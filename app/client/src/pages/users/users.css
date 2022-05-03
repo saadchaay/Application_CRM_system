@@ -1,51 +1,60 @@
 .con {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 0;
 }
 
 .title-btn {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 95%;
-    margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin: 20px 0;
 }
 
 .btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px 13px;
-    border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 13px;
+  border-radius: 10px;
 }
 .btn:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
+  background-color: #f1f1f1;
+  cursor: pointer;
 }
 .btn-primary {
-    background: none;
-    border: none;
+  background: none;
+  border: none;
 }
 
 .btn-primary:hover {
-    cursor: pointer;
-    background-color: #f1f1f1;
+  cursor: pointer;
+  background-color: #f1f1f1;
 }
 
-.userListEdit{
-    border: none;
-    border-radius: 10px;
-    padding: 5px 10px;
-    background-color: #3bb077;
-    color: white;
-    cursor: pointer;
-    margin-right: 20px;
+.userListEdit {
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: #3bb077;
+  color: white;
+  cursor: pointer;
+  margin-right: 20px;
 }
 
-.userListDelete{
-    color: red;
-    cursor: pointer;
+.userListDelete {
+  color: red;
+  cursor: pointer;
+}
+
+.status.Approved {
+  background-color: #e5faf2;
+  color: #3bb077;
+}
+.status.Declined {
+  background-color: #fff0f1;
+  color: #d95087;
 }
