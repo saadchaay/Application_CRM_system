@@ -53,21 +53,15 @@
   }
 }
 
-@media screen and(max-width: 768px) {
+@media screen and(max-width: 960px) {
   .widgetLg {
+    margin: 7px 0;
     @include Widget-large;
   }
 }
 
 
-@media screen and(max-width: 768px) {
-  .widgetLg {
-    @include Widget-large;
-  }
-}
-
-
-@media screen and(max-width: 768px) {
+@media screen and(min-width: 960px) {
   .widgetLg {
     @include Widget-large;
   }

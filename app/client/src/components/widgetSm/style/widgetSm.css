@@ -1,0 +1,146 @@
+@media screen and (max-width: 960px) {
+  .widgetSm {
+    margin: 7px 0;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    padding: 20px;
+  }
+  .widgetSm .widgetSmTitle {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .widgetSm .widgetSmList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    margin: 20px 0px;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmButton {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 10px;
+    background-color: #eeeef7;
+    color: #555;
+    cursor: pointer;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmButton .widgetSmIcon {
+    font-size: 16px !important;
+    margin-right: 5px;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmUser {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmUser .widgetSmUsername {
+    font-weight: 600;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmUser .widgetSmUserTitle {
+    font-weight: 300;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .widgetSm {
+    width: auto;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    padding: 20px;
+  }
+  .widgetSm .widgetSmTitle {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .widgetSm .widgetSmList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    margin: 20px 0px;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmButton {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 10px;
+    background-color: #eeeef7;
+    color: #555;
+    cursor: pointer;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmButton .widgetSmIcon {
+    font-size: 16px !important;
+    margin-right: 5px;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmUser {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmUser .widgetSmUsername {
+    font-weight: 600;
+  }
+  .widgetSm .widgetSmList .widgetSmListItem .widgetSmUser .widgetSmUserTitle {
+    font-weight: 300;
+  }
+}
+/*# sourceMappingURL=widgetSm.css.map */

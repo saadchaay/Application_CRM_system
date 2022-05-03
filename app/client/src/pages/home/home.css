@@ -1,8 +1,25 @@
 .home {
     flex: 4;
 }
+/* 
+@media screen and (min-width: 960px){
+    .homeWidgets{
+        flex-direction: column;
+    }
+} */
 
-.homeWidgets{
-    display: flex;
-    margin: 20px;
+@media screen and (max-width: 960px){
+    .homeWidgets{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 20px;
+    }
+}
+
+@media screen and (min-width: 960px){
+    .homeWidgets{
+        display: flex;
+        margin: 20px;
+    }
 }
