@@ -38,6 +38,7 @@
     cursor: pointer;
     margin-right: 10px;
     color: #555;
+    margin-top: 5px;
   }
   .topbar .topbarWrapper .topRight .topbarIconContainer .topIconBadge {
     width: 15px;
@@ -67,7 +68,7 @@
   }
 }
 
-@media screen and (max-width: 669px) and (min-width: 415px) {
+@media screen and (max-width: 669px) and (min-width: 414px) {
   .topbar {
     width: 100%;
     height: 50px;
@@ -107,6 +108,7 @@
     cursor: pointer;
     margin-right: 10px;
     color: #555;
+    margin-top: 5px;
   }
   .topbar .topbarWrapper .topRight .topbarIconContainer .topIconBadge {
     width: 15px;
@@ -136,7 +138,7 @@
   }
 }
 
-@media screen and (min-width: 670px) {
+@media screen and (min-width: 669px) {
   .topbar {
     width: 100%;
     height: 50px;
@@ -176,6 +178,7 @@
     cursor: pointer;
     margin-right: 10px;
     color: #555;
+    margin-top: 5px;
   }
   .topbar .topbarWrapper .topRight .topbarIconContainer .topIconBadge {
     width: 15px;

@@ -23,6 +23,7 @@
         cursor: pointer;
         margin-right: 10px;
         color: #555;
+        margin-top: 5px;
         .topIconBadge {
           width: 15px;
           height: 15px;
@@ -56,14 +57,14 @@
 }
 
 // Medium Desktop
-@media screen and (max-width: 669px) and (min-width: 415px) {
+@media screen and (max-width: 669px) and (min-width: 414px) {
     .topbar {
         @include Topbar(10px);
     }
 }
 
 // Large desktop
-@media screen and (min-width: 670px) {
+@media screen and (min-width: 669px) {
     .topbar {
         @include Topbar(20px);
     }

@@ -13,18 +13,18 @@
     padding: 20px;
     color: #555;
   }
-  .sidebar .sidebarMenu {
+  .sidebar .sidebarWrapper .sidebarMenu {
     margin-bottom: 10px;
   }
-  .sidebar .sidebarTitle {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarTitle {
     font-size: 13px;
     color: #bbbaba;
   }
-  .sidebar .sidebarList {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList {
     list-style: none;
     padding: 5px;
   }
-  .sidebar .sidebarListItem {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem {
     padding: 5px;
     cursor: pointer;
     display: -webkit-box;
@@ -35,17 +35,20 @@
             align-items: center;
     border-radius: 10px;
   }
-  .sidebar .sidebarListItem.active,
-  .sidebar .sidebarListItem:hover {
-    background-color: #f0f0ff;
-  }
-  .sidebar .sidebarIcon {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem .sidebarIcon {
     margin-right: 5px;
     font-size: 20px !important;
   }
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem.active,
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem:hover {
+    background-color: #f0f0ff;
+  }
+  .sidebar-none {
+    display: none;
+  }
 }
 
-@media screen and (max-width: 669px) and (min-width: 415px) {
+@media screen and (max-width: 669px) and (min-width: 414px) {
   .sidebar {
     -webkit-box-flex: 1;
         -ms-flex: 1;
@@ -60,18 +63,18 @@
     padding: 20px;
     color: #555;
   }
-  .sidebar .sidebarMenu {
+  .sidebar .sidebarWrapper .sidebarMenu {
     margin-bottom: 10px;
   }
-  .sidebar .sidebarTitle {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarTitle {
     font-size: 13px;
     color: #bbbaba;
   }
-  .sidebar .sidebarList {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList {
     list-style: none;
     padding: 5px;
   }
-  .sidebar .sidebarListItem {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem {
     padding: 5px;
     cursor: pointer;
     display: -webkit-box;
@@ -82,13 +85,13 @@
             align-items: center;
     border-radius: 10px;
   }
-  .sidebar .sidebarListItem.active,
-  .sidebar .sidebarListItem:hover {
-    background-color: #f0f0ff;
-  }
-  .sidebar .sidebarIcon {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem .sidebarIcon {
     margin-right: 5px;
     font-size: 20px !important;
+  }
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem.active,
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem:hover {
+    background-color: #f0f0ff;
   }
 }
 
@@ -107,18 +110,18 @@
     padding: 20px;
     color: #555;
   }
-  .sidebar .sidebarMenu {
+  .sidebar .sidebarWrapper .sidebarMenu {
     margin-bottom: 10px;
   }
-  .sidebar .sidebarTitle {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarTitle {
     font-size: 13px;
     color: #bbbaba;
   }
-  .sidebar .sidebarList {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList {
     list-style: none;
     padding: 5px;
   }
-  .sidebar .sidebarListItem {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem {
     padding: 5px;
     cursor: pointer;
     display: -webkit-box;
@@ -129,13 +132,13 @@
             align-items: center;
     border-radius: 10px;
   }
-  .sidebar .sidebarListItem.active,
-  .sidebar .sidebarListItem:hover {
-    background-color: #f0f0ff;
-  }
-  .sidebar .sidebarIcon {
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem .sidebarIcon {
     margin-right: 5px;
     font-size: 20px !important;
+  }
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem.active,
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem:hover {
+    background-color: #f0f0ff;
   }
 }
 /*# sourceMappingURL=sidebar.css.map */

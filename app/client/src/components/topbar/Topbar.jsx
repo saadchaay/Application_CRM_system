@@ -20,7 +20,6 @@ export default function Topbar() {
           </div>
           <div className="topbarIconContainer">
             <Settings />
-            <span className="topIconBadge">2</span>
           </div>
           <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
         </div>
