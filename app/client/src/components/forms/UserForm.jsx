@@ -13,10 +13,13 @@ export default function ModalUser() {
           <TextField id="fullName" label="Full Name *" helperText="" style={{width: "140%"}} />
         </div>
         <div className="input-group">
-          <TextField id="fullName" label="Full Name *" helperText="" style={{width: "140%"}} />
+          <TextField id="email" label="Email *" helperText="" type="email" style={{width: "140%"}} />
         </div>
         <div className="input-group">
-          <TextField id="fullName" label="Full Name *" helperText="" style={{width: "140%"}} />
+          <TextField id="username" label="Username *" helperText="" style={{width: "140%"}} />
+        </div>
+        <div className="input-group">
+          <TextField id="password" label="Password *" helperText="" type="password" autoComplete="current-password" style={{width: "140%"}} />
         </div>
         <div className="input-group">
           <FormControl style={{ width: "140%" }}>
@@ -30,20 +33,20 @@ export default function ModalUser() {
               // input={<BootstrapInput />}
             >
               <option aria-label="None" value="" />
-              <option value={}>Manager</option>
-              <option value={}>Agent</option>
-              <option value={}>Shipper</option>
+              <option value={10}>Manager</option>
+              <option value={11}>Agent</option>
+              <option value={12}>Shipper</option>
             </NativeSelect>
           </FormControl>
         </div>
         <div className="extra"></div>
         <div className="p-t-10">
           <button
-            className="btn btn--pill btn--signin"
+            className="btn--pill"
             type="submit"
             data-target="#"
           >
-            Add
+            Add User
           </button>
         </div>
       </form>

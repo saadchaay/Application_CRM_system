@@ -153,3 +153,17 @@ form{
         width: 80%;
     }
   }
+  .btn--pill {
+      padding: 9px 30px;
+      font-weight: bold;
+      background-color: #1a00c4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+  }
+  .btn--pill:hover {
+      background-color: #180590;
+      color: white;
+      border: none;
+      cursor: pointer;
+  }
