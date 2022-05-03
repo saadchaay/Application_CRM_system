@@ -25,7 +25,8 @@
     padding: 5px;
   }
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem {
-    padding: 5px;
+    padding: 8px 5px;
+    margin: 6px 0;
     cursor: pointer;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -38,6 +39,9 @@
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem .sidebarIcon {
     margin-right: 5px;
     font-size: 20px !important;
+  }
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .logout {
+    color: red;
   }
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem.active,
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem:hover {
@@ -75,7 +79,8 @@
     padding: 5px;
   }
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem {
-    padding: 5px;
+    padding: 8px 5px;
+    margin: 6px 0;
     cursor: pointer;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -88,6 +93,9 @@
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem .sidebarIcon {
     margin-right: 5px;
     font-size: 20px !important;
+  }
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .logout {
+    color: red;
   }
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem.active,
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem:hover {
@@ -122,7 +130,8 @@
     padding: 5px;
   }
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem {
-    padding: 5px;
+    padding: 8px 5px;
+    margin: 6px 0;
     cursor: pointer;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -135,6 +144,9 @@
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem .sidebarIcon {
     margin-right: 5px;
     font-size: 20px !important;
+  }
+  .sidebar .sidebarWrapper .sidebarMenu .sidebarList .logout {
+    color: red;
   }
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem.active,
   .sidebar .sidebarWrapper .sidebarMenu .sidebarList .sidebarListItem:hover {

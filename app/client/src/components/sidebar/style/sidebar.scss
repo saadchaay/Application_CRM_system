@@ -17,7 +17,8 @@
         list-style: none;
         padding: 5px;
         .sidebarListItem {
-          padding: 5px;
+          padding: 8px 5px;
+          margin: 6px 0;
           cursor: pointer;
           display: flex;
           align-items: center;
@@ -26,6 +27,9 @@
             margin-right: 5px;
             font-size: 20px !important;
           }
+        }
+        .logout {
+          color: red;
         }
         .sidebarListItem.active,
         .sidebarListItem:hover {
