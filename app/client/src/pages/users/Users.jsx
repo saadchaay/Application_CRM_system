@@ -1,50 +1,73 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 import { DataGrid } from "@material-ui/data-grid";
-import { PersonAdd } from "@material-ui/icons";
+import { PersonAdd, DeleteOutline } from "@material-ui/icons";
 import "./users.css";
+import { rows } from "../../userData";
+import { Link } from "react-router-dom";
 
-const columns = [
-  { field: "id", headerName: "ID", width: 100 },
-  { field: "firstName", headerName: "First name", width: 170 },
-  { field: "lastName", headerName: "Last name", width: 170 },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 100,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 200,
-  },
-];
 
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 10, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 11, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 12, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+
 
 export default function DataTable() {
+    const [data, setData] = useState();
+
+  const handleDelete = (id) => {
+    setData(data.filter((item) => item.id !== id));
+  };
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 100 },
+    {
+      field: "fullName",
+      headerName: "Full name",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      width: 200,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      width: 200,
+    },
+    {
+      field: "createdAt",
+      headerName: "Created on",
+      width: 160,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 160,
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 150,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={"/user/" + params.row.id}>
+              <button className="userListEdit">Edit</button>
+            </Link>
+            <DeleteOutline
+              className="userListDelete"
+              onClick={() => handleDelete(params.row.id)}
+            />
+          </>
+        );
+      },
+    },
+  ];
+
   return (
     <div className="con">
       <div className="title-btn">
         <h2>Users Management</h2>
         <div className="btn">
-            <PersonAdd />
-            <button className="btn-primary">Add User</button>
+          <PersonAdd />
+          <button className="btn-primary">Add User</button>
         </div>
       </div>
       <div style={{ height: 600, width: "95%" }}>
@@ -53,7 +76,7 @@ export default function DataTable() {
           rows={rows}
           columns={columns}
           pageSize={9}
-          rowsPerPageOptions={[9]}
+          rowsPerPageOptions={[1]}
         />
       </div>
     </div>

@@ -48,3 +48,78 @@ export const data = [
       "amount" : 2100,
     },
 ];
+
+export const rows = [
+  {
+    id: 1,
+    fullName: "Snow Jon",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 2,
+    fullName: "Lannister Cersei",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 3,
+    fullName: "Lannister Jaime",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 4,
+    fullName: "Stark Arya",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 5,
+    fullName: "Targaryen Daenerys",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 6,
+    fullName: "Melisandre ull",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 7,
+    fullName: "Clifford Ferrara",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 8,
+    fullName: "Frances Rossini",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 9,
+    fullName: "Roxie Harvey",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 10,
+    fullName: "Roxie Harvey",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 11,
+    fullName: "Roxie Harvey",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+  {
+    id: 12,
+    fullName: "Roxie Harvey",
+    email: "chaaysaad@gmail.com",
+    createdAt: "2020-01-01",
+  },
+];
