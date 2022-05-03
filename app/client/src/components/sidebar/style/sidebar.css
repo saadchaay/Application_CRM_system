@@ -3,7 +3,7 @@
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-    height: calc(100vh - 50px);
+    height: calc(98.5vh - 50px);
     background-color: #fbfbff;
     position: -webkit-sticky;
     position: sticky;
@@ -57,7 +57,7 @@
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-    height: calc(100vh - 50px);
+    height: calc(98.5vh - 50px);
     background-color: #fbfbff;
     position: -webkit-sticky;
     position: sticky;
@@ -108,7 +108,7 @@
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-    height: calc(100vh - 50px);
+    height: calc(98.5vh - 50px);
     background-color: #fbfbff;
     position: -webkit-sticky;
     position: sticky;

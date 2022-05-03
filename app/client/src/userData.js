@@ -54,94 +54,45 @@ export const rows = [
     id: 1,
     fullName: "Snow Jon",
     email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Manager",
+    phone: "+212 615 207 417",
+    address: "Lot lafarge, Bsk Casablanca",
+    createdAt: "22-02-2022",
     status: "Active"
   },
   {
     id: 2,
     fullName: "Lannister Cersei",
     email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Manager",
+    phone: "+212 615 207 417",
+    address: "Lot lafarge, Bsk Casablanca",
+    createdAt: "22-02-2022",
     status: "Active"
   },
   {
     id: 3,
     fullName: "Lannister Jaime",
     email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Manager",
+    phone: "+212 615 207 417",
+    address: "Lot lafarge, Bsk Casablanca",
+    createdAt: "22-02-2022",
     status: "Disabled"
   },
   {
     id: 4,
     fullName: "Stark Arya",
     email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Agent",
+    phone: "+212 615 207 417",
+    address: "Lot lafarge, Bsk Casablanca",
+    role: null,
     status: "Active"
   },
   {
     id: 5,
     fullName: "Targaryen Daenerys",
     email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Manager",
+    phone: "+212 615 207 417",
+    address: "Lot lafarge, Bsk Casablanca",
+    createdAt: "22-02-2022",
     status: "Active"
-  },
-  {
-    id: 6,
-    fullName: "Melisandre ull",
-    email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Manager",
-    status: "Disabled"
-  },
-  {
-    id: 7,
-    fullName: "Clifford Ferrara",
-    email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Manager",
-    status: "Active"
-  },
-  {
-    id: 8,
-    fullName: "Frances Rossini",
-    email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "delivery Man",
-    status: "Active"
-  },
-  {
-    id: 9,
-    fullName: "Roxie Harvey",
-    email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Agent",
-    status: "Disabled"
-  },
-  {
-    id: 10,
-    fullName: "Roxie Harvey",
-    email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Manager",
-    status: "Disabled"
-  },
-  {
-    id: 11,
-    fullName: "Roxie Harvey",
-    email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
-    role: "Manager",
-    status: "Active"
-  },
-  {
-    id: 12,
-    fullName: "Roxie Harvey",
-    email: "chaaysaad@gmail.com",
-    createdAt: "2020-01-01",
   },
 ];

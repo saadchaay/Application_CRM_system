@@ -4,12 +4,14 @@ import "./App.css";
 import Home from "./pages/home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Users from "./pages/users/Users";
-import Orders from "./pages/orders/Orders";
+// import Orders from "./pages/orders/Orders";
+import Customers from "./pages/customers/Customers";
 
 function App() {
   return (
     <Router>
       <div className="App">
+        
         <Topbar />
         <div className="container">
           <Sidebar />
@@ -17,7 +19,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/users" element={<Users />} />
-              <Route path="/orders" element={<Orders />} />
+              <Route path="/customers" element={<Customers />} />
             </Routes>
           </div>
         </div>
