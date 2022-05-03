@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 
 export default function DataTable() {
-    const [data, setData] = useState();
+    const [data, setData] = useState(rows);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -73,7 +73,7 @@ export default function DataTable() {
       <div style={{ height: 600, width: "95%" }}>
         <DataGrid
           checkboxSelection
-          rows={rows}
+          rows={data}
           columns={columns}
           pageSize={9}
           rowsPerPageOptions={[1]}
