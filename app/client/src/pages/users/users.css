@@ -1,0 +1,37 @@
+.con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+.title-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    margin: 20px 0;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 13px;
+    border-radius: 10px;
+}
+.btn:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+.btn-primary {
+    background: none;
+    border: none;
+}
+
+.btn-primary:hover {
+    cursor: pointer;
+    background-color: #f1f1f1;
+}
+

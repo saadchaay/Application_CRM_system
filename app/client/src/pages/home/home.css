@@ -1,13 +1,3 @@
-.home {
-    flex: 4;
-}
-/* 
-@media screen and (min-width: 960px){
-    .homeWidgets{
-        flex-direction: column;
-    }
-} */
-
 @media screen and (max-width: 960px){
     .homeWidgets{
         display: flex;
