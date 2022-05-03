@@ -55,6 +55,7 @@ export const rows = [
     fullName: "Snow Jon",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Manager",
     status: "Active"
   },
   {
@@ -62,6 +63,7 @@ export const rows = [
     fullName: "Lannister Cersei",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Manager",
     status: "Active"
   },
   {
@@ -69,6 +71,7 @@ export const rows = [
     fullName: "Lannister Jaime",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Manager",
     status: "Disabled"
   },
   {
@@ -76,6 +79,7 @@ export const rows = [
     fullName: "Stark Arya",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Agent",
     status: "Active"
   },
   {
@@ -83,6 +87,7 @@ export const rows = [
     fullName: "Targaryen Daenerys",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Manager",
     status: "Active"
   },
   {
@@ -90,6 +95,7 @@ export const rows = [
     fullName: "Melisandre ull",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Manager",
     status: "Disabled"
   },
   {
@@ -97,6 +103,7 @@ export const rows = [
     fullName: "Clifford Ferrara",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Manager",
     status: "Active"
   },
   {
@@ -104,6 +111,7 @@ export const rows = [
     fullName: "Frances Rossini",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "delivery Man",
     status: "Active"
   },
   {
@@ -111,6 +119,7 @@ export const rows = [
     fullName: "Roxie Harvey",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Agent",
     status: "Disabled"
   },
   {
@@ -118,6 +127,7 @@ export const rows = [
     fullName: "Roxie Harvey",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Manager",
     status: "Disabled"
   },
   {
@@ -125,6 +135,7 @@ export const rows = [
     fullName: "Roxie Harvey",
     email: "chaaysaad@gmail.com",
     createdAt: "2020-01-01",
+    role: "Manager",
     status: "Active"
   },
   {
