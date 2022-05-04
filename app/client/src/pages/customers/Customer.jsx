@@ -1,9 +1,7 @@
-import React, { useState } from "react";
 import {
   LocationSearching,
   MailOutline,
   PermIdentity,
-  Publish,
 } from "@material-ui/icons";
 import "./styles/customer.css";
 
