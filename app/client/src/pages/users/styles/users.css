@@ -50,15 +50,6 @@
   cursor: pointer;
 }
 
-.status.Approved {
-  background-color: #e5faf2;
-  color: #3bb077;
-}
-.status.Declined {
-  background-color: #fff0f1;
-  color: #d95087;
-}
-
 .modal {
     background-color: white;
     display: flex;
@@ -66,6 +57,7 @@
     align-items: center;
     width: 50%;
 }
+
 @media(width:1024px){
     .modal-dialog{
         max-width: 70%;

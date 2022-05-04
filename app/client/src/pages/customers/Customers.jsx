@@ -5,7 +5,7 @@ import { rows } from "../../userData";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
-
+import "./styles/customer.css";
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
       color: "green",
     },
     "& .size-input": {
-        width: "150%",
+      width: "150%",
     },
   },
 });
@@ -31,6 +31,10 @@ export default function UsersList() {
 
   const handleOpen = () => {
     renderEditInputCell(true);
+  };
+
+  const showCustomerDetails = (id) => {
+    console.log(id);
   };
 
   const columns = [
@@ -71,8 +75,8 @@ export default function UsersList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/customer/" + params.row.id}>
-              <button className="showCustomer">Show</button>
+            <Link to={"/customer-show/" + params.row.id}>
+              <button className="showCustomer" onClick={() => showCustomerDetails(params.row.id)}>Show</button>
             </Link>
             <Link to={"/customer-edit/" + params.row.id}>
               <button className="customerEdit">Edit</button>

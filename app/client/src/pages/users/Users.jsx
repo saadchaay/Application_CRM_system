@@ -9,7 +9,6 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
 import UserForm from "../../components/forms/UserForm";
 
-
 const useStyles = makeStyles({
   root: {
     "& .super-app.disabled": {
@@ -19,7 +18,7 @@ const useStyles = makeStyles({
       color: "green",
     },
     "& .size-input": {
-        width: "150%",
+      width: "150%",
     },
   },
 });
