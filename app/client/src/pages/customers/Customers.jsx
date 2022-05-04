@@ -1,40 +1,16 @@
 import React, { useState } from "react";
-import { DataGrid, renderEditInputCell } from "@material-ui/data-grid";
-import { PersonAdd, DeleteOutline } from "@material-ui/icons";
+import { DataGrid } from "@material-ui/data-grid";
+import { DeleteOutline } from "@material-ui/icons";
 import { rows } from "../../userData";
 import { Link } from "react-router-dom";
-import clsx from "clsx";
-import { makeStyles } from "@material-ui/styles";
 import "./styles/customer.css";
 
-const useStyles = makeStyles({
-  root: {
-    "& .super-app.disabled": {
-      color: "red",
-    },
-    "& .super-app.active": {
-      color: "green",
-    },
-    "& .size-input": {
-      width: "150%",
-    },
-  },
-});
 
 export default function UsersList() {
   const [data, setData] = useState(rows);
-  const classes = useStyles();
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
-  };
-
-  const handleOpen = () => {
-    renderEditInputCell(true);
-  };
-
-  const showCustomerDetails = (id) => {
-    console.log(id);
   };
 
   const columns = [
@@ -61,7 +37,7 @@ export default function UsersList() {
     {
       field: "address",
       headerName: "Address",
-      width: 130,
+      width: 190,
     },
     {
       field: "createdAt",
@@ -75,12 +51,10 @@ export default function UsersList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/customer-show/" + params.row.id}>
-              <button className="showCustomer" onClick={() => showCustomerDetails(params.row.id)}>Show</button>
-            </Link>
             <Link to={"/customer-edit/" + params.row.id}>
               <button className="customerEdit">Edit</button>
             </Link>
+
             <DeleteOutline
               className="customerDelete"
               onClick={() => handleDelete(params.row.id)}
@@ -94,13 +68,12 @@ export default function UsersList() {
   return (
     <div className="con">
       <div className="title-btn">
-        <h2>Users Management</h2>
-        <div className="btn" onClick={handleOpen}>
-          <PersonAdd />
-          <button className="btn-primary">Add User</button>
-        </div>
+        <h2>Customers Management</h2>
       </div>
-      <div style={{ height: 600, width: "95%" }} className={classes.root}>
+
+      
+
+      <div style={{ height: 600, width: "95%" }} >
         <DataGrid
           checkboxSelection
           rows={data}
