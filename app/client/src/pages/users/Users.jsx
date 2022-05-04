@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "@material-ui/core/Modal";
 import { DataGrid } from "@material-ui/data-grid";
 import { PersonAdd, DeleteOutline } from "@material-ui/icons";
-import "./users.css";
+import "./styles/users.css";
 import { rows } from "../../userData";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
