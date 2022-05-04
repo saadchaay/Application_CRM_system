@@ -22,4 +22,384 @@
   color: red;
   cursor: pointer;
 }
+
+@media screen and (max-width: 934.99px) {
+  .user {
+    -webkit-box-flex: 4;
+        -ms-flex: 4;
+            flex: 4;
+    padding: 20px;
+  }
+  .user .userTitleContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .user .userTitleContainer .userAddButton {
+    width: 80px;
+    border: none;
+    padding: 5px;
+    background-color: teal;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+  }
+  .user .userContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    margin-top: 20px;
+  }
+  .user .userContainer .userShow {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .user .userContainer .userShow .userShowTop {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .user .userContainer .userShow .userShowTop .userShowImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .user .userContainer .userShow .userShowTop .userShowTopTitle {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-left: 0;
+  }
+  .user .userContainer .userShow .userShowTop .userShowTopTitle .userShowUsername {
+    font-weight: 600;
+  }
+  .user .userContainer .userShow .userShowTop .userShowTopTitle .userShowUserTitle {
+    font-weight: 300;
+  }
+  .user .userContainer .userShow .userShowBottom {
+    margin-top: 20px;
+  }
+  .user .userContainer .userShow .userShowBottom .userShowTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #afaaaa;
+  }
+  .user .userContainer .userShow .userShowBottom .userShowInfo {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 20px 0px;
+    color: #444;
+  }
+  .user .userContainer .userShow .userShowBottom .userShowInfo .userShowIcon {
+    font-size: 16px !important;
+  }
+  .user .userContainer .userShow .userShowBottom .userShowInfo .userShowInfoTitle {
+    margin-left: 10px;
+  }
+  .user .userContainer .userUpdate {
+    -webkit-box-flex: 2;
+        -ms-flex: 2;
+            flex: 2;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .user .userContainer .userUpdate .userUpdateTitle {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .user .userContainer .userUpdate .userUpdateForm {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    margin-top: 20px;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateItem {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-top: 10px;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateItem .userUpdateInput {
+    border: none;
+    width: 250px;
+    height: 30px;
+    border-bottom: 1px solid gray;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateItem label {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    height: 30vh;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight .userUpdateUpload {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight .userUpdateUpload .userUpdateImg {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    margin-right: 20px;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight .userUpdateUpload .userUpdateIcon {
+    cursor: pointer;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight .userUpdateButton {
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+  }
+}
+
+@media screen and (min-width: 935px) {
+  .user {
+    -webkit-box-flex: 4;
+        -ms-flex: 4;
+            flex: 4;
+    padding: 20px;
+  }
+  .user .userTitleContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .user .userTitleContainer .userAddButton {
+    width: 80px;
+    border: none;
+    padding: 5px;
+    background-color: teal;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+  }
+  .user .userContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    margin-top: 20px;
+  }
+  .user .userContainer .userShow {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .user .userContainer .userShow .userShowTop {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .user .userContainer .userShow .userShowTop .userShowImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .user .userContainer .userShow .userShowTop .userShowTopTitle {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-left: 0;
+  }
+  .user .userContainer .userShow .userShowTop .userShowTopTitle .userShowUsername {
+    font-weight: 600;
+  }
+  .user .userContainer .userShow .userShowTop .userShowTopTitle .userShowUserTitle {
+    font-weight: 300;
+  }
+  .user .userContainer .userShow .userShowBottom {
+    margin-top: 20px;
+  }
+  .user .userContainer .userShow .userShowBottom .userShowTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #afaaaa;
+  }
+  .user .userContainer .userShow .userShowBottom .userShowInfo {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 20px 0px;
+    color: #444;
+  }
+  .user .userContainer .userShow .userShowBottom .userShowInfo .userShowIcon {
+    font-size: 16px !important;
+  }
+  .user .userContainer .userShow .userShowBottom .userShowInfo .userShowInfoTitle {
+    margin-left: 10px;
+  }
+  .user .userContainer .userUpdate {
+    -webkit-box-flex: 2;
+        -ms-flex: 2;
+            flex: 2;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .user .userContainer .userUpdate .userUpdateTitle {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .user .userContainer .userUpdate .userUpdateForm {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    margin-top: 20px;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateItem {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-top: 10px;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateItem .userUpdateInput {
+    border: none;
+    width: 250px;
+    height: 30px;
+    border-bottom: 1px solid gray;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateItem label {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    height: 30vh;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight .userUpdateUpload {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight .userUpdateUpload .userUpdateImg {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    margin-right: 20px;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight .userUpdateUpload .userUpdateIcon {
+    cursor: pointer;
+  }
+  .user .userContainer .userUpdate .userUpdateForm .userUpdateRight .userUpdateButton {
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+  }
+}
 /*# sourceMappingURL=customer.css.map */

@@ -7,6 +7,7 @@ import Users from "./pages/users/Users";
 import User from "./pages/users/User";
 // import Orders from "./pages/orders/Orders";
 import Customers from "./pages/customers/Customers";
+import Customer from "./pages/customers/Customer";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/users" element={<Users />} />
               <Route path="/user/:userId" element={<User />} />
               <Route path="/customers" element={<Customers />} />
+              <Route path="/customer-edit/:customerId" element={<Customer />} />
             </Routes>
           </div>
         </div>
