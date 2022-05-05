@@ -1,7 +1,8 @@
 import {
   LocationSearching,
   MailOutline,
-  PermIdentity,
+  Phone,
+  Place,
 } from "@material-ui/icons";
 import "./styles/customer.css";
 
@@ -19,19 +20,22 @@ export default function User() {
             </div>
           </div>
           <div className="userShowBottom">
-            <span className="userShowTitle">Account Details</span>
-            <div className="userShowInfo">
-              <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99</span>
-            </div>
-            <span className="userShowTitle">Contact Details</span>
+            <span className="userShowTitle">Customer Details</span>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
               <span className="userShowInfoTitle">annabeck99@gmail.com</span>
             </div>
             <div className="userShowInfo">
+              <Phone className="userShowIcon" />
+              <span className="userShowInfoTitle">+212 615 207 417</span>
+            </div>
+            <div className="userShowInfo">
+              <Place className="userShowIcon" />
+              <span className="userShowInfoTitle">Lot lafarge, Bsk Casablanca</span>
+            </div>
+            <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">Active</span>
+              <span className="userShowInfoTitle">Total Transactions: $ {7200.22}</span>
             </div>
           </div>
         </div>
@@ -72,8 +76,6 @@ export default function User() {
                 />
               </div>
             </div>
-        
-
               <button className="userUpdateButton">
                 Update
               </button>
