@@ -8,6 +8,7 @@ import User from "./pages/users/User";
 // import Orders from "./pages/orders/Orders";
 import Customers from "./pages/customers/Customers";
 import Customer from "./pages/customers/Customer";
+import ProductList from "./pages/products/ProductList";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/user/:userId" element={<User />} />
               <Route path="/customers" element={<Customers />} />
               <Route path="/customer-edit/:customerId" element={<Customer />} />
+              <Route path="/products" element={<ProductList />} />
             </Routes>
           </div>
         </div>
