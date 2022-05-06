@@ -44,14 +44,6 @@ export default function User() {
           <form className="userUpdateForm">
             <div className="userUpdateLeft">
               <div className="userUpdateItem">
-                <label>Username</label>
-                <input
-                  type="text"
-                  placeholder="annabeck99"
-                  className="userUpdateInput"
-                />
-              </div>
-              <div className="userUpdateItem">
                 <label>Full Name</label>
                 <input
                   type="text"
@@ -68,17 +60,26 @@ export default function User() {
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Password</label>
+                <label>Phone</label>
                 <input
-                  type="password"
-                  placeholder="Password"
+                  type="text"
+                  placeholder="Phone"
                   className="userUpdateInput"
                 />
               </div>
-            </div>
+              <div className="userUpdateItem">
+                <label>Address</label>
+                <input
+                  type="text"
+                  placeholder="Address"
+                  className="userUpdateInput"
+                />
+              </div>
               <button className="userUpdateButton">
                 Update
               </button>
+            </div>
+              
           </form>
         </div>
       </div>

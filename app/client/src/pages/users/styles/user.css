@@ -69,7 +69,7 @@
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    margin-left: 20px;
+    margin-left: 15px;
   }
   .user .userContainer .userShow .userShowTop .userShowTopTitle .userShowUsername {
     font-weight: 600;
@@ -259,7 +259,7 @@
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    margin-left: 20px;
+    margin-left: 15px;
   }
   .user .userContainer .userShow .userShowTop .userShowTopTitle .userShowUsername {
     font-weight: 600;

@@ -1,39 +1,51 @@
-// @import "../../styles/_user-sec.scss";
-.showCustomer {
-    border: none;
-    border-radius: 10px;
-    padding: 5px 10px;
-    background-color: gray;
-    color: white;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  .customerEdit {
-    border: none;
-    border-radius: 10px;
-    padding: 5px 10px;
-    background-color: #3bb077;
-    color: white;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  .customerDelete {
-    color: red;
-    cursor: pointer;
-  }
-  .userShowUsername {
-    margin-left: 0;
-  }
-    
+@import "../../../styles/editSection";
+
+
     @media screen and (max-width: 934.99px) {
       .user {
-        // @include user-section(column);
+        @include user-section(column);
       }
     }
     
     @media screen and (min-width: 935px) {
       .user {
-        // @include user-section(row);
+        @include user-section(row);
       }
+    }
+    .showCustomer {
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      background-color: gray;
+      color: white;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .customerEdit {
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      background-color: #3bb077;
+      color: white;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .customerDelete {
+      color: red;
+      cursor: pointer;
+    }
+    .userShowUsername {
+      margin-left: 0;
+    }
+      
+    .userUpdateButton {
+      border-radius: 5px;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      background-color: darkblue;
+      color: white;
+      font-weight: 600;
+      margin-top: 15px;
     }
     
