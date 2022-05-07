@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import MultiSelect from "react-multiple-select-dropdown-lite";
 import "react-multiple-select-dropdown-lite/dist/index.css";
+
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputBase from '@material-ui/core/InputBase';
 import Select from "@material-ui/core/Select";
 
 import InputLabel from '@material-ui/core/InputLabel';
@@ -114,23 +117,10 @@ export default function NewProduct() {
               </div>
               <div style={{ margin: "10px" }}></div>
               <label>Status</label>
-              <FormControl variant="outlined" >
-        {/* <InputLabel id="demo-simple-select-outlined-label"></InputLabel> */}
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          // value={age}
-          // onChange={handleChange}
-          label="Age"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
+              <select name="status" id="status">
+                <option value="inStock">In Stock</option>
+                <option value="outStock">Out Stock</option>
+                </select>
             </div>
             <div className="addProductItem">
               <label>Sizes</label>
