@@ -2,20 +2,24 @@ import "./styles/new-product.css";
 import { Publish } from "@material-ui/icons";
 import React, { useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
-import Multiselect from "multiselect-react-dropdown";
+import MultiSelect from "react-multiple-select-dropdown-lite";
+import  'react-multiple-select-dropdown-lite/dist/index.css'
 
-const sizes = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
-
+const  options  = [
+    { label:  'X-Small', value:  'option_1'  },
+    { label:  'Small', value:  'option_2'  },
+    { label:  'Option 3', value:  'option_3'  },
+    { label:  'Option 4', value:  'option_4'  },
+  ]
 export default function NewProduct() {
+    // const sizes = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
+
   const [valueSize, setValueSize] = React.useState([]);
   const [valueColor, setValueColor] = React.useState([]);
-  const selected = valueSize.length;
-  const [imgPreview, setImgPreview] = useState(
-    "https://via.placeholder.com/150"
-  );
+  const [imgPreview, setImgPreview] = useState("https://via.placeholder.com/150");
   const [error, setError] = useState(false);
-  const handleChange = (event) => {
-    setValueSize(event.valueSize);
+  const handleOnchange = (val) => {
+    setValueSize(val);
   };
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -76,18 +80,9 @@ export default function NewProduct() {
           <div className="addProductGroup">
             <div className="addProductItem">
               <label>Colors</label>
+              {valueSize}
               <div>
-                <Multiselect
-                  style={{
-                    width: "500px",
-                  }}
-                  isObject={false}
-                  onKeyPressFn={function noRefCheck() {}}
-                  onRemove={function noRefCheck() {}}
-                  onSearch={function noRefCheck() {}}
-                  onSelect={function noRefCheck() {}}
-                  options={sizes}
-                />
+                <MultiSelect onChange={handleOnchange} options={options} />
               </div>
             </div>
             <div className="addProductItem">
