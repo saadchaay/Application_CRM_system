@@ -3,17 +3,7 @@ import { Publish } from "@material-ui/icons";
 import React, { useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import MultiSelect from "react-multiple-select-dropdown-lite";
-import "react-multiple-select-dropdown-lite/dist/index.css";
-
-import NativeSelect from '@material-ui/core/NativeSelect';
-import InputBase from '@material-ui/core/InputBase';
-import Select from "@material-ui/core/Select";
-
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-// import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-// import colors from "../../properties/colors";
+import "react-multiple-select-dropdown-lite/dist/index.css";  
 
 const colors = [
   {
