@@ -8,18 +8,18 @@ import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
 
 const useStyles = makeStyles({
-    root: {
-      "& .super-app.disabled": {
-        color: "red",
-      },
-      "& .super-app.active": {
-        color: "green",
-      },
-      "& .size-input": {
-        width: "150%",
-      },
+  root: {
+    "& .super-app.disabled": {
+      color: "red",
     },
-  });
+    "& .super-app.active": {
+      color: "green",
+    },
+    "& .size-input": {
+      width: "150%",
+    },
+  },
+});
 export default function ProductList() {
   const [data, setData] = useState(productRows);
   const classes = useStyles();
@@ -43,20 +43,18 @@ export default function ProductList() {
       },
     },
     {
-        field: "category",
-        headerName: "Category",
-        width: 200,
-        renderCell: (params) => {
-            return (
-                <div className="productListItem">
-                    <Link to={"/category/" + params.row.id}>
-                        <button className="categoryBtn">
-                            {params.row.category}
-                        </button>
-                    </Link>
-                </div>
-            );
-        }
+      field: "category",
+      headerName: "Category",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="productListItem">
+            <Link to={"/category/" + params.row.id}>
+              <button className="categoryBtn">{params.row.category}</button>
+            </Link>
+          </div>
+        );
+      },
     },
     { field: "stock", headerName: "Stock", width: 150 },
     {
@@ -74,7 +72,6 @@ export default function ProductList() {
           active: params.value === "Active",
         });
       },
-
     },
     {
       field: "price",
@@ -102,15 +99,20 @@ export default function ProductList() {
   ];
 
   return (
-    <div className={classes.root} style={{ height: 600, width: "95%" }}>
-      <DataGrid
-        rows={data}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        checkboxSelection
-        height={600}
-      />
+    <div>
+      <Link to={"/new-product"}>
+        <button className="addProductButton">Add new product</button>
+      </Link>
+      <div className={classes.root} style={{ height: 600, width: "95%" }}>
+        <DataGrid
+          rows={data}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={8}
+          checkboxSelection
+          height={600}
+        />
+      </div>
     </div>
   );
 }

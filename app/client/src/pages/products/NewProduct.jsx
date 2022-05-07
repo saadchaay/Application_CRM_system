@@ -149,7 +149,7 @@ export default function NewProduct() {
               </div>
             </div>
           </div>
-          <button className="addProductButton">Create new product</button>
+          <button className="addProductButton">Submit</button>
         </div>
 
         <div className="addProductFormSide rightSide">

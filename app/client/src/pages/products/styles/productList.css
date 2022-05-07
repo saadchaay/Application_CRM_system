@@ -40,3 +40,15 @@
     color: blue;
     /* text-decoration: underline; */
 }
+
+.addProductButton {
+    margin: 10px 0;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: .9em;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
