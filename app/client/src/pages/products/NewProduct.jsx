@@ -3,20 +3,22 @@ import { Publish } from "@material-ui/icons";
 import React, { useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import MultiSelect from "react-multiple-select-dropdown-lite";
-import  'react-multiple-select-dropdown-lite/dist/index.css'
+import "react-multiple-select-dropdown-lite/dist/index.css";
 
-const  options  = [
-    { label:  'X-Small', value:  'option_1'  },
-    { label:  'Small', value:  'option_2'  },
-    { label:  'Option 3', value:  'option_3'  },
-    { label:  'Option 4', value:  'option_4'  },
-  ]
+const options = [
+  { label: "X-Small", value: "option_1" },
+  { label: "Small", value: "option_2" },
+  { label: "Option 3", value: "option_3" },
+  { label: "Option 4", value: "option_4" },
+];
 export default function NewProduct() {
-    // const sizes = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
+  // const sizes = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
 
   const [valueSize, setValueSize] = React.useState([]);
   const [valueColor, setValueColor] = React.useState([]);
-  const [imgPreview, setImgPreview] = useState("https://via.placeholder.com/150");
+  const [imgPreview, setImgPreview] = useState(
+    "https://via.placeholder.com/150"
+  );
   const [error, setError] = useState(false);
   const handleOnchange = (val) => {
     setValueSize(val);
@@ -80,9 +82,8 @@ export default function NewProduct() {
           <div className="addProductGroup">
             <div className="addProductItem">
               <label>Colors</label>
-              {valueSize}
               <div>
-                <MultiSelect onChange={handleOnchange} options={options} />
+                <MultiSelect onChange={handleOnchange} options={options} style={}/>
               </div>
             </div>
             <div className="addProductItem">
@@ -124,7 +125,11 @@ export default function NewProduct() {
           </div>
           <button className="addProductButton">Create new product</button>
         </div>
+
         <div className="addProductFormSide rightSide">
+          <div className="addProductItem">
+            <label>Upload Product Image</label>
+          </div>
           <div className="userUpdateUpload">
             <img className="userUpdateImg" src={imgPreview} alt="" />
             <label htmlFor="file">
