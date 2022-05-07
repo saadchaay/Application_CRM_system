@@ -4,12 +4,35 @@ import React, { useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import MultiSelect from "react-multiple-select-dropdown-lite";
 import "react-multiple-select-dropdown-lite/dist/index.css";
+import Select from "@material-ui/core/Select";
 
-const options = [
-  { label: "X-Small", value: "option_1" },
-  { label: "Small", value: "option_2" },
-  { label: "Option 3", value: "option_3" },
-  { label: "Option 4", value: "option_4" },
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+// import colors from "../../properties/colors";
+
+const colors = [
+  {
+    label: "Red",
+    value: "#F44336",
+  },
+  {
+    label: "Pink",
+    value: "#E91E63",
+  },
+  {
+    label: "Purple",
+    value: "#9C27B0",
+  },
+  {
+    label: "Deep Purple",
+    value: "#673AB7",
+  },
+  {
+    label: "Indigo",
+    value: "#3F51B5",
+  },
 ];
 export default function NewProduct() {
   // const sizes = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
@@ -51,7 +74,7 @@ export default function NewProduct() {
           <div className="addProductGroup">
             <div className="addProductItem">
               <label>Name</label>
-              <input type="text" placeholder="Apple Airpods" />
+              <input type="text" placeholder="Product name" />
             </div>
             <div className="addProductItem">
               <label>Category</label>
@@ -83,8 +106,31 @@ export default function NewProduct() {
             <div className="addProductItem">
               <label>Colors</label>
               <div>
-                <MultiSelect onChange={handleOnchange} options={options} style={}/>
+                <MultiSelect
+                  onChange={handleOnchange}
+                  options={colors}
+                  style={{ width: "100%" }}
+                />
               </div>
+              <div style={{ margin: "10px" }}></div>
+              <label>Status</label>
+              <FormControl variant="outlined" >
+        {/* <InputLabel id="demo-simple-select-outlined-label"></InputLabel> */}
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          // value={age}
+          // onChange={handleChange}
+          label="Age"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </FormControl>
             </div>
             <div className="addProductItem">
               <label>Sizes</label>

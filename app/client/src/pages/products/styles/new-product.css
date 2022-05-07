@@ -36,6 +36,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    flex-wrap: wrap;
     width: 100%;
 }
 
@@ -54,16 +55,19 @@
 
 .addProductItem > input {
   padding: 10px;
+  border-radius: 8px;
 }
 .addProductItem > textarea {
   resize: none;
-  width: 100%;
+  width: 90%;
   height: 110px;
   padding: 10px;
+  border-radius: 8px;
 }
 
 .addProductItem > select {
   padding: 10px;
+  border-radius: 8px;
 }
 
 .addProductButton {
