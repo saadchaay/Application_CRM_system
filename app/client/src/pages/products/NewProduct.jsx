@@ -1,12 +1,22 @@
 import "./styles/new-product.css";
 import { Publish } from "@material-ui/icons";
-import { useState } from "react";
+import React, { useState } from "react";
+import Checkbox from "@material-ui/core/Checkbox";
+import Multiselect from "multiselect-react-dropdown";
+
+const sizes = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
 
 export default function NewProduct() {
+  const [valueSize, setValueSize] = React.useState([]);
+  const [valueColor, setValueColor] = React.useState([]);
+  const selected = valueSize.length;
   const [imgPreview, setImgPreview] = useState(
     "https://via.placeholder.com/150"
   );
   const [error, setError] = useState(false);
+  const handleChange = (event) => {
+    setValueSize(event.valueSize);
+  };
   const handleImageChange = (e) => {
     e.preventDefault();
     let reader = new FileReader();
@@ -56,40 +66,68 @@ export default function NewProduct() {
               <textarea placeholder="Description" />
             </div>
             <div className="addProductItem">
-              <label>Name</label>
-              <input type="text" placeholder="" />
-              <label>Name</label>
-              <input type="text" placeholder="" />
-            </div>
-        
-          </div>
-          <div className="addProductGroup">
-            <div className="addProductItem">
               <label>Stock</label>
-              <input type="text" placeholder="123" />
-            </div>
-            <div className="addProductItem">
+              <input type="text" placeholder="Stock" />
+              <div style={{ margin: "10px" }}></div>
               <label>Price</label>
-              <input type="text" placeholder="123" />
+              <input type="text" placeholder="Price" />
             </div>
           </div>
           <div className="addProductGroup">
             <div className="addProductItem">
-              <label>Active</label>
-              <select name="active" id="active">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
+              <label>Colors</label>
+              <div>
+                <Multiselect
+                  style={{
+                    width: "500px",
+                  }}
+                  isObject={false}
+                  onKeyPressFn={function noRefCheck() {}}
+                  onRemove={function noRefCheck() {}}
+                  onSearch={function noRefCheck() {}}
+                  onSelect={function noRefCheck() {}}
+                  options={sizes}
+                />
+              </div>
             </div>
             <div className="addProductItem">
-              <label>Active</label>
-              <select name="active" id="active">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
+              <label>Sizes</label>
+              <div>
+                <Checkbox
+                  defaultChecked
+                  color="primary"
+                  name="S"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">S</label>
+                <Checkbox
+                  color="primary"
+                  name="M"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">M</label>
+                <Checkbox
+                  color="primary"
+                  name="L"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">L</label>
+                <Checkbox
+                  color="primary"
+                  name="XL"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">XL</label>
+                <Checkbox
+                  color="primary"
+                  name="XXL"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">XXL</label>
+              </div>
             </div>
           </div>
-            <button className="addProductButton">Create new product</button>
+          <button className="addProductButton">Create new product</button>
         </div>
         <div className="addProductFormSide rightSide">
           <div className="userUpdateUpload">
