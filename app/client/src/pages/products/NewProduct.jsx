@@ -31,7 +31,6 @@ export default function NewProduct() {
   // const sizes = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
 
   const [valueSize, setValueSize] = React.useState([]);
-  const [valueColor, setValueColor] = React.useState([]);
   const [imgPreview, setImgPreview] = useState(
     "https://via.placeholder.com/150"
   );
