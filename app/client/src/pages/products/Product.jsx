@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import MultiSelect from "react-multiple-select-dropdown-lite";
 import "react-multiple-select-dropdown-lite/dist/index.css";  
+import { product } from "../../properties";
 
 const colors = [
   {
@@ -31,7 +32,7 @@ const colors = [
 export default function NewProduct() {
   const [valueSize, setValueSize] = React.useState([]);
   const [imgPreview, setImgPreview] = useState(
-    "https://via.placeholder.com/150"
+    // "https://via.placeholder.com/150"
   );
   const [error, setError] = useState(false);
   const handleOnchange = (val) => {
@@ -65,12 +66,12 @@ export default function NewProduct() {
           <div className="addProductGroup">
             <div className="addProductItem">
               <label>Name</label>
-              <input type="text" placeholder="Product name" />
+              <input type="text" placeholder={product[0].name} />
             </div>
             <div className="addProductItem">
               <label>Category</label>
               <select name="category" id="category">
-                <option value="">Select Category</option>
+                <option value="">{product[0].category}</option>
                 <option value="Electronics">Electronics</option>
                 <option value="Fashion">Fashion</option>
                 <option value="Home">Home</option>
@@ -83,14 +84,14 @@ export default function NewProduct() {
           <div className="addProductGroup description">
             <div className="addProductItem">
               <label>Description</label>
-              <textarea placeholder="Description" />
+              <textarea placeholder={product[0].description} />
             </div>
             <div className="addProductItem">
               <label>Stock</label>
-              <input type="text" placeholder="Stock" />
+              <input type="text" placeholder={product[0].stock} />
               <div style={{ margin: "10px" }}></div>
               <label>Price</label>
-              <input type="text" placeholder="Price" />
+              <input type="text" placeholder={product[0].price} />
             </div>
           </div>
           <div className="addProductGroup">
@@ -101,6 +102,7 @@ export default function NewProduct() {
                   onChange={handleOnchange}
                   options={colors}
                   style={{ width: "100%" }}
+                  value={product[0].colors}
                 />
               </div>
               <div style={{ margin: "10px" }}></div>
@@ -147,7 +149,7 @@ export default function NewProduct() {
               </div>
             </div>
           </div>
-          <button className="addProductButton" onClick={handleSubmit}>Submit</button>
+          <button className="addProductButton" onClick={handleSubmit}>Update Product</button>
         </div>
 
         <div className="addProductFormSide rightSide">
@@ -155,7 +157,7 @@ export default function NewProduct() {
             <label>Upload Product Image</label>
           </div>
           <div className="userUpdateUpload">
-            <img className="userUpdateImg" src={imgPreview} alt="" />
+            <img className="userUpdateImg" src={product[0].image} alt="" />
             <label htmlFor="file">
               <Publish className="userUpdateIcon" />
             </label>

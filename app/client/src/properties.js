@@ -43,3 +43,25 @@ export const sizes = [
         value: "xxl"
     }
 ];
+
+export const product =[
+    {
+        name: "Product 1",
+        price: 100,
+        image: "https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        sizes: ["s", "m", "l", "xl", "xxl"],
+        colors: ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5"],
+        category: "category 1",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euism",
+        stock: 10,
+    },
+];
+
+export const category =[
+    {
+        name: "Category 1",
+        image: "https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euism",
+        Products: 10,
+    },
+];
