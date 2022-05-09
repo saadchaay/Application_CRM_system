@@ -57,8 +57,30 @@ export const product =[
     },
 ];
 
-export const category =[
+export const categories =[
     {
+        id: 1,
+        name: "Category 1",
+        image: "https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euism",
+        Products: 10,
+    },
+    {
+        id: 2,
+        name: "Category 1",
+        image: "https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euism",
+        Products: 10,
+    },
+    {
+        id: 3,
+        name: "Category 1",
+        image: "https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euism",
+        Products: 10,
+    },
+    {
+        id: 4,
         name: "Category 1",
         image: "https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euismod, urna eu tincidunt consectetur, nisi nunc ultricies nisl, eget euismod nunc nisl euismod nunc. Sed euism",

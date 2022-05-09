@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CardCategory({ key, data }) {
+export default function CardCategory(props) {
   const classes = useStyles();
 
   return (
@@ -25,15 +25,15 @@ export default function CardCategory({ key, data }) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={data.image}
-          title={data.name}
+          image={props.data.image}
+          title={props.data.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {data.name}
+            {props.data.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {data.description}
+            {props.data.description}
           </Typography>
         </CardContent>
       </CardActionArea>
