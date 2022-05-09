@@ -28,7 +28,6 @@ const colors = [
   },
 ];
 export default function NewProduct() {
-  // const sizes = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
 
   const [valueSize, setValueSize] = React.useState([]);
   const [imgPreview, setImgPreview] = useState(
@@ -148,7 +147,7 @@ export default function NewProduct() {
               </div>
             </div>
           </div>
-          <button className="addProductButton">Submit</button>
+          <button className="addProductButton" onClick={handleSubmit}>Submit</button>
         </div>
 
         <div className="addProductFormSide rightSide">

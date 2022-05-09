@@ -1,22 +1,42 @@
+import "./styles/new-product.css";
+import { Publish } from "@material-ui/icons";
 import React, { useState } from "react";
-import {
-  LocationSearching,
-  MailOutline,
-  PermIdentity,
-  Publish,
-} from "@material-ui/icons";
-import "./styles/user.css";
-import Switch from "@material-ui/core/Switch";
+import Checkbox from "@material-ui/core/Checkbox";
+import MultiSelect from "react-multiple-select-dropdown-lite";
+import "react-multiple-select-dropdown-lite/dist/index.css";  
 
-export default function User() {
+const colors = [
+  {
+    label: "Red",
+    value: "#F44336",
+  },
+  {
+    label: "Pink",
+    value: "#E91E63",
+  },
+  {
+    label: "Purple",
+    value: "#9C27B0",
+  },
+  {
+    label: "Deep Purple",
+    value: "#673AB7",
+  },
+  {
+    label: "Indigo",
+    value: "#3F51B5",
+  },
+];
+
+export default function NewProduct() {
+  const [valueSize, setValueSize] = React.useState([]);
   const [imgPreview, setImgPreview] = useState(
-    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+    "https://via.placeholder.com/150"
   );
   const [error, setError] = useState(false);
-  const [checked, setChecked] = React.useState({
-    checkedA: true,
-    checkedB: true,
-  });
+  const handleOnchange = (val) => {
+    setValueSize(val);
+  };
   const handleImageChange = (e) => {
     e.preventDefault();
     let reader = new FileReader();
@@ -36,114 +56,120 @@ export default function User() {
       console.log(error);
     }
   };
-  const handleChangeChecked = (event) => {
-    setChecked({ ...checked, [event.target.name]: event.target.checked });
-  };
-  return (
-    <div className="user">
-      <div className="userTitleContainer">
-        <h1 className="userTitle">Edit User</h1>
-      </div>
-      <div className="userContainer">
-        <div className="userShow">
-          <div className="userShowTop">
-            <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-              alt=""
-              className="userShowImg"
-            />
-            <div className="userShowTopTitle">
-              <span className="userShowUsername">Anna Becker</span>
-              <span className="userShowUserTitle">Manager</span>
-            </div>
-          </div>
-          <div className="userShowBottom">
-            <span className="userShowTitle">Account Details</span>
-            <div className="userShowInfo">
-              <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99</span>
-            </div>
-            <span className="userShowTitle">Contact Details</span>
-            <div className="userShowInfo">
-              <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99@gmail.com</span>
-            </div>
-            <div className="userShowInfo">
-              <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">Active</span>
-            </div>
-          </div>
-        </div>
-        <div className="userUpdate">
-          <span className="userUpdateTitle">Edit</span>
-          <form className="userUpdateForm">
-            <div className="userUpdateLeft">
-              <div className="userUpdateItem">
-                <label>Username</label>
-                <input
-                  type="text"
-                  placeholder="annabeck99"
-                  className="userUpdateInput"
-                />
-              </div>
-              <div className="userUpdateItem">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  placeholder="Anna Becker"
-                  className="userUpdateInput"
-                />
-              </div>
-              <div className="userUpdateItem">
-                <label>Email</label>
-                <input
-                  type="text"
-                  placeholder="annabeck99@gmail.com"
-                  className="userUpdateInput"
-                />
-              </div>
-              <div className="userUpdateItem">
-                <label>Password</label>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="userUpdateInput"
-                />
-              </div>
-            </div>
-            <div className="userUpdateRight">
-              <div className="userUpdateUpload">
-                <img className="userUpdateImg" src={imgPreview} alt="" />
-                <label htmlFor="file">
-                  <Publish className="userUpdateIcon" />
-                </label>
-                <input
-                  type="file"
-                  id="file"
-                  style={{ display: "none" }}
-                  accept="image/*"
-                  name="image-upload"
-                  onChange={handleImageChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="">Activate </label>
-                <Switch
-                  checked={checked.checkedB}
-                  onChange={handleChangeChecked}
-                  color="primary"
-                  name="checkedB"
-                  inputProps={{ "aria-label": "primary checkbox" }}
-                />
-              </div>
 
-              <button className="userUpdateButton" onClick={handleSubmit}>
-                Update
-              </button>
+  return (
+    <div className="newProduct">
+      <h1 className="addProductTitle">Edit Product</h1>
+      <form className="addProductForm">
+        <div className="addProductFormSide leftSide">
+          <div className="addProductGroup">
+            <div className="addProductItem">
+              <label>Name</label>
+              <input type="text" placeholder="Product name" />
             </div>
-          </form>
+            <div className="addProductItem">
+              <label>Category</label>
+              <select name="category" id="category">
+                <option value="">Select Category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Home">Home</option>
+                <option value="Sports">Sports</option>
+                <option value="Toys">Toys</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+          </div>
+          <div className="addProductGroup description">
+            <div className="addProductItem">
+              <label>Description</label>
+              <textarea placeholder="Description" />
+            </div>
+            <div className="addProductItem">
+              <label>Stock</label>
+              <input type="text" placeholder="Stock" />
+              <div style={{ margin: "10px" }}></div>
+              <label>Price</label>
+              <input type="text" placeholder="Price" />
+            </div>
+          </div>
+          <div className="addProductGroup">
+            <div className="addProductItem">
+              <label>Colors</label>
+              <div>
+                <MultiSelect
+                  onChange={handleOnchange}
+                  options={colors}
+                  style={{ width: "100%" }}
+                />
+              </div>
+              <div style={{ margin: "10px" }}></div>
+              <label>Status</label>
+              <select name="status" id="status">
+                <option value="inStock">In Stock</option>
+                <option value="outStock">Out Stock</option>
+                </select>
+            </div>
+            <div className="addProductItem">
+              <label>Sizes</label>
+              <div>
+                <Checkbox
+                  defaultChecked
+                  color="primary"
+                  name="S"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">S</label>
+                <Checkbox
+                  color="primary"
+                  name="M"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">M</label>
+                <Checkbox
+                  color="primary"
+                  name="L"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">L</label>
+                <Checkbox
+                  color="primary"
+                  name="XL"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">XL</label>
+                <Checkbox
+                  color="primary"
+                  name="XXL"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+                <label htmlFor="size">XXL</label>
+              </div>
+            </div>
+          </div>
+          <button className="addProductButton" onClick={handleSubmit}>Submit</button>
         </div>
-      </div>
+
+        <div className="addProductFormSide rightSide">
+          <div className="addProductItem">
+            <label>Upload Product Image</label>
+          </div>
+          <div className="userUpdateUpload">
+            <img className="userUpdateImg" src={imgPreview} alt="" />
+            <label htmlFor="file">
+              <Publish className="userUpdateIcon" />
+            </label>
+            <input
+              type="file"
+              id="file"
+              style={{ display: "none" }}
+              accept="image/*"
+              name="image-upload"
+              onChange={handleImageChange}
+            />
+          </div>
+        </div>
+      </form>
     </div>
   );
 }

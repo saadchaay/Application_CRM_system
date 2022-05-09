@@ -10,6 +10,7 @@ import Customers from "./pages/customers/Customers";
 import Customer from "./pages/customers/Customer";
 import ProductList from "./pages/products/ProductList";
 import NewProduct from "./pages/products/NewProduct";
+import Product from "./pages/products/Product";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/customers" element={<Customers />} />
               <Route path="/customer-edit/:customerId" element={<Customer />} />
               <Route path="/products" element={<ProductList />} />
+              <Route path="/product/:productId" element={<Product />} />
               <Route path="/new-product" element={<NewProduct />} />
             </Routes>
           </div>
