@@ -21,30 +21,15 @@ export default function CardCategory(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={props.data.image}
-          title={props.data.name}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.data.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {props.data.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
+    <li>{props.value.name}
+                <ul>
+                    <li>
+                    {props.value.description}
+                    </li>
+                    <li>
+                    {props.value.image}
+                    </li>
+                </ul>
+            </li>
   );
 }

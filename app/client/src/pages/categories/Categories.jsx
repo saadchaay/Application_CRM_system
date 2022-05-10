@@ -3,30 +3,29 @@ import { useState } from "react";
 import { categories } from "../../properties";
 
 function CardCate(props) {
-    return <li>{props.value}</li>;
+    return <li>{props.value.name}
+                <ul>
+                    <li>
+                    {props.value.description}
+                    </li>
+                    <li>
+                    {props.value.image}
+                    </li>
+                </ul>
+            </li>;
 }
 export default function Categories() {
     const [data, setData] = useState([]);
-    // const listCategory = category.map((item, index) => {
-    //     <CardCategory key={index} data={item} />;
-    // });
-    // const numbers = [
-    //     {
-    //         id: 1,
-    //         name: "Category 1", 
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Category 2",
-    //     },
-    // ];
+    const listCategory = categories.map((category) => {
+        <CardCategory key={category.id.toString()} value={category} />;
+    });
   const listItems = categories.map((category) =>
     // Correct! Key should be specified inside the array.
-    <CardCate key={category.id.toString()} value={category.description} />
+    <CardCate key={category.id.toString()} value={category} />
   );
   return (
     <ul>
-      {listItems}
+      {listCategory}
     </ul>
   );
     }
