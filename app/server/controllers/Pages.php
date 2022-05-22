@@ -17,7 +17,7 @@ class Pages {
     {
         $data = [
             'title' => 'Home',
-            // 'admins' => $this->admin->allAdmins()
+            'admins' => $this->admin->allAdmins()
         ];
         echo json_encode($data);
     }
