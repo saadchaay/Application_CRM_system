@@ -30,7 +30,7 @@ function App() {
               <Route path="/products" element={<ProductList />} />
               <Route path="/product/:productId" element={<Product />} />
               <Route path="/new-product" element={<NewProduct />} />
-              <Route path="/categories" element={<Categories />} />
+              {/* <Route path="/categories" element={<Categories />} /> */}
             </Routes>
           </div>
         </div>

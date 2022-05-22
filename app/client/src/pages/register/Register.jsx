@@ -14,7 +14,7 @@ export default function Register() {
                 id="fullName"
                 label="Full Name *"
                 helperText=""
-                // style={{ width: "100%" }}
+                style={{ width: "100%" }}
               />
             </div>
             <div className="input-group">
