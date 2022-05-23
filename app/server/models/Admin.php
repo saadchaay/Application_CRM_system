@@ -13,4 +13,9 @@ class Admin {
         $this->db->query('SELECT * FROM admins');
         return $this->db->resultSet();
     }
+
+    public function register()
+    {
+        # code...
+    }
 }
