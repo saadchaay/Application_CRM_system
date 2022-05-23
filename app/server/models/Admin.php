@@ -16,6 +16,21 @@ class Admin {
 
     public function register($data)
     {
-        
+        //create a query
+        $this->db->query("INSERT INTO `admins` VALUES (:name, :username, :email, :phone, :password)");
+
+        // bind the values
+        $this->db->bind(":name", $data["name"]);
+        $this->db->bind(":username", $data["username"]);
+        $this->db->bind(":email", $data["email"]);
+        $this->db->bind(":phone", $data["phone"]);
+        $this->db->bind(":password", $data["password"]);
+
+        // check execution the query
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
