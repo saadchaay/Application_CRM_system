@@ -26,13 +26,6 @@ class Pages {
                     "username" => trim($_POST['username']),
                     "password" => trim($_POST['password']),
                     "confirmPassword" => trim($_POST['confirmPassword']),
-                    "fullNameError" => "",
-                    "phoneError" => "",
-                    'usernameError' => '',
-                    'emailError' => '',
-                    'passwordError' => '',
-                    'confirmPasswordError' => '',
-                    'Errors' => ''
                 ];
 
                 $usernameValidation = "/^[a-zA-Z0-9]*$/";
