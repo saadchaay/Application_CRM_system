@@ -1,5 +1,6 @@
 <?php 
 require_once 'helpers/lang/validation.php';
+require_once 'helpers/lang/controllerValidation.php';
 require 'autoload.php' ;
 require 'config/config.php' ;
 
@@ -29,7 +30,8 @@ if(isset($params[0]) & !empty($params[0])){
                     }
                 } else {
                     http_response_code(404);
-                    echo "<h3>This method doesn't exist</h3>";
+                    // echo "<h3>This method doesn't exist</h3>";
+                    echo json_encode(array("message" => ));
                 }  
             } else {
                 http_response_code(404);
