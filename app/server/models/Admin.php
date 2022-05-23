@@ -14,8 +14,8 @@ class Admin {
         return $this->db->resultSet();
     }
 
-    public function register()
+    public function register($data)
     {
-        # code...
+        
     }
 }
