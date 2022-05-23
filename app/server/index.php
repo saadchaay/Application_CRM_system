@@ -1,5 +1,5 @@
 <?php 
-
+require_once 'helpers/lang/en/validation.php';
 require 'autoload.php' ;
 require 'config/config.php' ;
 
