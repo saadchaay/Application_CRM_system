@@ -5,5 +5,5 @@
 
     class Controller {
 
-        protected $validate
+        protected $validate = [];
     }
