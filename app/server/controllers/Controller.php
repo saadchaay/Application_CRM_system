@@ -6,4 +6,10 @@
     class Controller {
 
         protected $validate = [];
+
+        public function check($request)
+        {
+            
+        }
+
     }
