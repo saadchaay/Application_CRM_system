@@ -18,7 +18,6 @@ class Pages extends Controller{
     {
         $data = [
             'title' => 'Home',
-            // 'admins' => $this->admin->allAdmins()
         ];
         echo json_encode($data);
     }

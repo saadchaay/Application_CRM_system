@@ -1,16 +1,24 @@
 <?php
 
     require '../helpers/lang/validation.php';
-    require '../helpers/lang/regex.php';
-
+    require_once '../helpers/lang/regex.php';
+    print_r($lang);
+    
     class Controller {
 
-        protected $validate = [];
+        protected $validation = [];
 
-        public function validation($data)
+        public function validation($data, $validation)
         {
-            $validation = new Validation();
-            $validation->validate($data, $this->validate);
+            $errors = [];
+            foreach ($validation as $key => $value) {
+                if(!empty($value)){
+                    if(!preg_match($value, $data[$key])){
+                        $errors[$key] = $key . ' must be ' . $value;
+                    }
+                }
+            }
+            return $errors;
         }
 
     }
