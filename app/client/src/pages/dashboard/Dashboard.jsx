@@ -1,4 +1,4 @@
-import "./home.css";
+import "./dashboard.css";
 import CardInfo from "../../components/cardInfo/CardInfo";
 import Chart from "../../components/chart/Chart";
 import WidgetLg from "../../components/widgetLg/WidgrtLg";
