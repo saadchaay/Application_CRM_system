@@ -8,56 +8,53 @@ if(isset($_GET['url'])){
 }
 
 if(isset($params[0]) & !empty($params[0])){
-    $controller = ucfirst($params[0]);
+    // 
     if($params[0] == 'auth'){
-        $params = explode('/', $_GET['url']);
-        $controller = ucfirst($params[0]);
-        $controller = 'Auth';
-    }
-        foreach($params as $param){
-            
-        }
-        $file = 'controllers/auth/' . ($params[1]) . '.php';
         print_r($params);
-    }else{
-        $file = 'controllers/' . $controller . '.php';
-    }
+        array_shift($params);
+        var_dump($params);
+        $controller = ucfirst($params[0]);
+        $file = 'controllers/auth/' . $controller . '.php';
+        if(file_exists($file)){
 
-    if(file_exists($file)){
-        require_once $file;
-
-        if(class_exists($controller)){
-            $obj = new $controller();
-            
-            if(isset($params[1]) & !empty($params[1])){
-                $action = $params[1];
-
-                if(method_exists($obj, $action)){
-                    if(isset($params[2]) & !empty($params[2])){
-                        $obj->$action($params[2]);
+            require_once $file;
+    
+            if(class_exists($controller)){
+                $obj = new $controller();
+                
+                if(isset($params[1]) & !empty($params[1])){
+                    $action = $params[1];
+    
+                    if(method_exists($obj, $action)){
+                        if(isset($params[2]) & !empty($params[2])){
+                            $obj->$action($params[2]);
+                        } else {
+                            $obj->$action();
+                        }
                     } else {
-                        $obj->$action();
-                    }
+                        http_response_code(404);
+                        echo "<h3>This method doesn't exist</h3>";
+                        // echo json_encode(array("message" => $controllerValidation['action']['required']));
+                    }  
                 } else {
                     http_response_code(404);
                     echo "<h3>This method doesn't exist</h3>";
                     // echo json_encode(array("message" => $controllerValidation['action']['required']));
-                }  
+                }
             } else {
                 http_response_code(404);
-                echo "<h3>This method doesn't exist</h3>";
-                // echo json_encode(array("message" => $controllerValidation['action']['required']));
+                echo "<h3>This class doesn't exist</h3>";
+                // echo json_encode(array("message" => $controllerValidation['controller']['required']));
             }
         } else {
             http_response_code(404);
-            echo "<h3>This class doesn't exist</h3>";
-            // echo json_encode(array("message" => $controllerValidation['controller']['required']));
+            echo "<h3>This file doesn't exist</h3>";
+            // echo json_encode(array("message" => $controllerValidation['file']['required']));
         }
-    } else {
-        http_response_code(404);
-        echo "<h3>This file doesn't exist</h3>";
-        // echo json_encode(array("message" => $controllerValidation['file']['required']));
     }
+    
+
+    
 }
 
 ?>
