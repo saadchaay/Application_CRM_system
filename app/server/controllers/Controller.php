@@ -1,12 +1,19 @@
 <?php
 
     require '../helpers/lang/validation.php';
-    require_once '../helpers/lang/regex.php';
-    print_r($lang);
-    
+    // require_once '../helpers/lang/regex.php';
+    // print_r($lang);
+
     class Controller {
 
-        protected $validation = [];
+        protected $validate_regex = [
+            'email' => '/^[a-zA-Z0-9]*$/',
+            'password' => '/^(.{0x,7}|[^a-z]*|[^\d]*)$/i',
+            'name' => '/^([a-zA-Z' . "'" . ' ]+)$/',
+            'phone' => '/^[0-9]{10}$/',
+            'username' => '/^[a-zA-Z0-9]*$/',
+            'confirmPassword' => '/^(.{0,7}|[^a-z]*|[^\d]*)$/i',
+        ];
 
         public function validation($data, $validation)
         {

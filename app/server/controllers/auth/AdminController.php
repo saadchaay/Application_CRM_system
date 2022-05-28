@@ -13,6 +13,14 @@ class Pages extends Controller{
         $this->admin = new Admin();
     }
 
+    public function index()
+    {
+        $data = [
+            'email' => 'yees@email.com',
+        ];
+        return $this->validation($data, $this->validate_regex);
+    }
+
     public function register()
     {
         $data = json_decode(file_get_contents("php://input"));
