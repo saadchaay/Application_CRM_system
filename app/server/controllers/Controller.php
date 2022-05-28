@@ -7,9 +7,10 @@
 
         protected $validate = [];
 
-        public function check($request)
+        public function validation($data)
         {
-            
+            $validation = new Validation();
+            $validation->validate($data, $this->validate);
         }
 
     }
