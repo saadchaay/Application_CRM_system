@@ -1,8 +1,6 @@
 <?php
 
-    require '../helpers/lang/validation.php';
-    // require_once '../helpers/lang/regex.php';
-    // print_r($lang);
+ 
 
     class Controller {
 
