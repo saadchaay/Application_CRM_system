@@ -8,6 +8,14 @@ if(isset($_GET['url'])){
 }
 
 if(isset($params[0]) & !empty($params[0])){
+    $controller = $params[0];
+
+    if(!is_file($params[0] . '.php')){
+        $controller = 'error';
+    }
+}
+
+/* if(isset($params[0]) & !empty($params[0])){
     // 
     if($params[0] == 'auth'){
         print_r($params);
@@ -55,6 +63,6 @@ if(isset($params[0]) & !empty($params[0])){
     
 
     
-}
+} */
 
 ?>
