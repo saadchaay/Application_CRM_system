@@ -23,27 +23,33 @@ class AdminController extends Controller{
             'username' => 'yees',
             'confirm_password' => '123456',
         ];
-        $errors = $this->validation($data, $this->validate_regex) ;
-        if(!$errors){
-            echo json_encode($errors);
+        // $errors = $this->validation($data, $this->validate_regex) ;
+        if($this->admin->register($data)){
+            echo json_encode(['message' => 'Admin created successfully']);
         }else{
-            $errors = $this->requirement($data);
-            if($errors){
-                echo json_encode($errors);
-            }else{
-                $errors = $this->confirmation_password($data);
-                if($errors){
-                    echo json_encode($errors);
-                }else{
-                    $errors = $this->unique($data);
-                    if($errors){
-                        echo json_encode($errors);
-                    }else{
-                        echo json_encode($data);
-                    }
-                }
-            }
+            echo json_encode(['message' => 'Admin not created']);
         }
+        
+        // if(!$errors){
+        //     echo json_encode($errors);
+        // }else{
+        //     $errors = $this->requirement($data);
+        //     if($errors){
+        //         echo json_encode($errors);
+        //     }else{
+        //         $errors = $this->confirmation_password($data);
+        //         if($errors){
+        //             echo json_encode($errors);
+        //         }else{
+        //             $errors = $this->unique($data);
+        //             if($errors){
+        //                 echo json_encode($errors);
+        //             }else{
+        //                 echo json_encode($data);
+        //             }
+        //         }
+        //     }
+        // }
         // return $errors? print_r($errors) : "Success";
     }
 
