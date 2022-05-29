@@ -37,8 +37,15 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(name, username, email, pwd, confirmPwd, phone, address);
-    const res = await axios.get("https://api.github.com/users/octocat/followers", {});
-    console.log(res);
+    const data = {
+        "name": name,
+        "username": username,
+        "email": email,
+        "password": pwd,
+        "phone": phone,
+        "address": address,
+        "confirm_password": confirmPwd
+    };
     setName("");
     setUsername("");
     setEmail("");
@@ -46,7 +53,18 @@ function Register() {
     setConfirmPwd("");
     setPhone("");
     setAddress("");
-
+    const res = await axios.post("http://localhost/fil_rouge_project/app/server/auth/AdminController/register", JSON.stringify(data), {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    if (res.data.status === 300) {
+        setSuccess(true);
+        setAuth(res.data.token);
+    } else {
+        setErrMsg(res.data.msg);
+    }
+    console.log(res);
     setSuccess(true);
   };
 
