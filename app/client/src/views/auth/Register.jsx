@@ -61,7 +61,13 @@ function Register() {
     if (res.data.status === 200) {
         setSuccess(true);
         console.log(res.data);
-        // setAuth(res.data.token);
+        setName("");
+        setUsername("");
+        setEmail("");
+        setPwd("");
+        setConfirmPwd("");
+        setPhone("");
+        setAddress("");
     } else {
         setErrName(res.data.Error.name);
         setErrUsernme(res.data.Error.username);
@@ -72,13 +78,7 @@ function Register() {
         setErrConfirmPwd(res.data.Error.confirm_password);
         console.log(res.data.Error);
     }
-    setName("");
-    setUsername("");
-    setEmail("");
-    setPwd("");
-    setConfirmPwd("");
-    setPhone("");
-    setAddress("");
+    
   };
 
   return (
@@ -265,13 +265,13 @@ function Register() {
                 {errAddress ? errAddress : null}
             </div>
 
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4 mt-4">
+            <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4 my-2">
               <svg
                 className="h-5 w-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-              >
+              >sd
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -292,7 +292,7 @@ function Register() {
                 {errPwd ? errPwd : null}
             </div>
 
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4 mt-4">
+            <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4 my-2">
               <svg
                 className="h-5 w-5 text-gray-400"
                 fill="none"
