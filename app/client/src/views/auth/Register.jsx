@@ -4,7 +4,8 @@ import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
 
 function Register() {
-    const { setAuth } = useContext(AuthContext);
+    
+  const { setAuth } = useContext(AuthContext);
   const nameRef = useRef();
   const emailRef = useRef();
   const usernameRef = useRef();
@@ -19,7 +20,26 @@ function Register() {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [errMsg, setErrMsg] = useState("");
+  const [errMsg, setErrMsg] = useState([
+    {
+        name: "",
+        username: "",
+        email: "",
+        pwd: "",
+        confirmPwd: "",
+        phone: "",
+        address: "",
+    }
+  ]);
+//   const [errMsg, setErrMsg] = useState({
+//     name: "",
+//     username: "",
+//     email: "",
+//     pwd: "",
+//     confirmPwd: "",
+//     phone: "",
+//     address: "",
+//   });
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -30,9 +50,9 @@ function Register() {
     addressRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    setErrMsg("");
-  }, [username, pwd]);
+//   useEffect(() => {
+//     setErrMsg("");
+//   }, [username, pwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +66,27 @@ function Register() {
         "address": address,
         "confirm_password": confirmPwd
     };
+    const res = await axios.post("http://localhost/fil_rouge_project/app/server/auth/AdminController/register", JSON.stringify(data), {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    if (res.data.status === 200) {
+        setSuccess(true);
+        console.log(res.data);
+        // setAuth(res.data.token);
+    } else {
+        // setErrMsg({
+        //     name: res.data.name,
+        //     username: res.data.username,
+        //     email: res.data.email,
+        //     pwd: res.data.password,
+        //     confirmPwd: res.data.confirm_password,
+        //     phone: res.data.phone,
+        //     address: res.data.address,
+        // });
+        console.log(res.data.Error);
+    }
     setName("");
     setUsername("");
     setEmail("");
@@ -53,19 +94,6 @@ function Register() {
     setConfirmPwd("");
     setPhone("");
     setAddress("");
-    const res = await axios.post("http://localhost/fil_rouge_project/app/server/auth/AdminController/register", JSON.stringify(data), {
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
-    if (res.data.status === 300) {
-        setSuccess(true);
-        setAuth(res.data.token);
-    } else {
-        setErrMsg(res.data.msg);
-    }
-    console.log(res);
-    setSuccess(true);
   };
 
   return (
