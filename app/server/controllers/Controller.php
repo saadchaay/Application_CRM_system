@@ -57,6 +57,7 @@
             $errors = [];
             foreach ($data as $key => $value) {
                 if(!empty($value)){
+                    // $check = false ;
                     $check = $this->admin->check_unique($key, $value);
                     if($check){
                         $errors[$key] = ucfirst($key) . ' already exists';
@@ -64,5 +65,4 @@
                 }
             }
         }
-
     }
