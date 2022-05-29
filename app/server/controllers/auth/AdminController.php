@@ -65,22 +65,19 @@ class AdminController extends Controller{
 
             $errors = $this->requirement($data);
             if($errors){
-                // http_response_code(400);
                 echo json_encode(array('Error' => $errors));
             }else{
                 $errors = $this->validation($data, $this->validate_regex);
                 if($errors){
-                    // http_response_code(400);
+
                     echo json_encode(array('Error' => $errors));
                 }else{
                     $errors = $this->confirmation_password($data);
                     if($errors){
-                        // http_response_code(400);
                         echo json_encode(array('Error' => $errors));
                     }else{
                         $errors = $this->unique($data);
                         if($errors){
-                            // http_response_code(400);
                             echo json_encode(array('Error' => $errors));
                         }else{
                             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);

@@ -20,13 +20,15 @@
         {
             $errors = [];
             foreach ($data as $key => $value) {
-                if($key == 'email'){
-                    if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
-                        $errors[$key] = ucfirst($key) ." is not valid";
-                    }
-                }else {
-                    if (!preg_match($this->validate_regex[$key], $value)) {
-                        $errors[$key] = ucfirst($key) ." is not valid";
+                if($key != 'confirm_password'){
+                    if($key == 'email'){
+                        if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
+                            $errors[$key] = ucfirst($key) ." is not valid";
+                        }
+                    }else {
+                        if (!preg_match($this->validate_regex[$key], $value)) {
+                            $errors[$key] = ucfirst($key) ." is not valid";
+                        }
                     }
                 }
             }
