@@ -18,12 +18,13 @@ class Admin {
     {
         //create a query
         // $this->db->query("INSERT INTO `admins` VALUES (:name, :username, :email, :phone, :password, :status)");
-        $this->db->query("INSERT INTO `admins` (`name`, `username`, `email`, `phone`, `password`, `status`) VALUES (:name, :username, :email, :phone, :password, :status)");
+        $this->db->query("INSERT INTO `admins` (`name`, `username`, `email`, `phone`, `address`, `password`, `status`) VALUES (:name, :username, :email, :phone, :address, :password, :status)");
         // bind the values
         $this->db->bind(":name", $data["name"]);
         $this->db->bind(":username", $data["username"]);
         $this->db->bind(":email", $data["email"]);
         $this->db->bind(":phone", $data["phone"]);
+        $this->db->bind(":address", $data["address"]);
         $this->db->bind(":password", $data["password"]);
         $this->db->bind(":status", false);
 
@@ -35,15 +36,28 @@ class Admin {
         }
     }
 
-    public function check_unique($key, $data)
+    public function check_email($email)
     {
-        $status = false;
-        $this->db->query("SELECT * FROM `admins` WHERE `$key` = :$key");
-        $this->db->bind(":$key", $data);
-        $result = $this->db->resultSet();
-        if (count($result) > 0) {
-            $status = true;
+        $this->db->query("SELECT * FROM admins WHERE email = :email");
+        $this->db->bind(":email", $email);
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
         }
-        return $status;
     }
+
+    public function check_username($username)
+    {
+        $this->db->query("SELECT * FROM admins WHERE username = :username");
+        $this->db->bind(":username", $username);
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }

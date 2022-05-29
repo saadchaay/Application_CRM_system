@@ -5,26 +5,28 @@
     class Controller {
 
         private $admin ;
+
         protected $validate_regex = [
             'email' => '/^[a-zA-Z0-9]*$/',
-            'password' => '/^(.{0x,7}|[^a-z]*|[^\d]*)$/i',
+            'password' => '/^[a-zA-Z0-9]*$/',
             'name' => '/^([a-zA-Z' . "'" . ' ]+)$/',
             'phone' => '/^[0-9]{10}$/',
             'username' => '/^[a-zA-Z0-9]*$/',
-            'confirm_password' => '/^(.{0,7}|[^a-z]*|[^\d]*)$/i',
+            'confirm_password' => '/^[a-zA-Z0-9]*$/',
+            'address' => '/^([a-zA-Z0-9' . "'" . ' ]+)$/',
         ];
 
-        public function __construct(){
-            $this->admin = new Admin();
-        }
-
-        public function validation($data, $validation)
+        public function validation($data)
         {
             $errors = [];
-            foreach ($validation as $key => $value) {
-                if(!empty($value)){
-                    if(!preg_match($value, $data[$key])){
-                        $errors[$key] = ucfirst($key) . ' is not valid';
+            foreach ($data as $key => $value) {
+                if($key == 'email'){
+                    if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
+                        $errors[$key] = ucfirst($key) ." is not valid";
+                    }
+                }else {
+                    if (!preg_match($this->validate_regex[$key], $value)) {
+                        $errors[$key] = ucfirst($key) ." is not valid";
                     }
                 }
             }
@@ -52,17 +54,5 @@
             return $errors;
         }
 
-        public function unique($data)
-        {
-            $errors = [];
-            foreach ($data as $key => $value) {
-                if(!empty($value)){
-                    // $check = false ;
-                    // $check = $this->admin->check_unique($key, $value);
-                    if($this->admin->check_unique($key, $value)){
-                        $errors[$key] = ucfirst($key) . ' already exists';
-                    }
-                }
-            }
-        }
+        
     }
