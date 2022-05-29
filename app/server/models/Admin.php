@@ -34,4 +34,21 @@ class Admin {
             return false;
         }
     }
+
+    public function check_unique($key, $data)
+    {
+        /* $this->db->query("SELECT * FROM `admins` WHERE `$key` = :$key");
+        $this->db->bind(":$key", $data);
+        $row = $this->db->single();
+        if ($row) {
+            if ($row[$key] == $data) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        } */
+        return true ;
+    }
 }

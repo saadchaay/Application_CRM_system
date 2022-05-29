@@ -17,8 +17,34 @@ class AdminController extends Controller{
     {
         $data = [
             'email' => 'yees@email.com',
+            'password' => '123456',
+            'name' => 'Yees',
+            'phone' => '0123456789',
+            'username' => 'yees',
+            'confirm_password' => '123456',
         ];
-        return $this->validation($data, $this->validate_regex);
+        $errors = $this->validation($data, $this->validate_regex) ;
+        if(!$errors){
+            echo json_encode($errors);
+        }else{
+            $errors = $this->requirement($data);
+            if($errors){
+                echo json_encode($errors);
+            }else{
+                $errors = $this->confirmation_password($data);
+                if($errors){
+                    echo json_encode($errors);
+                }else{
+                    $errors = $this->unique($data);
+                    if($errors){
+                        echo json_encode($errors);
+                    }else{
+                        echo json_encode($data);
+                    }
+                }
+            }
+        }
+        // return $errors? print_r($errors) : "Success";
     }
 
     public function register()
