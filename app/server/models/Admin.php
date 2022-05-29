@@ -37,25 +37,13 @@ class Admin {
 
     public function check_unique($key, $data)
     {
+        $status = false;
         $this->db->query("SELECT * FROM `admins` WHERE `$key` = :$key");
         $this->db->bind(":$key", $data);
-        $this->db->execute();
-        $result = $this->db->rowCount();
-        if ($result > 0) {
-            return true;
-        } else {
-            return false;
+        $result = $this->db->resultSet();
+        if (count($result) > 0) {
+            $status = true;
         }
+        return $status;
     }
-    //     $row = $this->db->single();
-    //     if ($row) {
-    //         if ($row[$key] == $data) {
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-    //     } else {
-    //         return false;
-    //     }
-    // }
 }

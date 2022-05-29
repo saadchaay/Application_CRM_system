@@ -58,8 +58,8 @@
             foreach ($data as $key => $value) {
                 if(!empty($value)){
                     // $check = false ;
-                    $check = $this->admin->check_unique($key, $value);
-                    if($check){
+                    // $check = $this->admin->check_unique($key, $value);
+                    if($this->admin->check_unique($key, $value)){
                         $errors[$key] = ucfirst($key) . ' already exists';
                     }
                 }
