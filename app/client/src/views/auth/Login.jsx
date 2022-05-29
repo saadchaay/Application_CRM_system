@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo_white_bg.png";
-import logoColor from "../../assets/images/logo.png";
 import axios from "axios";
 import React from "react";
 
