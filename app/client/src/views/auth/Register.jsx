@@ -20,26 +20,13 @@ function Register() {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [errMsg, setErrMsg] = useState([
-    {
-        name: "",
-        username: "",
-        email: "",
-        pwd: "",
-        confirmPwd: "",
-        phone: "",
-        address: "",
-    }
-  ]);
-//   const [errMsg, setErrMsg] = useState({
-//     name: "",
-//     username: "",
-//     email: "",
-//     pwd: "",
-//     confirmPwd: "",
-//     phone: "",
-//     address: "",
-//   });
+  const [errName, setErrName] = useState("");
+  const [errUsernme, setErrUsernme] = useState("");
+  const [errEmail, setErrEmail] = useState("");
+  const [errPhone, setErrPhone] = useState("");
+  const [errAddress, setErrAddress] = useState("");
+  const [errPwd, setErrPwd] = useState("");
+  const [errConfirmPwd, setErrConfirmPwd] = useState("");
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -76,15 +63,13 @@ function Register() {
         console.log(res.data);
         // setAuth(res.data.token);
     } else {
-        // setErrMsg({
-        //     name: res.data.name,
-        //     username: res.data.username,
-        //     email: res.data.email,
-        //     pwd: res.data.password,
-        //     confirmPwd: res.data.confirm_password,
-        //     phone: res.data.phone,
-        //     address: res.data.address,
-        // });
+        setErrName(res.data.Error.name);
+        setErrUsernme(res.data.Error.username);
+        setErrEmail(res.data.Error.email);
+        setErrPhone(res.data.Error.phone);
+        setErrAddress(res.data.Error.address);
+        setErrPwd(res.data.Error.password);
+        setErrConfirmPwd(res.data.Error.confirm_password);
         console.log(res.data.Error);
     }
     setName("");
@@ -154,7 +139,7 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-              {errMsg ? errMsg : null}
+              {errName ? errName : null}
             </div>
 
 
@@ -184,7 +169,7 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-              Phone number is not valid
+                {errUsernme ? errUsernme : null}
             </div>
 
             <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-4 w-full md:w-3/4">
@@ -213,7 +198,7 @@ function Register() {
                 placeholder="Email Address"
               />
             </div>
-            <div className="text-red-500 mb-3 text-sm">Email is already taken</div>
+            <div className="text-red-500 mb-3 text-sm"> {errEmail ? errEmail : null} </div>
 
             <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-4 w-full md:w-3/4">
               <svg
@@ -242,7 +227,7 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-              Phone number is not valid
+                {errPhone ? errPhone : null}
             </div>
 
             <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4">
@@ -277,7 +262,7 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-              Phone number is not valid
+                {errAddress ? errAddress : null}
             </div>
 
             <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4 mt-4">
@@ -304,7 +289,7 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-              Phone number is not valid
+                {errPwd ? errPwd : null}
             </div>
 
             <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4 mt-4">
@@ -331,7 +316,7 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-              Phone number is not valid
+                {errConfirmPwd ? errConfirmPwd : null}
             </div>
 
             <button
