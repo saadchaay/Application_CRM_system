@@ -1,18 +1,22 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo_white_bg.png";
-import AuthContext from "../../context/AuthProvider";
+import logoColor from "../../assets/images/logo.png";
 import axios from "axios";
+import React from "react";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+
+
 
 function Register() {
-    
-  const { setAuth } = useContext(AuthContext);
+  const [open, setOpen] = React.useState(false);
   const nameRef = useRef();
   const emailRef = useRef();
   const usernameRef = useRef();
   const phoneRef = useRef();
   const addressRef = useRef();
-  const errRef = useRef();
-
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -21,13 +25,12 @@ function Register() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [errName, setErrName] = useState("");
-  const [errUsernme, setErrUsernme] = useState("");
+  const [errUsername, setErrUsername] = useState("");
   const [errEmail, setErrEmail] = useState("");
   const [errPhone, setErrPhone] = useState("");
   const [errAddress, setErrAddress] = useState("");
   const [errPwd, setErrPwd] = useState("");
   const [errConfirmPwd, setErrConfirmPwd] = useState("");
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     nameRef.current.focus();
@@ -37,52 +40,103 @@ function Register() {
     addressRef.current.focus();
   }, []);
 
-//   useEffect(() => {
-//     setErrMsg("");
-//   }, [username, pwd]);
+  useEffect(() => {
+    setErrName("");
+    setErrUsername("");
+    setErrEmail("");
+    setErrPhone("");
+    setErrAddress("");
+    setErrPwd("");
+    setErrConfirmPwd("");
+  }, [name, username, email, phone, address, pwd, confirmPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log(name, username, email, pwd, confirmPwd, phone, address);
     const data = {
-        "name": name,
-        "username": username,
-        "email": email,
-        "password": pwd,
-        "phone": phone,
-        "address": address,
-        "confirm_password": confirmPwd
+      name: name,
+      username: username,
+      email: email,
+      password: pwd,
+      phone: phone,
+      address: address,
+      confirm_password: confirmPwd,
     };
-    const res = await axios.post("http://localhost/fil_rouge_project/app/server/auth/AdminController/register", JSON.stringify(data), {
+    const res = await axios.post(
+      "http://localhost/fil_rouge_project/app/server/auth/AdminController/register",
+      JSON.stringify(data),
+      {
         headers: {
-            "Content-Type": "application/json"
-        }
-    });
-    if (res.data.status === 200) {
-        setSuccess(true);
-        console.log(res.data);
-        setName("");
-        setUsername("");
-        setEmail("");
-        setPwd("");
-        setConfirmPwd("");
-        setPhone("");
-        setAddress("");
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(res.status);
+    if (res.status === 201) {
+      console.log(res.data);
+      setName("");
+      setUsername("");
+      setEmail("");
+      setPwd("");
+      setConfirmPwd("");
+      setPhone("");
+      setAddress("");
+      setOpen(true);
     } else {
-        setErrName(res.data.Error.name);
-        setErrUsernme(res.data.Error.username);
-        setErrEmail(res.data.Error.email);
-        setErrPhone(res.data.Error.phone);
-        setErrAddress(res.data.Error.address);
-        setErrPwd(res.data.Error.password);
-        setErrConfirmPwd(res.data.Error.confirm_password);
-        console.log(res.data.Error);
+      if (res.data.errors) {
+        setErrName(res.data.errors.name);
+        setErrUsername(res.data.errors.username);
+        setErrEmail(res.data.errors.email);
+        setErrPhone(res.data.errors.phone);
+        setErrAddress(res.data.errors.address);
+        setErrPwd(res.data.errors.password);
+        setErrConfirmPwd(res.data.errors.confirm_password);
+      }
+      console.log(res.data.errors);
     }
-    
   };
 
   return (
     <div>
+      <div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className="flex items-center justify-center"
+          open={open}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className="w-full max-w-lg p-5 px-10 relative mx-auto my-auto rounded-xl shadow-lg bg-white">
+              <div>
+                <div className="flex justify-center items-center">
+                  <img src={logoColor} alt="logo" className="w-1/2 mx-auto" />
+                </div>
+                <div className="flex flex-col justify-center items-center mt-5">
+                  <h1 className="text-2xl font-bold text-center text-green-500">
+                    Congratulations
+                  </h1>
+                  <p className="mt-3 font-bold">
+                    Your registration has been successfully.
+                  </p>
+                  <p className="mt-3">
+                    Our team will activate your account as soon as possible.
+                  </p>
+                  <p className="mt-3">Keep check your email.</p>
+                  <button className="mt-6 md:mb-0 bg-violet-600 border border-violet-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-violet-700">
+                    <Link to="/">Back home</Link>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+      </div>
       <div className=" flex flex-col md:flex-row w-full items-center">
         <div className="md:h-screen w-auto md:w-1/2 bg-gradient-to-tr bg-sky-800 to-purple-700 i justify-around items-center hidden md:flex">
           <div className="flex flex-col justify-center items-center">
@@ -94,10 +148,9 @@ function Register() {
               Business.
             </p>
             <button
-              type="submit"
               className="block w-28 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2"
             >
-              Read More
+              <Link to="/" >Back Home</Link>
             </button>
           </div>
         </div>
@@ -107,9 +160,11 @@ function Register() {
             onSubmit={handleSubmit}
           >
             <h1 className="text-gray-800 font-bold text-2xl mb-1">Welcome !</h1>
-            <p className="text-sm font-normal text-gray-600 mb-7">Register Now</p>
+            <p className="text-sm font-normal text-gray-600 mb-7">
+              Register Now
+            </p>
 
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-4 w-full md:w-3/4">
+            <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-2 w-full md:w-3/4">
               <svg
                 className="h-5 w-5 text-gray-400"
                 width="24"
@@ -142,8 +197,7 @@ function Register() {
               {errName ? errName : null}
             </div>
 
-
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-4 w-full md:w-3/4">
+            <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-2 w-full md:w-3/4">
               <svg
                 className="h-5 w-5 text-gray-400"
                 fill="none"
@@ -169,10 +223,10 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-                {errUsernme ? errUsernme : null}
+              {errUsername ? errUsername : null}
             </div>
 
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-4 w-full md:w-3/4">
+            <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-2 w-full md:w-3/4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 text-gray-400"
@@ -198,9 +252,11 @@ function Register() {
                 placeholder="Email Address"
               />
             </div>
-            <div className="text-red-500 mb-3 text-sm"> {errEmail ? errEmail : null} </div>
+            <div className="text-red-500 mb-3 text-sm">
+              {errEmail ? errEmail : null}
+            </div>
 
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-4 w-full md:w-3/4">
+            <div className="flex items-center border-2 py-2 px-3 rounded-xl mb-2 w-full md:w-3/4">
               <svg
                 className="h-5 w-5 text-gray-400"
                 width="24"
@@ -227,10 +283,10 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-                {errPhone ? errPhone : null}
+              {errPhone ? errPhone : null}
             </div>
 
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4">
+            <div className="flex items-center border-2 py-2 px-3 mb-2 rounded-xl w-full md:w-3/4">
               <svg
                 className="h-5 w-5 text-gray-400"
                 fill="none"
@@ -262,16 +318,17 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-                {errAddress ? errAddress : null}
+              {errAddress ? errAddress : null}
             </div>
 
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4 my-2">
+            <div className="flex items-center border-2 py-2 px-3 mb-2 rounded-xl w-full md:w-3/4">
               <svg
                 className="h-5 w-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-              >sd
+              >
+                sd
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -289,10 +346,10 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-                {errPwd ? errPwd : null}
+              {errPwd ? errPwd : null}
             </div>
 
-            <div className="flex items-center border-2 py-2 px-3 rounded-xl w-full md:w-3/4 my-2">
+            <div className="flex items-center border-2 py-2 px-3 mb-2 rounded-xl w-full md:w-3/4">
               <svg
                 className="h-5 w-5 text-gray-400"
                 fill="none"
@@ -316,7 +373,7 @@ function Register() {
               />
             </div>
             <div className="text-red-500 mb-3 text-sm">
-                {errConfirmPwd ? errConfirmPwd : null}
+              {errConfirmPwd ? errConfirmPwd : null}
             </div>
 
             <button
@@ -326,7 +383,7 @@ function Register() {
               Submit
             </button>
             <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-              Already have an account ?
+              Already have an account ? <Link to="/login">Login</Link>
             </span>
           </form>
         </div>

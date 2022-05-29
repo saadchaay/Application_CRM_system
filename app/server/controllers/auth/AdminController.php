@@ -63,25 +63,35 @@ class AdminController extends Controller{
                 'confirm_password' => $dataJSON->confirm_password,
             ];
 
+            $email_details = [
+                "to" => $data['email'],
+                "from" => "contact@growYB.com",
+                "subject" => "GROW YB: Email Verification",
+                "message" => "verify your account",
+            ];
+
             $errors = $this->requirement($data);
             if($errors){
-                echo json_encode(array('Error' => $errors));
+                // http_response_code(400);
+                echo json_encode(array('errors' => $errors));
             }else{
                 $errors = $this->validation($data, $this->validate_regex);
                 if($errors){
 
-                    echo json_encode(array('Error' => $errors));
+                    echo json_encode(array('errors' => $errors));
                 }else{
                     $errors = $this->confirmation_password($data);
                     if($errors){
-                        echo json_encode(array('Error' => $errors));
+                        echo json_encode(array('errors' => $errors));
                     }else{
                         $errors = $this->unique($data);
                         if($errors){
-                            echo json_encode(array('Error' => $errors));
+                            echo json_encode(array('errors' => $errors));
                         }else{
                             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                             $this->admin->register($data);
+                            // mail($email_details['to'], $email_details['subject'], $email_details['message']);
+                            http_response_code(201);
                             echo json_encode($data);
                         }
                     }

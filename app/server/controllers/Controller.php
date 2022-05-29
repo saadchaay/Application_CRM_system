@@ -8,11 +8,11 @@
 
         protected $validate_regex = [
             'email' => '/^[a-zA-Z0-9]*$/',
-            'password' => '/^[a-zA-Z0-9]*$/',
+            'password' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
             'name' => '/^([a-zA-Z' . "'" . ' ]+)$/',
             'phone' => '/^[0-9]{10}$/',
             'username' => '/^[a-zA-Z0-9]*$/',
-            'confirm_password' => '/^[a-zA-Z0-9]*$/',
+            'confirm_password' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
             'address' => '/^([a-zA-Z0-9' . "'" . ' ]+)$/',
         ];
 
@@ -39,10 +39,13 @@
         {
             $errors = [];
             foreach ($data as $key => $value) {
-                if(empty($value)){
-                    $errors[$key] = ucfirst($key) . ' is required';
+                if($key !== 'confirm_password'){
+                    if(empty($value)){
+                        $errors[$key] = ucfirst($key) . ' is required';
+                    }
                 }
             }
+            return $errors;
         }
 
         public function confirmation_password($data)
