@@ -4,7 +4,7 @@ import logo from '../../assets/images/logo_white_bg.png'
 
 const Navbar = () => {
   return (
-    <section className="box-border relative block w-full py-6 leading-10 text-center text-indigo-900 bg-black border-b border-gray-200 md:py-4 ">
+    <section className="box-border relative block w-full py-6 leading-10 text-center text-indigo-900 bg-sky-900 border-b border-gray-200 md:py-4 ">
         <div className="w-full px-6 mx-auto leading-10 text-center md:px-8 max-w-7xl">
             <div className="box-border flex flex-wrap items-center justify-between mx-3 text-indigo-900">
                 <div className='flex justify-start'>

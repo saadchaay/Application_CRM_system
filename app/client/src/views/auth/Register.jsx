@@ -125,7 +125,7 @@ function Register() {
                   <p className="mt-3">
                     Our team will activate your account as soon as possible.
                   </p>
-                  <p className="mt-3">Keep check your email.</p>
+                  <p className="mt-3">Continue to check your email.</p>
                   <button className="mt-6 md:mb-0 bg-violet-600 border border-violet-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-violet-700">
                     <Link to="/">Back home</Link>
                   </button>

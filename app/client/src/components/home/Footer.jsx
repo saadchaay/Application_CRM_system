@@ -1,16 +1,15 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 import {
-    FaFacebook,
+    FaDev,
     FaGithub,
     FaInstagram,
     FaTwitter,
-    FaTwitch,
 } from 'react-icons/fa'
 
 const Footer = () => {
   return (
-    <div className='w-full bg-slate-900 text-gray-300 py-y px-2'>
+    <div className='w-full bg-sky-900 text-gray-300 py-y px-2'>
         <div className='max-w-[1240px] mx-auto grid grid-cols-2 md:grid-cols-6 border-b-2 border-gray-600 py-8'>
             <div>
                 <h6 className='font-bold uppercase pt-2'>Solutions</h6>
@@ -62,13 +61,12 @@ const Footer = () => {
         </div>
 
         <div className='flex flex-col max-w-[1240px] px-2 py-4 mx-auto justify-between sm:flex-row text-center text-gray-500'>
-        <p className='py-4'>2022 Workflow, LLC. All rights reserved</p>
+        <p className='py-4'>2022 Grow YB, LLC. All rights reserved</p>
         <div className='flex justify-between sm:w-[300px] pt-4 text-2xl'>
-            <FaFacebook />
-            <FaInstagram />
-            <FaTwitter />
-            <FaTwitch />
-            <FaGithub />
+            <a href="https://www.instagram.com/ssaad_chaay/"> <FaInstagram /> </a> 
+            <a href="https://dev.to/saadchaay"> <FaDev /> </a> 
+            <a href='https://twitter.com/Ssaad_chaay' ><FaTwitter /></a>
+            <a href='https://github.com/saadchaay' ><FaGithub /></a>
         </div>
         </div>
     </div>
