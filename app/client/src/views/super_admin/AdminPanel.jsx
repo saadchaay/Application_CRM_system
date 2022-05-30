@@ -38,7 +38,7 @@ function Register() {
         password: pwd,
       };
       const res = await axios.post(
-        "http://localhost/fil_rouge_project/app/server/auth/AdminController/login",
+        "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/login",
         JSON.stringify(data),
         {
           headers: {

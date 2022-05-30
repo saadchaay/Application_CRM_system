@@ -16,14 +16,21 @@
 
         public function login()
         {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $dataJSON = json_decode(file_get_contents("php://input"));
 
             if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                 $data = [
-                    'username' => $data['username'],
-                    'password' => $data['password'],
+                    'login' => "",
+                    'password' => "",
                 ];
+                if($dataJSON) {
+
+                    $data = [
+                        'login' => $dataJSON->login,
+                        'password' => $dataJSON->password,
+                    ];
+                }
 
                 $errors = $this->requirement($data);
                 if($errors){
