@@ -1,144 +1,172 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
-import {
-    MonetizationOn,
-    Home,
-    SupervisorAccount,
-  } from "@material-ui/icons";
+import { Fragment, useEffect, useState } from "react";
+import { Dialog, Menu, Transition } from "@headlessui/react";
+import { MonetizationOn, Home, SupervisorAccount } from "@material-ui/icons";
 
 import {
-    BellIcon,
-    MenuAlt1Icon,
-    ScaleIcon,
-    XIcon,
-} from '@heroicons/react/outline';
+  BellIcon,
+  MenuAlt1Icon,
+  ScaleIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import {
   CashIcon,
   CheckCircleIcon,
   ChevronDownIcon,
   OfficeBuildingIcon,
   ChevronRightIcon,
-} from '@heroicons/react/solid';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-
+} from "@heroicons/react/solid";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import axios from "axios";
 
 const navigation = [
-  { name: 'Dashboard', href: '#', icon: Home, current: true },
-  { name: 'New Members', href: '#', icon: SupervisorAccount, current: false },
-  { name: 'Transaction', href: '#', icon: MonetizationOn, current: false },
-]
-
+  { name: "Dashboard", href: "#", icon: Home, current: true },
+  { name: "New Members", href: "#", icon: SupervisorAccount, current: false },
+  { name: "Transaction", href: "#", icon: MonetizationOn, current: false },
+];
 
 const cards = [
-  { name: 'Account balance', href: '/', icon: ScaleIcon, amount: '$30,659.45' },
-  { name: 'New members', href: '/new-members', icon: SupervisorAccount, amount: '122' },
-  { name: 'Deactivate accounts', href: '/deactivate-accounts', icon: SupervisorAccount, amount: '32' },
+  { name: "Account balance", href: "/", icon: ScaleIcon, amount: "$30,659.45" },
+  {
+    name: "New members",
+    href: "/new-members",
+    icon: SupervisorAccount,
+    amount: "122",
+  },
+  {
+    name: "Deactivate accounts",
+    href: "/deactivate-accounts",
+    icon: SupervisorAccount,
+    amount: "32",
+  },
   // More items...
-]
+];
 
+const statusStyles = {
+  active: "bg-green-100 text-green-800",
+  inactive: "bg-red-100 text-red-800",
+  processing: "bg-yellow-100 text-yellow-800",
+  failed: "bg-gray-100 text-gray-800",
+};
 
-  const statusStyles = {
-    active: 'bg-green-100 text-green-800',
-    inactive: 'bg-red-100 text-red-800',
-    processing: 'bg-yellow-100 text-yellow-800',
-    failed: 'bg-gray-100 text-gray-800',
-  }
-
-  const users = [
-    {
-      id: 1,
-      name: 'Saad chaay',
-      email: 'chaaysaad@gmail.com',
-      href: '#',
-      phone: '0615207417',
-      status: 'active',
-      checked: true,
-    },
-    {
-      id: 1,
-      name: 'Saad chaay',
-      email: 'chaaysaad@gmail.com',
-      href: '#',
-      phone: '0615207417',
-      status: 'active',
-      checked: true,
-    },
-    {
-      id: 1,
-      name: 'Saad chaay',
-      email: 'chaaysaad@gmail.com',
-      href: '#',
-      phone: '0615207417',
-      status: 'active',
-      checked: false,
-    },
-    {
-      id: 1,
-      name: 'Saad chaay',
-      email: 'chaaysaad@gmail.com',
-      href: '#',
-      phone: '0615207417',
-      status: 'active',
-      checked: true,
-    },
-    {
-      id: 1,
-      name: 'Saad chaay',
-      email: 'chaaysaad@gmail.com',
-      href: '#',
-      phone: '0615207417',
-      status: 'active',
-      checked: true,
-    },
-    {
-      id: 1,
-      name: 'Saad chaay',
-      email: 'chaaysaad@gmail.com',
-      href: '#',
-      phone: '0615207417',
-      status: 'active',
-      checked: false,
-    },
-    {
-      id: 1,
-      name: 'Saad chaay',
-      email: 'chaaysaad@gmail.com',
-      href: '#',
-      phone: '0615207417',
-      status: 'inactive',
-      checked: false,
-    },
-    // More transactions...
-  ]
+const users = [
+  {
+    id: 1,
+    name: "Saad chaay",
+    email: "chaaysaad@gmail.com",
+    href: "#",
+    phone: "0615207417",
+    status: "active",
+    checked: true,
+  },
+  {
+    id: 1,
+    name: "Saad chaay",
+    email: "chaaysaad@gmail.com",
+    href: "#",
+    phone: "0615207417",
+    status: "active",
+    checked: true,
+  },
+  {
+    id: 1,
+    name: "Saad chaay",
+    email: "chaaysaad@gmail.com",
+    href: "#",
+    phone: "0615207417",
+    status: "active",
+    checked: false,
+  },
+  {
+    id: 1,
+    name: "Saad chaay",
+    email: "chaaysaad@gmail.com",
+    href: "#",
+    phone: "0615207417",
+    status: "active",
+    checked: true,
+  },
+  {
+    id: 1,
+    name: "Saad chaay",
+    email: "chaaysaad@gmail.com",
+    href: "#",
+    phone: "0615207417",
+    status: "active",
+    checked: true,
+  },
+  {
+    id: 1,
+    name: "Saad chaay",
+    email: "chaaysaad@gmail.com",
+    href: "#",
+    phone: "0615207417",
+    status: "active",
+    checked: false,
+  },
+  {
+    id: 1,
+    name: "Saad chaay",
+    email: "chaaysaad@gmail.com",
+    href: "#",
+    phone: "0615207417",
+    status: "inactive",
+    checked: false,
+  },
+  // More transactions...
+];
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [state, setState] =useState({
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [admins, setAdmins] = useState([]);
+  const [state, setState] = useState({
     checkedA: true,
     checkedB: true,
   });
-  
-  const handleData = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
-    const data = await response.json();
-    console.log(data);
-}
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+  const handleData = async () => {
+    const res = await axios.get(
+      "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/index"
+    );
+    // const data = await response.json();
+    // console.log(res);
+    setAdmins(res.data);
+    // console.log(admins);
+  };
+
+  useEffect(() => {
+    handleData();
+  }, []);
+
+  const handleChangeStatus = async (id) => {
+    const res = await axios.put(
+      "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +
+        id,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (res.data.status === "success") {
+      console.log(res.data.status);
+    }
   };
 
   return (
     <>
-    
       <div className="min-h-full">
         <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-40 lg:hidden" onClose={setSidebarOpen}>
+          <Dialog
+            as="div"
+            className="relative z-40 lg:hidden"
+            onClose={setSidebarOpen}
+          >
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -178,7 +206,10 @@ export default function Example() {
                         onClick={() => setSidebarOpen(false)}
                       >
                         <span className="sr-only">Close sidebar</span>
-                        <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                        <XIcon
+                          className="h-6 w-6 text-white"
+                          aria-hidden="true"
+                        />
                       </button>
                     </div>
                   </Transition.Child>
@@ -200,13 +231,16 @@ export default function Example() {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? 'bg-cyan-800 text-white'
-                              : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
-                            'group flex items-center px-2 py-2 text-base font-medium rounded-md'
+                              ? "bg-cyan-800 text-white"
+                              : "text-cyan-100 hover:text-white hover:bg-cyan-600",
+                            "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                           )}
-                          aria-current={item.current ? 'page' : undefined}
+                          aria-current={item.current ? "page" : undefined}
                         >
-                          <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200" aria-hidden="true" />
+                          <item.icon
+                            className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200"
+                            aria-hidden="true"
+                          />
                           {item.name}
                         </a>
                       ))}
@@ -232,19 +266,27 @@ export default function Example() {
                 alt="Easywire logo"
               />
             </div>
-            <nav className="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto" aria-label="Sidebar">
+            <nav
+              className="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto"
+              aria-label="Sidebar"
+            >
               <div className="px-2 space-y-1">
                 {navigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-cyan-800 text-white' : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
-                      'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md'
+                      item.current
+                        ? "bg-cyan-800 text-white"
+                        : "text-cyan-100 hover:text-white hover:bg-cyan-600",
+                      "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
                     )}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={item.current ? "page" : undefined}
                   >
-                    <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200" aria-hidden="true" />
+                    <item.icon
+                      className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200"
+                      aria-hidden="true"
+                    />
                     {item.name}
                   </a>
                 ))}
@@ -265,9 +307,7 @@ export default function Example() {
             </button>
             {/* Search bar */}
             <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
-              <div className="flex-1 flex">
-
-              </div>
+              <div className="flex-1 flex"></div>
               <div className="ml-4 flex items-center md:ml-6">
                 <button
                   type="button"
@@ -287,7 +327,8 @@ export default function Example() {
                         alt=""
                       />
                       <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
-                        <span className="sr-only">Open user menu for </span>Emilia Birch
+                        <span className="sr-only">Open user menu for </span>
+                        Emilia Birch
                       </span>
                       <ChevronDownIcon
                         className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block"
@@ -307,8 +348,12 @@ export default function Example() {
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          <a
+                            href="#"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Your Profile
                           </a>
@@ -318,7 +363,10 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Settings
                           </a>
@@ -328,7 +376,10 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Logout
                           </a>
@@ -337,12 +388,10 @@ export default function Example() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                
               </div>
             </div>
           </div>
           <main className="flex-1 pb-8">
-
             {/* Page header */}
             <div className="bg-white shadow">
               <div className="px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
@@ -393,64 +442,95 @@ export default function Example() {
 
             {/* Page Content */}
 
-            <div className='flex flex-col mt-8'>
-                
-                <h2 className="text-lg leading-6 font-medium text-gray-900  ml-8">Overview</h2>
-                <div className="flex flex-col justify-center items-center sm:justify-around lg:px-8 w-auto sm:flex-row"> 
+            <div className="flex flex-col mt-8">
+              <h2 className="text-lg leading-6 font-medium text-gray-900  ml-8">
+                Overview
+              </h2>
+              <div className="flex flex-col justify-center items-center sm:justify-around lg:px-8 w-auto sm:flex-row">
                 {/* Card */}
                 {cards.map((card) => (
-                    <div className="mt-2 w-1/2 sm:w-1/4">
-                        <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg w-full">
-                            <div className="p-5">
-                                <div className="flex items-center">
-                                <div className="flex-shrink-0">
-                                    <card.icon className="h-6 w-6 text-gray-400" aria-hidden="true" />
+                  <div className="mt-2 w-1/2 sm:w-1/4">
+                    <div
+                      key={card.name}
+                      className="bg-white overflow-hidden shadow rounded-lg w-full"
+                    >
+                      <div className="p-5">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0">
+                            <card.icon
+                              className="h-6 w-6 text-gray-400"
+                              aria-hidden="true"
+                            />
+                          </div>
+                          <div className="ml-5 flex-1">
+                            <dl>
+                              <dt className="text-sm font-medium text-gray-500 truncate">
+                                {card.name}
+                              </dt>
+                              <dd>
+                                <div className="text-lg font-medium text-gray-900">
+                                  {card.amount}
                                 </div>
-                                <div className="ml-5 flex-1">
-                                    <dl>
-                                    <dt className="text-sm font-medium text-gray-500 truncate">{card.name}</dt>
-                                    <dd>
-                                        <div className="text-lg font-medium text-gray-900">{card.amount}</div>
-                                    </dd>
-                                    </dl>
-                                </div>
-                                </div>
-                            </div>
-                            <div className="bg-gray-50 px-5 py-3">
-                                <div className="text-sm">
-                                <a href={card.href} className="font-medium text-cyan-700 hover:text-cyan-900">
-                                    View all
-                                </a>
-                                </div>
-                            </div>
+                              </dd>
+                            </dl>
+                          </div>
                         </div>
+                      </div>
+                      <div className="bg-gray-50 px-5 py-3">
+                        <div className="text-sm">
+                          <a
+                            href={card.href}
+                            className="font-medium text-cyan-700 hover:text-cyan-900"
+                          >
+                            View all
+                          </a>
+                        </div>
+                      </div>
                     </div>
-                    ))}
+                  </div>
+                ))}
+              </div>
 
-                </div>
-
-                <h2 className="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
+              <h2 className="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
                 Recent Members
-                </h2>
+              </h2>
 
               {/* Activity list (smallest breakpoint only) */}
               <div className="shadow sm:hidden">
-                <ul role="list" className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
+                <ul
+                  role="list"
+                  className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden"
+                >
                   {users.map((transaction) => (
                     <li key={transaction.id}>
-                      <a href={transaction.href} className="block px-4 py-4 bg-white hover:bg-gray-50">
+                      <a
+                        href={transaction.href}
+                        className="block px-4 py-4 bg-white hover:bg-gray-50"
+                      >
                         <span className="flex items-center space-x-4">
                           <span className="flex-1 flex space-x-2 truncate">
-                            <CashIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+                            <CashIcon
+                              className="flex-shrink-0 h-5 w-5 text-gray-400"
+                              aria-hidden="true"
+                            />
                             <span className="flex flex-col text-gray-500 text-sm truncate">
-                              <span className="truncate">{transaction.name}</span>
-                              <span>
-                                <span className="text-gray-900 font-medium">{transaction.phone}</span>
+                              <span className="truncate">
+                                {transaction.name}
                               </span>
-                              <time dateTime={transaction.datetime}>{transaction.date}</time>
+                              <span>
+                                <span className="text-gray-900 font-medium">
+                                  {transaction.phone}
+                                </span>
+                              </span>
+                              <time dateTime={transaction.datetime}>
+                                {transaction.date}
+                              </time>
                             </span>
                           </span>
-                          <ChevronRightIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+                          <ChevronRightIcon
+                            className="flex-shrink-0 h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
                         </span>
                       </a>
                     </li>
@@ -519,53 +599,60 @@ export default function Example() {
                           </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                          {users.map((transaction) => (
-                            <tr key={transaction.id} className="bg-white">
+                          {admins.map((admin) => (
+                            <tr key={admin.id} className="bg-white">
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 <div className="flex">
-                                  <a href={transaction.href} className="group inline-flex space-x-2 truncate text-sm">
+                                  <a
+                                    href={admin.href}
+                                    className="group inline-flex space-x-2 truncate text-sm"
+                                  >
                                     <CashIcon
                                       className="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                       aria-hidden="true"
                                     />
                                     <p className="text-gray-500 truncate group-hover:text-gray-900">
-                                      {transaction.name}
+                                      {admin.name}
                                     </p>
                                   </a>
                                 </div>
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 <div className="flex">
-                                    <p className="text-gray-500 truncate group-hover:text-gray-900">
-                                        {transaction.email}
-                                    </p>
+                                  <p className="text-gray-500 truncate group-hover:text-gray-900">
+                                    {admin.email}
+                                  </p>
                                 </div>
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                                <span className="text-gray-900 font-medium">{transaction.phone} </span>
+                                <span className="text-gray-900 font-medium">
+                                  {admin.phone}{" "}
+                                </span>
                               </td>
                               <td className="hidden px-6 py-4 whitespace-nowrap text-sm text-gray-500 md:block">
                                 <span
                                   className={classNames(
-                                    statusStyles[transaction.status],
-                                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize'
+                                    admin.status
+                                      ? statusStyles["active"]
+                                      : statusStyles["inactive"],
+                                    "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"
                                   )}
                                 >
-                                  {transaction.status}
+                                  {admin.status ? "Active" : "Inactive"}
                                 </span>
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                                 <span>
-                                <FormControlLabel
+                                  <FormControlLabel
                                     control={
-                                    <Switch
+                                      <Switch
                                         checked={state.checkedB}
-                                        onChange={handleChange}
+                                        onChange={handleChangeStatus(admin.id)}
                                         name="checkedB"
                                         color="primary"
-                                    />
+                                      />
                                     }
-                                />
+                                  />
                                 </span>
                               </td>
                             </tr>
@@ -579,7 +666,8 @@ export default function Example() {
                       >
                         <div className="hidden sm:block">
                           <p className="text-sm text-gray-700">
-                            Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
+                            Showing <span className="font-medium">1</span> to{" "}
+                            <span className="font-medium">10</span> of{" "}
                             <span className="font-medium">20</span> results
                           </p>
                         </div>
@@ -603,10 +691,9 @@ export default function Example() {
                 </div>
               </div>
             </div>
-
           </main>
         </div>
       </div>
     </>
-  )
+  );
 }

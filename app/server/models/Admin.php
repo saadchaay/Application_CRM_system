@@ -8,9 +8,9 @@ class Admin {
         $this->db = new Database();
     }
 
-    public function allAdmins()
+    public function get_all_admins()
     {
-        $this->db->query('SELECT * FROM admins');
+        $this->db->query('SELECT * FROM admins WHERE is_super != 1 ORDER BY id DESC');
         return $this->db->resultSet();
     }
 

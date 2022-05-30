@@ -12,6 +12,18 @@
             header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
             
             $this->super_admin = new SuperAdmin();
+            $this->admin = new Admin();
+        }
+
+        public function index()
+        {
+            $dataJSON = json_decode(file_get_contents("php://input"));
+            $all_admins = $this->admin->get_all_admins();
+
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                echo json_encode($all_admins);
+            }
+
         }
 
         public function login()
