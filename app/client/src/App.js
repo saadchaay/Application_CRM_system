@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Register from "./views/auth/Register";
 import Login from "./views/auth/Login";
-
+import AdminPanel from "./views/super_admin/AdminPanel";
 function App() {
 
 
@@ -13,6 +13,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/admin-panel" element={<AdminPanel />} />
           </Routes>
         </BrowserRouter>
       </div>
