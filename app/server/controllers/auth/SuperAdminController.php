@@ -31,15 +31,20 @@
                 }else{
                     $errors = $this->validation($data, $this->validate_regex);
                     if($errors){
-
                         echo json_encode(array('errors' => $errors));
                     }else{
-                        $errors = $this->login_super_admin($data);
-                        if($errors){
+                        $result = $this->super_admin->login_super_admin($data);
+                        if(!$result){
+                            $errors = array('login_password' => 'Login or password is incorrect');
                             echo json_encode(array('errors' => $errors));
                         }else{
-                            http_response_code(200);
-                            echo json_encode($data);
+                            if($result->status){
+                                http_response_code(201);
+                                echo json_encode($result);
+                            }else {
+                                $errors = array('status' => 'Your Account is not active yet.');
+                                echo json_encode(array('errors' => $errors));
+                            }
                         }
                     }
                 }
