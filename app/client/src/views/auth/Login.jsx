@@ -16,7 +16,7 @@ function Register() {
   const [errLogin, setErrLogin] = useState("");
   const [errPwd, setErrPwd] = useState("");
   const [errAll, setErrAll] = useState("");
-  const [errStatus, setErrStatus] = useState("");
+//   const [errStatus, setErrStatus] = useState("");
 
   useEffect(() => {
     loginRef.current.focus();
@@ -26,7 +26,7 @@ function Register() {
     setErrLogin("");
     setErrPwd("");
     setErrAll("");
-    setErrStatus("");
+    // setErrStatus("");
   }, [login, pwd]);
 
   const handleLogin = async (e) => {
@@ -56,7 +56,6 @@ function Register() {
           setErrLogin(res.data.errors.login);
           setErrPwd(res.data.errors.password);
           setErrAll(res.data.errors.login_password);
-          setErrStatus(res.data.errors.status);
           if (res.data.errors.status) {
             setOpen(true);
           }
@@ -129,7 +128,7 @@ function Register() {
           >
             <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello !</h1>
             <p className="text-sm font-normal text-gray-600 mb-7">Login Now</p>
-            <div className="text-red-500 mb-3 text-sm">
+            <div className="text-red-500 mb-3 text-md">
               {errAll ? errAll : null}
             </div>
             <div className="flex items-center border-2 py-3 px-3 rounded-xl mb-2 w-full md:w-3/4">

@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 
 const Hero = () => {
   return (
-    <section className="overflow-hidden bg-white from-black via-gray-900 to-blue-900">
+    <section className="overflow-hidden bg-gray-300 from-black via-gray-900 to-blue-900">
         <Navbar />
         <div className="flex flex-col px-10 mx-auto md:py-16 lg:px-6">
             <div className="flex flex-col items-center justify-around md:flex-row">
