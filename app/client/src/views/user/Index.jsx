@@ -16,14 +16,15 @@ import "./index.css"
 
 function Index() {
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
       <div className="Index">
         <Topbar />
         <div className="container">
           <Sidebar />
           <div className="content">
-            <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
+            {/* <Routes> */}
+            <Dashboard />
+              {/* <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/users" element={<Users />} />
               <Route path="/user/:userId" element={<User />} />
               <Route path="/customers" element={<Customers />} />
@@ -31,12 +32,12 @@ function Index() {
               <Route path="/products" element={<ProductList />} />
               <Route path="/product/:productId" element={<Product />} />
               <Route path="/new-product" element={<NewProduct />} />
-              <Route path="/categories" element={<Categories />} />
-            </Routes>
+              <Route path="/categories" element={<Categories />} /> */}
+            {/* </Routes> */}
           </div>
         </div>
       </div>
-    </BrowserRouter>
+    // </BrowserRouter>
   );
 }
 
