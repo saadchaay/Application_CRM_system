@@ -9,7 +9,7 @@
             $this->db = new Database();
         }
         
-        public function register()
+        public function login_super_admin($data)
         {
             
         }
