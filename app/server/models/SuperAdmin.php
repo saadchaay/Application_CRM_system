@@ -28,5 +28,17 @@
             }
         }
 
+        public function change_status($id)
+        {
+            $this->db->query("UPDATE `admins` SET `status` = NOT `status` WHERE `id` = :id");
+            $this->db->bind(":id", $id);
+            $res = $this->db->execute();
+            if($res) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
 
     }

@@ -72,9 +72,14 @@
         public function changeStatus($id)
         {
             if($_SERVER["REQUEST_METHOD"] == "PUT") {
-                $result = $this->admin->change_status($id);
-                http_response_code(201);
-                echo json_encode();
+                $result = $this->super_admin->change_status($id);
+                if($result){
+                    http_response_code(201);
+                    echo json_encode(array('message' => 'Status changed'));
+                }else{
+                    http_response_code(500);
+                    echo json_encode(array('message' => 'Status not changed'));
+                }
             }
         }
 

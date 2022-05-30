@@ -143,6 +143,11 @@ export default function Example() {
   }, []);
   const handleChangeStatus = (id) => {
     console.log(id);
+    users.map((user) => {
+      if (user.id === id) {
+        user.checked = !user.checked;
+      }
+    });
     // const res = await axios.put(
     //   "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +id,
     //   {
