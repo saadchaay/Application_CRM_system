@@ -16,8 +16,6 @@ import {
   OfficeBuildingIcon,
   ChevronRightIcon,
 } from "@heroicons/react/solid";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
 const navigation = [
@@ -122,7 +120,6 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const [isChecked, setIsChecked] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [admins, setAdmins] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -133,35 +130,21 @@ export default function Example() {
     );
     setAdmins(res.data);
     setChecked(res.data.map((admin) => admin.status));
-    // setChecked(res.data.map());
   };
 
-  const [state, setState] = useState({
-    checkedA: true,
-    checkedB: true,
-  });
-
-  const handleChange = (index) => {
+  const handleChange = async (index) => {
     const newChecked = [...checked];
     newChecked[index] = !newChecked[index];
     setChecked(newChecked);
 
     const newAdmins = admins.map((admin, i) => {
       if (i === index) {
-        admin.status = newChecked[index] ? "active" : "inactive";
+        admin.status = newChecked[index] ? true : false;
       }
       return admin;
     });
     setAdmins(newAdmins);
-  };
-  // const handleChange = (id, ) => {
-    // setChecked({ ...checked, [event.target.name]: event.target.checked });
-  //   console.log(checked.indexOf(id));
-  // };
-  
-  const handleChangeStatus = async (id) => {
-    console.log(checked.indexOf(id));
-    console.log(id);
+    const id = admins[index].id;
     const res = await axios.put(
       "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +id,
       {
@@ -174,18 +157,10 @@ export default function Example() {
     if (res.data.status === "success") {
       console.log(res.data.status);
     }
-    admins.map((admin) => {
-      if (admin.id === id) {
-        admin.status = !admin.status;
-      }
-      return admin;
-    });
-    console.log(admins);
   };
 
   useEffect(() => {
     handleData();
-    handleChangeStatus();
   }, []);
 
   return (
@@ -528,7 +503,6 @@ export default function Example() {
               {/* Activity list (smallest breakpoint only) */}
               <div className="shadow sm:hidden">
                 <ul
-                  role="list"
                   className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden"
                 >
                   {users.map((transaction) => (
@@ -700,14 +674,11 @@ export default function Example() {
                           </p>
                         </div>
                         <div className="flex-1 flex justify-between sm:justify-end">
-                          <a
-                            href="#"
-                            className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                          >
+                          <a href="/" className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                             Previous
                           </a>
                           <a
-                            href="#"
+                            href="/"
                             className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                           >
                             Next
