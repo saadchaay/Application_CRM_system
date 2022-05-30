@@ -83,4 +83,9 @@
             }
         }
 
+        public function mail_activation($data)
+        {
+            
+        }
+
     }
