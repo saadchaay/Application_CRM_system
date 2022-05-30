@@ -45,7 +45,7 @@ class Admin {
 
         $row = $this->db->single();
         if($row) {
-            if(password_verify($data["password"], $row->password) && $row->status == true) {
+            if(password_verify($data["password"], $row->password)) {
                 return $row;
             } else {
                 return false;

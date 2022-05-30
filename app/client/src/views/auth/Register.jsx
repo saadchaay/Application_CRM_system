@@ -180,7 +180,7 @@ function Register() {
               </svg>
               <input
                 ref={nameRef}
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none border-none w-full"
                 type="text"
                 autoComplete="off"
                 onChange={(e) => setName(e.target.value)}
@@ -209,7 +209,7 @@ function Register() {
               </svg>
               <input
                 ref={usernameRef}
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none border-none w-full"
                 type="text"
                 autoComplete="off"
                 onChange={(e) => setUsername(e.target.value)}
@@ -239,7 +239,7 @@ function Register() {
               </svg>
               <input
                 ref={emailRef}
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none border-none w-full"
                 type="email"
                 id="email"
                 autoComplete="off"
@@ -269,7 +269,7 @@ function Register() {
               </svg>
               <input
                 ref={phoneRef}
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none border-none w-full"
                 type="text"
                 id="phone"
                 autoComplete="off"
@@ -304,7 +304,7 @@ function Register() {
               </svg>
               <input
                 ref={addressRef}
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none border-none w-full"
                 type="text"
                 id="address"
                 autoComplete="off"
@@ -333,7 +333,7 @@ function Register() {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none border-none w-full"
                 type="password"
                 id="password"
                 onChange={(e) => setPwd(e.target.value)}
@@ -360,7 +360,7 @@ function Register() {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none border-none w-full"
                 type="password"
                 id="confirmPassword"
                 onChange={(e) => setConfirmPwd(e.target.value)}
@@ -381,7 +381,6 @@ function Register() {
             <span className="text-sm ml-2">
               Already have an account ?
               <span className="hover:text-blue-500 cursor-pointer underline">
-                
                 <Link to="/login">Login</Link>
               </span>
             </span>

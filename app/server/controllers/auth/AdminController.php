@@ -91,12 +91,17 @@ class AdminController extends Controller{
                     echo json_encode(array('errors' => $errors));
                 }else{
                     $result = $this->admin->login($data);
-                    if($result){
-                        http_response_code(201);
-                        echo json_encode($result);
-                    }else{
+                    if(!$result){
                         $errors = array('login_password' => 'Login or password is incorrect');
                         echo json_encode(array('errors' => $errors));
+                    }else{
+                        if($result->status){
+                            http_response_code(201);
+                            echo json_encode($result);
+                        }else {
+                            $errors = array('status' => 'Your Account is not active yet.');
+                            echo json_encode(array('errors' => $errors));
+                        }
                     }
                 }
             }
