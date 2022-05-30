@@ -646,7 +646,7 @@ export default function Example() {
                                   <FormControlLabel
                                     control={
                                       <Switch
-                                        checked={state.checkedB}
+                                        checked={admin.status ? true : false}
                                         onChange={handleChangeStatus(admin.id)}
                                         name="checkedB"
                                         color="primary"
