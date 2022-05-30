@@ -133,6 +133,7 @@ export default function Example() {
     );
     setAdmins(res.data);
     setChecked(res.data.map((admin) => admin.status));
+    // setChecked(res.data.map());
   };
 
   const [state, setState] = useState({
@@ -140,12 +141,26 @@ export default function Example() {
     checkedB: true,
   });
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+  const handleChange = (index) => {
+    const newChecked = [...checked];
+    newChecked[index] = !newChecked[index];
+    setChecked(newChecked);
+
+    const newAdmins = admins.map((admin, i) => {
+      if (i === index) {
+        admin.status = newChecked[index] ? "active" : "inactive";
+      }
+      return admin;
+    });
+    setAdmins(newAdmins);
   };
+  // const handleChange = (id, ) => {
+    // setChecked({ ...checked, [event.target.name]: event.target.checked });
+  //   console.log(checked.indexOf(id));
+  // };
   
   const handleChangeStatus = async (id) => {
-    console.log(checked);
+    console.log(checked.indexOf(id));
     console.log(id);
     const res = await axios.put(
       "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +id,
@@ -614,8 +629,8 @@ export default function Example() {
                           </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                          {admins.map((admin) => (
-                            <tr key={admin.id} className="bg-white">
+                          {admins.map((admin, index) => (
+                            <tr key={index} className="bg-white">
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 <div className="flex">
                                   <a
@@ -659,8 +674,9 @@ export default function Example() {
                               <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                                   <span>
                                   <Switch
-                                    checked={state.checkedB}
-                                    onChange={() => handleChangeStatus(admin.id)}
+                                    checked={checked[index]}
+                                    onChange={() => handleChange(index)}
+                                    // onChange={() => handleChangeStatus(admin.id)}
                                     color="primary"
                                     name="checkedB"
                                     inputProps={{ 'aria-label': 'primary checkbox' }}
