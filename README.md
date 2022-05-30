@@ -3,10 +3,10 @@
 
 {
     "name": "saad chaay",
-    "username": "saad_chaay",
+    "username": "saadchaay",
     "email": "saad@gmail.com",
-    "phone": "07398267483",
+    "phone": "0989097656",
     "address": "bsk casablanca",
-    "password": "saad7223",
-    "confirm_password": "saad7223"
+    "password": "Saad7223",
+    "confirm_password": "Saad7223"
 }

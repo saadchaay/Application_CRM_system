@@ -70,12 +70,17 @@ class AdminController extends Controller{
         $dataJSON = json_decode(file_get_contents("php://input"));
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
-
             $data = [
-                'username' => $dataJSON->username,
-                'email' => $dataJSON->email,
-                'password' => $dataJSON->password,
+                'login' => "",
+                'password' => "",
             ];
+            if($dataJSON) {
+                $data = [
+                    'login' => $dataJSON->login,
+                    'password' => $dataJSON->password,
+                ];
+            }
+            
 
             $errors = $this->requirement($data);
             if($errors){
@@ -83,17 +88,15 @@ class AdminController extends Controller{
             }else{
                 $errors = $this->validation($data, $this->validate_regex);
                 if($errors){
-
                     echo json_encode(array('errors' => $errors));
                 }else{
-                    $errors = $this->exists($data);
-                    if($errors){
-                        echo json_encode(array('errors' => $errors));
-                    }else{
-                        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                        $this->admin->register($data);
+                    $result = $this->admin->login($data);
+                    if($result){
                         http_response_code(201);
-                        echo json_encode($data);
+                        echo json_encode($result);
+                    }else{
+                        $errors = array('login_password' => 'Login or password is incorrect');
+                        echo json_encode(array('errors' => $errors));
                     }
                 }
             }

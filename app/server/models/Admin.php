@@ -36,6 +36,25 @@ class Admin {
         }
     }
 
+    public function login($data)
+    {
+        $this->db->query("SELECT * FROM `admins` WHERE `username` = :username OR `email` = :email");
+
+        $this->db->bind(":username", $data["login"]);
+        $this->db->bind(":email", $data["login"]);
+
+        $row = $this->db->single();
+        if($row) {
+            if(password_verify($data["password"], $row->password) && $row->status == true) {
+                return $row;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public function check_email($email)
     {
         $this->db->query("SELECT * FROM admins WHERE email = :email");
@@ -59,5 +78,5 @@ class Admin {
             return false;
         }
     }
-    
+
 }

@@ -8,8 +8,6 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 
-
-
 function Register() {
   const [open, setOpen] = React.useState(false);
   const nameRef = useRef();
@@ -147,10 +145,8 @@ function Register() {
               Get ready to scale your business and Join Us Now at GROW Your
               Business.
             </p>
-            <button
-              className="block w-28 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2"
-            >
-              <Link to="/" >Back Home</Link>
+            <button className="block w-28 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2">
+              <Link to="/">Back Home</Link>
             </button>
           </div>
         </div>
@@ -176,10 +172,10 @@ function Register() {
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                <rect x="3" y="5" width="18" height="14" rx="3" />{" "}
-                <line x1="3" y1="10" x2="21" y2="10" />{" "}
-                <line x1="7" y1="15" x2="7.01" y2="15" />{" "}
+                <path stroke="none" d="M0 0h24v24H0z" />
+                <rect x="3" y="5" width="18" height="14" rx="3" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+                <line x1="7" y1="15" x2="7.01" y2="15" />
                 <line x1="11" y1="15" x2="13" y2="15" />
               </svg>
               <input
@@ -382,8 +378,12 @@ function Register() {
             >
               Submit
             </button>
-            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-              Already have an account ? <Link to="/login">Login</Link>
+            <span className="text-sm ml-2">
+              Already have an account ?
+              <span className="hover:text-blue-500 cursor-pointer underline">
+                
+                <Link to="/login">Login</Link>
+              </span>
             </span>
           </form>
         </div>
