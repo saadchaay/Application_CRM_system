@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { MonetizationOn, Home, SupervisorAccount } from "@material-ui/icons";
+import axios from "axios";
 
 import {
   BellIcon,
@@ -18,7 +19,6 @@ import {
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import axios from "axios";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: Home, current: true },
@@ -116,51 +116,62 @@ const users = [
   },
   // More transactions...
 ];
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
+  const [isChecked, setIsChecked] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [admins, setAdmins] = useState([]);
-  const [state, setState] = useState({
-    checkedA: true,
-    checkedB: true,
-  });
+  const [checked, setChecked] = useState([]);
 
   const handleData = async () => {
     const res = await axios.get(
       "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/index"
     );
-    // const data = await response.json();
-    // console.log(res);
     setAdmins(res.data);
-    // console.log(admins);
+    setChecked(res.data.map((admin) => admin.status));
+  };
+
+  const [state, setState] = useState({
+    checkedA: true,
+    checkedB: true,
+  });
+
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+  
+  const handleChangeStatus = async (id) => {
+    console.log(checked);
+    console.log(id);
+    const res = await axios.put(
+      "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +id,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (res.data.status === "success") {
+      console.log(res.data.status);
+    }
+    admins.map((admin) => {
+      if (admin.id === id) {
+        admin.status = !admin.status;
+      }
+      return admin;
+    });
+    console.log(admins);
   };
 
   useEffect(() => {
     handleData();
+    handleChangeStatus();
   }, []);
-  const handleChangeStatus = (id) => {
-    console.log(id);
-    users.map((user) => {
-      if (user.id === id) {
-        user.checked = !user.checked;
-      }
-    });
-    // const res = await axios.put(
-    //   "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +id,
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-
-    // if (res.data.status === "success") {
-    //   console.log(res.data.status);
-    // }
-  };
 
   return (
     <>
@@ -646,16 +657,13 @@ export default function Example() {
                                 </span>
                               </td>
                               <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                                <span>
-                                  <FormControlLabel
-                                    control={
-                                      <Switch
-                                        checked={admin.status ? true : false}
-                                        onChange={() => handleChangeStatus(admin.id)  }
-                                        name="checked"
-                                        color="primary"
-                                      />
-                                    }
+                                  <span>
+                                  <Switch
+                                    checked={state.checkedB}
+                                    onChange={() => handleChangeStatus(admin.id)}
+                                    color="primary"
+                                    name="checkedB"
+                                    inputProps={{ 'aria-label': 'primary checkbox' }}
                                   />
                                 </span>
                               </td>
