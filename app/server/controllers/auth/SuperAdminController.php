@@ -17,7 +17,6 @@
 
         public function index()
         {
-            $dataJSON = json_decode(file_get_contents("php://input"));
             $all_admins = $this->admin->get_all_admins();
 
             if($_SERVER["REQUEST_METHOD"] == "GET"){
@@ -65,6 +64,36 @@
                                 echo json_encode(array('errors' => $errors));
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        public function changeStatus($id)
+        {
+            $dataJSON = json_decode(file_get_contents("php://input"));
+            if($_SERVER["REQUEST_METHOD"] == "PUT") {
+                $data = [
+                    'id' => $id,
+                    'status' => "",
+                ];
+                if($dataJSON) {
+                    $data = [
+                        'id' => $id,
+                        'status' => $dataJSON->status,
+                    ];
+                }
+                $errors = $this->requirement($data);
+                if($errors){
+                    echo json_encode(array('errors' => $errors));
+                }else{
+                    $errors = $this->validation($data, $this->validate_regex);
+                    if($errors){
+                        echo json_encode(array('errors' => $errors));
+                    }else{
+                        $this->admin->change_status($data);
+                        http_response_code(201);
+                        echo json_encode($data);
                     }
                 }
             }

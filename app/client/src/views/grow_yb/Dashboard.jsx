@@ -141,11 +141,10 @@ export default function Example() {
   useEffect(() => {
     handleData();
   }, []);
-
-  const handleChangeStatus = async (id) => {
+  const handleChangeStatus = async (id, e) => {
+    e.preventDefault();
     const res = await axios.put(
-      "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +
-        id,
+      "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +id,
       {
         headers: {
           "Content-Type": "application/json",
@@ -648,7 +647,7 @@ export default function Example() {
                                       <Switch
                                         checked={admin.status ? true : false}
                                         onChange={handleChangeStatus(admin.id)}
-                                        name="checkedB"
+                                        name="checked"
                                         color="primary"
                                       />
                                     }
