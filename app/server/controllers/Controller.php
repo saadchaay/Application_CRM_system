@@ -1,6 +1,10 @@
 <?php
 
-    
+    //phpMailer
+require __DIR__.'/../PHPMailer/PHPMailer.php';
+require __DIR__.'/../PHPMailer/SMTP.php';
+require __DIR__.'/../PHPMailer/Exception.php';
+use PHPMailer\PHPMailer\PHPMailer;
 
     class Controller {
 
@@ -62,6 +66,28 @@
                 }
             }
             return $errors;
+        }
+
+        public function sendEmail($data) {
+            $mail = new PHPMailer(true); 
+            
+            $body="Hello $data->name,\nThanks for registration!\n\nYour Account is activated.\n\nIf you have any question, contact our support: support@grow-yb.com\n\nThanks,\nGROW YB";
+
+            $mail->isSMTP();
+            $mail->Host = "smtp.gmail.com";
+            $mail->SMTPAuth= "true";
+            $mail->SMTPSecure = "tls";
+            $mail->port="587";
+            $mail->Username = "saad.chaay@cloudlink.us";
+            $mail->Password = "Maggie@7223";
+            $mail->Subject = "GROW YB: Activation your account";
+            $mail->setFrom("saad.chaay@cloudlink.us");
+            $mail->Body = $body;
+            $mail->addAddress($data->email);//sent To
+            $mail->Send() ;
+            $mail->smtpClose();
+            
+            return $mail;
         }
 
         

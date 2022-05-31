@@ -14,6 +14,17 @@ class Admin {
         return $this->db->resultSet();
     }
 
+    public function get_admin($id)
+    {
+        $this->db->query('SELECT * FROM admins WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if($this->db->single()) {
+            return $this->db->single();
+        } else {
+            return false;
+        }
+    }
+
     public function register($data)
     {
         //create a query
