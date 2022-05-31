@@ -125,6 +125,7 @@ export default function Example() {
   const [admins, setAdmins] = useState([]);
   const [checked, setChecked] = useState([]);
 
+  // Get all admins ....
   const handleData = async () => {
     const res = await axios.get(
       "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/index"
@@ -133,6 +134,7 @@ export default function Example() {
     setChecked(res.data.map((admin) => admin.status));
   };
 
+  // activate accounts here ....
   const handleChange = async (index) => {
     const newChecked = [...checked];
     newChecked[index] = !newChecked[index];
