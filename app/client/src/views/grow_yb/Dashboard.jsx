@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { MonetizationOn, Home, SupervisorAccount } from "@material-ui/icons";
-import axios from "axios";
+import axios from "../../api/axios";
 import { Link } from "react-router-dom";
 
 import {
@@ -124,11 +124,12 @@ export default function Example() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [admins, setAdmins] = useState([]);
   const [checked, setChecked] = useState([]);
+  const [numbersInactive, setNumbersInactive] = useState(admins.map((admin) => admin.status).filter((status) => status === 0 ).length);
 
   // Get all admins ....
   const handleData = async () => {
     const res = await axios.get(
-      "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/index"
+      "auth/SuperAdminController/index"
     );
     setAdmins(res.data);
     setChecked(res.data.map((admin) => admin.status));
@@ -136,7 +137,7 @@ export default function Example() {
     cards[2].number = res.data.map((admin) => admin.status).filter(
       (status) => status === 0
     ).length;
-  };
+    };
 
   // activate accounts here ....
   const handleChange = async (index) => {
@@ -150,10 +151,17 @@ export default function Example() {
       }
       return admin;
     });
+
+    if(newChecked[index] === true){
+      cards[2].number = cards[2].number - 1;
+    }else{
+      cards[2].number = cards[2].number + 1;
+    }
+
     setAdmins(newAdmins);
     const id = admins[index].id;
     const res = await axios.put(
-      "http://localhost/fil_rouge_project/app/server/auth/SuperAdminController/changeStatus/" +id,
+      "auth/SuperAdminController/changeStatus/" +id,
       {
         headers: {
           "Content-Type": "application/json",
@@ -164,6 +172,10 @@ export default function Example() {
     if (res.data.status === "success") {
       console.log(res.data.status);
     }
+    const newCardsLength = admins.map((admin) => {
+        return admin.status;
+    });
+    cards[1].number = newCardsLength.length;
   };
 
 

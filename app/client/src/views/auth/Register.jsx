@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo_white_bg.png";
 import logoColor from "../../assets/images/logo.png";
-import axios from "axios";
+import axios from "../../api/axios";
 import React from "react";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -62,7 +62,7 @@ function Register() {
       confirm_password: confirmPwd,
     };
     const res = await axios.post(
-      "http://localhost/fil_rouge_project/app/server/auth/AdminController/register",
+      "auth/AdminController/register",
       JSON.stringify(data),
       {
         headers: {
