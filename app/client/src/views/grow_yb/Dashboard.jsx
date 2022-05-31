@@ -21,23 +21,23 @@ import Switch from "@material-ui/core/Switch";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: Home, current: true },
-  { name: "New Members", href: "#", icon: SupervisorAccount, current: false },
+  { name: "All members", href: "#", icon: SupervisorAccount, current: false },
   { name: "Transaction", href: "#", icon: MonetizationOn, current: false },
 ];
 
 const cards = [
-  { name: "Account balance", href: "/", icon: ScaleIcon, amount: "$30,659.45" },
+  { name: "Account balance", href: "/", icon: ScaleIcon, number: "$30,659.45" },
   {
-    name: "New members",
-    href: "/new-members",
+    name: "All members",
+    href: "/all-members",
     icon: SupervisorAccount,
-    amount: "122",
+    number: "122",
   },
   {
     name: "Deactivate accounts",
     href: "/deactivate-accounts",
     icon: SupervisorAccount,
-    amount: "32",
+    number: "32",
   },
   // More items...
 ];
@@ -132,6 +132,10 @@ export default function Example() {
     );
     setAdmins(res.data);
     setChecked(res.data.map((admin) => admin.status));
+    cards[1].number = res.data.length;
+    cards[2].number = res.data.map((admin) => admin.status).filter(
+      (status) => status === 0
+    ).length;
   };
 
   // activate accounts here ....
@@ -162,10 +166,12 @@ export default function Example() {
     }
   };
 
+
   useEffect(() => {
     handleData();
   }, []);
 
+  
   return (
     <>
       <div className="min-h-full">
@@ -478,7 +484,7 @@ export default function Example() {
                               </dt>
                               <dd>
                                 <div className="text-lg font-medium text-gray-900">
-                                  {card.amount}
+                                  {card.number}
                                 </div>
                               </dd>
                             </dl>
