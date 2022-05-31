@@ -1,4 +1,10 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'path/to/PHPMailer/src/Exception.php';
+require 'path/to/PHPMailer/src/PHPMailer.php';
+require 'path/to/PHPMailer/src/SMTP.php'; 
 
     class SuperAdminController extends Controller {
 
@@ -74,6 +80,7 @@
             if($_SERVER["REQUEST_METHOD"] == "PUT") {
                 $result = $this->super_admin->change_status($id);
                 if($result){
+
                     http_response_code(201);
                     echo json_encode(array('message' => 'Status changed'));
                 }else{
