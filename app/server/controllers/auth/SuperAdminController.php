@@ -1,14 +1,17 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
-require 'path/to/PHPMailer/src/Exception.php';
-require 'path/to/PHPMailer/src/PHPMailer.php';
-require 'path/to/PHPMailer/src/SMTP.php'; 
+// require_once 'path/to/PHPMailer/src/Exception.php';
+// require_once "path/to/PHPMailer/src/PHPMailer.php";
+require 'vendor/autoload.php';
 
     class SuperAdminController extends Controller {
 
         private $super_admin;
+        private $admin;
+        private $mail;
 
         public function __construct()
         {
@@ -19,6 +22,7 @@ require 'path/to/PHPMailer/src/SMTP.php';
             
             $this->super_admin = new SuperAdmin();
             $this->admin = new Admin();
+            $this->mail = new PHPMailer(true);
         }
 
         public function index()
@@ -90,9 +94,48 @@ require 'path/to/PHPMailer/src/SMTP.php';
             }
         }
 
-        public function mail_activation($data)
+        public function mail_activation()
         {
-            
+            if($_SERVER["REQUEST_METHOD"] == "GET") {
+                try {
+                    //Server settings
+                    $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                    $this->mail->isSMTP();
+                    $this->mail->Host = 'localhost';
+                    $this->mail->SMTPAuth = false;
+                    $this->mail->SMTPAutoTLS = false; 
+                    $this->mail->Port = 25;
+                    
+                    // $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                    // $this->mail->isSMTP();                                            //Send using SMTP
+                    // $this->mail->Host       = 'localhost';                     //Set the SMTP server to send through
+                    // $this->mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    // $this->mail->Username   = 'user@example.com';                     //SMTP username
+                    // $this->mail->Password   = 'secret';                               //SMTP password
+                    // $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                    // $this->mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                
+                    //Recipients
+                    $this->mail->setFrom('from@example.com', 'Mailer');
+                    $this->mail->addAddress('saadchaay27@gmail.com', 'Saad chaay');     //Add a recipient
+                    // $this->mail->addAddress('ellen@example.com');               //Name is optional
+                    $this->mail->addReplyTo('info@example.com', 'Information');
+                    $this->mail->addCC('cc@example.com');
+                    $this->mail->addBCC('bcc@example.com');
+                
+                    //Content
+                    $this->mail->isHTML(true);                                  //Set email format to HTML
+                    $this->mail->Subject = 'Here is the subject';
+                    $this->mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+                    $this->mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+                
+                    $this->mail->send();
+                    echo json_encode(array('message' => 'Message has been sent'));
+    
+                } catch (Exception $e) {
+                    echo json_encode(array('message' => 'Message could not be sent. Mailer Error: '. $this->mail->ErrorInfo));
+                }
+            }
         }
 
     }
