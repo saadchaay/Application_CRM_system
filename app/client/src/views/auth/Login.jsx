@@ -1,4 +1,5 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
+import AuthContext from "../../context/AuthProvider" ;
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo_white_bg.png";
 import logoColor from "../../assets/images/logo.png";
@@ -9,6 +10,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 
 function Register() {
+  const { setAuth } = useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
   const loginRef = useRef();
   const [login, setLogin] = useState("");
@@ -31,7 +33,6 @@ function Register() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const data = {
         login: login,
@@ -48,6 +49,7 @@ function Register() {
       );
       console.log(JSON.stringify(res?.data));
       if (res.status === 201) {
+        setAuth(res.data);
         setPwd("");
         setLogin("");
         console.log("ok");
@@ -62,6 +64,7 @@ function Register() {
         }
         // console.log(open);
       }
+
     } catch (err) {
       if (err.res?.status === 404) {
         setErrAll("Username or password is incorrect");
