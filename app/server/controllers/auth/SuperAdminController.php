@@ -74,19 +74,29 @@
         {
             if($_SERVER["REQUEST_METHOD"] == "PUT") {
                 $admin = $this->admin->get_admin($id);
-                $result = $this->super_admin->change_status($id);
-                if($result && $admin->is_super == false){
-                    if($this->sendEmail($admin)){
-                        http_response_code(201);
-                        echo json_encode($admin);
-                    }else{
-                        http_response_code(500);
-                        echo json_encode(array('errors' => 'Something went wrong'));
-                    }
-                }else{
-                    http_response_code(500);
-                    echo json_encode(array('message' => 'Status not changed'));
+                // active
+                if($admin->status == 1) {
+                    $this->admin->change_status($id);
+                    http_response_code(201);
+                    echo json_encode(array('message' => 'Status changed successfully'));
+                } else {
+                    $this->admin->change_status($id);
+                    http_response_code(201);
+                    echo json_encode(array('message' => 'Status changed successfully'));
                 }
+                // $result = $this->super_admin->change_status($id);
+                // if($result && $admin->status == false){
+                //     if($this->sendEmail($admin)){
+                //         http_response_code(201);
+                //         echo json_encode($admin);
+                //     }else{
+                //         http_response_code(500);
+                //         echo json_encode(array('errors' => 'Something went wrong'));
+                //     }
+                // }else{
+                //     http_response_code(500);
+                //     echo json_encode(array('message' => 'Status not changed'));
+                // }
             }
         }
 
