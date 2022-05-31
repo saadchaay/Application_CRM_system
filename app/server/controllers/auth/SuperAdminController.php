@@ -19,7 +19,6 @@
         public function index()
         {
             $all_admins = $this->admin->get_all_admins();
-
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 echo json_encode($all_admins);
             }
@@ -75,28 +74,17 @@
             if($_SERVER["REQUEST_METHOD"] == "PUT") {
                 $admin = $this->admin->get_admin($id);
                 // active
-                if($admin->status == 1) {
-                    $this->admin->change_status($id);
-                    http_response_code(201);
-                    echo json_encode(array('message' => 'Status changed successfully'));
+                if($admin->status == 0) {
+                    $this->super_admin->change_status($id);
+                    if($this->sendEmail($admin)){
+                        http_response_code(201);
+                        echo json_encode($admin);
+                    }
                 } else {
-                    $this->admin->change_status($id);
+                    $this->super_admin->change_status($id);
                     http_response_code(201);
                     echo json_encode(array('message' => 'Status changed successfully'));
                 }
-                // $result = $this->super_admin->change_status($id);
-                // if($result && $admin->status == false){
-                //     if($this->sendEmail($admin)){
-                //         http_response_code(201);
-                //         echo json_encode($admin);
-                //     }else{
-                //         http_response_code(500);
-                //         echo json_encode(array('errors' => 'Something went wrong'));
-                //     }
-                // }else{
-                //     http_response_code(500);
-                //     echo json_encode(array('message' => 'Status not changed'));
-                // }
             }
         }
 
