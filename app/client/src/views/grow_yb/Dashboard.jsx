@@ -1,8 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { MonetizationOn, Home, SupervisorAccount } from "@material-ui/icons";
+import { Home, SupervisorAccount, ExitToApp } from "@material-ui/icons";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
 
 import {
   BellIcon,
@@ -18,11 +17,9 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/solid";
 import Switch from "@material-ui/core/Switch";
-
 const navigation = [
-  { name: "Dashboard", href: "#", icon: Home, current: true },
-  { name: "All members", href: "#", icon: SupervisorAccount, current: false },
-  { name: "Transaction", href: "#", icon: MonetizationOn, current: false },
+  { name: "Dashboard", href: "/super-dashboard", icon: Home, current: true },
+  { name: "Logout", href: "/logout", icon: ExitToApp, current: false },
 ];
 
 const cards = [
@@ -124,8 +121,7 @@ export default function Example() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [admins, setAdmins] = useState([]);
   const [checked, setChecked] = useState([]);
-  const [numbersInactive, setNumbersInactive] = useState(admins.map((admin) => admin.status).filter((status) => status === 0 ).length);
-
+  
   // Get all admins ....
   const handleData = async () => {
     const res = await axios.get(
@@ -335,27 +331,18 @@ export default function Example() {
             <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
               <div className="flex-1 flex"></div>
               <div className="ml-4 flex items-center md:ml-6">
-                <button
-                  type="button"
-                  className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
 
-                {/* Profile dropdown */}
+                {/* Notification dropdown */}
                 <Menu as="div" className="ml-3 relative">
                   <div>
                     <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                      <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
-                        <span className="sr-only">Open user menu for </span>
-                        Emilia Birch
-                      </span>
+                    <button
+                        type="button"
+                        className="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+                      >
+                        <span className="sr-only">View notifications</span>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
                       <ChevronDownIcon
                         className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block"
                         aria-hidden="true"
@@ -381,16 +368,31 @@ export default function Example() {
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
-                            Logout
+                            Notification 1
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="/logout"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                          >
+                            Notification 2
                           </a>
                         )}
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>
-                </Menu>
+                </Menu> 
+
               </div>
             </div>
           </div>
+          
           <main className="flex-1 pb-8">
             {/* Page header */}
             <div className="bg-white shadow">
@@ -443,18 +445,18 @@ export default function Example() {
             {/* Page Content */}
 
             <div className="flex flex-col mt-8">
-              <h2 className="text-lg leading-6 font-medium text-gray-900  ml-8">
+              <h2 className="text-lg leading-6 font-medium text-gray-900 text-center">
                 Overview
               </h2>
-              <div className="flex flex-col justify-center items-center sm:justify-around lg:px-8 w-auto sm:flex-row">
+              <div className="flex flex-col justify-center items-center sm:justify-around lg:px-8 w-full mr-4 sm:flex-row">
                 {/* Card */}
                 {cards.map((card) => (
-                  <div className="mt-2 w-1/2 sm:w-1/4">
+                  <div className="mt-2 w-full sm:w-1/4">
                     <div
                       key={card.name}
-                      className="bg-white overflow-hidden shadow rounded-lg w-full"
+                      className="bg-white overflow-hidden shadow rounded-lg mx-4 sm:mx-0"
                     >
-                      <div className="p-5">
+                      <div className="p-5 w-auto">
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             <card.icon
@@ -476,7 +478,7 @@ export default function Example() {
                           </div>
                         </div>
                       </div>
-                      <div className="bg-gray-50 px-5 py-3">
+                      <div className="bg-gray-50 px-5 py-3 w-auto">
                         <div className="text-sm">
                           <a
                             href={card.href}
@@ -491,7 +493,7 @@ export default function Example() {
                 ))}
               </div>
 
-              <h2 className="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
+              <h2 className="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8 text-center">
                 Recent Members
               </h2>
 
