@@ -39,6 +39,8 @@ const Details = () => {
         if(res.status === 200) {
             console.log(res.data);
             setAdmin(res.data);
+        } else {
+            return false ;
         }
     }
 
@@ -57,6 +59,14 @@ const Details = () => {
             getAdmin(id);
         }
 
+    }
+
+    const handleDelete = async (id) => {
+        const res = await axios.delete('auth/AdminController/delete/' + id);
+        if(res.status === 200) {
+            console.log(res.data);
+            getAdmin(id);
+        }
     }
 
     useEffect(() => {
@@ -303,6 +313,7 @@ const Details = () => {
                         <div className="mt-6 flex justify-end items-center sm:justify-end sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
                             <button
                             type="button"
+                            onClick={() => handleDelete(admin.id)}
                             >
                                 <Delete className="mr-4 text-red-500" />
                             </button>

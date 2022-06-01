@@ -90,4 +90,15 @@ class Admin {
         }
     }
 
+    public function delete($id)
+    {
+        $this->db->query("DELETE FROM admins WHERE id = :id");
+        $this->db->bind(":id", $id);
+
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

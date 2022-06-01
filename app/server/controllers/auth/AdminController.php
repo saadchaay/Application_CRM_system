@@ -161,4 +161,18 @@ class AdminController extends Controller{
             echo json_encode(array('message' => 'Admin not found'));
         }
     }
+
+    public function delete($id)
+    {
+        $result = $this->admin->delete($id);
+        if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+            if($result){
+                http_response_code(200);
+                echo json_encode(array('message' => 'Admin deleted'));
+            }else{
+                http_response_code(404);
+                echo json_encode(array('message' => 'Admin not found'));
+            }
+        }
+    }
 }
