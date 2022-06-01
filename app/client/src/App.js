@@ -14,6 +14,7 @@ function App() {
       <div>
           <Routes>
               <Route path="/" element={<Layout />} > 
+              
                   {/* For Admin or Client */}
                   <Route path="/" element={<Home />} />
                   <Route path="/register" element={<Register />} />
