@@ -77,7 +77,6 @@ function classNames(...classes) {
 
 export default function Example(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { path } = useParams();
 
   return (
     <>
