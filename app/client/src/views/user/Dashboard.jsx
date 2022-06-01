@@ -26,11 +26,15 @@ import {
   SearchIcon,
 } from '@heroicons/react/solid';
 
+
+
+
 const navigation = [
   { name: 'Home', href: '#', icon: Home, current: true },
   { name: 'Analytics', href: '#', icon: Timeline, current: false },
   { name: 'Sales', href: '#', icon: MonetizationOn, current: false },
 ]
+
 const secondaryNavigation = [
   { name: 'Users', href: '#', icon: SupervisorAccount },
   { name: 'Customers', href: '#', icon: PermIdentity },
@@ -44,6 +48,7 @@ const cards = [
   { name: 'Account balance', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
   // More items...
 ]
+
 const transactions = [
   {
     id: 1,
@@ -174,6 +179,7 @@ export default function Example() {
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
+
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col flex-grow bg-cyan-700 pt-5 pb-4 overflow-y-auto">
             <div className="flex items-center flex-shrink-0 px-4">
@@ -216,6 +222,7 @@ export default function Example() {
               </div>
             </nav>
           </div>
+          
         </div>
 
         <div className="lg:pl-64 flex flex-col flex-1">
@@ -322,6 +329,7 @@ export default function Example() {
               </div>
             </div>
           </div>
+
           <main className="flex-1 pb-8">
             {/* Page header */}
             <div className="bg-white shadow">
@@ -573,6 +581,7 @@ export default function Example() {
               
             </div>
           </main>
+          
         </div>
       </div>
     </>
