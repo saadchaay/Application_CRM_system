@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Route } from 'react-router-dom'
 import {
     Timeline,
     PermIdentity,
@@ -183,6 +184,7 @@ export default function Example() {
         <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <Sidebar />
+
         </div>
 
         <div className="lg:pl-64 flex flex-col flex-1">
@@ -267,7 +269,11 @@ export default function Example() {
           
           </div>
 
-          <Main />
+          <Route path="/dashboard" element={<Main />} />
+          {/* <Route exact path="/about" component={About} />
+          <Route exact path="/contact" component={Contact} />
+          <Route exact path="/blog" component={Blog} />
+          <Route exact path="/blog/:slug" component={BlogPost} /> */}
           
         </div>
       </div>

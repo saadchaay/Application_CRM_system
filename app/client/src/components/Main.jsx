@@ -25,7 +25,6 @@ import {
   OfficeBuildingIcon,
   SearchIcon,
 } from '@heroicons/react/solid';
-import Sidebar from "../../components/Sidebar";
 
 
 

@@ -35,7 +35,8 @@ function App() {
                     </Route>
 
                   {/* For Admin when Auth */}
-                  <Route path="/dashboard" element={<Index />} />
+                  {/* <Route path="/dashboard" element={<Index />} /> */}
+                  <Index />
 
                   {/* For Client when Auth */}
               {/* </Route> */}
