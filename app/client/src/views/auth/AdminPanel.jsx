@@ -1,14 +1,15 @@
 import { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo_white_bg.png";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import logoColor from "../../assets/images/logo.png";
 import axios from "axios";
 import React from "react";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
+import useAuth from "../../hooks/useAuth";
 
 function Register() {
+  const { setAuth } = useAuth();
   const [open, setOpen] = React.useState(false);
   const loginRef = useRef();
   const [login, setLogin] = useState("");
@@ -16,7 +17,9 @@ function Register() {
   const [errLogin, setErrLogin] = useState("");
   const [errPwd, setErrPwd] = useState("");
   const [errAll, setErrAll] = useState("");
-//   const [errStatus, setErrStatus] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/super-dashboard";
 
   useEffect(() => {
     loginRef.current.focus();
@@ -51,6 +54,9 @@ function Register() {
         setPwd("");
         setLogin("");
         console.log("ok");
+        setAuth({ login, pwd });
+        localStorage.setItem("auth", JSON.stringify(res?.data));
+        navigate(from, { replace: true });
       } else {
         if (res.data.errors) {
           setErrLogin(res.data.errors.login);

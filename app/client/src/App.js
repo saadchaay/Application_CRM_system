@@ -7,6 +7,7 @@ import Dashboard from "./views/grow_yb/Dashboard";
 import Index from "./views/user/Index";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
+import Logout from "./views/auth/Logout";
 
 
 function App() {
@@ -21,12 +22,13 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/admin/login" element={<AdminPanel />} />
+                  <Route path="/logout" element={<Logout />} />
                   
                   {/* Protect this Routes for super Admin */}
                     <Route element={<RequiredAuth />}>
                         <Route path="/super-dashboard" element={<Dashboard />} />
                     </Route>
-                    
+
                   {/* For Admin when Auth */}
                   <Route path="/dashboard" element={<Index />} />
 

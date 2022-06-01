@@ -6,10 +6,10 @@ const RequiredAuth = () => {
     const location = useLocation();
 
     return (
-        auth.user ?
+        localStorage.getItem("auth") ?
             <Outlet /> :
-            <Navigate to="/login" state={{ from: location }} replace />
-     );
+            <Navigate to="/admin/login" state={{ from: location }} replace />
+    );
 }
 
 export default RequiredAuth;
