@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../../context/AuthProvider" ;
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo_white_bg.png";
 import logoColor from "../../assets/images/logo.png";
 import axios from "../../api/axios";
@@ -18,7 +18,10 @@ function Register() {
   const [errLogin, setErrLogin] = useState("");
   const [errPwd, setErrPwd] = useState("");
   const [errAll, setErrAll] = useState("");
-//   const [errStatus, setErrStatus] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/dashboard";
+
 
   useEffect(() => {
     loginRef.current.focus();
@@ -53,6 +56,9 @@ function Register() {
         setPwd("");
         setLogin("");
         console.log("ok");
+        setAuth({ login, pwd });
+        localStorage.setItem("auth", JSON.stringify(res?.data));
+        navigate(from, { replace: true });
       } else {
         if (res.data.errors) {
           setErrLogin(res.data.errors.login);

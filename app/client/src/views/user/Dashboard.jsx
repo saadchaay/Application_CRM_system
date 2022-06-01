@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import { Route } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
+import { useParams } from 'react-router';
 import {
     Timeline,
     PermIdentity,
@@ -74,8 +75,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Example(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { path } = useParams();
 
   return (
     <>
@@ -269,11 +271,9 @@ export default function Example() {
           
           </div>
 
-          <Route path="/dashboard" element={<Main />} />
-          {/* <Route exact path="/about" component={About} />
-          <Route exact path="/contact" component={Contact} />
-          <Route exact path="/blog" component={Blog} />
-          <Route exact path="/blog/:slug" component={BlogPost} /> */}
+          {/* <Route path="/dashboard" element={<Main />} /> */}
+          {props.contentMain}
+          {props.contentUsers}
           
         </div>
       </div>
