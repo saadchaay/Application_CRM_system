@@ -1,5 +1,3 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
     Timeline,
     PermIdentity,
@@ -10,21 +8,6 @@ import {
     Ballot,
     Category,
   } from "@material-ui/icons";
-
-import {
-  BellIcon,
-  MenuAlt1Icon,
-  ScaleIcon,
-  XIcon,
-} from '@heroicons/react/outline';
-import {
-  CashIcon,
-  CheckCircleIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  OfficeBuildingIcon,
-  SearchIcon,
-} from '@heroicons/react/solid';
 
 const navigation = [
     { name: 'Home', href: '#', icon: Home, current: true },
