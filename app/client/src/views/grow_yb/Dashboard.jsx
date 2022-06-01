@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Home, SupervisorAccount, ExitToApp } from "@material-ui/icons";
 import axios from "../../api/axios";
@@ -502,10 +503,10 @@ export default function Example() {
                 <ul
                   className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden"
                 >
-                  {users.map((transaction) => (
-                    <li key={transaction.id}>
-                      <a
-                        href={transaction.href}
+                  {admins.map((admin) => (
+                    <li key={admin.id}>
+                      <Link to={`/admin/${admin.id}`}>
+                      <span
                         className="block px-4 py-4 bg-white hover:bg-gray-50"
                       >
                         <span className="flex items-center space-x-4">
@@ -516,15 +517,15 @@ export default function Example() {
                             />
                             <span className="flex flex-col text-gray-500 text-sm truncate">
                               <span className="truncate">
-                                {transaction.name}
+                                {admin.name}
                               </span>
                               <span>
                                 <span className="text-gray-900 font-medium">
-                                  {transaction.phone}
+                                  {admin.phone}
                                 </span>
                               </span>
-                              <time dateTime={transaction.datetime}>
-                                {transaction.date}
+                              <time dateTime={admin.datetime}>
+                                {admin.date}
                               </time>
                             </span>
                           </span>
@@ -533,30 +534,13 @@ export default function Example() {
                             aria-hidden="true"
                           />
                         </span>
-                      </a>
+                      </span>
+                      </Link>
                     </li>
                   ))}
                 </ul>
 
-                <nav
-                  className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200"
-                  aria-label="Pagination"
-                >
-                  <div className="flex-1 flex justify-between">
-                    <a
-                      href="/"
-                      className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
-                    >
-                      Previous
-                    </a>
-                    <a
-                      href="/"
-                      className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
-                    >
-                      Next
-                    </a>
-                  </div>
-                </nav>
+                
               </div>
 
               {/* Activity table (small breakpoint and up) */}
@@ -599,6 +583,7 @@ export default function Example() {
                             </th>
                           </tr>
                         </thead>
+                      
                         <tbody className="bg-white divide-y divide-gray-200">
                           {admins.map((admin, index) => (
                             <tr key={index} className="bg-white">
@@ -665,9 +650,9 @@ export default function Example() {
                       >
                         <div className="hidden sm:block">
                           <p className="text-sm text-gray-700">
-                            Showing <span className="font-medium">1</span> to{" "}
-                            <span className="font-medium">10</span> of{" "}
-                            <span className="font-medium">20</span> results
+                            Showing <span className="font-medium">1</span> to{"10"}
+                            <span className="font-medium"></span> of {admins.length}
+                            <span className="font-medium"></span> results
                           </p>
                         </div>
                         <div className="flex-1 flex justify-between sm:justify-end">
