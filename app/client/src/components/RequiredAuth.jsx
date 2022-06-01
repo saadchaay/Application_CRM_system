@@ -10,7 +10,7 @@ const RequiredAuth = () => {
         isLoggedIn ?
             is_super ? 
                 <Outlet /> :
-                <Navigate to="/login" state={{ from: location }} replace /> 
+                <Navigate to="/admin/login" state={{ from: location }} replace /> 
                 : <Navigate to="/admin/login" state={{ from: location }} replace />
     );
 }
