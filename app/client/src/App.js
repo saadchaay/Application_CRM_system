@@ -4,7 +4,7 @@ import Register from "./views/auth/Register";
 import Login from "./views/auth/Login";
 import AdminPanel from "./views/auth/AdminPanel";
 import Dashboard from "./views/grow_yb/Dashboard";
-import Index from "./views/user/Index";
+import Index from "./views/user/Dashboard";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
 import Logout from "./views/auth/Logout";
