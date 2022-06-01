@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Navigate, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./views/Home";
 import Register from "./views/auth/Register";
@@ -8,13 +8,14 @@ import Dashboard from "./views/grow_yb/Dashboard";
 import Index from "./views/user/Index";
 import Layout from "./components/Layout";
 
+
 function App() {
 
   return (
       <div>
           <Routes>
               <Route path="/" element={<Layout />} > 
-              
+
                   {/* For Admin or Client */}
                   <Route path="/" element={<Home />} />
                   <Route path="/register" element={<Register />} />
