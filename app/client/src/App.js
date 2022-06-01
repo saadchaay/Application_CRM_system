@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
 import Home from "./views/Home";
 import Register from "./views/auth/Register";
 import Login from "./views/auth/Login";
@@ -7,6 +6,7 @@ import AdminPanel from "./views/auth/AdminPanel";
 import Dashboard from "./views/grow_yb/Dashboard";
 import Index from "./views/user/Index";
 import Layout from "./components/Layout";
+import RequiredAuth from "./components/RequiredAuth";
 
 
 function App() {
@@ -23,8 +23,10 @@ function App() {
                   <Route path="/admin/login" element={<AdminPanel />} />
                   
                   {/* Protect this Routes for super Admin */}
-                  <Route path="/super-dashboard" element={<Dashboard />} />
-
+                    <Route element={<RequiredAuth />}>
+                        <Route path="/super-dashboard" element={<Dashboard />} />
+                    </Route>
+                    
                   {/* For Admin when Auth */}
                   <Route path="/dashboard" element={<Index />} />
 
