@@ -25,7 +25,7 @@ function App() {
                   <Route path="/admin/login" element={<AdminPanel />} />
                   {/* <Route path="/logout" element={<Logout />} /> */}
             
-              </Route>
+            </Route>
 
                   {/* Protect this Routes for super Admin */}
                     <Route element={<RequiredAuth />}>

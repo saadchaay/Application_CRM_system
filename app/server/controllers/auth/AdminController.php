@@ -154,10 +154,10 @@ class AdminController extends Controller{
     {
         $result = $this->admin->get_admin($id);
         if($result){
-            http_response_code(200);
+            http_response_code(201);
             echo json_encode($result);
         }else{
-            http_response_code(404);
+            http_response_code(200);
             echo json_encode(array('message' => 'Admin not found'));
         }
     }
