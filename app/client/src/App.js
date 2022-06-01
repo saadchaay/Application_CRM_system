@@ -8,6 +8,7 @@ import Index from "./views/user/Index";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
 import Logout from "./views/auth/Logout";
+import Details from "./components/Details";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                   {/* Protect this Routes for super Admin */}
                     <Route element={<RequiredAuth />}>
                         <Route path="/super-dashboard" element={<Dashboard />} />
+                        <Route path="/admin/:id" element={<Details />} />
                     </Route>
 
                   {/* For Admin when Auth */}
