@@ -8,7 +8,7 @@ import Index from "./views/user/Index";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
 import Logout from "./views/auth/Logout";
-import Details from "./components/Details";
+import Details from "./views/grow_yb/Details";
 
 
 function App() {

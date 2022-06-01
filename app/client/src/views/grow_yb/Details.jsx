@@ -2,7 +2,7 @@ import { useState, useEffect, Fragment } from "react";
 import { Home, ExitToApp, Delete } from "@material-ui/icons";
 import { useParams } from 'react-router';
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import axios from "../api/axios";
+import axios from "../../api/axios";
 import {
   BellIcon,
   MenuAlt1Icon,

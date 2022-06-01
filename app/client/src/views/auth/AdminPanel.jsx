@@ -54,8 +54,9 @@ function Register() {
         setPwd("");
         setLogin("");
         console.log("ok");
-        setAuth({ login, pwd });
+        setAuth({ login, pwd, is_super: true });
         localStorage.setItem("auth", JSON.stringify(res?.data));
+        localStorage.setItem("is_super", JSON.stringify(res.data.is_super));
         navigate(from, { replace: true });
       } else {
         if (res.data.errors) {
@@ -74,6 +75,8 @@ function Register() {
       }
     }
   };
+  
+  console.log();
 
   return (      
     <>
