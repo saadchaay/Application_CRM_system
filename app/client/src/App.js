@@ -67,7 +67,7 @@ function App() {
           />
           <Route
             path="account/profile"
-            element={<System contentAccount={<Account contentProfile={<Profile />} />} />}
+            element={<System contentAccount={<Account profile={<Profile />} />} />}
           />
         </Route>
         {/* <System /> */}
