@@ -9,8 +9,8 @@ import Index from "./views/app_system/Dashboard";
 import Details from "./views/super_admin/Details";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
-import Main from "./components/Main";
-import Users from "./components/Users";
+import Main from "./components/system/Main";
+import Users from "./components/system/Users";
 
 
 function App() {

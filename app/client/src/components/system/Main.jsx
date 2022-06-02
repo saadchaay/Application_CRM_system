@@ -1,46 +1,10 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
-import {
-    Timeline,
-    PermIdentity,
-    Storefront,
-    MonetizationOn,
-    Home,
-    SupervisorAccount,
-    Ballot,
-    Category,
-  } from "@material-ui/icons";
-
-import {
-  BellIcon,
-  MenuAlt1Icon,
-  ScaleIcon,
-  XIcon,
-} from '@heroicons/react/outline';
+import { ScaleIcon } from '@heroicons/react/outline';
 import {
   CashIcon,
   CheckCircleIcon,
-  ChevronDownIcon,
   ChevronRightIcon,
   OfficeBuildingIcon,
-  SearchIcon,
 } from '@heroicons/react/solid';
-
-
-
-const navigation = [
-  { name: 'Home', href: '#', icon: Home, current: true },
-  { name: 'Analytics', href: '#', icon: Timeline, current: false },
-  { name: 'Sales', href: '#', icon: MonetizationOn, current: false },
-]
-
-const secondaryNavigation = [
-  { name: 'Users', href: '#', icon: SupervisorAccount },
-  { name: 'Customers', href: '#', icon: PermIdentity },
-  { name: 'Orders', href: '#', icon: Ballot },
-  { name: 'Products', href: '#', icon: Storefront },
-  { name: 'Categories', href: '#', icon: Category },
-]
 
 
 const cards = [
