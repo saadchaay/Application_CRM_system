@@ -1,13 +1,11 @@
-import {
-    CogIcon,
-    KeyIcon,
-    UserCircleIcon,
-  } from "@heroicons/react/outline";
+import { Link, useLocation } from "react-router-dom";
+import { CogIcon, KeyIcon, UserCircleIcon,} from "@heroicons/react/outline";
+import { useEffect } from "react";
   
   const subNavigation = [
-    { name: "Profile", href: "#", icon: UserCircleIcon, current: false },
-    { name: "Settings", href: "#", icon: CogIcon, current: true },
-    { name: "Password", href: "#", icon: KeyIcon, current: false },
+    { name: "Profile", href: "/profile", icon: UserCircleIcon, current: false },
+    { name: "Settings", href: "/settings", icon: CogIcon, current: false },
+    { name: "Password", href: "/password", icon: KeyIcon, current: false },
   ];
   
   function classNames(...classes) {
@@ -15,7 +13,28 @@ import {
   }
   
   export default function Example(props) {
-    
+    //   const [current, setCurrent] = useState();
+    const location = useLocation();
+    const path = location.pathname ;
+    switch (path) {
+        case "/account/profile":
+            subNavigation[0].current = true;
+            subNavigation[1].current = false;
+            subNavigation[2].current = false;
+            break;
+        case "/account/settings":
+            subNavigation[0].current = false;
+            subNavigation[1].current = true;
+            subNavigation[2].current = false;
+            break;
+        case "/account/password":
+            subNavigation[0].current = false;
+            subNavigation[1].current = false;
+            subNavigation[2].current = true;
+            break;
+        default:
+            break;
+    }
   
     return (
       <>
@@ -31,9 +50,9 @@ import {
               {/* <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3"> */}
               <nav className="flex mt-5 border-y py-4 w-full">
                 {subNavigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={`/account${item.href}`}
                     className={classNames(
                       item.current
                         ? "bg-gray-50 text-cyan-600 hover:bg-white"
@@ -52,12 +71,14 @@ import {
                       aria-hidden="true"
                     />
                     <span className="truncate">{item.name}</span>
-                  </a>
+                  </Link>
                 ))}
               </nav>
               {/* </aside> */}
   
             {props.profile}
+            {props.settings}
+            {props.password}
               
               {/* settings details */}
               {/* <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 mt-8 w-full">
