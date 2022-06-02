@@ -17,6 +17,7 @@ import Orders from "./components/system/Orders";
 import Customers from "./components/system/Customers";
 import Products from "./components/system/Products";
 import Categories from "./components/system/Categories";
+import Account from "./components/system/Account";
 import Profile from "./components/system/account/Profile";
 
 function App() {
@@ -65,8 +66,8 @@ function App() {
             element={<System contentCategories={<Categories />} />}
           />
           <Route
-            path="/profile"
-            element={<System contentProfile={<Profile />} />}
+            path="account/profile"
+            element={<System contentAccount={<Account contentProfile={<Profile />} />} />}
           />
         </Route>
         {/* <System /> */}
