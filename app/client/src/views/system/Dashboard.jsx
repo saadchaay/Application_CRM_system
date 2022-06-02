@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react'
+import { Link, Navigate } from 'react-router-dom'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Timeline,
@@ -20,9 +21,9 @@ import Sidebar from "../../components/Sidebar";
 
 
 const navigation = [
-  { name: 'Home', href: '#', icon: Home, current: true },
-  { name: 'Analytics', href: '#', icon: Timeline, current: false },
-  { name: 'Sales', href: '#', icon: MonetizationOn, current: false },
+  { name: 'Home', href: '/dashboard', icon: Home, current: true },
+  { name: 'Analytics', href: '/analytics', icon: Timeline, current: false },
+  { name: 'Sales', href: 'sales', icon: MonetizationOn, current: false },
 ]
 
 const secondaryNavigation = [
@@ -106,9 +107,8 @@ export default function Example(props) {
                   >
                     <div className="px-2 space-y-1">
                       {navigation.map((item) => (
-                        <a
+                        <span
                           key={item.name}
-                          href={item.href}
                           className={classNames(
                             item.current
                               ? 'bg-cyan-800 text-white'
@@ -118,21 +118,21 @@ export default function Example(props) {
                           aria-current={item.current ? 'page' : undefined}
                         >
                           <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200" aria-hidden="true" />
-                          {item.name}
-                        </a>
+                          <Link to={item.href}>{item.name}</Link>
+                          
+                        </span>
                       ))}
                     </div>
                     <div className="mt-6 pt-6">
                       <div className="px-2 space-y-1">
                         {secondaryNavigation.map((item) => (
-                          <a
+                          <span
                             key={item.name}
-                            href={item.href}
                             className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-cyan-100 hover:text-white hover:bg-cyan-600"
                           >
                             <item.icon className="mr-4 h-6 w-6 text-cyan-200" aria-hidden="true" />
-                            {item.name}
-                          </a>
+                            <Link to={item.href}>{item.name}</Link>
+                          </span>
                         ))}
                       </div>
                     </div>
@@ -218,12 +218,11 @@ export default function Example(props) {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="/sign-out"
+                          <span
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Logout
-                          </a>
+                            <Link to="/logout" > Logout </Link>
+                          </span>
                         )}
                       </Menu.Item>
                     </Menu.Items>
