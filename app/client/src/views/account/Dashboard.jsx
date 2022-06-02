@@ -31,11 +31,11 @@ const navigation = [
 ]
 
 const secondaryNavigation = [
-  { name: 'Users', href: '#', icon: SupervisorAccount },
-  { name: 'Customers', href: '#', icon: PermIdentity },
-  { name: 'Orders', href: '#', icon: Ballot },
-  { name: 'Products', href: '#', icon: Storefront },
-  { name: 'Categories', href: '#', icon: Category },
+  { name: 'Users', href: '/users', icon: SupervisorAccount },
+  { name: 'Customers', href: '/customers', icon: PermIdentity },
+  { name: 'Orders', href: 'orders', icon: Ballot },
+  { name: 'Products', href: 'products', icon: Storefront },
+  { name: 'Categories', href: 'categories', icon: Category },
 ]
 
 

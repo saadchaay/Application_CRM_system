@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
     Timeline,
     PermIdentity,
@@ -10,17 +11,17 @@ import {
   } from "@material-ui/icons";
 
 const navigation = [
-    { name: 'Home', href: '#', icon: Home, current: true },
-    { name: 'Analytics', href: '#', icon: Timeline, current: false },
-    { name: 'Sales', href: '#', icon: MonetizationOn, current: false },
+    { name: 'Home', to: '/dashboard', icon: Home, current: true },
+    { name: 'Analytics', to: '/analytics', icon: Timeline, current: false },
+    { name: 'Sales', to: '/sales', icon: MonetizationOn, current: false },
   ]
   
   const secondaryNavigation = [
-    { name: 'Users', href: '#', icon: SupervisorAccount },
-    { name: 'Customers', href: '#', icon: PermIdentity },
-    { name: 'Orders', href: '#', icon: Ballot },
-    { name: 'Products', href: '#', icon: Storefront },
-    { name: 'Categories', href: '#', icon: Category },
+    { name: 'Users', to: '/users', icon: SupervisorAccount },
+    { name: 'Customers', to: '/customers', icon: PermIdentity },
+    { name: 'Orders', to: '/orders', icon: Ballot },
+    { name: 'Products', to: '/products', icon: Storefront },
+    { name: 'Categories', to: '/categories', icon: Category },
   ]
 
   function classNames(...classes) {
@@ -45,9 +46,8 @@ export default function Sidebar() {
                 >
                 <div className="px-2 space-y-1">
                     {navigation.map((item) => (
-                    <a
+                    <span
                         key={item.name}
-                        href={item.href}
                         className={classNames(
                         item.current
                             ? "bg-cyan-800 text-white"
@@ -60,24 +60,26 @@ export default function Sidebar() {
                         className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200"
                         aria-hidden="true"
                         />
-                        {item.name}
-                    </a>
+                        <Link to={item.to}>{item.name}</Link>
+                    </span>
                     ))}
                 </div>
                 <div className="mt-6 pt-6">
                     <div className="px-2 space-y-1">
                     {secondaryNavigation.map((item) => (
-                        <a
+                        <span
                         key={item.name}
-                        href={item.href}
                         className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-cyan-100 hover:text-white hover:bg-cyan-600"
                         >
                         <item.icon
                             className="mr-4 h-6 w-6 text-cyan-200"
                             aria-hidden="true"
                         />
-                        {item.name}
-                        </a>
+                        <Link to={item.to}>
+                            {item.name}
+                        </Link>
+                        
+                        </span>
                     ))}
                     </div>
                 </div>

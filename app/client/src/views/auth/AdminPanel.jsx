@@ -29,7 +29,6 @@ function Register() {
     setErrLogin("");
     setErrPwd("");
     setErrAll("");
-    // setErrStatus("");
   }, [login, pwd]);
 
   const handleLogin = async (e) => {
