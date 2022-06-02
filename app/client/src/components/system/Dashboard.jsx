@@ -36,7 +36,7 @@ function classNames(...classes) {
 }
 
 
-export default function Main() {
+export default function Dashboard() {
 
   return (
     <>

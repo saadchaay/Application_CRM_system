@@ -238,6 +238,10 @@ export default function Example(props) {
           {/* <Route path="/dashboard" element={<Main />} /> */}
           {props.contentMain}
           {props.contentUsers}
+          {props.contentCustomers}
+          {props.contentOrders}
+          {props.contentProducts}
+          {props.contentCategories}
           
         </div>
       </div>

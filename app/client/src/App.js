@@ -5,12 +5,16 @@ import Login from "./views/auth/Login";
 import AdminPanel from "./views/auth/AdminPanel";
 import Logout from "./views/auth/Logout";
 import Dashboard from "./views/super_admin/Dashboard";
-import Index from "./views/app_system/Dashboard";
+import System from "./views/system/Dashboard";
 import Details from "./views/super_admin/Details";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
-import Main from "./components/system/Main";
+import Main from "./components/system/Dashboard";
 import Users from "./components/system/Users";
+import Orders from "./components/system/Orders";
+import Customers from "./components/system/Customers";
+import Products from "./components/system/Products";
+import Categories from "./components/system/Categories";
 
 
 function App() {
@@ -37,12 +41,14 @@ function App() {
                     </Route>
 
                   {/* For Admin when Auth */}
-                    <Route path="/dashboard" element={<Index contentMain={<Main />} />} />
-                    <Route path="/users" element={<Index contentUsers={<Users />} />} />
-                    {/* <Route path="/dashboard" element={<Index contentMain={<Main />} />} /> */}
-                    {/* <Route path="/logout" element={<Logout />} />
-                    <Route path="Orders" element={<Index />} />   */}
-                    {/* <Index /> */}
+                    <Route path="/dashboard" element={<System contentMain={<Main />} />} />
+                    <Route path="/users" element={<System contentUsers={<Users />} />} />
+                    <Route path="/orders" element={<System contentOrders={<Orders />} />} />
+                    <Route path="/customers" element={<System contentCustomers={<Customers />} />} />
+                    <Route path="/products" element={<System contentProducts={<Products />} />} />
+                    <Route path="/categories" element={<System contentCategories={<Categories />} />} />
+                    
+                    {/* <System /> */}
 
                   {/* For Client when Auth */}
               {/* </Route> */}
