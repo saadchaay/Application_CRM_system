@@ -4,6 +4,7 @@ import Register from "./views/auth/Register";
 import Login from "./views/auth/Login";
 import AdminPanel from "./views/auth/AdminPanel";
 import Logout from "./views/auth/Logout";
+import Signout from "./views/auth/Signout";
 import Dashboard from "./views/super_admin/Dashboard";
 import System from "./views/system/Dashboard";
 import Details from "./views/super_admin/Details";
@@ -34,7 +35,7 @@ function App() {
         <Route element={<RequiredAuth />}>
           <Route path="/super-dashboard" element={<Dashboard />} />
           <Route path="/admin/:id" element={<Details />} />
-          <Route path="/logout" element={<Logout />} />
+          <Route path="/sign-out" element={<Signout />} />
         </Route>
 
         {/* For Admin when Auth */}
