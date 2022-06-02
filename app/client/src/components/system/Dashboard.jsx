@@ -5,12 +5,9 @@ import {
   ChevronRightIcon,
   OfficeBuildingIcon,
 } from '@heroicons/react/solid';
-
-
-const cards = [
-  { name: 'Account balance', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
-  // More items...
-]
+import { AttachMoney, MonetizationOn, Store, LocalShipping, DonutLarge, TrendingDown } from '@material-ui/icons';
+import axios from '../../api/axios';
+import { useState, useEffect } from 'react';
 
 const transactions = [
   {
@@ -37,6 +34,15 @@ function classNames(...classes) {
 
 
 export default function Dashboard() {
+  const auth = JSON.parse(localStorage.getItem('auth'));
+  const [cards, setCards] = useState([
+    { name: 'Total Revenu', href: '#', icon: AttachMoney, amount: '$30,659.45' },
+    { name: 'Total Orders', href: '#', icon: Store, amount: '5388' },
+    { name: 'Total Profit', href: '#', icon: MonetizationOn, amount: '$11,600.23' },
+    { name: 'Delivered Orders', href: '#', icon: LocalShipping, amount: '3199' },
+    { name: 'Order In Progress', href: '#', icon: DonutLarge, amount: '1239' },
+    { name: 'Returned Orders', href: '#', icon: TrendingDown, amount: '2183' },
+  ]);
 
   return (
     <>
@@ -48,20 +54,29 @@ export default function Dashboard() {
                   <div className="flex-1 min-w-0">
                     {/* Profile */}
                     <div className="flex items-center">
-                      <img
-                        className="hidden h-16 w-16 rounded-full sm:block"
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
-                        alt=""
-                      />
+                      {auth.avatar ? (
+                          <img
+                            className="hidden h-16 w-16 rounded-full sm:block"
+                            src={auth.avatar}
+                            alt=""
+                          /> ) : (
+                            <img
+                              className="hidden h-16 w-16 rounded-full sm:block"
+                              src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
+                              alt=""
+                            />
+                          )
+                      }
+                      
                       <div>
                         <div className="flex items-center">
                           <img
                             className="h-16 w-16 rounded-full sm:hidden"
-                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
+                            src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
                             alt=""
                           />
                           <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                            Good morning, Emilia Birch
+                            Good morning, {auth.name}
                           </h1>
                         </div>
                         <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
@@ -71,7 +86,7 @@ export default function Dashboard() {
                               className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                               aria-hidden="true"
                             />
-                            Duke street studio
+                            {auth.address}
                           </dd>
                           <dt className="sr-only">Account status</dt>
                           <dd className="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize">
@@ -84,20 +99,6 @@ export default function Dashboard() {
                         </dl>
                       </div>
                     </div>
-                  </div>
-                  <div className="mt-6 flex space-x-3 md:mt-0 md:ml-4">
-                    <button
-                      type="button"
-                      className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
-                    >
-                      Add money
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
-                    >
-                      Send money
-                    </button>
                   </div>
                 </div>
               </div>
@@ -138,7 +139,7 @@ export default function Dashboard() {
               </div>
 
               <h2 className="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
-                Recent activity
+                Recent orders
               </h2>
 
               {/* Activity list (smallest breakpoint only) */}

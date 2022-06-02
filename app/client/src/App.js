@@ -17,6 +17,7 @@ import Orders from "./components/system/Orders";
 import Customers from "./components/system/Customers";
 import Products from "./components/system/Products";
 import Categories from "./components/system/Categories";
+import Profile from "./components/system/Profile";
 
 function App() {
   return (
@@ -63,7 +64,10 @@ function App() {
             path="/categories"
             element={<System contentCategories={<Categories />} />}
           />
-          {/* <Route path="/logout" element={<Logout />} /> */}
+          <Route
+            path="/profile"
+            element={<System contentProfile={<Profile />} />}
+          />
         </Route>
         {/* <System /> */}
 

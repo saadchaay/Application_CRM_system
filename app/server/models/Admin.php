@@ -10,13 +10,13 @@ class Admin {
 
     public function get_all_admins()
     {
-        $this->db->query('SELECT * FROM admins WHERE is_super != 1 ORDER BY id DESC');
+        $this->db->query('SELECT * FROM users WHERE ORDER BY id DESC');
         return $this->db->resultSet();
     }
 
     public function get_admin($id)
     {
-        $this->db->query('SELECT * FROM admins WHERE id = :id');
+        $this->db->query('SELECT * FROM users WHERE id = :id');
         $this->db->bind(':id', $id);
         if($this->db->single()) {
             return $this->db->single();
@@ -28,8 +28,9 @@ class Admin {
     public function register($data)
     {
         //create a query
-        // $this->db->query("INSERT INTO `admins` VALUES (:name, :username, :email, :phone, :password, :status)");
-        $this->db->query("INSERT INTO `admins` (`name`, `username`, `email`, `phone`, `address`, `password`, `status`) VALUES (:name, :username, :email, :phone, :address, :password, :status)");
+
+        $this->db->query("INSERT INTO `users` (`name`, `username`, `email`, `phone`, `address`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name, :username, :email, :phone, :address, :password, :role, :status, :created_at, :updated_at)");
+        
         // bind the values
         $this->db->bind(":name", $data["name"]);
         $this->db->bind(":username", $data["username"]);
@@ -38,6 +39,14 @@ class Admin {
         $this->db->bind(":address", $data["address"]);
         $this->db->bind(":password", $data["password"]);
         $this->db->bind(":status", false);
+        $this->db->bind(":created_at", date("Y-m-d H:i:s"));
+        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+
+        if(!$data["role"]) {
+            $this->db->bind(":role", "admin");
+        } else {
+            $this->db->bind(":role", $data["role"]);
+        }
 
         // check execution the query
         if ($this->db->execute()) {
@@ -49,14 +58,14 @@ class Admin {
 
     public function login($data)
     {
-        $this->db->query("SELECT * FROM `admins` WHERE `username` = :username OR `email` = :email");
+        $this->db->query("SELECT * FROM `users` WHERE `username` = :username OR `email` = :email");
 
         $this->db->bind(":username", $data["login"]);
         $this->db->bind(":email", $data["login"]);
 
         $row = $this->db->single();
         if($row) {
-            if((password_verify($data["password"], $row->password)) && !$row->is_super) {
+            if((password_verify($data["password"], $row->password))) {
                 return $row;
             } else {
                 return false;
