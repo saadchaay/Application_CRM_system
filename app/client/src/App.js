@@ -3,12 +3,12 @@ import Home from "./views/Home";
 import Register from "./views/auth/Register";
 import Login from "./views/auth/Login";
 import AdminPanel from "./views/auth/AdminPanel";
-import Dashboard from "./views/grow_yb/Dashboard";
-import Index from "./views/account/Dashboard";
+import Logout from "./views/auth/Logout";
+import Dashboard from "./views/super_admin/Dashboard";
+import Index from "./views/app_system/Dashboard";
+import Details from "./views/super_admin/Details";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
-import Logout from "./views/auth/Logout";
-import Details from "./views/grow_yb/Details";
 import Main from "./components/Main";
 import Users from "./components/Users";
 
