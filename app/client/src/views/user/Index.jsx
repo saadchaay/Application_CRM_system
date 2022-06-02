@@ -13,7 +13,6 @@ import Categories from "../../pages/categories/Categories";
 import "./index.css"
 
 
-
 function Index() {
   return (
     // <BrowserRouter>

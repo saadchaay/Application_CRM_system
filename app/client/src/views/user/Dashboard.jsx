@@ -19,16 +19,8 @@ import {
   ScaleIcon,
   XIcon,
 } from '@heroicons/react/outline';
-import {
-  CashIcon,
-  CheckCircleIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  OfficeBuildingIcon,
-  SearchIcon,
-} from '@heroicons/react/solid';
+import { ChevronDownIcon } from '@heroicons/react/solid';
 import Sidebar from "../../components/Sidebar";
-import Main from "../../components/Main";
 
 
 
@@ -234,7 +226,7 @@ export default function Example(props) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/account"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Your Profile
@@ -244,7 +236,7 @@ export default function Example(props) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/settings"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Settings
@@ -254,7 +246,7 @@ export default function Example(props) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/sign-out"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Logout
