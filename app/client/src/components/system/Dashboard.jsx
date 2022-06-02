@@ -65,7 +65,7 @@ export default function Dashboard() {
     { name: "Returned Orders", href: "#", icon: TrendingDown, amount: "2183" },
   ]);
 
-  const people = [
+  const Orders = [
     { Number: '#5627', date: '28-05-2022', customer: 'Saad Chaay', items: 'Product 1, Product 2', status: 'Pending', total: '$320' },
   ]
 
@@ -230,35 +230,35 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {people.map((person) => (
-                    <tr key={person.email}>
+                  {Orders.map((order) => (
+                    <tr key={order.email}>
                       <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                        {person.Number}
+                        {order.Number}
                         <dl className="font-normal lg:hidden">
                           <dt className="sr-only">Date</dt>
                           <dd className="mt-1 truncate text-gray-700">
-                            {person.date}
+                            {order.date}
                           </dd>
                           <dt className="sr-only sm:hidden">Customer</dt>
                           <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                            {person.customer}
+                            {order.customer}
                           </dd>
                         </dl>
                       </td>
                       <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                        {person.date}
+                        {order.date}
                       </td>
                       <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                        {person.customer}
+                        {order.customer}
                       </td>
                       <td className="px-3 py-4 text-sm text-gray-500">
-                        {person.items}
+                        {order.items}
                       </td>
                       <td className="px-3 py-4 text-sm text-gray-500">
-                        {person.status}
+                        {order.status}
                       </td>
                       <td className="px-3 py-4 text-sm text-gray-500">
-                        {person.total}
+                        {order.total}
                       </td>
                     </tr>
                   ))}
