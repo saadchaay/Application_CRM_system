@@ -19,6 +19,8 @@ import Products from "./components/system/Products";
 import Categories from "./components/system/Categories";
 import Account from "./components/system/Account";
 import Profile from "./components/system/account/Profile";
+import Settings from "./components/system/account/Settings";
+import Password from "./components/system/account/Password";
 
 function App() {
   return (
@@ -68,6 +70,14 @@ function App() {
           <Route
             path="account/profile"
             element={<System contentAccount={<Account profile={<Profile />} />} />}
+          />
+          <Route
+            path="account/settings"
+            element={<System contentAccount={<Account settings={<Settings />} />} />}
+          />
+          <Route
+            path="account/password"
+            element={<System contentAccount={<Account password={<Password />} />} />}
           />
         </Route>
         {/* <System /> */}
