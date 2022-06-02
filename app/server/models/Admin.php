@@ -56,7 +56,7 @@ class Admin {
 
         $row = $this->db->single();
         if($row) {
-            if(password_verify($data["password"], $row->password)) {
+            if((password_verify($data["password"], $row->password)) && !$row->is_super) {
                 return $row;
             } else {
                 return false;
