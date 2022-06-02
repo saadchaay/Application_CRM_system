@@ -204,7 +204,7 @@ function Register() {
             >
               Login
             </button>
-            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+            <span className="text-sm ml-2">
               I don't have an account yet ?
               <span className="hover:text-blue-500 cursor-pointer underline">
                 <Link to="/register">Sign up</Link>
