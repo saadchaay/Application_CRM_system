@@ -182,9 +182,9 @@ export default function Example() {
                   >
                     <div className="px-2 space-y-1">
                       {navigation.map((item) => (
-                        <a
+                        <span
                           key={item.name}
-                          href={item.href}
+                          // href={item.href}
                           className={classNames(
                             item.current
                               ? "bg-cyan-800 text-white"
@@ -197,8 +197,8 @@ export default function Example() {
                             className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200"
                             aria-hidden="true"
                           />
-                          {item.name}
-                        </a>
+                          <Link to={item.href} >{item.name}</Link>
+                        </span>
                       ))}
                     </div>
                   </nav>

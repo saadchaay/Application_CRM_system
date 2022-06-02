@@ -21,6 +21,7 @@ function App() {
   return (
     <div>
       <Routes>
+      <Route path="/logout" element={<Logout />} />
         <Route path="/" element={<Layout />}>
           {/* For Admin or Client */}
           <Route path="/" element={<Home />} />
@@ -39,7 +40,7 @@ function App() {
         {/* For Admin when Auth */}
         <Route element={<Required />}>
           
-          <Route path="/logout" element={<Logout />} />
+          
           <Route
             path="/dashboard"
             element={<System contentMain={<Main />} />}

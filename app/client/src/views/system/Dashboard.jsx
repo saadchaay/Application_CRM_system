@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Timeline,
@@ -208,21 +208,22 @@ export default function Example(props) {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="/settings"
+                          <Link
+                            to="/settings"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Settings
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <span
+                          <Link
+                            to="/logout"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            <Link to="/logout" > Logout </Link>
-                          </span>
+                            Logout
+                          </Link>
                         )}
                       </Menu.Item>
                     </Menu.Items>
