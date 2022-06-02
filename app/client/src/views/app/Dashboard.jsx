@@ -1,16 +1,15 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
-    Timeline,
-    PermIdentity,
-    Storefront,
-    MonetizationOn,
-    Home,
-    SupervisorAccount,
-    Ballot,
-    Category,
-  } from "@material-ui/icons";
-
+  Timeline,
+  PermIdentity,
+  Storefront,
+  MonetizationOn,
+  Home,
+  SupervisorAccount,
+  Ballot,
+  Category,
+} from "@material-ui/icons";
 import {
   MenuAlt1Icon,
   XIcon,
