@@ -67,6 +67,8 @@ export default function Dashboard() {
 
   const Orders = [
     { Number: '#5627', date: '28-05-2022', customer: 'Saad Chaay', items: 'Product 1, Product 2', status: 'Pending', total: '$320' },
+    { Number: '#5627', date: '28-05-2022', customer: 'Saad Chaay', items: 'Product 1, Product 2', status: 'Pending', total: '$320' },
+    { Number: '#5627', date: '28-05-2022', customer: 'Saad Chaay', items: 'Product 1, Product 2', status: 'Pending', total: '$320' },
   ]
 
   return (
@@ -231,8 +233,8 @@ export default function Dashboard() {
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {Orders.map((order) => (
-                    <tr key={order.email}>
-                      <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                    <tr key={order.id}>
+                      <td className="w-1/2 max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
                         {order.Number}
                         <dl className="font-normal lg:hidden">
                           <dt className="sr-only">Date</dt>

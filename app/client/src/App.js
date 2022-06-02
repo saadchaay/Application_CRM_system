@@ -17,7 +17,7 @@ import Orders from "./components/system/Orders";
 import Customers from "./components/system/Customers";
 import Products from "./components/system/Products";
 import Categories from "./components/system/Categories";
-import Profile from "./components/system/Profile";
+import Profile from "./components/system/account/Profile";
 
 function App() {
   return (
