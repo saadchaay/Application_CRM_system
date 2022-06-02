@@ -60,7 +60,7 @@ import {
             {/* {props.profile} */}
               
               {/* settings details */}
-              {/* <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 mt-8 w-full">
+              <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 mt-8 w-full">
                 <section aria-labelledby="payment-details-heading">
                   <form action="#" method="POST">
                     <div className="shadow sm:rounded-md sm:overflow-hidden">
@@ -170,7 +170,7 @@ import {
                     </div>
                   </form>
                 </section>
-              </div> */}
+              </div>
 
             </div>
           </main>
@@ -178,18 +178,5 @@ import {
       </>
     );
   }
-  
-  // export default function Orders() {
-  //     return (
-  //       <>
-  //         <main className="flex justify-center pb-8">
-  //             <h1 className="text-xl font-bold">
-  //               This is profile here
-  //             </h1>
-  //         </main>
-  //       </>
-  //     );
-  //   }
-  
 
   

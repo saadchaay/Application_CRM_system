@@ -242,7 +242,7 @@ export default function Example(props) {
           {props.contentOrders}
           {props.contentProducts}
           {props.contentCategories}
-          {props.contentProfile}
+          {props.contentAccount}
           
         </div>
       </div>

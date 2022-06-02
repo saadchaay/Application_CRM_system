@@ -15,7 +15,6 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  
 
   return (
     <>
