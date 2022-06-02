@@ -1,15 +1,15 @@
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import Dashboard from "../../pages/dashboard/Dashboard";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Users from "../../pages/users/Users";
-import User from "../../pages/users/User";
-import Customers from "../../pages/customers/Customers";
-import Customer from "../../pages/customers/Customer";
-import ProductList from "../../pages/products/ProductList";
-import NewProduct from "../../pages/products/NewProduct";
-import Product from "../../pages/products/Product";
-import Categories from "../../pages/categories/Categories";
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import Users from "../../pages/users/Users";
+// import User from "../../pages/users/User";
+// import Customers from "../../pages/customers/Customers";
+// import Customer from "../../pages/customers/Customer";
+// import ProductList from "../../pages/products/ProductList";
+// import NewProduct from "../../pages/products/NewProduct";
+// import Product from "../../pages/products/Product";
+// import Categories from "../../pages/categories/Categories";
 import "./index.css"
 
 
