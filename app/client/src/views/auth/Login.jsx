@@ -68,7 +68,6 @@ function Register() {
             setOpen(true);
           }
         }
-        // console.log(open);
       }
 
     } catch (err) {
