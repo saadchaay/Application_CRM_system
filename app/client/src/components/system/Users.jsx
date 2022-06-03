@@ -32,6 +32,12 @@ export default function Example() {
 
   useEffect(() => {
     fetchUsers();
+    setErrPwd("");
+    setErrRole("");
+    setErrEmail("");
+    setErrUsername("");
+    setErrName("");
+    setErrConfirmPwd("");
   }, []);
 
   const handleUser = async (e) => {
@@ -57,6 +63,8 @@ export default function Example() {
       setUsername("");
       setPassword("");
       setConfirmPwd("");
+      setRole("");
+      setEmail("");
     } else {
       console.log(res.data);
       setErrName(res.data.errors.name);
