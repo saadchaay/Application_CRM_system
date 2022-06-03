@@ -48,10 +48,11 @@ use PHPMailer\PHPMailer\PHPMailer;
 
         public function validate_password($value)
         {
+            $errors = [];
             if(!preg_match($this->validate_regex['password'], $value)){
-                return false;
+                $errors = "Password is not valid";
             }
-            return true;
+            return $errors;
         }
 
         public function requirement($data)
@@ -63,6 +64,11 @@ use PHPMailer\PHPMailer\PHPMailer;
                         $errors[$key] = ucfirst($key) . ' is required';
                     }
                 }
+                if($key == 'old_password'){
+                    if(empty($value)){
+                        $errors[$key] = 'Old Password is required';
+                    }
+                }
             }
             return $errors;
         }
@@ -70,10 +76,8 @@ use PHPMailer\PHPMailer\PHPMailer;
         public function confirmation_password($data)
         {
             $errors = [];
-            if(!empty($data['confirm_password'])){
-                if($data['confirm_password'] != $data['password']){
-                    $errors['confirm_password'] = 'Confirm password must be same as password';
-                }
+            if($data['confirm_password'] != $data['password']){
+                $errors['confirm_password'] = 'Confirm password must be same as password';
             }
             return $errors;
         }

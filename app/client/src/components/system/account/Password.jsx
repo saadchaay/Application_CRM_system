@@ -11,6 +11,8 @@ import axios from "../../../api/axios";
     const [errOld, setErrOld] = useState("");
     const [errNew, setErrNew] = useState("");
     const [errConfirmPwd, setErrConfirmPwd] = useState("");
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     const handleSave = async (e) => {
       e.preventDefault();
@@ -30,14 +32,21 @@ import axios from "../../../api/axios";
       if (res.status === 201) {
         localStorage.setItem("auth", JSON.stringify(res.data));
         console.log(res);
+        setSuccess("Password changed successfully.");
         setOldPwd("");
         setNewPwd("");
         setConfirmPwd("");
       } else {
         console.log(res);
-        setErrOld(res.data.errors.old);
-        setErrNew(res.data.errors.new);
+        setSuccess("");
+        setErrOld(res.data.errors.old_password);
+        setErrNew(res.data.errors.password);
         setErrConfirmPwd(res.data.errors.confirm_password);
+        if(res.data.errors){
+          setError(res.data.errors);
+        } else {
+          setError(res.data);
+        }
       }
     };
 
@@ -45,6 +54,7 @@ import axios from "../../../api/axios";
       setErrOld("");
       setErrNew("");
       setErrConfirmPwd("");
+      setError("");
     }, [ oldPwd, newPwd, confirmPwd]);
 
 
@@ -65,8 +75,15 @@ import axios from "../../../api/axios";
                         Update Password
                       </h2>
                     </div>
-                    <div className="text-red-500 mb-3 text-sm">
-                        {errConfirmPwd ? errConfirmPwd : null}
+                    <div className="text-red-500 text-sm my-3">
+                        { 
+                          error ? error : (errOld ? errOld : (errNew ? errNew : (errConfirmPwd ? errConfirmPwd : null)))
+                        }
+                    </div>
+                    <div className="text-green-600 text-sm my-3">
+                        { 
+                          success ? success : null
+                        }
                     </div>
                     <div className="mt-6 grid grid-cols-4 gap-6">
                       <div className="col-span-4 sm:col-span-1">
@@ -101,9 +118,6 @@ import axios from "../../../api/axios";
                           autoComplete="cc-family-name"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
-                        <div className="text-red-500 mb-3 text-sm">
-                            {errNew ? errNew : null}
-                        </div>
                       </div>
 
                       <div className="col-span-4 sm:col-span-1">
@@ -121,9 +135,6 @@ import axios from "../../../api/axios";
                           autoComplete="cc-family-name"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
-                        <div className="text-red-500 mb-3 text-sm">
-                            {errConfirmPwd ? errConfirmPwd : null}
-                        </div>
                       </div>
 
                     </div>

@@ -136,20 +136,24 @@ class Admin {
     public function update_password($data, $id)
     {
         $user = $this->get_admin($id);
-        if(password_verify($data["old_password"], $user->password)) {
-            $this->db->query("UPDATE `users` SET `password` = :password, `updated_at` = :updated_at WHERE `id` = :id");
-            $this->db->bind(":password", $data["password"]);
-            $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
-            $this->db->bind(":id", $id);
-            $this->db->execute();
-            $res = $this->get_admin($id);
-            if ($res) {
-                return $res;
+        if($user) {
+            if(password_verify($data["old_password"], $user->password)) {
+                $this->db->query("UPDATE `users` SET `password` = :password, `updated_at` = :updated_at WHERE `id` = :id");
+                $this->db->bind(":password", $data["password"]);
+                $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+                $this->db->bind(":id", $id);
+                $this->db->execute();
+                $res = $this->get_admin($id);
+                if ($res) {
+                    return $res;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
         } else {
-            return "The old password is incorrect";
+            return false;
         }
         
     }

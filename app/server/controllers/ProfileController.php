@@ -63,27 +63,36 @@
                 $data = [
                     'id' => $id,
                     'old_password' => $dataJSON->old_password ? $dataJSON->old_password : "",
-                    'password' => $dataJSON->new_password,
-                    'confirm_password' => $dataJSON->confirm_password,
+                    'password' => $dataJSON->new_password ? $dataJSON->new_password : "",
+                    'confirm_password' => $dataJSON->confirm_password ? $dataJSON->confirm_password : "",
                 ];
-                
-                $errors = $this->validate_password($data['password']);
-                if(!$errors){
+
+                $errors = $this->requirement($data);
+                if($errors){
                     echo json_encode(array('errors' => $errors));
                 }else{
-                    $errors = $this->admin->get_admin($id);
+                    $errors = $this->confirmation_password($data);
                     if($errors){
-                        $errors = $this->confirmation_password($data);
+                        echo json_encode(array('errors' => $errors));
+                    }else{
+                        $errors = $this->validate_password($data['password']);
                         if($errors){
                             echo json_encode(array('errors' => $errors));
-                        }else{
-                            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                            $res = $this->admin->update_password($data, $id);
-                            http_response_code(201);
-                            echo json_encode($res);
+                        } else {
+                            $errors = $this->admin->get_admin($id);
+                            if(!$errors){
+                                echo json_encode(array('errors' => "Admin not found"));
+                            }else{
+                                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                                $res = $this->admin->update_password($data, $id);
+                                if(!$res){
+                                    echo json_encode(array('errors' => "The old password is incorrect"));
+                                } else {
+                                    http_response_code(201);
+                                    echo json_encode($res);
+                                }
+                            }
                         }
-                    } else {
-                        echo json_encode(array('errors' => "Profile not found"));
                     }
                 }
                 
