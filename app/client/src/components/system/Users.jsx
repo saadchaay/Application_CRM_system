@@ -1,7 +1,6 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationIcon } from "@heroicons/react/outline";
 
 export default function Example() {
   const [users, setUsers] = useState([]);
@@ -24,6 +23,7 @@ export default function Example() {
   const [errEmail, setErrEmail] = useState("");
   const [errPwd, setErrPwd] = useState("");
   const [errConfirmPwd, setErrConfirmPwd] = useState("");
+  const [errRole, setErrRole] = useState("");
 
   const fetchUsers = async () => {
     const res = await axios.get("UsersController/index");
@@ -37,12 +37,36 @@ export default function Example() {
   const handleUser = async (e) => {
     // add modal here.........
     e.preventDefault();
-    console.log(name, username, password, confirmPwd);
-    setOpen(false);
-    setName("");
-    setUsername("");
-    setPassword("");
-    setConfirmPwd("");
+    const data = {
+      name: name,
+      username: username,
+      email: email,
+      password: password,
+      confirm_password: confirmPwd,
+      role: role,
+    };
+    const res = await axios.post("UsersController/store", JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.status === 201) {
+      fetchUsers();
+      setOpen(false);
+      setName("");
+      setUsername("");
+      setPassword("");
+      setConfirmPwd("");
+    } else {
+      console.log(res.data);
+      setErrName(res.data.errors.name);
+      setErrUsername(res.data.errors.username); 
+      setErrEmail(res.data.errors.email);
+      setErrPwd(res.data.errors.password);
+      setErrConfirmPwd(res.data.errors.confirm_password);
+      setErrRole(res.data.errors.role);
+    }
+    
   };
 
   return (
@@ -213,10 +237,14 @@ export default function Example() {
                                   autoComplete="country-name"
                                   className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 >
-                                  <option value="stock-manager" >Stock Manager</option>
-                                  <option value="agent-customer" >Agent of Customer</option>
-                                  <option value="shipping-manager" >Shipping Manager</option>
+                                  <option >Choose role ...</option>
+                                  <option value="stockManager" >Stock Manager</option>
+                                  <option value="agentCustomer" >Agent of Customer</option>
+                                  <option value="shipManager" >Shipping Manager</option>
                                 </select>
+                                <div className="text-red-500 mb-3 text-sm">
+                                  {errRole ? errRole : null}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -231,7 +259,6 @@ export default function Example() {
                         Submit
                       </button>
                       <button
-                        type="button"
                         className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                         onClick={() => setOpen(false)}
                         ref={cancelButtonRef}
@@ -322,7 +349,10 @@ export default function Example() {
                     {person.email}
                   </td>
                   <td className="px-3 py-4 text-sm text-gray-500">
-                    {person.role ? person.role : "Manager"}
+                    {person.role === "stockManager" ? "Stock Manager" : ""}
+                    {person.role === "agentCustomer" ? "Agent of Customer" : ""}
+                    {person.role === "shipManager" ? "Shipping Manager" : ""}
+                  
                   </td>
                   <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                     <button

@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\PHPMailer;
         
         protected $validate_regex = [
             'id' => '/^[0-9]+$/',
-            'role' => '/^[a-zA-Z]+$/',
+            'role' => '/^([a-zA-Z' . "'" . ' ]+)$/',
             'login' => '/^[a-zA-Z0-9]*$/',
             'email' => '/^[a-zA-Z0-9]*$/',
             'password' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',

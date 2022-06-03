@@ -17,14 +17,14 @@ class User {
     public function create_user($data)
     {
         //create a query
-        $this->db->query("INSERT INTO `users` (`name`, `username`, `email`, `phone`, `address`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name, :username, :email, :phone, :address, :password, :role, :status, :created_at, :updated_at)");
+        $this->db->query("INSERT INTO `users` (`name`, `username`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name, :username, :email, :password, :role, :status, :created_at, :updated_at)");
         
         // bind the values
         $this->db->bind(":name", $data["name"]);
         $this->db->bind(":username", $data["username"]);
         $this->db->bind(":email", $data["email"]);
-        $this->db->bind(":phone", null);
-        $this->db->bind(":address", null);
+        // $this->db->bind(":phone", null);
+        // $this->db->bind(":address", null);
         $this->db->bind(":password", $data["password"]);
         $this->db->bind(":status", true);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
