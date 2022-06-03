@@ -35,8 +35,6 @@
                     'email' => $dataJSON->email,
                     'phone' => $dataJSON->phone,
                     'address' => $dataJSON->address,
-                    'password' => $dataJSON->password,
-                    'confirm_password' => $dataJSON->confirm_password,
                 ];
 
                 $errors = $this->requirement($data);
@@ -56,7 +54,6 @@
                             if($errors){
                                 echo json_encode(array('errors' => $errors));
                             }else{
-                                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                                 $this->profile->update($data, $id);
                                 http_response_code(201);
                                 echo json_encode($data);

@@ -99,7 +99,7 @@ class Admin {
         }
     }
 
-    public function update($data)
+    public function update($data, $id)
     {
         $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `password` = :password, `role` = :role, `status` = :status, `updated_at` = :updated_at WHERE `id` = :id");
 
@@ -108,10 +108,9 @@ class Admin {
         $this->db->bind(":email", $data["email"]);
         $this->db->bind(":phone", $data["phone"]);
         $this->db->bind(":address", $data["address"]);
-        $this->db->bind(":password", $data["password"]);
         $this->db->bind(":status", $data["status"]);
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
-        $this->db->bind(":id", $data["id"]);
+        $this->db->bind(":id", $id);
 
         if(!$data["role"]) {
             $this->db->bind(":role", "admin");
