@@ -85,8 +85,6 @@ use PHPMailer\PHPMailer\PHPMailer;
         public function sendEmail($data) {
             $mail = new PHPMailer(true); 
             
-            $body="Hello $data->name,\nThanks for registration!\n\nYour Account is activated.\n\nIf you have any question, contact our support: support@grow-yb.com\n\nThanks,\nGROW YB";
-
             $mail->isSMTP();
             $mail->Host = "smtp.gmail.com";
             $mail->SMTPAuth= "true";
@@ -96,8 +94,8 @@ use PHPMailer\PHPMailer\PHPMailer;
             $mail->Password = "Maggie@7223";
             $mail->Subject = "GROW YB: Activation your account";
             $mail->setFrom("saad.chaay@cloudlink.us");
-            $mail->Body = $body;
-            $mail->addAddress($data->email);//sent To
+            $mail->Body = $data["body"];
+            $mail->addAddress($data["admin"]->email);//sent To
             $mail->Send() ;
             $mail->smtpClose();
             

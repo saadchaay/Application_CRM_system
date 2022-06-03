@@ -71,12 +71,20 @@
 
         public function changeStatus($id)
         {
+            $mail = [
+                'admin' => [],
+                'body' => ""
+            ];
             if($_SERVER["REQUEST_METHOD"] == "PUT") {
                 $admin = $this->admin->get_admin($id);
                 // active
                 if($admin->status == 0) {
                     $this->super_admin->change_status($id);
-                    if($this->sendEmail($admin)){
+                    $mail = [
+                        'admin' => $admin,
+                        'body' => "Hello $admin->name,\nThanks for registration!\n\nYour Account is activated.\n\nIf you have any question, contact our support: support@grow-yb.com\n\nThanks,\nGROW YB"
+                    ];
+                    if($this->sendEmail($mail)){
                         http_response_code(201);
                         echo json_encode($admin);
                     }
