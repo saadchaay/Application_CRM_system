@@ -21,6 +21,11 @@ use PHPMailer\PHPMailer\PHPMailer;
             'address' => '/^([a-zA-Z0-9' . "'" . ' ]+)$/',
         ];
 
+        public function __construct()
+        {
+            $this->admin = new Admin();
+        }
+
         public function validation($data)
         {
             $errors = [];
@@ -90,5 +95,47 @@ use PHPMailer\PHPMailer\PHPMailer;
             return $mail;
         }
 
+
+        public function unique($data)
+    {
+        $errors = [];
+        foreach ($data as $key => $value) {
+            if(!empty($value)){
+                if($key == 'email'){
+                    $check = $this->admin->check_email($value);
+                    if($check){
+                        $errors[$key] = ucfirst($key) . ' is already exist';
+                    }
+                }else if($key == 'username'){
+                    $check = $this->admin->check_username($value);
+                    if($check){
+                        $errors[$key] = ucfirst($key) . ' is already exist';
+                    }
+                }
+            }
+        }
+        return $errors;
+    }
+
+    public function exists($data)
+    {
+        $errors = [];
+        foreach ($data as $key => $value) {
+            if(!empty($value)){
+                if($key == 'email'){
+                    $check = $this->admin->check_email($value);
+                    if(!$check){
+                        $errors[$key] = ucfirst($key) . ' is not exist';
+                    }
+                }else if($key == 'username'){
+                    $check = $this->admin->check_username($value);
+                    if(!$check){
+                        $errors[$key] = ucfirst($key) . ' is not exist';
+                    }
+                }
+            }
+        }
+        return $errors;
+    }
         
     }

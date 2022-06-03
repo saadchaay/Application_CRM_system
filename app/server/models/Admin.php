@@ -99,6 +99,34 @@ class Admin {
         }
     }
 
+    public function update($data)
+    {
+        $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `password` = :password, `role` = :role, `status` = :status, `updated_at` = :updated_at WHERE `id` = :id");
+
+        $this->db->bind(":name", $data["name"]);
+        $this->db->bind(":username", $data["username"]);
+        $this->db->bind(":email", $data["email"]);
+        $this->db->bind(":phone", $data["phone"]);
+        $this->db->bind(":address", $data["address"]);
+        $this->db->bind(":password", $data["password"]);
+        $this->db->bind(":status", $data["status"]);
+        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+        $this->db->bind(":id", $data["id"]);
+
+        if(!$data["role"]) {
+            $this->db->bind(":role", "admin");
+        } else {
+            $this->db->bind(":role", $data["role"]);
+        }
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public function delete($id)
     {
         $this->db->query("DELETE FROM admins WHERE id = :id");

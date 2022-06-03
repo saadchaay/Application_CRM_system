@@ -1,7 +1,6 @@
 <?php
 
 class AdminController extends Controller{
-    private $admin;
     
     public function __construct()
     {
@@ -9,8 +8,7 @@ class AdminController extends Controller{
         header('Content-Type: application/json');
         header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
         header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
-        
-        $this->admin = new Admin();
+
     }
 
     public function index()
@@ -108,48 +106,6 @@ class AdminController extends Controller{
         }
     }
 
-    public function unique($data)
-    {
-        $errors = [];
-        foreach ($data as $key => $value) {
-            if(!empty($value)){
-                if($key == 'email'){
-                    $check = $this->admin->check_email($value);
-                    if($check){
-                        $errors[$key] = ucfirst($key) . ' is already exist';
-                    }
-                }else if($key == 'username'){
-                    $check = $this->admin->check_username($value);
-                    if($check){
-                        $errors[$key] = ucfirst($key) . ' is already exist';
-                    }
-                }
-            }
-        }
-        return $errors;
-    }
-
-    public function exists($data)
-    {
-        $errors = [];
-        foreach ($data as $key => $value) {
-            if(!empty($value)){
-                if($key == 'email'){
-                    $check = $this->admin->check_email($value);
-                    if(!$check){
-                        $errors[$key] = ucfirst($key) . ' is not exist';
-                    }
-                }else if($key == 'username'){
-                    $check = $this->admin->check_username($value);
-                    if(!$check){
-                        $errors[$key] = ucfirst($key) . ' is not exist';
-                    }
-                }
-            }
-        }
-        return $errors;
-    }
-
     public function getAdmin($id)
     {
         $result = $this->admin->get_admin($id);
@@ -175,5 +131,5 @@ class AdminController extends Controller{
             }
         }
     }
-    
+
 }
