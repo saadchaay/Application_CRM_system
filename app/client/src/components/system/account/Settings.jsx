@@ -1,22 +1,43 @@
-import {
-    CogIcon,
-    KeyIcon,
-    UserCircleIcon,
-  } from "@heroicons/react/outline";
-  
-  const subNavigation = [
-    { name: "Profile", href: "#", icon: UserCircleIcon, current: false },
-    { name: "Settings", href: "#", icon: CogIcon, current: true },
-    { name: "Password", href: "#", icon: KeyIcon, current: false },
-  ];
-  
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+import { useState, useRef, useEffect } from "react";
+import axios from "../../../api/axios";
+
   
   export default function Example() {
     const auth = JSON.parse(localStorage.getItem("auth"));
-  
+    const [open, setOpen] = useState(false);
+
+    const nameRef = useRef();
+    const emailRef = useRef();
+    const usernameRef = useRef();
+    const phoneRef = useRef();
+    const addressRef = useRef();
+
+    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+
+    const [errName, setErrName] = useState("");
+    const [errUsername, setErrUsername] = useState("");
+    const [errEmail, setErrEmail] = useState("");
+    const [errPhone, setErrPhone] = useState("");
+    const [errAddress, setErrAddress] = useState("");
+
+    const handleSave = async (id) => {
+      const res = await axios.post("/api/account/update/", {
+      });
+    }
+
+    useEffect(() => {
+      setErrName("");
+      setErrUsername("");
+      setErrEmail("");
+      setErrPhone("");
+      setErrAddress("");
+    }, [name, username, email, phone, address]);
+
+
     return (
       <>
           {/* settings details */}
@@ -47,7 +68,9 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="name"
+                          id="name"
+                          ref={nameRef}
+                          onChange={(e) => setName(e.target.value)}
                           autoComplete="name"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                           placeholder={auth.name}
@@ -63,7 +86,9 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="username"
+                          id="username"
+                          ref={usernameRef}
+                          onChange={(e) => setUsername(e.target.value)}
                           autoComplete="username"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                           placeholder={auth.username}
@@ -79,8 +104,10 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="email"
+                          id="email"
                           autoComplete="email"
+                          ref={emailRef}
+                          onChange={(e) => setEmail(e.target.value)}
                           placeholder={auth.email}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
@@ -95,8 +122,10 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="phone"
+                          id="phone"
                           autoComplete="phone"
+                          ref={phoneRef}
+                          onChange={(e) => setPhone(e.target.value)}
                           placeholder={auth.phone}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
@@ -111,8 +140,10 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="address"
+                          id="address"
                           autoComplete="address"
+                          ref={addressRef}
+                          onChange={(e) => setAddress(e.target.value)}
                           placeholder={auth.address}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
@@ -122,6 +153,7 @@ import {
                   <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                     <button
                       type="submit"
+                      onClick={() => handleSave()}
                       className="bg-cyan-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-md font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                     >
                       Save

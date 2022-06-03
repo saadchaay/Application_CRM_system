@@ -10,7 +10,7 @@ class Admin {
 
     public function get_all_admins()
     {
-        $this->db->query('SELECT * FROM users WHERE ORDER BY id DESC');
+        $this->db->query('SELECT * FROM users ORDER BY id DESC');
         return $this->db->resultSet();
     }
 
@@ -41,12 +41,7 @@ class Admin {
         $this->db->bind(":status", false);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
-
-        if(!$data["role"]) {
-            $this->db->bind(":role", "admin");
-        } else {
-            $this->db->bind(":role", $data["role"]);
-        }
+        $this->db->bind(":role", $data["role"]);
 
         // check execution the query
         if ($this->db->execute()) {
@@ -77,8 +72,9 @@ class Admin {
 
     public function check_email($email)
     {
-        $this->db->query("SELECT * FROM admins WHERE email = :email");
+        $this->db->query("SELECT * FROM users WHERE email = :email");
         $this->db->bind(":email", $email);
+
         $row = $this->db->single();
         if ($this->db->rowCount() > 0) {
             return true;
@@ -89,34 +85,45 @@ class Admin {
 
     public function check_username($username)
     {
-        $this->db->query("SELECT * FROM admins WHERE username = :username");
+        $this->db->query("SELECT * FROM users WHERE username = :username");
+        
         $this->db->bind(":username", $username);
         $row = $this->db->single();
+
         if ($this->db->rowCount() > 0) {
             return true;
         } else {
             return false;
         }
+        return $username;
+    }
+
+    public function exists_user($data)
+    {
+        $this->db->query("SELECT * FROM users WHERE (username = :username OR email = :email) AND id != :id");
+        $this->db->bind(":username", $data["username"]);
+        $this->db->bind(":email", $data["email"]);
+        $this->db->bind(":id", $data["id"]);
+
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }    
     }
 
     public function update($data, $id)
     {
-        $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `password` = :password, `role` = :role, `status` = :status, `updated_at` = :updated_at WHERE `id` = :id");
+        $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `updated_at` = :updated_at WHERE `id` = :id");
 
         $this->db->bind(":name", $data["name"]);
         $this->db->bind(":username", $data["username"]);
         $this->db->bind(":email", $data["email"]);
         $this->db->bind(":phone", $data["phone"]);
         $this->db->bind(":address", $data["address"]);
-        $this->db->bind(":status", $data["status"]);
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
         $this->db->bind(":id", $id);
-
-        if(!$data["role"]) {
-            $this->db->bind(":role", "admin");
-        } else {
-            $this->db->bind(":role", $data["role"]);
-        }
 
         if ($this->db->execute()) {
             return true;

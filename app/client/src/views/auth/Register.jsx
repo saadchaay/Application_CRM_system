@@ -135,6 +135,7 @@ function Register() {
           </Fade>
         </Modal>
       </div>
+      
       <div className=" flex flex-col md:flex-row w-full items-center">
         <div className="md:h-screen w-auto md:w-1/2 bg-gradient-to-tr bg-sky-800 to-purple-700 i justify-around items-center hidden md:flex">
           <div className="flex flex-col justify-center items-center">

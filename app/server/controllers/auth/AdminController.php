@@ -2,13 +2,15 @@
 
 class AdminController extends Controller{
     
+    private $admin;
+
     public function __construct()
     {
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
         header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
         header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
-
+        $this->admin = new Admin();
     }
 
     public function index()
@@ -18,7 +20,6 @@ class AdminController extends Controller{
         ];
         echo json_encode($data);
     }
-
     public function register()
     {
         $dataJSON = json_decode(file_get_contents("php://input"));
@@ -33,6 +34,7 @@ class AdminController extends Controller{
                 'address' => $dataJSON->address,
                 'password' => $dataJSON->password,
                 'confirm_password' => $dataJSON->confirm_password,
+                'role' => $dataJSON->role ? $dataJSON->role : 'admin',
             ];
 
             $errors = $this->requirement($data);
@@ -48,7 +50,7 @@ class AdminController extends Controller{
                     if($errors){
                         echo json_encode(array('errors' => $errors));
                     }else{
-                        $errors = $this->unique($data);
+                        $errors = $this->unique($data, $this->admin);
                         if($errors){
                             echo json_encode(array('errors' => $errors));
                         }else{

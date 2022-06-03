@@ -9,11 +9,9 @@ if(isset($_GET['url'])){
 
 if(isset($params[0]) & !empty($params[0])){
     $controller = $params[0];
-    print_r(($params[0].'.php'));
-    if(!is_file("$params[0].php")){
-        print_r(($params[0].'.php'));
-    }
-    if(!is_file($params[0].'.php')){
+    
+    
+    if(!is_file("controllers/$params[0].php")){
         // array_shift($params);
         $controller = ucfirst($params[0]) .'/'. ucfirst($params[1]);
         $file = 'controllers/' . $controller . '.php';

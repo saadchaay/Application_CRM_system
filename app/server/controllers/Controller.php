@@ -7,10 +7,9 @@ require __DIR__.'/../PHPMailer/Exception.php';
 use PHPMailer\PHPMailer\PHPMailer;
 
     class Controller {
-
-        private $admin ;
-
+        
         protected $validate_regex = [
+            'id' => '/^[0-9]+$/',
             'login' => '/^[a-zA-Z0-9]*$/',
             'email' => '/^[a-zA-Z0-9]*$/',
             'password' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
@@ -20,11 +19,6 @@ use PHPMailer\PHPMailer\PHPMailer;
             'confirm_password' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
             'address' => '/^([a-zA-Z0-9' . "'" . ' ]+)$/',
         ];
-
-        public function __construct()
-        {
-            $this->admin = new Admin();
-        }
 
         public function validation($data)
         {
@@ -95,47 +89,39 @@ use PHPMailer\PHPMailer\PHPMailer;
             return $mail;
         }
 
-
-        public function unique($data)
-    {
-        $errors = [];
-        foreach ($data as $key => $value) {
-            if(!empty($value)){
-                if($key == 'email'){
-                    $check = $this->admin->check_email($value);
-                    if($check){
-                        $errors[$key] = ucfirst($key) . ' is already exist';
-                    }
-                }else if($key == 'username'){
-                    $check = $this->admin->check_username($value);
-                    if($check){
-                        $errors[$key] = ucfirst($key) . ' is already exist';
-                    }
-                }
-            }
-        }
-        return $errors;
-    }
-
-    public function exists($data)
-    {
-        $errors = [];
-        foreach ($data as $key => $value) {
-            if(!empty($value)){
-                if($key == 'email'){
-                    $check = $this->admin->check_email($value);
-                    if(!$check){
-                        $errors[$key] = ucfirst($key) . ' is not exist';
-                    }
-                }else if($key == 'username'){
-                    $check = $this->admin->check_username($value);
-                    if(!$check){
-                        $errors[$key] = ucfirst($key) . ' is not exist';
+        public function unique($data, $admin)
+        {
+            $errors = [];
+            foreach ($data as $key => $value) {
+                if(!empty($value)){
+                    if($key == 'email'){
+                        $check = $admin->check_email($value);
+                        if($check){
+                            $errors[$key] = ucfirst($key) . ' is already exist';
+                        }
+                    }else if($key == 'username'){
+                        $check = $admin->check_username($value);
+                        if($check){
+                            $errors[$key] = ucfirst($key) . ' is already exist';
+                        }
                     }
                 }
             }
+            return $errors;
         }
-        return $errors;
-    }
+        
+        public function exists($data, $admin)
+        {
+            $errors = [];
+            if($data){
+                $check = $admin->exists_user($data);
+                if($check){
+                    $errors['email'] = 'Email is not exist';
+                }
+            }
+            return $errors;
+        }
         
     }
+
+?>
