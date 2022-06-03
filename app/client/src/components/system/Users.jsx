@@ -98,7 +98,6 @@ export default function Example() {
                                   onChange={(e) => setName(e.target.value)}
                                   autoComplete="name"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                  placeholder="John Doe"
                                 />
                                 <div className="text-red-500 mb-3 text-sm">
                                   {errName ? errName : null}
@@ -119,7 +118,6 @@ export default function Example() {
                                   onChange={(e) => setUsername(e.target.value)}
                                   autoComplete="username"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                  placeholder="Username"
                                 />
                                 <div className="text-red-500 mb-3 text-sm">
                                   {errUsername ? errUsername : null}
@@ -142,7 +140,6 @@ export default function Example() {
                                   onChange={(e) => setPassword(e.target.value)}
                                   autoComplete="name"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                  placeholder="John Doe"
                                 />
                                 <div className="text-red-500 mb-3 text-sm">
                                   { errPwd ? errPwd : null}
@@ -162,7 +159,6 @@ export default function Example() {
                                   onChange={(e) => setConfirmPwd(e.target.value)}
                                   autoComplete="username"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                  placeholder="Username"
                                 />
                                 <div className="text-red-500 mb-3 text-sm">
                                   { errConfirmPwd ? errConfirmPwd : null}
