@@ -24,10 +24,30 @@ import axios from "../../../api/axios";
     const [errPhone, setErrPhone] = useState("");
     const [errAddress, setErrAddress] = useState("");
 
-    const handleSave = async (id) => {
-      const res = await axios.post("/api/account/update/", {
-      });
-    }
+    const handleSave = async (e) => {
+      e.preventDefault();
+      const id = auth.id;
+      const data = {
+        name: name,
+        username: username,
+        email: email,
+        phone: phone,
+        address: address,
+      };
+      const res = await axios.put("ProfileController/update/"+id, 
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      if (res.data) {
+        localStorage.setItem("another", JSON.stringify(res.data));
+        console.log(res);
+      }
+
+
+    };
 
     useEffect(() => {
       setErrName("");
@@ -43,7 +63,7 @@ import axios from "../../../api/axios";
           {/* settings details */}
           <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 mt-8 w-full">
             <section aria-labelledby="payment-details-heading">
-              <form action="#" method="POST">
+              <form onSubmit={handleSave}>
                 <div className="shadow sm:rounded-md sm:overflow-hidden">
                   <div className="bg-white py-6 px-4 sm:p-6">
                     <div>
@@ -153,7 +173,6 @@ import axios from "../../../api/axios";
                   <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                     <button
                       type="submit"
-                      onClick={() => handleSave()}
                       className="bg-cyan-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-md font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                     >
                       Save

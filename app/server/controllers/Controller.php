@@ -24,19 +24,21 @@ use PHPMailer\PHPMailer\PHPMailer;
         {
             $errors = [];
             foreach ($data as $key => $value) {
-                if($key != 'confirm_password' && $key != 'login'){
-                    if($key == 'email' && $key != 'login'){
-                        if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
+                if(!empty($value)){
+                    if($key != 'confirm_password' && $key != 'login'){
+                        if($key == 'email' && $key != 'login'){
+                            if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
+                                $errors[$key] = ucfirst($key) ." is not valid";
+                            }
+                        }else {
+                            if (!preg_match($this->validate_regex[$key], $value)) {
+                                $errors[$key] = ucfirst($key) ." is not valid";
+                            }
+                        }
+                    }elseif($key == 'login') {
+                        if(!preg_match($this->validate_regex['username'], $value) && !filter_var($value, FILTER_VALIDATE_EMAIL)){
                             $errors[$key] = ucfirst($key) ." is not valid";
                         }
-                    }else {
-                        if (!preg_match($this->validate_regex[$key], $value)) {
-                            $errors[$key] = ucfirst($key) ." is not valid";
-                        }
-                    }
-                }elseif($key == 'login') {
-                    if(!preg_match($this->validate_regex['username'], $value) && !filter_var($value, FILTER_VALIDATE_EMAIL)){
-                        $errors[$key] = ucfirst($key) ." is not valid";
                     }
                 }
             }
@@ -109,7 +111,7 @@ use PHPMailer\PHPMailer\PHPMailer;
             }
             return $errors;
         }
-        
+
         public function exists($data, $admin)
         {
             $errors = [];

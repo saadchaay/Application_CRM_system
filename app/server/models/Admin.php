@@ -28,7 +28,6 @@ class Admin {
     public function register($data)
     {
         //create a query
-
         $this->db->query("INSERT INTO `users` (`name`, `username`, `email`, `phone`, `address`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name, :username, :email, :phone, :address, :password, :role, :status, :created_at, :updated_at)");
         
         // bind the values
@@ -115,18 +114,20 @@ class Admin {
 
     public function update($data, $id)
     {
+        $user = $this->get_admin($id);
         $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `updated_at` = :updated_at WHERE `id` = :id");
 
-        $this->db->bind(":name", $data["name"]);
-        $this->db->bind(":username", $data["username"]);
-        $this->db->bind(":email", $data["email"]);
-        $this->db->bind(":phone", $data["phone"]);
-        $this->db->bind(":address", $data["address"]);
+        $this->db->bind(":name", ($data["name"]) ? $data["name"] : $user->name);
+        $this->db->bind(":username", ($data["username"]) ? $data["username"] : $user->username);
+        $this->db->bind(":email", ($data["email"]) ? $data["email"] : $user->email);
+        $this->db->bind(":phone", ($data["phone"]) ? $data["phone"] : $user->phone);
+        $this->db->bind(":address", ($data["address"]) ? $data["address"] : $user->address);
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
         $this->db->bind(":id", $id);
-
-        if ($this->db->execute()) {
-            return true;
+        $this->db->execute();
+        $res = $this->get_admin($id);
+        if ($res) {
+            return $res;
         } else {
             return false;
         }

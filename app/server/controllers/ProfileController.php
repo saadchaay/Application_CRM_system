@@ -30,11 +30,11 @@
 
                 $data = [
                     'id' => $id,
-                    'name' => $dataJSON->name,
-                    'username' => $dataJSON->username,
-                    'email' => $dataJSON->email,
-                    'phone' => $dataJSON->phone,
-                    'address' => $dataJSON->address,
+                    'name' => $dataJSON->name ? $dataJSON->name : "",
+                    'username' => $dataJSON->username ? $dataJSON->username : "",
+                    'email' => $dataJSON->email ? $dataJSON->email : "",
+                    'phone' => $dataJSON->phone ? $dataJSON->phone : "",
+                    'address' => $dataJSON->address ? $dataJSON->address : "",
                 ];
 
                 $errors = $this->validation($data, $this->validate_regex);
@@ -45,9 +45,9 @@
                     if($errors){
                         echo json_encode(array('errors' => $errors));
                     }else{
-                        $this->admin->update($data, $id);
+                        $res = $this->admin->update($data, $id);
                         http_response_code(201);
-                        echo json_encode($data);
+                        echo json_encode($res);
                     }
                 }
                 
