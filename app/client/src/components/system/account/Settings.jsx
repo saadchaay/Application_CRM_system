@@ -15,7 +15,7 @@ import {
   }
   
   export default function Example() {
-    
+    const auth = JSON.parse(localStorage.getItem("auth"));
   
     return (
       <>
@@ -47,10 +47,10 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="first-name"
-                          id="first-name"
-                          autoComplete="cc-given-name"
+                          name="name"
+                          autoComplete="name"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                          placeholder={auth.name}
                         />
                       </div>
   
@@ -63,10 +63,10 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="last-name"
-                          id="last-name"
-                          autoComplete="cc-family-name"
+                          name="username"
+                          autoComplete="username"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                          placeholder={auth.username}
                         />
                       </div>
   
@@ -79,9 +79,9 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="email-address"
-                          id="email-address"
+                          name="email"
                           autoComplete="email"
+                          placeholder={auth.email}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
                       </div>
@@ -95,9 +95,9 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="email-address"
-                          id="email-address"
-                          autoComplete="email"
+                          name="phone"
+                          autoComplete="phone"
+                          placeholder={auth.phone}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
                       </div>
@@ -111,9 +111,9 @@ import {
                         </label>
                         <input
                           type="text"
-                          name="postal-code"
-                          id="postal-code"
-                          autoComplete="postal-code"
+                          name="address"
+                          autoComplete="address"
+                          placeholder={auth.address}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
                       </div>
@@ -134,34 +134,4 @@ import {
       </>
     );
   }
-  
-  // export default function Orders() {
-  //     return (
-  //       <>
-  //         <main className="flex justify-center pb-8">
-  //             <h1 className="text-xl font-bold">
-  //               This is profile here
-  //             </h1>
-  //         </main>
-  //       </>
-  //     );
-  //   }
-  
-  
-  //  select option needed
-  {/* <div className="col-span-4 sm:col-span-2">
-    <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-      Country
-    </label>
-    <select
-      id="country"
-      name="country"
-      autoComplete="country-name"
-      className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-    >
-      <option>United States</option>
-      <option>Canada</option>
-      <option>Mexico</option>
-    </select>
-  </div>; */}
   

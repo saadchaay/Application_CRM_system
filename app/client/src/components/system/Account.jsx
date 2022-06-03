@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { CogIcon, KeyIcon, UserCircleIcon,} from "@heroicons/react/outline";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
   
   const subNavigation = [
     { name: "Profile", href: "/profile", icon: UserCircleIcon, current: false },
@@ -13,24 +13,28 @@ import { useEffect } from "react";
   }
   
   export default function Example(props) {
-    //   const [current, setCurrent] = useState();
     const location = useLocation();
     const path = location.pathname ;
+    var title = "";
+
     switch (path) {
         case "/account/profile":
             subNavigation[0].current = true;
             subNavigation[1].current = false;
             subNavigation[2].current = false;
+            title = "Account Details";
             break;
         case "/account/settings":
             subNavigation[0].current = false;
             subNavigation[1].current = true;
             subNavigation[2].current = false;
+            title = "Account Settings";
             break;
         case "/account/password":
             subNavigation[0].current = false;
             subNavigation[1].current = false;
             subNavigation[2].current = true;
+            title = "Password Setting";
             break;
         default:
             break;
@@ -41,14 +45,14 @@ import { useEffect } from "react";
         <div className="h-full">
           <main className="max-w-7xl mx-auto pb-10 lg:py-2 lg:px-8">
             <div className="flex flex-col justify-between items-start">
-              <div className="px-4 sm:px-6 md:px-0">
-                <h1 className="text-3xl font-extrabold text-gray-900">
-                  Account
-                </h1>
+              <div className="px-4 mt-4">
+                <h2 className="text-3xl font-extrabold text-gray-900">
+                  {title}
+                </h2>
               </div>
   
               {/* <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3"> */}
-              <nav className="flex mt-5 border-y py-4 w-full">
+              <nav className="flex mt-5 border-y py-4 px-4 w-full">
                 {subNavigation.map((item) => (
                   <Link
                     key={item.name}

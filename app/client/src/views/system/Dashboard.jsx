@@ -43,7 +43,7 @@ function classNames(...classes) {
 
 export default function Example(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-
+  const auth = JSON.parse(localStorage.getItem('auth'));
   return (
     <>
     
@@ -178,7 +178,7 @@ export default function Example(props) {
                         alt=""
                       />
                       <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
-                        <span className="sr-only">Open user menu for </span>Emilia Birch
+                        <span className="sr-only">Open user menu for </span>{auth.name}
                       </span>
                       <ChevronDownIcon
                         className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block"
@@ -199,7 +199,7 @@ export default function Example(props) {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            to="/profile"
+                            to="/account/profile"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Your Profile
@@ -209,7 +209,7 @@ export default function Example(props) {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            to="/settings"
+                            to="/account/settings"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Settings
