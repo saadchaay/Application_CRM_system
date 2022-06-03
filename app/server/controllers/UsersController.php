@@ -37,6 +37,7 @@
                     'email' => $dataJSON->email ? $dataJSON->email : "",
                     'username' => $dataJSON->username ? $dataJSON->username : "",
                     'password' => $dataJSON->password ? $dataJSON->password : "",
+                    'confirm_password' => $dataJSON->confirm_password ? $dataJSON->confirm_password : "",
                     'role' => $dataJSON->role ? $dataJSON->role : "",
                 ];
                 
