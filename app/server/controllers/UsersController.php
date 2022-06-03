@@ -48,15 +48,20 @@
                     if($errors){
                         echo json_encode(array('errors' => $errors));
                     }else{
-                        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                        $result = $this->user->create_user($data);
-                        //send email
-                        if(!$result){
-                            $errors = array('email' => 'Email already exists');
+                        $errors = $this->confirmation_password($data);
+                        if($errors){
                             echo json_encode(array('errors' => $errors));
                         }else{
-                            http_response_code(201);
-                            echo json_encode(array('message' => 'User created'));
+                            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                            $result = $this->user->create_user($data);
+                            //send email
+                            if(!$result){
+                                $errors = array('email' => 'Email already exists');
+                                echo json_encode(array('errors' => $errors));
+                            }else{
+                                http_response_code(201);
+                                echo json_encode(array('message' => 'User created'));
+                            }
                         }
                     }
                 }
