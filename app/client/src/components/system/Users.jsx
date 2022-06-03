@@ -136,8 +136,8 @@ export default function Example() {
                                   Password
                                 </label>
                                 <input
-                                  type="email"
-                                  id="name"
+                                  type="password"
+                                  id="password"
                                   value={password}
                                   onChange={(e) => setPassword(e.target.value)}
                                   autoComplete="name"
@@ -156,8 +156,8 @@ export default function Example() {
                                   Confirm Password
                                 </label>
                                 <input
-                                  type="text"
-                                  id="username"
+                                  type="password"
+                                  id="confirmPwd"
                                   value={confirmPwd}
                                   onChange={(e) => setConfirmPwd(e.target.value)}
                                   autoComplete="username"
