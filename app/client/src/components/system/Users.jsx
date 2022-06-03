@@ -33,7 +33,7 @@ export default function Example() {
   const handleUser = async (e) => {
     // add modal here.........
     e.preventDefault();
-    console.log("clicked");
+    console.log(name, username, password, confirmPwd);
     setOpen(false);
   };
 
