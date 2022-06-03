@@ -17,6 +17,7 @@ export default function Example() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+  const [role, setRole] = useState("");
 
   const [errName, setErrName] = useState("");
   const [errUsername, setErrUsername] = useState("");
@@ -203,17 +204,18 @@ export default function Example() {
                                   htmlFor="country"
                                   className="block text-sm font-medium text-gray-700"
                                 >
-                                  Country
+                                  Role
                                 </label>
                                 <select
-                                  id="country"
-                                  name="country"
+                                  id="role"
+                                  value={role}
+                                  onChange={(e) => setRole(e.target.value)}
                                   autoComplete="country-name"
                                   className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 >
-                                  <option>United States</option>
-                                  <option>Canada</option>
-                                  <option>Mexico</option>
+                                  <option value="stock-manager" >Stock Manager</option>
+                                  <option value="agent-customer" >Agent of Customer</option>
+                                  <option value="shipping-manager" >Shipping Manager</option>
                                 </select>
                               </div>
                             </div>
