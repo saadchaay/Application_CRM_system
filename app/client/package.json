@@ -21,6 +21,8 @@
     "recharts": "^2.1.9",
     "sass": "^1.51.0",
     "styled-components": "^5.3.5",
+    "sweetalert-react": "^0.4.11",
+    "sweetalert2": "^11.4.17",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
