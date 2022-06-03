@@ -2,21 +2,18 @@
 
     class ProfileController extends Controller {
 
-        private $profile;
-
         public function __construct()
         {
             header('Access-Control-Allow-Origin: *');
             header('Content-Type: application/json');
             header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
             header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
-            
-            $this->profile = new Admin();
+
         }
 
         public function index()
         {
-            $all_admins = $this->profile->get_all_admins();
+            $all_admins = $this->admin->get_all_admins();
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 echo json_encode($all_admins);
             }
@@ -54,7 +51,7 @@
                             if($errors){
                                 echo json_encode(array('errors' => $errors));
                             }else{
-                                $this->profile->update($data, $id);
+                                $this->admin->update($data, $id);
                                 http_response_code(201);
                                 echo json_encode($data);
                             }
