@@ -7,17 +7,20 @@ export default function Example() {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
-  
+
   const nameRef = useRef();
   const usernameRef = useRef();
+  const emailRef = useRef();
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
 
   const [errName, setErrName] = useState("");
   const [errUsername, setErrUsername] = useState("");
+  const [errEmail, setErrEmail] = useState("");
   const [errPwd, setErrPwd] = useState("");
   const [errConfirmPwd, setErrConfirmPwd] = useState("");
 
@@ -35,6 +38,10 @@ export default function Example() {
     e.preventDefault();
     console.log(name, username, password, confirmPwd);
     setOpen(false);
+    setName("");
+    setUsername("");
+    setPassword("");
+    setConfirmPwd("");
   };
 
   return (
@@ -73,7 +80,7 @@ export default function Example() {
                   <Dialog.Panel className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                       <div className="sm:flex sm:items-start">
-                        <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <div className="mt-3 text-center sm:mt-0 mx-3 sm:text-left">
                           <Dialog.Title
                             as="h3"
                             className="text-lg leading-6 font-bold text-gray-900"
@@ -81,8 +88,7 @@ export default function Example() {
                             Add User
                           </Dialog.Title>
                           <div className="mt-2">
-
-                            <div className="mt-6 grid grid-cols-4 gap-6">
+                            <div className="mt-3 grid grid-cols-4 gap-6">
                               <div className="col-span-4 sm:col-span-2">
                                 <label
                                   htmlFor="first-name"
@@ -122,10 +128,33 @@ export default function Example() {
                                 <div className="text-red-500 mb-3 text-sm">
                                   {errUsername ? errUsername : null}
                                 </div>
-                              </div>  
+                              </div>
                             </div>
 
-                            <div className="mt-6 grid grid-cols-4 gap-6">
+                            <div className="mt-3 grid grid-cols-2 gap-6">
+                              <div className="col-span-4 sm:col-span-2">
+                                <label
+                                  htmlFor="last-name"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Email
+                                </label>
+                                <input
+                                  type="text"
+                                  id="email"
+                                  value={email}
+                                  ref={emailRef}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                  autoComplete="email"
+                                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                />
+                                <div className="text-red-500 mb-3 text-sm">
+                                  {errEmail ? errEmail : null}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="mt-3 grid grid-cols-4 gap-6">
                               <div className="col-span-4 sm:col-span-2">
                                 <label
                                   htmlFor="first-name"
@@ -142,7 +171,7 @@ export default function Example() {
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
                                 <div className="text-red-500 mb-3 text-sm">
-                                  { errPwd ? errPwd : null}
+                                  {errPwd ? errPwd : null}
                                 </div>
                               </div>
                               <div className="col-span-4 sm:col-span-2">
@@ -156,16 +185,38 @@ export default function Example() {
                                   type="password"
                                   id="confirmPwd"
                                   value={confirmPwd}
-                                  onChange={(e) => setConfirmPwd(e.target.value)}
+                                  onChange={(e) =>
+                                    setConfirmPwd(e.target.value)
+                                  }
                                   autoComplete="username"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
                                 <div className="text-red-500 mb-3 text-sm">
-                                  { errConfirmPwd ? errConfirmPwd : null}
+                                  {errConfirmPwd ? errConfirmPwd : null}
                                 </div>
                               </div>
                             </div>
 
+                            <div className="mt-3 grid grid-cols-4 gap-6">
+                              <div className="col-span-4 sm:col-span-2">
+                                <label
+                                  htmlFor="country"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Country
+                                </label>
+                                <select
+                                  id="country"
+                                  name="country"
+                                  autoComplete="country-name"
+                                  className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                >
+                                  <option>United States</option>
+                                  <option>Canada</option>
+                                  <option>Mexico</option>
+                                </select>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
