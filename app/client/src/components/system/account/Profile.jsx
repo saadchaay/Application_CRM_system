@@ -1,11 +1,3 @@
-import { useState, useEffect, Fragment } from "react";
-import { Home, ExitToApp, Delete } from "@material-ui/icons";
-import { useParams } from "react-router";
-import { Dialog, Menu, Transition } from "@headlessui/react";
-import axios from "../../../api/axios";
-import { BellIcon, MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-
 const statusStyles = {
   active: "bg-green-100 text-green-800",
   inactive: "bg-red-100 text-red-800",
