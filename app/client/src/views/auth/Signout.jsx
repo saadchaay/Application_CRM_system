@@ -1,5 +1,4 @@
 import { Navigate } from "react-router-dom";
-import { useState } from "react";
 
 const Logout = () => {
   localStorage.clear();

@@ -10,6 +10,7 @@ use PHPMailer\PHPMailer\PHPMailer;
         
         protected $validate_regex = [
             'id' => '/^[0-9]+$/',
+            'role' => '/^[a-zA-Z]+$/',
             'login' => '/^[a-zA-Z0-9]*$/',
             'email' => '/^[a-zA-Z0-9]*$/',
             'password' => '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
@@ -43,6 +44,14 @@ use PHPMailer\PHPMailer\PHPMailer;
                 }
             }
             return $errors;
+        }
+
+        public function validate_password($value)
+        {
+            if(!preg_match($this->validate_regex['password'], $value)){
+                return false;
+            }
+            return true;
         }
 
         public function requirement($data)
@@ -118,7 +127,7 @@ use PHPMailer\PHPMailer\PHPMailer;
             if($data){
                 $check = $admin->exists_user($data);
                 if($check){
-                    $errors['email'] = 'Email is not exist';
+                    $errors = 'Email or Username is already taken';
                 }
             }
             return $errors;

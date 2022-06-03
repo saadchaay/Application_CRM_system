@@ -1,28 +1,60 @@
-import {
-    CogIcon,
-    KeyIcon,
-    UserCircleIcon,
-  } from "@heroicons/react/outline";
-  
-  const subNavigation = [
-    { name: "Profile", href: "#", icon: UserCircleIcon, current: false },
-    { name: "Settings", href: "#", icon: CogIcon, current: true },
-    { name: "Password", href: "#", icon: KeyIcon, current: false },
-  ];
-  
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+import { useState, useRef, useEffect } from "react";
+import axios from "../../../api/axios";
   
   export default function Example() {
-    
+    const auth = JSON.parse(localStorage.getItem("auth"));
+
+    const [oldPwd, setOldPwd] = useState("");
+    const [newPwd, setNewPwd] = useState("");
+    const [confirmPwd, setConfirmPwd] = useState("");
+
+    const [errOld, setErrOld] = useState("");
+    const [errNew, setErrNew] = useState("");
+    const [errConfirmPwd, setErrConfirmPwd] = useState("");
+
+    const handleSave = async (e) => {
+      e.preventDefault();
+      const id = auth.id;
+      const data = {
+        old_password: oldPwd,
+        new_password: newPwd,
+        confirm_password: confirmPwd
+      };
+      const res = await axios.put("ProfileController/update_password/"+id, 
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      if (res.status === 201) {
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        console.log(res);
+        setOldPwd("");
+        setNewPwd("");
+        setConfirmPwd("");
+      } else {
+        console.log(res);
+        setErrOld(res.data.errors.old);
+        setErrNew(res.data.errors.new);
+        setErrConfirmPwd(res.data.errors.confirm_password);
+      }
+    };
+
+    useEffect(() => {
+      setErrOld("");
+      setErrNew("");
+      setErrConfirmPwd("");
+    }, [ oldPwd, newPwd, confirmPwd]);
+
+
   
     return (
       <>
           {/* settings details */}
           <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 mt-8 w-full">
             <section aria-labelledby="payment-details-heading">
-              <form action="#" method="POST">
+              <form onSubmit={handleSave}>
                 <div className="shadow sm:rounded-md sm:overflow-hidden">
                   <div className="bg-white py-6 px-4 sm:p-6">
                     <div>
@@ -33,7 +65,9 @@ import {
                         Update Password
                       </h2>
                     </div>
-  
+                    <div className="text-red-500 mb-3 text-sm">
+                        {errConfirmPwd ? errConfirmPwd : null}
+                    </div>
                     <div className="mt-6 grid grid-cols-4 gap-6">
                       <div className="col-span-4 sm:col-span-1">
                         <label
@@ -44,8 +78,9 @@ import {
                         </label>
                         <input
                           type="password"
-                          name="first-name"
-                          id="first-name"
+                          id="old_password"
+                          onChange={(e) => setOldPwd(e.target.value)}
+                          value={oldPwd}
                           autoComplete="cc-given-name"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
@@ -60,10 +95,15 @@ import {
                         </label>
                         <input
                           type="password"
-                          name=""
+                          id="new_password"
+                          onChange={(e) => setNewPwd(e.target.value)}
+                          value={newPwd}
                           autoComplete="cc-family-name"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
+                        <div className="text-red-500 mb-3 text-sm">
+                            {errNew ? errNew : null}
+                        </div>
                       </div>
 
                       <div className="col-span-4 sm:col-span-1">
@@ -75,10 +115,15 @@ import {
                         </label>
                         <input
                           type="password"
-                          name=""
+                          if="confirm_password"
+                          onChange={(e) => setConfirmPwd(e.target.value)}
+                          value={confirmPwd}
                           autoComplete="cc-family-name"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
+                        <div className="text-red-500 mb-3 text-sm">
+                            {errConfirmPwd ? errConfirmPwd : null}
+                        </div>
                       </div>
 
                     </div>

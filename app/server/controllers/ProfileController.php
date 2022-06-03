@@ -53,4 +53,40 @@
                 
             }
         }
+
+        public function update_password($id)
+        {
+            $dataJSON = json_decode(file_get_contents("php://input"));
+
+            if($_SERVER["REQUEST_METHOD"] == "PUT"){
+
+                $data = [
+                    'id' => $id,
+                    'old_password' => $dataJSON->old_password ? $dataJSON->old_password : "",
+                    'password' => $dataJSON->new_password,
+                    'confirm_password' => $dataJSON->confirm_password,
+                ];
+                
+                $errors = $this->validate_password($data['password']);
+                if(!$errors){
+                    echo json_encode(array('errors' => $errors));
+                }else{
+                    $errors = $this->admin->get_admin($id);
+                    if($errors){
+                        $errors = $this->confirmation_password($data);
+                        if($errors){
+                            echo json_encode(array('errors' => $errors));
+                        }else{
+                            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                            $res = $this->admin->update_password($data, $id);
+                            http_response_code(201);
+                            echo json_encode($res);
+                        }
+                    } else {
+                        echo json_encode(array('errors' => "Profile not found"));
+                    }
+                }
+                
+            }
+        }
     }

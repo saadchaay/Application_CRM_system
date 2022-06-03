@@ -4,7 +4,6 @@ import axios from "../../../api/axios";
   
   export default function Example() {
     const auth = JSON.parse(localStorage.getItem("auth"));
-    const [open, setOpen] = useState(false);
 
     const nameRef = useRef();
     const emailRef = useRef();
@@ -41,13 +40,33 @@ import axios from "../../../api/axios";
             "Content-Type": "application/json",
           },
         });
-      if (res.data) {
-        localStorage.setItem("another", JSON.stringify(res.data));
+      if (res.status === 201) {
+        localStorage.setItem("auth", JSON.stringify(res.data));
         console.log(res);
+        setName("");
+        setUsername("");
+        setEmail("");
+        setPhone("");
+        setAddress("");
+      } else {
+        console.log(res.data.errors.name);
+        setErrName(res.data.errors.name);
+        setErrUsername(res.data.errors.username);
+        setErrEmail(res.data.errors.email);
+        setErrPhone(res.data.errors.phone);
+        setErrAddress(res.data.errors.address);
       }
 
 
     };
+
+    useEffect(() => {
+        nameRef.current.focus();
+        emailRef.current.focus();
+        usernameRef.current.focus();
+        phoneRef.current.focus();
+        addressRef.current.focus();
+      }, []);
 
     useEffect(() => {
       setErrName("");
@@ -90,11 +109,15 @@ import axios from "../../../api/axios";
                           type="text"
                           id="name"
                           ref={nameRef}
+                          value={name}
                           onChange={(e) => setName(e.target.value)}
                           autoComplete="name"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                           placeholder={auth.name}
                         />
+                        <div className="text-red-500 mb-3 text-sm">
+                            {errName ? errName : null}
+                        </div>
                       </div>
   
                       <div className="col-span-4 sm:col-span-2">
@@ -107,12 +130,16 @@ import axios from "../../../api/axios";
                         <input
                           type="text"
                           id="username"
+                          value={username}
                           ref={usernameRef}
                           onChange={(e) => setUsername(e.target.value)}
                           autoComplete="username"
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                           placeholder={auth.username}
                         />
+                        <div className="text-red-500 mb-3 text-sm">
+                            {errUsername ? errUsername : null}
+                        </div>
                       </div>
   
                       <div className="col-span-4 sm:col-span-2">
@@ -125,12 +152,16 @@ import axios from "../../../api/axios";
                         <input
                           type="text"
                           id="email"
+                          value={email}
                           autoComplete="email"
                           ref={emailRef}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder={auth.email}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
+                        <div className="text-red-500 mb-3 text-sm">
+                            {errEmail ? errEmail : null}
+                        </div>
                       </div>
   
                       <div className="col-span-4 sm:col-span-2">
@@ -143,12 +174,16 @@ import axios from "../../../api/axios";
                         <input
                           type="text"
                           id="phone"
+                          value={phone}
                           autoComplete="phone"
                           ref={phoneRef}
                           onChange={(e) => setPhone(e.target.value)}
                           placeholder={auth.phone}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
+                        <div className="text-red-500 mb-3 text-sm">
+                            {errPhone ? errPhone : null}
+                        </div>
                       </div>
   
                       <div className="col-span-4 sm:col-span-2">
@@ -161,12 +196,16 @@ import axios from "../../../api/axios";
                         <input
                           type="text"
                           id="address"
+                          value={address}
                           autoComplete="address"
                           ref={addressRef}
                           onChange={(e) => setAddress(e.target.value)}
                           placeholder={auth.address}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
+                        <div className="text-red-500 mb-3 text-sm">
+                            {errAddress ? errAddress : null}
+                        </div>
                       </div>
                     </div>
                   </div>
