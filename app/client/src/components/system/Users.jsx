@@ -6,6 +6,7 @@ export default function Example() {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
+  const [user, setUser] = useState({});
 
   const nameRef = useRef();
   const usernameRef = useRef();
