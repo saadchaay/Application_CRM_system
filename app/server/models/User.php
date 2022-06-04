@@ -37,6 +37,17 @@ class User {
         }
     }
 
+    public function delete_user($id)
+    {
+        $this->db->query("DELETE FROM `users` WHERE `id` = :id");
+        $this->db->bind(":id", $id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     
 }
