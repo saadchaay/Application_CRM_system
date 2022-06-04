@@ -69,4 +69,17 @@
             }
         }
         
+        public function delete($id)
+        {
+            if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+                $result = $this->user->delete_user($id);
+                if($result){
+                    http_response_code(200);
+                    echo json_encode(array('message' => 'User deleted'));
+                }else{
+                    http_response_code(404);
+                    echo json_encode(array('message' => 'User not found'));
+                }
+            }
+        }
     }
