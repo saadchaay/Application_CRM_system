@@ -1,12 +1,12 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
+import { Delete, Edit } from "@material-ui/icons";
 
 export default function Example() {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
-  const [user, setUser] = useState({});
   const auth = JSON.parse(localStorage.getItem("auth"));
 
   const nameRef = useRef();
@@ -28,8 +28,13 @@ export default function Example() {
   const [errRole, setErrRole] = useState("");
 
   const fetchUsers = async () => {
-    const res = await axios.get("UsersController/index");
-    setUsers(res.data);
+    const res = await axios.get("UsersController/index/"+auth.id);
+    if(res.status === 200) {
+      setUsers(res.data);
+      console.log(res.data);
+    } else {
+      console.log("There's no user");
+    }
   };
 
   useEffect(() => {
@@ -68,6 +73,7 @@ export default function Example() {
       setConfirmPwd("");
       setRole("");
       setEmail("");
+      console.log("User added");
     } else {
       console.log(res.data);
       setErrName(res.data.errors.name);
@@ -79,6 +85,15 @@ export default function Example() {
     }
     
   };
+
+  const handleDelete = async (id) => {
+    const res = await axios.delete(`UsersController/destroy/${id}`);
+    if (res.status === 200) {
+      fetchUsers();
+      console.log("User deleted");
+    }
+  };
+
 
   return (
     <>
@@ -332,8 +347,8 @@ export default function Example() {
                 >
                   Role
                 </th>
-                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span className="sr-only">Edit</span>
+                <th scope="col" className="px-3 text-sm font-semibold text-gray-900">
+                  Edit
                 </th>
               </tr>
             </thead>
@@ -370,9 +385,15 @@ export default function Example() {
                       onClick={() => {
                         window.location.href = `/users/edit/${person.id}`;
                       }}
-                      className="text-indigo-600 hover:text-indigo-900"
+                      className="text-green-500 hover:text-green-700"
                     >
-                      Edit<span className="sr-only">, {person.name}</span>
+                     <Edit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(person.id)}
+                      className="text-red-500 hover:text-red-600"
+                    >
+                      <Delete />
                     </button>
                   </td>
                 </tr>

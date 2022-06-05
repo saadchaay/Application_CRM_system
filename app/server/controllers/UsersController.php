@@ -12,15 +12,15 @@
             $this->user = new User();
         }
 
-        public function index()
+        public function index($id)
         {    
-            $all_users = $this->user->get_all_users();
+            $all_users = $this->user->get_all_users($id);
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($all_users){
                     http_response_code(200);
                     echo json_encode($all_users);
                 }else{
-                    http_response_code(404);
+                    http_response_code(201);
                     echo json_encode(array('message' => 'No users found'));
                 }
             }
@@ -70,7 +70,7 @@
             }
         }
         
-        public function delete($id)
+        public function destroy($id)
         {
             if($_SERVER["REQUEST_METHOD"] == "DELETE"){
                 $result = $this->user->delete_user($id);

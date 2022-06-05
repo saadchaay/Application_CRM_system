@@ -8,9 +8,10 @@ class User {
         $this->db = new Database();
     }
 
-    public function get_all_users()
+    public function get_all_users($id)
     {
-        $this->db->query('SELECT * FROM users WHERE `role` != "admin" ORDER BY id DESC');
+        $this->db->query('SELECT * FROM users WHERE id_admin = :id ORDER BY id DESC');
+        $this->db->bind(':id', $id);
         return $this->db->resultSet();
     }
 
