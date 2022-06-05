@@ -39,6 +39,7 @@
                     'password' => $dataJSON->password ? $dataJSON->password : "",
                     'confirm_password' => $dataJSON->confirm_password ? $dataJSON->confirm_password : "",
                     'role' => $dataJSON->role ? $dataJSON->role : "",
+                    'id' => $dataJSON->id_admin ? $dataJSON->id_admin : "",
                 ];
                 
                 $errors = $this->requirement($data);

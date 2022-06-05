@@ -7,6 +7,7 @@ export default function Example() {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [user, setUser] = useState({});
+  const auth = JSON.parse(localStorage.getItem("auth"));
 
   const nameRef = useRef();
   const usernameRef = useRef();
@@ -51,6 +52,7 @@ export default function Example() {
       password: password,
       confirm_password: confirmPwd,
       role: role,
+      id_admin: auth.id,
     };
     const res = await axios.post("UsersController/store", JSON.stringify(data), {
       headers: {

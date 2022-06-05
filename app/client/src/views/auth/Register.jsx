@@ -70,7 +70,7 @@ function Register() {
         },
       }
     );
-    console.log(res.status);
+    console.log(res);
     if (res.status === 201) {
       console.log(res.data);
       setName("");
@@ -82,15 +82,15 @@ function Register() {
       setAddress("");
       setOpen(true);
     } else {
-      // if (res.data.errors) {
-        // setErrName(res.data.errors.name);
-        // setErrUsername(res.data.errors.username);
-        // setErrEmail(res.data.errors.email);
-        // setErrPhone(res.data.errors.phone);
-        // setErrAddress(res.data.errors.address);
-        // setErrPwd(res.data.errors.password);
-        // setErrConfirmPwd(res.data.errors.confirm_password);
-      // }
+      if (res.data.errors) {
+        setErrName(res.data.errors.name);
+        setErrUsername(res.data.errors.username);
+        setErrEmail(res.data.errors.email);
+        setErrPhone(res.data.errors.phone);
+        setErrAddress(res.data.errors.address);
+        setErrPwd(res.data.errors.password);
+        setErrConfirmPwd(res.data.errors.confirm_password);
+      }
       console.log(res.data.errors);
     }
   };

@@ -34,7 +34,6 @@ class AdminController extends Controller{
                 'address' => $dataJSON->address,
                 'password' => $dataJSON->password,
                 'confirm_password' => $dataJSON->confirm_password,
-                'role' => $dataJSON->role ? $dataJSON->role : 'admin',
             ];
 
             $errors = $this->requirement($data);

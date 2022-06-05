@@ -40,7 +40,7 @@ class Admin {
         $this->db->bind(":status", false);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
-        $this->db->bind(":role", $data["role"]);
+        $this->db->bind(":role", "admin");
 
         // check execution the query
         if ($this->db->execute()) {
