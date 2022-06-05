@@ -17,6 +17,7 @@ import {
 } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import Sidebar from "../../components/Sidebar";
+import logo from '../../assets/images/logo_gyb.png'
 
 
 
@@ -97,8 +98,10 @@ export default function Example(props) {
                   <div className="flex-shrink-0 flex items-center px-4">
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
+                      src={logo}
                       alt="Easywire logo"
+                      width={200}
+                      height={64}
                     />
                   </div>
                   <nav
