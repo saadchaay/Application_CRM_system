@@ -15,9 +15,20 @@ class User {
         return $this->db->resultSet();
     }
 
+    public function get_user($id)
+    {
+        $this->db->query('SELECT * FROM users WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if($this->db->single()) {
+            return $this->db->single();
+        } else {
+            return false;
+        }
+    }
+
     public function login($data)
     {
-        $this->db->query("SELECT * FROM `admins` WHERE `username` = :username OR `email` = :email");
+        $this->db->query("SELECT * FROM `users` WHERE `username` = :username OR `email` = :email");
 
         $this->db->bind(":username", $data["login"]);
         $this->db->bind(":email", $data["login"]);
@@ -54,6 +65,27 @@ class User {
         // check execution the query
         if ($this->db->execute()) {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function update($data, $id)
+    {
+        $user = $this->get_user($id);
+        $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `updated_at` = :updated_at WHERE `id` = :id");
+
+        $this->db->bind(":name", ($data["name"]) ? $data["name"] : $user->name);
+        $this->db->bind(":username", ($data["username"]) ? $data["username"] : $user->username);
+        $this->db->bind(":email", ($data["email"]) ? $data["email"] : $user->email);
+        $this->db->bind(":phone", ($data["phone"]) ? $data["phone"] : $user->phone);
+        $this->db->bind(":address", ($data["address"]) ? $data["address"] : $user->address);
+        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+        $this->db->bind(":id", $id);
+        $this->db->execute();
+        $res = $this->get_user($id);
+        if ($res) {
+            return $res;
         } else {
             return false;
         }

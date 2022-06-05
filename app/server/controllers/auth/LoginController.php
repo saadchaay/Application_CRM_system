@@ -1,6 +1,6 @@
 <?php
 
-class AdminController extends Controller{
+class LoginController extends Controller{
     
     private $admin;
     private $user;
@@ -54,9 +54,13 @@ class AdminController extends Controller{
                         $errors = array('login_password' => 'Login or password is incorrect');
                         echo json_encode(array('errors' => $errors));
                     }else{
-                        if($$admin_login->status || $user_login->status){
+                        if(isset($admin_login->status) || isset($user_login->status)){
                             http_response_code(201);
-                            echo json_encode($result);
+                            if($admin_login){
+                                echo json_encode($admin_login);
+                            } elseif($user_login){
+                                echo json_encode($user_login);
+                            }
                         }else {
                             $errors = array('status' => 'Your Account is not active yet.');
                             echo json_encode(array('errors' => $errors));

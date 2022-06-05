@@ -3,6 +3,8 @@
     class ProfileController extends Controller {
 
         private $admin ;
+        private $user ;
+
         public function __construct()
         {
             header('Access-Control-Allow-Origin: *');
@@ -10,6 +12,7 @@
             header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
             header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
             $this->admin = new Admin();
+            $this->user = new User();
         }
 
         public function index()
@@ -36,6 +39,7 @@
                     'phone' => $dataJSON->phone ? $dataJSON->phone : "",
                     'address' => $dataJSON->address ? $dataJSON->address : "",
                 ];
+                $role = $dataJSON->role ? $dataJSON->role : "";
 
                 $errors = $this->validation($data, $this->validate_regex);
                 if($errors){
@@ -45,7 +49,11 @@
                     if($errors){
                         echo json_encode(array('errors' => $errors));
                     }else{
-                        $res = $this->admin->update($data, $id);
+                        if($role == "admin"){
+                            $res = $this->admin->update($data, $id);
+                        }else{
+                            $res = $this->user->update($data, $id);
+                        }
                         http_response_code(201);
                         echo json_encode($res);
                     }

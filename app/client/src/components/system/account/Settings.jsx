@@ -32,6 +32,7 @@ import axios from "../../../api/axios";
         email: email,
         phone: phone,
         address: address,
+        role: auth.role,
       };
       const res = await axios.put("ProfileController/update/"+id, 
         JSON.stringify(data),

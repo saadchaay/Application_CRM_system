@@ -21,6 +21,7 @@ function Register() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
+  const fromTo = location.state?.from?.pathname || "/account/profile";
 
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function Register() {
         password: pwd,
       };
       const res = await axios.post(
-        "auth/AdminController/login",
+        "auth/LoginController/login",
         JSON.stringify(data),
         {
           headers: {
@@ -58,7 +59,11 @@ function Register() {
         console.log("ok");
         setAuth({ login, pwd });
         localStorage.setItem("auth", JSON.stringify(res?.data));
-        navigate(from, { replace: true });
+        if(res.data.role === "admin"){
+          navigate(from, { replace: true });
+        } else {
+          navigate(fromTo, { replace: true });
+        }
       } else {
         if (res.data.errors) {
           setErrLogin(res.data.errors.login);
