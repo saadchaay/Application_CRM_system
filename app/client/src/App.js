@@ -45,7 +45,6 @@ function App() {
         {/* For Admin when Auth */}
         <Route element={<Required />}>
           
-          
           <Route
             path="/dashboard"
             element={<System contentMain={<Main />} />}
@@ -80,6 +79,7 @@ function App() {
             element={<System contentAccount={<Account password={<Password />} />} />}
           />
         </Route>
+
         {/* <System /> */}
 
         {/* For Client when Auth */}
