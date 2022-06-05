@@ -10,13 +10,13 @@ class Admin {
 
     public function get_all_admins()
     {
-        $this->db->query('SELECT * FROM users ORDER BY id DESC');
+        $this->db->query('SELECT * FROM admins ORDER BY id DESC');
         return $this->db->resultSet();
     }
 
     public function get_admin($id)
     {
-        $this->db->query('SELECT * FROM users WHERE id = :id');
+        $this->db->query('SELECT * FROM admins WHERE id = :id');
         $this->db->bind(':id', $id);
         if($this->db->single()) {
             return $this->db->single();
@@ -28,7 +28,7 @@ class Admin {
     public function register($data)
     {
         //create a query
-        $this->db->query("INSERT INTO `users` (`name`, `username`, `email`, `phone`, `address`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name, :username, :email, :phone, :address, :password, :role, :status, :created_at, :updated_at)");
+        $this->db->query("INSERT INTO `admins` (`name`, `username`, `email`, `phone`, `address`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name, :username, :email, :phone, :address, :password, :role, :status, :created_at, :updated_at)");
         
         // bind the values
         $this->db->bind(":name", $data["name"]);
@@ -52,7 +52,7 @@ class Admin {
 
     public function login($data)
     {
-        $this->db->query("SELECT * FROM `users` WHERE `username` = :username OR `email` = :email");
+        $this->db->query("SELECT * FROM `admins` WHERE `username` = :username OR `email` = :email");
 
         $this->db->bind(":username", $data["login"]);
         $this->db->bind(":email", $data["login"]);
@@ -71,7 +71,7 @@ class Admin {
 
     public function check_email($email)
     {
-        $this->db->query("SELECT * FROM users WHERE email = :email");
+        $this->db->query("SELECT * FROM admins WHERE email = :email");
         $this->db->bind(":email", $email);
 
         $row = $this->db->single();
@@ -84,7 +84,7 @@ class Admin {
 
     public function check_username($username)
     {
-        $this->db->query("SELECT * FROM users WHERE username = :username");
+        $this->db->query("SELECT * FROM admins WHERE username = :username");
         
         $this->db->bind(":username", $username);
         $row = $this->db->single();
@@ -99,7 +99,7 @@ class Admin {
 
     public function exists_user($data)
     {
-        $this->db->query("SELECT * FROM users WHERE (username = :username OR email = :email) AND id != :id");
+        $this->db->query("SELECT * FROM admins WHERE (username = :username OR email = :email) AND id != :id");
         $this->db->bind(":username", $data["username"]);
         $this->db->bind(":email", $data["email"]);
         $this->db->bind(":id", $data["id"]);
@@ -115,7 +115,7 @@ class Admin {
     public function update($data, $id)
     {
         $user = $this->get_admin($id);
-        $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `updated_at` = :updated_at WHERE `id` = :id");
+        $this->db->query("UPDATE `admins` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `updated_at` = :updated_at WHERE `id` = :id");
 
         $this->db->bind(":name", ($data["name"]) ? $data["name"] : $user->name);
         $this->db->bind(":username", ($data["username"]) ? $data["username"] : $user->username);
@@ -138,7 +138,7 @@ class Admin {
         $user = $this->get_admin($id);
         if($user) {
             if(password_verify($data["old_password"], $user->password)) {
-                $this->db->query("UPDATE `users` SET `password` = :password, `updated_at` = :updated_at WHERE `id` = :id");
+                $this->db->query("UPDATE `admins` SET `password` = :password, `updated_at` = :updated_at WHERE `id` = :id");
                 $this->db->bind(":password", $data["password"]);
                 $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
                 $this->db->bind(":id", $id);
