@@ -58,5 +58,18 @@
             }
         }
 
+        public function destroy($id)
+        {
+            
+            $result = $this->category->delete_category($id);
+            if($result){
+                http_response_code(201);
+                echo json_encode(array('message' => 'Category deleted'));
+            }else{
+                http_response_code(500);
+                echo json_encode(array('message' => 'Something went wrong'));
+            }
+        }
+
         
     }

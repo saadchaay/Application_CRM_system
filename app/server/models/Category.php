@@ -58,4 +58,15 @@ class Category {
             return false;
         }
     }
+
+    public function delete_category($id)
+    {
+        $this->db->query("DELETE FROM `categories` WHERE id = :id");
+        $this->db->bind(":id", $id);
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
