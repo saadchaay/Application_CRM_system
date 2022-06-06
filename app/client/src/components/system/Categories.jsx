@@ -21,7 +21,7 @@ export default function Example() {
   const fetchCategories = async () => {
     const type = auth.role === "admin" ? "admin" : "user";
     const res = await axios.get("CategoriesController/index/"+auth.id+"/"+type);
-    if(res.status === 200) {
+    if(res) {
       setCategories(res.data);
       console.log(res.data);
     } else {
@@ -35,7 +35,7 @@ export default function Example() {
     setErrDescription("");
   }, []);
 
-  const handleUser = async (e) => {
+  const handleCategory = async (e) => {
     // add modal here.........
     e.preventDefault();
     if(title === "") {
@@ -68,7 +68,7 @@ export default function Example() {
   };
 
   const handleDelete = async (id) => {
-    const res = await axios.delete(`UsersController/destroy/${id}`);
+    const res = await axios.delete(`CategoriesController/destroy/${id}`);
     if (res.status === 200) {
       fetchCategories();
       console.log("Category deleted");
@@ -99,7 +99,7 @@ export default function Example() {
 
           <div className="fixed z-10 inset-0 overflow-y-auto mb-20">
             <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-              <form onSubmit={handleUser}>
+              <form onSubmit={handleCategory}>
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -228,7 +228,7 @@ export default function Example() {
                   scope="col"
                   className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
                 >
-                  Name
+                  Title
                 </th>
                 <th
                   scope="col"
@@ -251,9 +251,9 @@ export default function Example() {
                       <dd className="mt-1 truncate text-gray-700">
                         {item.created_at}
                       </dd>
-                      <dt className="sr-only sm:hidden">Name</dt>
+                      <dt className="sr-only sm:hidden">Title</dt>
                       <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                        {item.name}
+                        {item.title}
                       </dd>
                     </dl>
                   </td>
@@ -261,7 +261,7 @@ export default function Example() {
                     {item.created_at}
                   </td>
                   <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {item.name}
+                    {item.title}
                   </td>
                   <td className="px-3 py-4 text-sm text-gray-500">
                     {item.description}
