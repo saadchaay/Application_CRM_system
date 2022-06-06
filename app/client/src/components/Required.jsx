@@ -1,12 +1,14 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 
-const RequiredAuth = () => {
+const RequiredAuth = ({ allowedRoles }) => {
     const location = useLocation();
-    const isLoggedIn = localStorage.getItem("auth");
+    const auth = JSON.parse(localStorage.getItem("auth"));
     const is_super = localStorage.getItem("is_super");
-    const isAdmin = JSON.parse(localStorage.getItem("auth")).role === "admin";
     return (
-        (isLoggedIn && !is_super && isAdmin) ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace /> 
+        // (auth.role.find(role => allowedRoles.includes(role)) && !is_super)  ? 
+        //     <Outlet /> : <Navigate to="/login" state={{ from: location }} replace /> 
+        // (allowedRoles.find(auth.role => auth.role === ) && !is_super) ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace /> 
+        ((allowedRoles.includes(auth.role))) ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />
     );
 }
 

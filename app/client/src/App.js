@@ -22,6 +22,15 @@ import Profile from "./components/system/account/Profile";
 import Settings from "./components/system/account/Settings";
 import Password from "./components/system/account/Password";
 
+
+const roles = {
+  superAdmin: "superAdmin",
+  admin: "admin",
+  stockManager: "stockManager",
+  agentCustomer: "agentCustomer",
+  shipManager: "shipManager",
+};
+
 function App() {
   return (
     <div>
@@ -43,7 +52,7 @@ function App() {
         </Route>
 
         {/* For Admin when Auth */}
-        <Route element={<Required />}>
+        <Route element={<Required allowedRoles={[roles.admin]} />}>
           
           <Route
             path="/dashboard"
