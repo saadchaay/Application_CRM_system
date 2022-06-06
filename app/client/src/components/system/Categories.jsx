@@ -44,7 +44,7 @@ export default function Example() {
       setErrDescription("Description is required");
     } else {
         const data = {
-          creator: auth.id,
+          id_creator: auth.id,
           type: auth.role === "admin" ? "admin" : "user",
           name: title,
           username: description,
