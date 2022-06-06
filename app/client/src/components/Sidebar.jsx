@@ -10,6 +10,7 @@ import {
     Category,
   } from "@material-ui/icons";
 
+
 const navigation = [
     { name: 'Home', to: '/dashboard', icon: Home, current: true },
     { name: 'Analytics', to: '/analytics', icon: Timeline, current: false },
@@ -28,7 +29,7 @@ const navigation = [
     return classes.filter(Boolean).join(' ')
   }
 export default function Sidebar() {
-  
+    const auth = JSON.parse(localStorage.getItem('auth'));
     return (
         <>
         {/* Sidebar component, swap this element with another sidebar if you like */}
@@ -67,18 +68,18 @@ export default function Sidebar() {
                 <div className="mt-6 pt-6">
                     <div className="px-2 space-y-1">
                     {secondaryNavigation.map((item) => (
+
                         <span
-                        key={item.name}
-                        className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-cyan-100 hover:text-white hover:bg-cyan-600"
-                        >
-                        <item.icon
-                            className="mr-4 h-6 w-6 text-cyan-200"
-                            aria-hidden="true"
-                        />
-                        <Link to={item.to}>
-                            {item.name}
-                        </Link>
-                        
+                            key={item.name}
+                            className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-cyan-100 hover:text-white hover:bg-cyan-600"
+                            >
+                            <item.icon
+                                className="mr-4 h-6 w-6 text-cyan-200"
+                                aria-hidden="true"
+                            />
+                            <Link to={item.to}>
+                                {item.name}
+                            </Link>
                         </span>
                     ))}
                     </div>
