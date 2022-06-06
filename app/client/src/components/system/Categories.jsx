@@ -46,7 +46,7 @@ export default function Example() {
         const data = {
           creator: auth.id,
           type: auth.role === "admin" ? "admin" : "user",
-          name: name,
+          name: title,
           username: description,
         };
         const res = await axios.post("Categories/store", JSON.stringify(data), {
@@ -57,7 +57,7 @@ export default function Example() {
         if (res.status === 201) {
           fetchCategories();
           setOpen(false);
-          setName("");
+          setTitle("");
           setDescription("");
           console.log("Category added");
         } else {
