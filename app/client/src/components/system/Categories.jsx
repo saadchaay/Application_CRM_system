@@ -6,6 +6,8 @@ import { Delete, Edit } from "@material-ui/icons";
 export default function Example() {
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
+  const [action, setAction] = useState("Add Category");
+  const [buttonSubmit , setButtonSubmit] = useState();
   const cancelButtonRef = useRef(null);
   const auth = JSON.parse(localStorage.getItem("auth"));
 
@@ -34,6 +36,14 @@ export default function Example() {
     setErrTitle("");
     setErrDescription("");
   }, []);
+  
+  const displayModalUpdate = async (id) => {
+    setOpen(true);
+    setAction("Update Category");
+    setTitle(categories.find((category) => category.id === id).title);
+    setDescription(categories.find((category) => category.id === id).description);
+    setButtonSubmit(id);
+  };
 
   const handleCategory = async (e) => {
     // add modal here.........
@@ -65,6 +75,29 @@ export default function Example() {
         }
       }
     
+  };
+
+  const handleUpdate = async (id) => {
+    const data = {
+      id_creator: auth.id,
+      type: auth.role === "admin" ? "admin" : "user",
+      title: title,
+      description: description,
+    };
+    const res = await axios.put("CategoriesController/update/"+id, JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.status === 201) {
+      fetchCategories();
+      setOpen(false);
+      setTitle("");
+      setDescription("");
+      console.log("Category updated");
+    } else {
+      console.log(res.data);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -101,7 +134,7 @@ export default function Example() {
 
           <div className="fixed z-10 inset-0 overflow-y-auto mb-20">
             <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-              <form onSubmit={handleCategory}>
+              <form onSubmit={!buttonSubmit ? handleCategory : handleUpdate(buttonSubmit)}>
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -119,7 +152,7 @@ export default function Example() {
                             as="h3"
                             className="text-lg leading-6 font-bold text-gray-900"
                           >
-                            Add Category
+                            {action}
                           </Dialog.Title>
                           <div className="mt-2">
                             <div className="mt-3 flex flex-col w-80">
@@ -270,9 +303,7 @@ export default function Example() {
                   </td>
                   <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                     <button
-                      onClick={() => {
-                        window.location.href = `/users/edit/${item.id}`;
-                      }}
+                      onClick={() => displayModalUpdate(item.id)}
                       className="text-green-500 hover:text-green-700"
                     >
                      <Edit />
