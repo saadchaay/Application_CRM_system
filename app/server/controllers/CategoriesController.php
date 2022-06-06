@@ -36,10 +36,10 @@
 
             if($_SERVER["REQUEST_METHOD"] === "POST"){
                 $data = [
-                    'title' => $dataJSON->title ? $dataJSON->title : "",
-                    'description' => $dataJSON->description ? $dataJSON->description : "",
                     'id_creator' => $dataJSON->id_creator ? $dataJSON->id_creator : "",
                     'type' => $dataJSON->type ? $dataJSON->type : "",
+                    'title' => $dataJSON->title ? $dataJSON->title : "",
+                    'description' => $dataJSON->description ? $dataJSON->description : "",
                 ];
 
                 $errors = $this->requirement($data);

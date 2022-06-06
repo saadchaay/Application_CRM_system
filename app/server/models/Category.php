@@ -41,12 +41,12 @@ class Category {
     public function create_category($data)
     {
         //create a query
-        $this->db->query("INSERT INTO `categories` (`name`, `id_creator`, `type_creator`, `created_at`, `updated_at`) VALUES (:name, :id_creator, :type_creator, :created_at, :updated_at)");
+        $this->db->query("INSERT INTO `categories` (`title`, `id_creator`, `type_creator`, `created_at`, `updated_at`) VALUES (:title, :id_creator, :type_creator, :created_at, :updated_at)");
 
         // bind the values
-        $this->db->bind(":name", $data["name"]);
         $this->db->bind(":id_creator", $data["id_creator"]);
         $this->db->bind(":type_creator", $data["type_creator"]);
+        $this->db->bind(":title", $data["title"]);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
 
