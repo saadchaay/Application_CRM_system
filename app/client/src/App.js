@@ -11,6 +11,7 @@ import Details from "./views/super_admin/Details";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
 import Required from "./components/Required";
+import Unauthorized from "./components/Unauthorized";
 import Main from "./components/system/Dashboard";
 import Users from "./components/system/Users";
 import Orders from "./components/system/Orders";
@@ -35,7 +36,7 @@ function App() {
   return (
     <div>
       <Routes>
-      <Route path="/logout" element={<Logout />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/" element={<Layout />}>
           {/* For Admin or Client */}
           <Route path="/" element={<Home />} />
@@ -43,7 +44,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin/login" element={<AdminPanel />} />
         </Route>
-
+        <Route path="/unauthorized" element={<Unauthorized />} />
         {/* Protect this Routes for super Admin */}
         <Route element={<RequiredAuth />}>
           <Route path="/super-dashboard" element={<Dashboard />} />
@@ -53,7 +54,10 @@ function App() {
 
         {/* For Admin when Auth */}
       <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer, roles.stockManager, roles.shipManager]} />}>
-          
+        <Route
+            path="/dashboard"
+            element={<System contentMain={<Main />} />}
+          />
         <Route
             path="account/profile"
             element={<System contentAccount={<Account profile={<Profile />} />} />}
@@ -68,31 +72,29 @@ function App() {
           />
       </Route>
       <Route element={<Required allowedRoles={[roles.admin]} />}>
-          <Route
-            path="/dashboard"
-            element={<System contentMain={<Main />} />}
-          />
           <Route path="/users" element={<System contentUsers={<Users />} />} />
       </Route>
 
-      <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer]} />}>
+      <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer, roles.shipManager]} />}>
           <Route
             path="/orders"
             element={<System contentOrders={<Orders />} />}
           />
+      </Route>
 
+      <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer]} />}>
           <Route
             path="/customers"
             element={<System contentCustomers={<Customers />} />}
           />
       </Route>
+
       
       <Route element={<Required allowedRoles={[roles.admin, roles.stockManager]} />}>   
           <Route
             path="/products"
             element={<System contentProducts={<Products />} />}
-          />
-          
+          />       
           <Route
             path="/categories"
             element={<System contentCategories={<Categories />} />}
