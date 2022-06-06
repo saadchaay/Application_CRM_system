@@ -46,10 +46,10 @@ export default function Example() {
         const data = {
           id_creator: auth.id,
           type: auth.role === "admin" ? "admin" : "user",
-          name: title,
-          username: description,
+          title: title,
+          description: description,
         };
-        const res = await axios.post("Categories/store", JSON.stringify(data), {
+        const res = await axios.post("CategoriesController/store", JSON.stringify(data), {
           headers: {
             "Content-Type": "application/json",
           },
