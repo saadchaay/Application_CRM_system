@@ -56,6 +56,7 @@ function Register() {
         setAuth({ login, pwd, is_super: true });
         localStorage.setItem("auth", JSON.stringify(res?.data));
         localStorage.setItem("is_super", JSON.stringify(res.data.is_super));
+        localStorage.setItem("time", new Date().getTime());
         navigate(from, { replace: true });
       } else {
         if (res.data.errors) {

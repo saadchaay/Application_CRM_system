@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
     Timeline,
     PermIdentity,
@@ -16,20 +17,49 @@ const navigation = [
     { name: 'Analytics', to: '/analytics', icon: Timeline, current: false },
     { name: 'Sales', to: '/sales', icon: MonetizationOn, current: false },
   ]
-  
-  const secondaryNavigation = [
-    { name: 'Users', to: '/users', icon: SupervisorAccount },
-    { name: 'Customers', to: '/customers', icon: PermIdentity },
-    { name: 'Orders', to: '/orders', icon: Ballot },
-    { name: 'Products', to: '/products', icon: Storefront },
-    { name: 'Categories', to: '/categories', icon: Category },
-  ]
+
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
-export default function Sidebar() {
+export default function Sidebar(allowedRoles) {
     const auth = JSON.parse(localStorage.getItem('auth'));
+    const [secondaryNavigation, setSecondaryNavigation] = useState([]); 
+    
+    const handleNavigation = () => {
+        switch (auth.role) {
+            case "agentCustomer":
+                setSecondaryNavigation([
+                    { name: 'Customers', to: '/customers', icon: PermIdentity },
+                    { name: 'Orders', to: '/orders', icon: Ballot },
+                ]);
+                break;
+            case "shipManager":
+                setSecondaryNavigation([
+                    { name: 'Orders', to: '/orders', icon: Ballot },
+                ]);
+                break
+            case "stockManager":
+                setSecondaryNavigation([
+                    { name: 'Products', to: '/products', icon: Storefront },
+                    { name: 'Categories', to: '/categories', icon: Category },
+                ]);
+                break;
+            default:
+                setSecondaryNavigation([
+                    { name: 'Users', to: '/users', icon: SupervisorAccount },
+                    { name: 'Customers', to: '/customers', icon: PermIdentity },
+                    { name: 'Orders', to: '/orders', icon: Ballot },
+                    { name: 'Products', to: '/products', icon: Storefront },
+                    { name: 'Categories', to: '/categories', icon: Category },
+                ]);
+                break;
+        }
+    }
+
+    useEffect(() => {
+        handleNavigation();
+    }, [auth.role]);
     return (
         <>
         {/* Sidebar component, swap this element with another sidebar if you like */}

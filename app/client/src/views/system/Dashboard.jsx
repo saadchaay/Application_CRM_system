@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
@@ -25,26 +25,57 @@ const navigation = [
   { name: 'Home', href: '/dashboard', icon: Home, current: true },
   { name: 'Analytics', href: '/analytics', icon: Timeline, current: false },
   { name: 'Sales', href: 'sales', icon: MonetizationOn, current: false },
-]
+];
 
-const secondaryNavigation = [
+const adminRole = [
   { name: 'Users', href: '/users', icon: SupervisorAccount },
   { name: 'Customers', href: '/customers', icon: PermIdentity },
-  { name: 'Orders', href: 'orders', icon: Ballot },
-  { name: 'Products', href: 'products', icon: Storefront },
-  { name: 'Categories', href: 'categories', icon: Category },
-]
-
-
-
+  { name: 'Orders', href: '/orders', icon: Ballot },
+  { name: 'Products', href: '/products', icon: Storefront },
+  { name: 'Categories', href: '/categories', icon: Category },
+];
+const agentRole = [
+  { name: 'Customers', href: '/customers', icon: PermIdentity },
+  { name: 'Orders', href: '/orders', icon: Ballot },
+];
+const shipRole = [
+  { name: 'Orders', href: '/orders', icon: Ballot },
+];
+const stockRole = [
+  { name: 'Products', to: '/products', icon: Storefront },
+  { name: 'Categories', to: '/categories', icon: Category },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Example(props) {
+  const [secondaryNavigation, setSecondaryNavigation] = useState([]);
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const auth = JSON.parse(localStorage.getItem('auth'));
+  const handleNavigation = () => {
+    switch (auth.role) {
+        case "agentCustomer":
+            setSecondaryNavigation(agentRole);
+            break;
+        case "shipManager":
+            setSecondaryNavigation(shipRole);
+            break
+        case "stockManager":
+            setSecondaryNavigation(stockRole);
+            break;
+        default:
+            setSecondaryNavigation(adminRole);
+            break;
+    }
+    // setSecondaryNavigation();
+    setSidebarOpen(true);
+  }
+
+  // useEffect(() => {
+  // }, [auth.role]);
   return (
     <>
     
@@ -162,7 +193,7 @@ export default function Example(props) {
             <button
               type="button"
               className="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden"
-              onClick={() => setSidebarOpen(true)}
+              onClick={() => handleNavigation()}
             >
               <span className="sr-only">Open sidebar</span>
               <MenuAlt1Icon className="h-6 w-6" aria-hidden="true" />

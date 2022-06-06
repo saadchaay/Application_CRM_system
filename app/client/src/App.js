@@ -37,6 +37,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/logout" element={<Logout />} />
+        <Route path="/sign-out" element={<Signout />} />
         <Route path="/" element={<Layout />}>
           {/* For Admin or Client */}
           <Route path="/" element={<Home />} />
@@ -49,7 +50,6 @@ function App() {
         <Route element={<RequiredAuth />}>
           <Route path="/super-dashboard" element={<Dashboard />} />
           <Route path="/admin/:id" element={<Details />} />
-          <Route path="/sign-out" element={<Signout />} />
         </Route>
 
         {/* For Admin when Auth */}
