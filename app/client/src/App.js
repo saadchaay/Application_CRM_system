@@ -52,30 +52,9 @@ function App() {
         </Route>
 
         {/* For Admin when Auth */}
-        <Route element={<Required allowedRoles={[roles.admin]} />}>
+      <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer, roles.stockManager, roles.shipManager]} />}>
           
-          <Route
-            path="/dashboard"
-            element={<System contentMain={<Main />} />}
-          />
-          <Route path="/users" element={<System contentUsers={<Users />} />} />
-          <Route
-            path="/orders"
-            element={<System contentOrders={<Orders />} />}
-          />
-          <Route
-            path="/customers"
-            element={<System contentCustomers={<Customers />} />}
-          />
-          <Route
-            path="/products"
-            element={<System contentProducts={<Products />} />}
-          />
-          <Route
-            path="/categories"
-            element={<System contentCategories={<Categories />} />}
-          />
-          <Route
+        <Route
             path="account/profile"
             element={<System contentAccount={<Account profile={<Profile />} />} />}
           />
@@ -87,7 +66,38 @@ function App() {
             path="account/password"
             element={<System contentAccount={<Account password={<Password />} />} />}
           />
-        </Route>
+      </Route>
+      <Route element={<Required allowedRoles={[roles.admin]} />}>
+          <Route
+            path="/dashboard"
+            element={<System contentMain={<Main />} />}
+          />
+          <Route path="/users" element={<System contentUsers={<Users />} />} />
+      </Route>
+
+      <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer]} />}>
+          <Route
+            path="/orders"
+            element={<System contentOrders={<Orders />} />}
+          />
+
+          <Route
+            path="/customers"
+            element={<System contentCustomers={<Customers />} />}
+          />
+      </Route>
+      
+      <Route element={<Required allowedRoles={[roles.admin, roles.stockManager]} />}>   
+          <Route
+            path="/products"
+            element={<System contentProducts={<Products />} />}
+          />
+          
+          <Route
+            path="/categories"
+            element={<System contentCategories={<Categories />} />}
+          />       
+      </Route>
 
         {/* <System /> */}
 
