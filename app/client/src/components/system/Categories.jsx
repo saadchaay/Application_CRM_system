@@ -69,9 +69,11 @@ export default function Example() {
 
   const handleDelete = async (id) => {
     const res = await axios.delete(`CategoriesController/destroy/${id}`);
-    if (res.status === 200) {
+    if (res.data) {
       fetchCategories();
       console.log("Category deleted");
+    } else {
+      console.log("Category not deleted");
     }
   };
 
