@@ -59,6 +59,27 @@ class Category {
         }
     }
 
+    public function update_category($id, $data)
+    {
+        //create a query
+        $this->db->query("UPDATE `categories` SET `id_creator` = :creator AND `type_creator` = :type AND `title` = :title AND `description` = :description AND `updated_at` = :updated_at WHERE `id` = :id");
+
+        // bind the values
+        $this->db->bind(":id", $id);
+        $this->db->bind(":creator", $data["id_creator"]);
+        $this->db->bind(":type", $data["type"]);
+        $this->db->bind(":title", $data["title"]);
+        $this->db->bind(":description", $data["description"]);
+        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+
+        // check execution the query
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function delete_category($id)
     {
         $this->db->query("DELETE FROM `categories` WHERE id = :id");

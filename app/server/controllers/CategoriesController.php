@@ -58,6 +58,34 @@
             }
         }
 
+        public function update($id)
+        {
+            $dataJSON = json_decode(file_get_contents("php://input"));
+
+            if($_SERVER["REQUEST_METHOD"] === "PUT"){
+                $data = [
+                    'id_creator' => $dataJSON->id_creator ? $dataJSON->id_creator : "",
+                    'type' => $dataJSON->type ? $dataJSON->type : "",
+                    'title' => $dataJSON->title ? $dataJSON->title : "",
+                    'description' => $dataJSON->description ? $dataJSON->description : "",
+                ];
+
+                $errors = $this->requirement($data);
+                if($errors){
+                    echo json_encode(array('errors' => $errors));
+                }else{ 
+                    $result = $this->category->update_category($id, $data);
+                    if($result){
+                        http_response_code(201);
+                        echo json_encode(array('message' => 'Category updated'));
+                    }else{
+                        http_response_code(500);
+                        echo json_encode(array('message' => 'Something went wrong'));
+                    }
+                }
+            }
+        }
+
         public function destroy($id)
         {
             
