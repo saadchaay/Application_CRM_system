@@ -37,4 +37,24 @@ class Category {
             return false;
         }
     }
+
+    public function create_category($data)
+    {
+        //create a query
+        $this->db->query("INSERT INTO `categories` (`name`, `id_creator`, `type_creator`, `created_at`, `updated_at`) VALUES (:name, :id_creator, :type_creator, :created_at, :updated_at)");
+
+        // bind the values
+        $this->db->bind(":name", $data["name"]);
+        $this->db->bind(":id_creator", $data["id_creator"]);
+        $this->db->bind(":type_creator", $data["type_creator"]);
+        $this->db->bind(":created_at", date("Y-m-d H:i:s"));
+        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+
+        // check execution the query
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

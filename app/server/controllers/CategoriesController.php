@@ -30,5 +30,33 @@
             }
         }
 
+        public function store()
+        {
+            $dataJSON = json_decode(file_get_contents("php://input"));
+
+            if($_SERVER["REQUEST_METHOD"] === "POST"){
+                $data = [
+                    'title' => $dataJSON->title ? $dataJSON->title : "",
+                    'description' => $dataJSON->description ? $dataJSON->description : "",
+                    'id_creator' => $dataJSON->id_creator ? $dataJSON->id_creator : "",
+                    'type' => $dataJSON->type ? $dataJSON->type : "",
+                ];
+
+                $errors = $this->requirement($data);
+                if($errors){
+                    echo json_encode(array('errors' => $errors));
+                }else{ 
+                    $result = $this->category->create_category($data);
+                    if($result){
+                        http_response_code(201);
+                        echo json_encode(array('message' => 'Category created'));
+                    }else{
+                        http_response_code(500);
+                        echo json_encode(array('message' => 'Something went wrong'));
+                    }
+                }
+            }
+        }
+
         
     }
