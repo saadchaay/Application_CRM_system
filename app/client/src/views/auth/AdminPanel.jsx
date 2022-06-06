@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import logoColor from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.v2.png";
 import axios from "axios";
 import React from "react";
 import Modal from "@material-ui/core/Modal";
@@ -95,7 +95,7 @@ function Register() {
           <div className="w-full max-w-lg p-5 px-10 relative mx-auto my-auto rounded-xl shadow-lg bg-white">
             <div>
               <div className="flex justify-center items-center">
-                <img src={logoColor} alt="logo" className="w-1/2 mx-auto" />
+                <img src={logo} alt="logo" width={180} height={40} />
               </div>
               <div className="flex flex-col justify-center items-center mt-5">
                 <h1 className="text-2xl font-bold text-center text-red-500">
@@ -112,7 +112,7 @@ function Register() {
       </Modal>
       <div className="flex flex-col items-center h-screen justify-center bg-white">
         
-        <img src={logoColor} alt="logo" className="mb-10" width={200} height={100} />                              
+        <img src={logo} alt="logo" className="mb-10" width={200} height={100} />                              
         <div className="flex w-auto md:w-1/2 justify-center items-center bg-white mt-20 md:mt-0 shadow-xl rounded-xl px-5 py-10">
           
           <form

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo_white_bg.png";
-import logoColor from "../../assets/images/logo.png";
+import logoColor from "../../assets/images/logo-cyan.png";
 import axios from "../../api/axios";
 import React from "react";
 import Modal from "@material-ui/core/Modal";
@@ -126,7 +126,7 @@ function Register() {
                     Our team will activate your account as soon as possible.
                   </p>
                   <p className="mt-3">Continue to check your email.</p>
-                  <button className="mt-6 md:mb-0 bg-violet-600 border border-violet-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-violet-700">
+                  <button className="mt-6 md:mb-0 bg-cyan-600 border border-cyan-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-cyan-700">
                     <Link to="/">Back home</Link>
                   </button>
                 </div>

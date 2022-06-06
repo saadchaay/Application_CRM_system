@@ -10,6 +10,7 @@ import {
     Ballot,
     Category,
   } from "@material-ui/icons";
+import logo from "../assets/images/logo.v2.png";
 
 
 const navigation = [
@@ -66,9 +67,10 @@ export default function Sidebar(allowedRoles) {
             <div className="flex flex-col flex-grow bg-cyan-700 pt-5 pb-4 overflow-y-auto">
                 <div className="flex items-center flex-shrink-0 px-4">
                 <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
-                    alt="Easywire logo"
+                    src={logo}
+                    alt="grow-yb logo"
+                    width={180}
+                    height={40}
                 />
                 </div>
                 <nav

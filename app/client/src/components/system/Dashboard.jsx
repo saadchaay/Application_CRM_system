@@ -121,7 +121,7 @@ export default function Dashboard() {
                           className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
                           aria-hidden="true"
                         />
-                        Verified account
+                        {auth.role}
                       </dd>
                     </dl>
                   </div>

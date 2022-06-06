@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../../context/AuthProvider" ;
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo_white_bg.png";
-import logoColor from "../../assets/images/logo.png";
+import logoColor from "../../assets/images/logo-cyan.png";
 import axios from "../../api/axios";
 import React from "react";
 import Modal from "@material-ui/core/Modal";
@@ -100,14 +100,14 @@ function Register() {
           <div className="w-full max-w-lg p-5 px-10 relative mx-auto my-auto rounded-xl shadow-lg bg-white">
             <div>
               <div className="flex justify-center items-center">
-                <img src={logoColor} alt="logo" className="w-1/2 mx-auto" />
+                <img src={logoColor} alt="logo" />
               </div>
               <div className="flex flex-col justify-center items-center mt-5">
                 <h1 className="text-2xl font-bold text-center text-red-500">
                   Failed !
                 </h1>
                 <p className="mt-3 ">Your Account is not active yet.</p>
-                <button className="mt-6 md:mb-0 bg-violet-600 border border-violet-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-violet-700">
+                <button className="mt-6 md:mb-0 bg-cyan-600 border border-cyan-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-cyan-700">
                   <Link to="/">Back home</Link>
                 </button>
               </div>
@@ -115,6 +115,7 @@ function Register() {
           </div>
         </Fade>
       </Modal>
+      
       <div className="flex flex-col md:flex-row w-full items-center justify-center">
         <div className="md:h-screen w-auto md:w-1/2 bg-gradient-to-tr bg-sky-800 to-purple-700 i justify-around items-center hidden md:flex">
           <div className="flex flex-col justify-center items-center">

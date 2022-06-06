@@ -17,7 +17,7 @@ import {
 } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import Sidebar from "../../components/Sidebar";
-import logo from '../../assets/images/logo_gyb.png'
+import logo from "../../assets/images/logo.v2.png";
 
 
 
