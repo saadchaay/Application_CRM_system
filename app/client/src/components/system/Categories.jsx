@@ -20,7 +20,7 @@ export default function Example() {
 
   const fetchCategories = async () => {
     const type = auth.role === "admin" ? "admin" : "user";
-    const res = await axios.get("UsersController/index/"+auth.id+"/"+type);
+    const res = await axios.get("CategoriesController/index/"+auth.id+"/"+type);
     if(res.status === 200) {
       setCategories(res.data);
       console.log(res.data);
