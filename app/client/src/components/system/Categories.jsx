@@ -9,87 +9,69 @@ export default function Example() {
   const cancelButtonRef = useRef(null);
   const auth = JSON.parse(localStorage.getItem("auth"));
 
-  const nameRef = useRef();
+  const titleRef = useRef();
   const descriptionRef = useRef();
 
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPwd, setConfirmPwd] = useState("");
-  const [role, setRole] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  const [errName, setErrName] = useState("");
-  const [errUsername, setErrUsername] = useState("");
-  const [errEmail, setErrEmail] = useState("");
-  const [errPwd, setErrPwd] = useState("");
-  const [errConfirmPwd, setErrConfirmPwd] = useState("");
-  const [errRole, setErrRole] = useState("");
+  const [errTitle, setErrTitle] = useState("");
+  const [errDescription, setErrDescription] = useState("");
 
-  const fetchUsers = async () => {
-    const res = await axios.get("UsersController/index/"+auth.id);
+  const fetchCategories = async () => {
+    const type = auth.role === "admin" ? "admin" : "user";
+    const res = await axios.get("UsersController/index/"+auth.id+"/"+type);
     if(res.status === 200) {
-      setUsers(res.data);
+      setCategories(res.data);
       console.log(res.data);
     } else {
-      console.log("There's no user");
+      console.log("There's no category");
     }
   };
 
   useEffect(() => {
-    fetchUsers();
-    setErrPwd("");
-    setErrRole("");
-    setErrEmail("");
-    setErrUsername("");
-    setErrName("");
-    setErrConfirmPwd("");
+    fetchCategories();
+    setErrTitle("");
+    setErrDescription("");
   }, []);
 
   const handleUser = async (e) => {
     // add modal here.........
     e.preventDefault();
-    const data = {
-      name: name,
-      username: username,
-      email: email,
-      password: password,
-      confirm_password: confirmPwd,
-      role: role,
-      id_admin: auth.id,
-    };
-    const res = await axios.post("UsersController/store", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.status === 201) {
-      fetchUsers();
-      setOpen(false);
-      setName("");
-      setUsername("");
-      setPassword("");
-      setConfirmPwd("");
-      setRole("");
-      setEmail("");
-      console.log("User added");
+    if(title === "") {
+      setErrTitle("Name is required");
+    } else if(description === "") {
+      setErrDescription("Description is required");
     } else {
-      console.log(res.data);
-      setErrName(res.data.errors.name);
-      setErrUsername(res.data.errors.username); 
-      setErrEmail(res.data.errors.email);
-      setErrPwd(res.data.errors.password);
-      setErrConfirmPwd(res.data.errors.confirm_password);
-      setErrRole(res.data.errors.role);
-    }
+        const data = {
+          creator: auth.id,
+          type: auth.role === "admin" ? "admin" : "user",
+          name: name,
+          username: description,
+        };
+        const res = await axios.post("Categories/store", JSON.stringify(data), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (res.status === 201) {
+          fetchCategories();
+          setOpen(false);
+          setName("");
+          setDescription("");
+          console.log("Category added");
+        } else {
+          console.log(res.data);
+        }
+      }
     
   };
 
   const handleDelete = async (id) => {
     const res = await axios.delete(`UsersController/destroy/${id}`);
     if (res.status === 200) {
-      fetchUsers();
-      console.log("User deleted");
+      fetchCategories();
+      console.log("Category deleted");
     }
   };
 
@@ -135,143 +117,52 @@ export default function Example() {
                             as="h3"
                             className="text-lg leading-6 font-bold text-gray-900"
                           >
-                            Add User
+                            Add Category
                           </Dialog.Title>
                           <div className="mt-2">
-                            <div className="mt-3 grid grid-cols-4 gap-6">
-                              <div className="col-span-4 sm:col-span-2">
+                            <div className="mt-3 flex flex-col w-80">
+                              <div className="col-span-4 sm:col-span-12">
                                 <label
                                   htmlFor="first-name"
                                   className="block text-sm font-medium text-gray-700"
                                 >
-                                  Full name
+                                  Title
                                 </label>
                                 <input
                                   type="text"
-                                  id="name"
-                                  ref={nameRef}
-                                  value={name}
-                                  onChange={(e) => setName(e.target.value)}
-                                  autoComplete="name"
+                                  id="title"
+                                  ref={titleRef}
+                                  value={title}
+                                  onChange={(e) => setTitle(e.target.value)}
+                                  autoComplete="title"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
                                 <div className="text-red-500 mb-3 text-sm">
-                                  {errName ? errName : null}
+                                  {errTitle ? errTitle : null}
                                 </div>
                               </div>
-                              <div className="col-span-4 sm:col-span-2">
+                              <div className="col-span-4 sm:col-span-12">
                                 <label
                                   htmlFor="last-name"
                                   className="block text-sm font-medium text-gray-700"
                                 >
-                                  Username
+                                  Description
                                 </label>
-                                <input
+                                <textarea
                                   type="text"
-                                  id="username"
-                                  value={username}
-                                  ref={usernameRef}
-                                  onChange={(e) => setUsername(e.target.value)}
-                                  autoComplete="username"
+                                  id="description"
+                                  value={description}
+                                  ref={descriptionRef}
+                                  onChange={(e) => setDescription(e.target.value)}
+                                  autoComplete="description"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
                                 <div className="text-red-500 mb-3 text-sm">
-                                  {errUsername ? errUsername : null}
+                                  {errDescription ? errDescription : null}
                                 </div>
                               </div>
                             </div>
 
-                            <div className="mt-3 grid grid-cols-2 gap-6">
-                              <div className="col-span-4 sm:col-span-2">
-                                <label
-                                  htmlFor="last-name"
-                                  className="block text-sm font-medium text-gray-700"
-                                >
-                                  Email
-                                </label>
-                                <input
-                                  type="text"
-                                  id="email"
-                                  value={email}
-                                  ref={emailRef}
-                                  onChange={(e) => setEmail(e.target.value)}
-                                  autoComplete="email"
-                                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                />
-                                <div className="text-red-500 mb-3 text-sm">
-                                  {errEmail ? errEmail : null}
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="mt-3 grid grid-cols-4 gap-6">
-                              <div className="col-span-4 sm:col-span-2">
-                                <label
-                                  htmlFor="first-name"
-                                  className="block text-sm font-medium text-gray-700"
-                                >
-                                  Password
-                                </label>
-                                <input
-                                  type="password"
-                                  id="password"
-                                  value={password}
-                                  onChange={(e) => setPassword(e.target.value)}
-                                  autoComplete="name"
-                                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                />
-                                <div className="text-red-500 mb-3 text-sm">
-                                  {errPwd ? errPwd : null}
-                                </div>
-                              </div>
-                              <div className="col-span-4 sm:col-span-2">
-                                <label
-                                  htmlFor="last-name"
-                                  className="block text-sm font-medium text-gray-700"
-                                >
-                                  Confirm Password
-                                </label>
-                                <input
-                                  type="password"
-                                  id="confirmPwd"
-                                  value={confirmPwd}
-                                  onChange={(e) =>
-                                    setConfirmPwd(e.target.value)
-                                  }
-                                  autoComplete="username"
-                                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                />
-                                <div className="text-red-500 mb-3 text-sm">
-                                  {errConfirmPwd ? errConfirmPwd : null}
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="mt-3 grid grid-cols-4 gap-6">
-                              <div className="col-span-4 sm:col-span-2">
-                                <label
-                                  htmlFor="country"
-                                  className="block text-sm font-medium text-gray-700"
-                                >
-                                  Role
-                                </label>
-                                <select
-                                  id="role"
-                                  value={role}
-                                  onChange={(e) => setRole(e.target.value)}
-                                  autoComplete="country-name"
-                                  className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                >
-                                  <option >Choose role ...</option>
-                                  <option value="stockManager" >Stock Manager</option>
-                                  <option value="agentCustomer" >Agent of Customer</option>
-                                  <option value="shipManager" >Shipping Manager</option>
-                                </select>
-                                <div className="text-red-500 mb-3 text-sm">
-                                  {errRole ? errRole : null}
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -302,10 +193,9 @@ export default function Example() {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Users</h1>
+            <h1 className="text-xl font-semibold text-gray-900">Categories</h1>
             <p className="mt-2 text-sm text-gray-700">
-              A list of all the users in your account including their name,
-              created_at, email and role.
+              A list of all the Categories in your account including their name of category, description and date of created category.
             </p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -314,7 +204,7 @@ export default function Example() {
               type="button"
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-cyan-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
-              Add user
+              Add Category
             </button>
           </div>
         </div>
@@ -326,70 +216,67 @@ export default function Example() {
                   scope="col"
                   className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                 >
-                  Name
+                  Number
                 </th>
                 <th
                   scope="col"
                   className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                 >
-                  Created User
+                  Created at
                 </th>
                 <th
                   scope="col"
                   className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
                 >
-                  Email
+                  Name
                 </th>
                 <th
                   scope="col"
                   className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >
-                  Role
+                  Description
                 </th>
                 <th scope="col" className="px-3 text-sm font-semibold text-gray-900">
-                  Edit
+                  Action
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {users.map((person) => (
-                <tr key={person.email}>
+              {categories.map((item) => (
+                <tr key={item.id}>
                   <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                    {person.name}
+                    ## {item.id}
                     <dl className="font-normal lg:hidden">
-                      <dt className="sr-only">Created User</dt>
+                      <dt className="sr-only">Created at</dt>
                       <dd className="mt-1 truncate text-gray-700">
-                        {person.created_at}
+                        {item.created_at}
                       </dd>
-                      <dt className="sr-only sm:hidden">Email</dt>
+                      <dt className="sr-only sm:hidden">Name</dt>
                       <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                        {person.email}
+                        {item.name}
                       </dd>
                     </dl>
                   </td>
                   <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                    {person.created_at}
+                    {item.created_at}
                   </td>
                   <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {person.email}
+                    {item.name}
                   </td>
                   <td className="px-3 py-4 text-sm text-gray-500">
-                    {person.role === "stockManager" ? "Stock Manager" : ""}
-                    {person.role === "agentCustomer" ? "Agent of Customer" : ""}
-                    {person.role === "shipManager" ? "Shipping Manager" : ""}
-                  
+                    {item.description}
                   </td>
                   <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                     <button
                       onClick={() => {
-                        window.location.href = `/users/edit/${person.id}`;
+                        window.location.href = `/users/edit/${item.id}`;
                       }}
                       className="text-green-500 hover:text-green-700"
                     >
                      <Edit />
                     </button>
                     <button
-                      onClick={() => handleDelete(person.id)}
+                      onClick={() => handleDelete(item.id)}
                       className="text-red-500 hover:text-red-600"
                     >
                       <Delete />
