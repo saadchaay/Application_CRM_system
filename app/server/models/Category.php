@@ -38,6 +38,17 @@ class Category {
         }
     }
 
+    public function get_category($id)
+    {
+        $this->db->query('SELECT * FROM categories WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if($this->db->single()) {
+            return $this->db->single();
+        } else {
+            return false;
+        }    
+    }
+
     public function create_category($data)
     {
         //create a query
