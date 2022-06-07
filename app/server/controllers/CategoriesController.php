@@ -30,6 +30,11 @@
             }
         }
 
+        public function show($id)
+        {
+            
+        }
+
         public function store()
         {
             $dataJSON = json_decode(file_get_contents("php://input"));
