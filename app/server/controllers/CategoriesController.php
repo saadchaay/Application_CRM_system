@@ -32,7 +32,16 @@
 
         public function show($id)
         {
-            
+            $category = $this->category->get_category($id);
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                if($category){
+                    http_response_code(201);
+                    echo json_encode($category);
+                }else{
+                    http_response_code(404);
+                    echo json_encode(array('message' => 'No category found'));
+                }
+            }
         }
 
         public function store()
