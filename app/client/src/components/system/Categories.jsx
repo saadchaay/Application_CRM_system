@@ -5,6 +5,7 @@ import { Delete, Edit } from "@material-ui/icons";
 
 export default function Example() {
   const [categories, setCategories] = useState([]);
+  const [idCategory, setIdCategory] = useState();
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("Add Category");
   const [buttonSubmit , setButtonSubmit] = useState();
@@ -36,15 +37,17 @@ export default function Example() {
     fetchCategories();
     setErrTitle("");
     setErrDescription("");
+    displayModalUpdate();
   }, []);
   
   const displayModalUpdate = async (id) => {
-    setOpen(true);
-    setAction("Update Category");
-    setTitle(categories.find((category) => category.id === id).title);
-    setDescription(categories.find((category) => category.id === id).description);
+    setIdCategory(id);
+    console.log(idCategory);
+    // setOpen(true);
+    // setAction("Update Category");
+    // setTitle(categories.find((category) => category.id === id).title);
+    // setDescription(categories.find((category) => category.id === id).description);
     // setButtonSubmit(id);
-    localStorage.setItem("categoryId", id);
   };
 
   const handleCategory = async (e) => {
@@ -97,7 +100,6 @@ export default function Example() {
       setTitle("");
       setDescription("");
       console.log("Category updated");
-      localStorage.removeItem('categoryId');
     } else {
       console.log(res.data);
     }
@@ -281,6 +283,7 @@ export default function Example() {
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
               {categories.map((item) => (
+                { idCategory } ?
                 <tr key={item.id}>
                   <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
                     ## {item.id}
@@ -319,6 +322,8 @@ export default function Example() {
                     </button>
                   </td>
                 </tr>
+                :
+                <p>update yes</p>
               ))}
             </tbody>
           </table>
