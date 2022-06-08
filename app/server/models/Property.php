@@ -1,12 +1,12 @@
 <?php
 
-class Product {
+class Property {
+    
     private $db;
 
     public function __construct()
     {
         $this->db = new Database();
-        $this->property = new Property();
     }
     
 }
