@@ -17,6 +17,8 @@ class Category {
         } else {
             $this->db->query("SELECT * FROM `categories` WHERE `id_user` = :id ORDER BY id DESC");
             // $this->db->bind(':type', $data['type']);
+            $this->db->bind(':id', $data['id']);
+
         }
         
         if($this->db->resultSet()) {
