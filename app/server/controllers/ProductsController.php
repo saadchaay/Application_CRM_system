@@ -45,7 +45,7 @@
                     'description' => $dataJSON->description ? $dataJSON->description : "",
                     'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
                     'status' => $dataJSON->status ? $dataJSON->status : true,
-                    'price' => $dataJSON->description ? $dataJSON->description : 0.00,
+                    'price' => $dataJSON->price ? $dataJSON->price : 0.00,
                     'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
                 ];
 

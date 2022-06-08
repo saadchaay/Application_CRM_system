@@ -7,6 +7,7 @@ class Product {
     {
         $this->db = new Database();
         $this->property = new Property();
+        $this->user = new User();
     }
     
     public function get_all_product($data)
