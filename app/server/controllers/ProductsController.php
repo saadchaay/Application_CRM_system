@@ -10,6 +10,7 @@
             header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
             header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
             $this->product = new Product();
+            $this->category = new Category();
         }
 
         public function index($id, $type)
@@ -22,6 +23,7 @@
             
             $all_products = $this->product->get_all_product($data);
             if($_SERVER["REQUEST_METHOD"] == "GET"){
+                print_r($all_products[0]->title);
                 if($all_products){
                     http_response_code(201);
                     echo json_encode($all_products);
