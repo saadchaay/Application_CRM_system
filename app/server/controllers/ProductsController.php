@@ -42,6 +42,9 @@
                     'type' => $dataJSON->type ? $dataJSON->type : "",
                     'title' => $dataJSON->title ? $dataJSON->title : "",
                     'description' => $dataJSON->description ? $dataJSON->description : "",
+                    'quantity' => $dataJSON->quantity ? $dataJSON->quantity : "",
+                    'status' => $dataJSON->status ? $dataJSON->status : "",
+                    'price' => $dataJSON->description ? $dataJSON->description : "",
                 ];
 
                 $product = $this->product->create_product($data);
