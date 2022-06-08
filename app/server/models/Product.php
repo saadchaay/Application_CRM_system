@@ -12,7 +12,7 @@ class Product {
     
     public function get_all_product($data)
     {
-        ($data['type'] === 'admin') ?  $this->db->query("SELECT * FROM `products` INNER JOIN `categories` ON `products`.id_category = `categories`.id WHERE  `products`.`id_admin` = :id ORDER BY `products`.id DESC")
+        ($data['type'] === 'admin') ?  $this->db->query("SELECT * FROM `products` LEFT JOIN `categories` ON `products`.id_category = `categories`.id WHERE  `products`.`id_admin` = :id ORDER BY `products`.id DESC")
             : $this->db->query("SELECT * FROM `products` INNER JOIN `categories` ON `products`.id_category = `categories`.id WHERE  `id_user` = :id ORDER BY id DESC");
         
         $this->db->bind(':id', $data['id']);
