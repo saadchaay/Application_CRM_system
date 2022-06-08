@@ -40,11 +40,13 @@
                 $data = [
                     'id_creator' => $dataJSON->id_creator ? $dataJSON->id_creator : "",
                     'type' => $dataJSON->type ? $dataJSON->type : "",
+                    'category' => $dataJSON->category ? $dataJSON->category : "",
                     'title' => $dataJSON->title ? $dataJSON->title : "",
                     'description' => $dataJSON->description ? $dataJSON->description : "",
-                    'quantity' => $dataJSON->quantity ? $dataJSON->quantity : "",
-                    'status' => $dataJSON->status ? $dataJSON->status : "",
-                    'price' => $dataJSON->description ? $dataJSON->description : "",
+                    'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
+                    'status' => $dataJSON->status ? $dataJSON->status : true,
+                    'price' => $dataJSON->description ? $dataJSON->description : 0.00,
+                    'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
                 ];
 
                 $product = $this->product->create_product($data);
@@ -57,5 +59,6 @@
                 }
             }
         }
+        
         
     }
