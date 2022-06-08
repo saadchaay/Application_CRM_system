@@ -10,13 +10,13 @@ export default function Example() {
   const [editItemId, setEditItemId] = useState(null);
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
+  const auth = JSON.parse(localStorage.getItem("auth"));
   const [editData, setEditData] = useState({
     id_creator: auth.id,
     type: auth.role === "admin" ? "admin" : "user",
     title: "",
     description: "",
   });
-  const auth = JSON.parse(localStorage.getItem("auth"));
 
   const titleRef = useRef();
   const descriptionRef = useRef();
