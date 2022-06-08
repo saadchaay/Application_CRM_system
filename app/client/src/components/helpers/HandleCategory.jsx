@@ -6,13 +6,13 @@ const HandleCategory = ({ item, handleClick, handleDelete }) => {
       <td className="max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
         ## {item.id}
         <dl className="font-normal lg:hidden">
-          <dt className="sr-only">Title</dt>
-          <dd className="mt-1 truncate text-gray-700">
-            {item.title}
-          </dd>
           <dt className="sr-only sm:hidden">Created at</dt>
           <dd className="mt-1 truncate text-gray-500 sm:hidden">
             {item.created_at}
+          </dd>
+          <dt className="sr-only">Title</dt>
+          <dd className="mt-1 truncate text-gray-700">
+            {item.title}
           </dd>
         </dl>
       </td>

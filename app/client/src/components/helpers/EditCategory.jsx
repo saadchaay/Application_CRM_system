@@ -1,9 +1,8 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Cancel, SaveAlt } from "@material-ui/icons"
 
-const EditCategory = ({item, handleCancel, handleUpdate}) => {
-    const [title, setTitle] = useState(item.title);
-    const [description, setDescription] = useState(item.description);
+const EditCategory = ({item, handleCancel, handleEditChange}) => {
+
   return (
     <tr key={item.id}>
       <td className="max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
@@ -21,9 +20,9 @@ const EditCategory = ({item, handleCancel, handleUpdate}) => {
       <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
         <input
           type="text"
-          id="title"
-          placeholder={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          placeholder={item.title}
+          onChange={handleEditChange}
           autoComplete="title"
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
         />
@@ -31,16 +30,15 @@ const EditCategory = ({item, handleCancel, handleUpdate}) => {
       <td className="px-3 py-4 text-sm text-gray-500">
         <textarea
           type="text"
-          id="description"
-          placeholder={description}
-          onChange={(e) => setDescription(e.target.value)}
+          name="description"
+          placeholder={item.description}
+          onChange={handleEditChange}
           autoComplete="description"
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
         />
       </td>
       <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
         <button
-            onClick={(e) => handleUpdate(e, item.id)}
             className="text-green-500 hover:text-green-700"
         >
           <SaveAlt />

@@ -14,10 +14,12 @@
 
         public function index($id, $type)
         {
-            $data = [
-                'id' => $id,
-                'type' => $type,
-            ];
+            
+                $data = [
+                    'id' => $id,
+                    'type' => $type,
+                ];
+            
             $all_categories = $this->category->get_all_category($data);
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($all_categories){
@@ -78,7 +80,7 @@
 
             if($_SERVER["REQUEST_METHOD"] === "PUT"){
                 $data = [
-                    'id_creator' => $dataJSON->id_creator ? $dataJSON->id_creator : "",
+                    'id_creator' => $dataJSON->id_creator ,
                     'type' => $dataJSON->type ? $dataJSON->type : "",
                     'title' => $dataJSON->title ? $dataJSON->title : "",
                     'description' => $dataJSON->description ? $dataJSON->description : "",

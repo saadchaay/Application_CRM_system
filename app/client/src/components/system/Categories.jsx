@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
-import { Delete, Edit } from "@material-ui/icons";
+// import { Delete, Edit } from "@material-ui/icons";
 import EditCategory from "../helpers/EditCategory";
 import HandleCategory from "../helpers/HandleCategory";
 
@@ -99,16 +99,20 @@ export default function Example() {
     }
   };
 
-  const handleUpdate = async (e, id) => {
+  const handleEditChange = (e) => {
     e.preventDefault();
     const fieldName = e.target.getAttribute("name");
     const fieldValue = e.target.value;
     const newData = { ...editData };
     newData[fieldName] = fieldValue;
     setEditData(newData);
-
+  };
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    console.log(editData);
+    console.log(editItemId);
     const res = await axios.put(
-      "CategoriesController/update/" + id,
+      "CategoriesController/update/" + editItemId,
       JSON.stringify(editData),
       {
         headers: {
@@ -118,10 +122,10 @@ export default function Example() {
     );
     if (res.status === 201) {
       fetchCategories();
-      setOpen(false);
       setTitle("");
       setDescription("");
       console.log("Category updated");
+      setEditItemId(null);
     } else {
       console.log(res.data);
     }
@@ -355,7 +359,7 @@ export default function Example() {
                       <EditCategory
                         item={item}
                         handleCancel={handleCancel}
-                        handleUpdate={handleUpdate}
+                        handleEditChange={handleEditChange}
                       />
                     ) : (
                       <HandleCategory
