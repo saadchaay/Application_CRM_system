@@ -9,4 +9,8 @@ class Product {
         $this->property = new Property();
     }
     
+    public function get_all_product($data)
+    {
+        
+    }
 }
