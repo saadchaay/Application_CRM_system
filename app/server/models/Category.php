@@ -64,12 +64,9 @@ class Category {
     {
         //create a query
         if( $data['type'] === 'admin' ) {
-            $this->db->query("INSERT INTO `categories` (`id_admin`, `type_creator`, `title`, `description`, `created_at`, `updated_at`) VALUES (:id_admin, :type, :title, :description, :created_at, :updated_at)");
-            $this->db->bind(":id_admin", $data["id_creator"]);
+            $this->db->query("UPDATE `categories` SET `type_creator` = :type, `title` = :title, `description` = :description, `updated_at` = :updated_at WHERE `id` = :id");
         } else {
-            $id_admin = $this->user->get_user($data['id_creator'])->id_admin;
-            $this->db->query("INSERT INTO `categories` (`id_admin`, `id_user`, `type_creator`, `title`, `description`, `created_at`, `updated_at`) VALUES (:id_admin, :id_user, :type, :title, :description, :created_at, :updated_at)");
-            $this->db->bind(":id_admin", $id_admin);
+            $this->db->query("UPDATE `categories` SET `id_user` = :id_user, `type_creator` = :type, `title` = :title, `description` = :description, `updated_at` = :updated_at WHERE `id` = :id");
             $this->db->bind(":id_user", $data["id_creator"]);
         }
         // bind the values
