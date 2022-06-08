@@ -67,7 +67,7 @@ class Category {
             $this->db->query("UPDATE `categories` SET `type_creator` = :type, `title` = :title, `description` = :description, `updated_at` = :updated_at WHERE `id` = :id");
         } else {
             $this->db->query("UPDATE `categories` SET `id_user` = :id_user, `type_creator` = :type, `title` = :title, `description` = :description, `updated_at` = :updated_at WHERE `id` = :id");
-            $this->db->bind(":id_user", $data["id_creator"]);
+            $this->db->bind(":i d_user", $data["id_creator"]);
         }
         // bind the values
         $this->db->bind(":id", $id);
