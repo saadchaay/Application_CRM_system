@@ -1,14 +1,12 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
-// import { Delete, Edit } from "@material-ui/icons";
 import EditCategory from "../helpers/EditCategory";
 import HandleCategory from "../helpers/HandleCategory";
 
 export default function Example() {
   const [categories, setCategories] = useState([]);
   const [editItemId, setEditItemId] = useState(null);
-  const [errors, setErrors] = useState();
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -99,6 +97,7 @@ export default function Example() {
     newData[fieldName] = fieldValue;
     setEditData(newData);
   };
+  
   const handleUpdate = async (e) => {
     e.preventDefault();
     const res = await axios.put(
@@ -117,7 +116,6 @@ export default function Example() {
       console.log("Category updated");
       setEditItemId(null);
     } else {
-      setErrors(res.data);
       console.log(res.data);
     }
   };
@@ -312,7 +310,6 @@ export default function Example() {
                         item={item}
                         handleCancel={handleCancel}
                         handleEditChange={handleEditChange}
-                        // errors={errors}
                       />
                     ) : (
                       <HandleCategory
