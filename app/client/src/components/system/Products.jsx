@@ -45,6 +45,8 @@ export default function Example() {
       console.log(res.data.data);
       setProducts(res.data.data);
       setChecked(res.data.data.map((item) => item.status));
+      setCategories(res.data.categories);
+      console.log(res.data.categories);
     } else {
       console.log("There's no product");
     }
@@ -289,7 +291,13 @@ export default function Example() {
                       </dl>
                     </td>
                     <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                      {item.id_category}
+                      {categories.find(
+                        (category) => category.id === item.id_category
+                      ).title
+                        ? categories.find(
+                            (category) => category.id === item.id_category
+                          ).title
+                        : "Unknown"}
                     </td>
                     <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       {item.title}
