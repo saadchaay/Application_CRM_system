@@ -17,6 +17,8 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/solid";
 import Switch from "@material-ui/core/Switch";
+
+
 const navigation = [
   { name: "Dashboard", href: "/super-dashboard", icon: Home, current: true },
   { name: "Logout", href: "/sign-out", icon: ExitToApp, current: false },

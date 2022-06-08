@@ -1,23 +1,29 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
-import EditCategory from "../helpers/EditCategory";
-import HandleCategory from "../helpers/HandleCategory";
+import Switch from "@material-ui/core/Switch";
+
+const statusStyles = {
+  active: "bg-green-100 text-green-800",
+  inactive: "bg-red-100 text-red-800",
+  processing: "bg-yellow-100 text-yellow-800",
+  failed: "bg-gray-100 text-gray-800",
+};
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function Example() {
   const auth = JSON.parse(localStorage.getItem("auth"));
+  const [status, setStatus] = useState([]);
+  const [checked, setChecked] = useState([]);
+
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [products, setProducts] = useState([]);
 
-  const [product, setProduct] = useState({
-    title: "",
-    description: "",
-    quantity: "",
-    price: "",
-    category_id: "",
-    avatar: "",
-  });
+  const [product, setProduct] = useState([]);
 
   const [errProduct, setErrProduct] = useState({
     title: "",
@@ -41,6 +47,8 @@ export default function Example() {
     if (res) {
       setProducts(res.data);
       console.log(res.data);
+      setProducts(res.data);
+      setChecked(res.data.map((item) => item.status));
     } else {
       console.log("There's no product");
     }
@@ -51,35 +59,34 @@ export default function Example() {
     // add modal here.........
     e.preventDefault();
     console.log(JSON.parse(product));
-    // if (product.title === "") {
-    //   setErrProduct.title("Name is required");
-    // } else if (product.description === "") {
-    //   setErrProduct.description("Description is required");
-    // } else {
-    //   const data = {
-    //     id_creator: auth.id,
-    //     type: auth.role === "admin" ? "admin" : "user",
-    //     title: title,
-    //     description: description,
-    //   };
-    //   const res = await axios.post(
-    //     "ProductsController/store",
-    //     JSON.stringify(data),
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   if (res.status === 201) {
-    //     fetchCategories();
-    //     setOpen(false);
-    //     setTitle("");
-    //     setDescription("");
-    //     console.log("Category added");
-    //   } else {
-    //     console.log(res.data);
+  };
+
+  // handle change
+  const handleChange = async (index) => {
+    const newChecked = [...checked];
+    newChecked[index] = !newChecked[index];
+    setChecked(newChecked);
+
+    const newStatus = status.map((item, i) => {
+      if (i === index) {
+        item.status = newChecked[index] ? true : false;
+      }
+      return item;
+    });
+
+    setStatus(newStatus);
+    // const id = status[index].id;
+    // const res = await axios.put(
+    //   "ProductsController/changeStatus/" +id,
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
     //   }
+    // );
+
+    // if (res.data.status === "success") {
+    //   console.log(res.data.status);
     // }
   };
 
@@ -159,7 +166,7 @@ export default function Example() {
                                   id="description"
                                   // value={description}
                                   // onChange={(e) =>
-                                    // setDescription(e.target.value)
+                                  // setDescription(e.target.value)
                                   // }
                                   autoComplete="description"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
@@ -201,8 +208,8 @@ export default function Example() {
           <div className="sm:flex-auto">
             <h1 className="text-xl font-semibold text-gray-900">Products</h1>
             <p className="mt-2 text-sm text-gray-700">
-              A list of all the Products in your account including their name
-              of product, description and date of created product.
+              A list of all the Products in your account including their name of
+              product, description and date of created product.
             </p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -236,7 +243,7 @@ export default function Example() {
                     scope="col"
                     className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
                   >
-                   Product name
+                    Product name
                   </th>
                   <th
                     scope="col"
@@ -260,14 +267,63 @@ export default function Example() {
                     scope="col"
                     className="px-3 text-sm font-semibold text-gray-900"
                   >
-                    Action
+                    Status
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {products.map((item) => (
-                  <tr>  </tr>
-                 ))}
+                {products.map((item, index) => (
+                  <tr key={index}>
+                    <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                      ## {item.id}
+                      <dl className="font-normal lg:hidden">
+                        <dt className="sr-only">Category</dt>
+                        <dd className="mt-1 truncate text-gray-700">
+                          {item.id_category}
+                        </dd>
+                        <dt className="sr-only sm:hidden">Product name</dt>
+                        <dd className="mt-1 truncate text-gray-500 sm:hidden">
+                          {item.title}
+                        </dd>
+                      </dl>
+                    </td>
+                    <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
+                      {item.id_category}
+                    </td>
+                    <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      {item.title}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-500">
+                      {item.description}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-500">
+                      <span
+                        className={classNames(
+                          item.status
+                            ? statusStyles["active"]
+                            : statusStyles["inactive"],
+                          "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"
+                        )}
+                      >
+                        {item.status ? "In Stock" : "Out of Stock"}
+                      </span>
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-500">
+                      {item.price}
+                    </td>
+                    <td className="py-4 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <span>
+                        <Switch
+                          checked={checked[index]}
+                          onChange={() => handleChange(index)}
+                          color="primary"
+                          name="checkedB"
+                          inputProps={{ "aria-label": "primary checkbox" }}
+                        />
+                      </span>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </form>
