@@ -12,8 +12,8 @@ class Product {
     
     public function get_all_product($data)
     {
-        ($data['type'] === 'admin') ?  $this->db->query("SELECT * FROM `products` WHERE `id_admin` = :id ORDER BY id DESC")
-            : $this->db->query("SELECT * FROM `products` WHERE `id_user` = :id ORDER BY id DESC");
+        ($data['type'] === 'admin') ?  $this->db->query("SELECT * FROM `products` INNER JOIN `categories` ON `products`.id_category = `categories`.id WHERE  `id_admin` = :id ORDER BY id DESC")
+            : $this->db->query("SELECT * FROM `products` INNER JOIN `categories` ON `products`.id_category = `categories`.id WHERE  `id_user` = :id ORDER BY id DESC");
         
         $this->db->bind(':id', $data['id']);
         
