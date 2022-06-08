@@ -37,12 +37,6 @@ class Category {
     public function create_category($data)
     {
         
-
-        //create a query
-        // ( $data['type'] === 'admin' ) ?  
-        // $this->db->query("INSERT INTO `categories` (`id_creator`, `type_creator`, `title`, `description`, `created_at`, `updated_at`) VALUES (:id_creator, :type_creator, :title, :description, :created_at, :updated_at)");
-
-        // bind the values
         if( $data['type'] === 'admin' ) {
             $this->db->query("INSERT INTO `categories` (`id_admin`, `type_creator`, `title`, `description`, `created_at`, `updated_at`) VALUES (:id, :type, :title, :description, :created_at, :updated_at)");
             $this->db->bind(":id", $data["id_creator"]);
@@ -57,7 +51,6 @@ class Category {
         $this->db->bind(":description", $data["description"]);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
-        // print_r($id_admin);
 
         // check execution the query
         if ($this->db->execute()) {
@@ -70,11 +63,17 @@ class Category {
     public function update_category($id, $data)
     {
         //create a query
-        $this->db->query("UPDATE `categories` SET `id_creator` = :id_creator AND `type_creator` = :type AND `title` = :title AND `description` = :description AND `updated_at` = :updated_at WHERE `id` = :id");
-
+        if( $data['type'] === 'admin' ) {
+            $this->db->query("INSERT INTO `categories` (`id_admin`, `type_creator`, `title`, `description`, `created_at`, `updated_at`) VALUES (:id_admin, :type, :title, :description, :created_at, :updated_at)");
+            $this->db->bind(":id_admin", $data["id_creator"]);
+        } else {
+            $id_admin = $this->user->get_user($data['id_creator'])->id_admin;
+            $this->db->query("INSERT INTO `categories` (`id_admin`, `id_user`, `type_creator`, `title`, `description`, `created_at`, `updated_at`) VALUES (:id_admin, :id_user, :type, :title, :description, :created_at, :updated_at)");
+            $this->db->bind(":id_admin", $id_admin);
+            $this->db->bind(":id_user", $data["id_creator"]);
+        }
         // bind the values
         $this->db->bind(":id", $id);
-        $this->db->bind(":id_creator", $data["id_creator"]);
         $this->db->bind(":type", $data["type"]);
         $this->db->bind(":title", $data["title"]);
         $this->db->bind(":description", $data["description"]);
