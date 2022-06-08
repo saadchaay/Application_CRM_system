@@ -8,6 +8,7 @@ export default function Example() {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("Add Category");
   const [buttonSubmit , setButtonSubmit] = useState();
+  const categoryId = localStorage.getItem("categoryId");
   const cancelButtonRef = useRef(null);
   const auth = JSON.parse(localStorage.getItem("auth"));
 
@@ -42,7 +43,8 @@ export default function Example() {
     setAction("Update Category");
     setTitle(categories.find((category) => category.id === id).title);
     setDescription(categories.find((category) => category.id === id).description);
-    setButtonSubmit(id);
+    // setButtonSubmit(id);
+    localStorage.setItem("categoryId", id);
   };
 
   const handleCategory = async (e) => {
@@ -95,6 +97,7 @@ export default function Example() {
       setTitle("");
       setDescription("");
       console.log("Category updated");
+      localStorage.removeItem('categoryId');
     } else {
       console.log(res.data);
     }
@@ -134,7 +137,7 @@ export default function Example() {
 
           <div className="fixed z-10 inset-0 overflow-y-auto mb-20">
             <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-              <form onSubmit={!buttonSubmit ? handleCategory : handleUpdate(buttonSubmit)}>
+               <form onSubmit={!categoryId ? handleCategory : handleUpdate(buttonSubmit)}>
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
