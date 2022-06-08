@@ -6,6 +6,7 @@ class Category {
     public function __construct()
     {
         $this->db = new Database();
+        $this->user = new User();
     }
     
     public function get_all_category($data)
@@ -45,7 +46,7 @@ class Category {
         if( $data['type'] === 'admin' ) {
             $this->db->bind(":id", $data["id_creator"]);
         } else {
-            $this->db->bind(":id_admin", );
+            $this->db->bind(":id_admin", $this->user->get_user($data["id_creator"])->id_admin);
             $this->db->bind(":id_user", $data["id_creator"]);
         }
         $this->db->bind(":type_creator", $data["type"]);
