@@ -16,8 +16,8 @@ function classNames(...classes) {
 
 export default function Example() {
   const auth = JSON.parse(localStorage.getItem("auth"));
-  const [status, setStatus] = useState([]);
   const [checked, setChecked] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -34,9 +34,6 @@ export default function Example() {
     avatar: "",
   });
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   // fetch all products
   const fetchProducts = async () => {
@@ -66,28 +63,33 @@ export default function Example() {
     newChecked[index] = !newChecked[index];
     setChecked(newChecked);
 
-    const newStatus = status.map((item, i) => {
+    const newProducts = products.map((product, i) => {
       if (i === index) {
-        item.status = newChecked[index] ? true : false;
+        product.status = newChecked[index] ? true : false;
       }
-      return item;
+      return product;
     });
+    
+    setProducts(newProducts);
 
-    // setProducts(newStatus);
-    // const id = status[index].id;
-    // const res = await axios.put(
-    //   "ProductsController/changeStatus/" +id,
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
+    const id = product[index].id;
+    const res = await axios.put(
+      "ProductsController/changeStatus/" +id,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    // if (res.data.status === "success") {
-    //   console.log(res.data.status);
-    // }
+    if (res.data.status === "success") {
+      console.log(res.data.status);
+    }
   };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <>
