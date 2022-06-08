@@ -283,7 +283,6 @@ export default function Example() {
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
               {categories.map((item) => (
-                { idCategory } ?
                 <tr key={item.id}>
                   <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
                     ## {item.id}
@@ -322,8 +321,6 @@ export default function Example() {
                     </button>
                   </td>
                 </tr>
-                :
-                <p>update yes</p>
               ))}
             </tbody>
           </table>
