@@ -22,11 +22,16 @@
                 ];
             
             $all_products = $this->product->get_all_product($data);
+            $categories = $this->category->get_all_category($data);
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 print_r($all_products[0]->title);
                 if($all_products){
                     http_response_code(201);
-                    echo json_encode($all_products);
+                    echo json_encode(array(
+                        'status' => 'success',
+                        'data' => $all_products,
+                        'categories' => $categories
+                    ));
                 }else{
                     http_response_code(404);
                     echo json_encode(array('message' => 'No products found'));
