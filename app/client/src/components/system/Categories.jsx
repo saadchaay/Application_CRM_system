@@ -40,9 +40,9 @@ export default function Example() {
   };
 
   useEffect(() => {
-    fetchCategories();
-    setErrTitle("");
-    setErrDescription("");
+      fetchCategories();
+      setErrTitle("");
+      setErrDescription("");
   }, []);
 
   const handleClick = async (event, item) => {
