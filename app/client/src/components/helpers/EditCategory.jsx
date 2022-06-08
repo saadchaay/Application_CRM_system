@@ -1,45 +1,60 @@
+import { useState } from "react";
+import { Cancel, SaveAlt } from "@material-ui/icons"
+
+const EditCategory = ({item, handleCancel, handleUpdate}) => {
+    const [title, setTitle] = useState(item.title);
+    const [description, setDescription] = useState(item.description);
+  return (
+    <tr key={item.id}>
+      <td className="max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+        ## {item.id}
+        <dl className="font-normal lg:hidden">
+          <dt className="sr-only sm:hidden">Created at</dt>
+          <dd className="mt-1 truncate text-gray-500 sm:hidden">
+            {item.created_at}
+          </dd>
+        </dl>
+      </td>
+      <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
+        {item.created_at}
+      </td>
+      <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+        <input
+          type="text"
+          id="title"
+          placeholder={title}
+          onChange={(e) => setTitle(e.target.value)}
+          autoComplete="title"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+        />
+      </td>
+      <td className="px-3 py-4 text-sm text-gray-500">
+        <textarea
+          type="text"
+          id="description"
+          placeholder={description}
+          onChange={(e) => setDescription(e.target.value)}
+          autoComplete="description"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+        />
+      </td>
+      <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+        <button
+            onClick={(e) => handleUpdate(e, item.id)}
+            className="text-green-500 hover:text-green-700"
+        >
+          <SaveAlt />
+        </button>
+        <button
+            onClick={(e) => handleCancel(e)}
+            className="text-red-500 hover:text-red-600"
+        >
+          <Cancel />
+        </button>
+      </td>
+    </tr>
+  );
+};
 
 
-
-const EditCategory = (props) => {
-    return (
-        <tr key={props.id}>
-                  <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                    ## {props.id}
-                    <dl className="font-normal lg:hidden">
-                      <dt className="sr-only">Created at</dt>
-                      <dd className="mt-1 truncate text-gray-700">
-                        {props.created_at}
-                      </dd>
-                      <dt className="sr-only sm:hidden">Title</dt>
-                      <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                        {props.title}
-                      </dd>
-                    </dl>
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                    {props.created_at}
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {props.title}
-                  </td>
-                  <td className="px-3 py-4 text-sm text-gray-500">
-                    {props.description}
-                  </td>
-                  <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <button
-                      onClick={() => displayModalUpdate(props.id)}
-                      className="text-green-500 hover:text-green-700"
-                    >
-                     <Edit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(props.id)}
-                      className="text-red-500 hover:text-red-600"
-                    >
-                      <Delete />
-                    </button>
-                  </td>
-                </tr>
-    );
-}
+export default EditCategory;

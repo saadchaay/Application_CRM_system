@@ -2,15 +2,20 @@ import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
 import { Delete, Edit } from "@material-ui/icons";
+import EditCategory from "../helpers/EditCategory";
+import HandleCategory from "../helpers/HandleCategory";
 
 export default function Example() {
   const [categories, setCategories] = useState([]);
-  const [idCategory, setIdCategory] = useState();
+  const [editItemId, setEditItemId] = useState(null);
   const [open, setOpen] = useState(false);
-  const [action, setAction] = useState("Add Category");
-  const [buttonSubmit , setButtonSubmit] = useState();
-  const categoryId = localStorage.getItem("categoryId");
   const cancelButtonRef = useRef(null);
+  const [editData, setEditData] = useState({
+    id_creator: auth.id,
+    type: auth.role === "admin" ? "admin" : "user",
+    title: "",
+    description: "",
+  });
   const auth = JSON.parse(localStorage.getItem("auth"));
 
   const titleRef = useRef();
@@ -24,8 +29,10 @@ export default function Example() {
 
   const fetchCategories = async () => {
     const type = auth.role === "admin" ? "admin" : "user";
-    const res = await axios.get("CategoriesController/index/"+auth.id+"/"+type);
-    if(res) {
+    const res = await axios.get(
+      "CategoriesController/index/" + auth.id + "/" + type
+    );
+    if (res) {
       setCategories(res.data);
       console.log(res.data);
     } else {
@@ -37,63 +44,78 @@ export default function Example() {
     fetchCategories();
     setErrTitle("");
     setErrDescription("");
-    displayModalUpdate();
   }, []);
-  
-  const displayModalUpdate = async (id) => {
-    setIdCategory(id);
-    console.log(idCategory);
-    // setOpen(true);
-    // setAction("Update Category");
-    // setTitle(categories.find((category) => category.id === id).title);
-    // setDescription(categories.find((category) => category.id === id).description);
-    // setButtonSubmit(id);
+
+  const handleClick = async (event, item) => {
+    event.preventDefault();
+    setEditItemId(item.id);
+
+    // const formValues = {
+    //   id_creator: auth.id,
+    //   type: auth.role === "admin" ? "admin" : "user",
+    //   title: item.title,
+    //   description: item.description,
+    // };
+
+    // setEditData(formValues);
+  };
+  const handleCancel = (event) => {
+    event.preventDefault();
+    setEditItemId(null);
   };
 
   const handleCategory = async (e) => {
     // add modal here.........
     e.preventDefault();
-    if(title === "") {
+    if (title === "") {
       setErrTitle("Name is required");
-    } else if(description === "") {
+    } else if (description === "") {
       setErrDescription("Description is required");
     } else {
-        const data = {
-          id_creator: auth.id,
-          type: auth.role === "admin" ? "admin" : "user",
-          title: title,
-          description: description,
-        };
-        const res = await axios.post("CategoriesController/store", JSON.stringify(data), {
+      const data = {
+        id_creator: auth.id,
+        type: auth.role === "admin" ? "admin" : "user",
+        title: title,
+        description: description,
+      };
+      const res = await axios.post(
+        "CategoriesController/store",
+        JSON.stringify(data),
+        {
           headers: {
             "Content-Type": "application/json",
           },
-        });
-        if (res.status === 201) {
-          fetchCategories();
-          setOpen(false);
-          setTitle("");
-          setDescription("");
-          console.log("Category added");
-        } else {
-          console.log(res.data);
         }
+      );
+      if (res.status === 201) {
+        fetchCategories();
+        setOpen(false);
+        setTitle("");
+        setDescription("");
+        console.log("Category added");
+      } else {
+        console.log(res.data);
       }
-    
+    }
   };
 
-  const handleUpdate = async (id) => {
-    const data = {
-      id_creator: auth.id,
-      type: auth.role === "admin" ? "admin" : "user",
-      title: title,
-      description: description,
-    };
-    const res = await axios.put("CategoriesController/update/"+id, JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const handleUpdate = async (e, id) => {
+    e.preventDefault();
+    const fieldName = e.target.getAttribute("name");
+    const fieldValue = e.target.value;
+    const newData = { ...editData };
+    newData[fieldName] = fieldValue;
+    setEditData(newData);
+
+    const res = await axios.put(
+      "CategoriesController/update/" + id,
+      JSON.stringify(editData),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (res.status === 201) {
       fetchCategories();
       setOpen(false);
@@ -105,7 +127,8 @@ export default function Example() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
     const res = await axios.delete(`CategoriesController/destroy/${id}`);
     if (res.data) {
       fetchCategories();
@@ -114,7 +137,6 @@ export default function Example() {
       console.log("Category not deleted");
     }
   };
-
 
   return (
     <>
@@ -139,7 +161,7 @@ export default function Example() {
 
           <div className="fixed z-10 inset-0 overflow-y-auto mb-20">
             <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-               <form onSubmit={!categoryId ? handleCategory : handleUpdate(buttonSubmit)}>
+              <form onSubmit={handleCategory}>
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -157,7 +179,7 @@ export default function Example() {
                             as="h3"
                             className="text-lg leading-6 font-bold text-gray-900"
                           >
-                            {action}
+                            Add Category
                           </Dialog.Title>
                           <div className="mt-2">
                             <div className="mt-3 flex flex-col w-80">
@@ -193,7 +215,9 @@ export default function Example() {
                                   id="description"
                                   value={description}
                                   ref={descriptionRef}
-                                  onChange={(e) => setDescription(e.target.value)}
+                                  onChange={(e) =>
+                                    setDescription(e.target.value)
+                                  }
                                   autoComplete="description"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
@@ -202,7 +226,6 @@ export default function Example() {
                                 </div>
                               </div>
                             </div>
-
                           </div>
                         </div>
                       </div>
@@ -235,7 +258,8 @@ export default function Example() {
           <div className="sm:flex-auto">
             <h1 className="text-xl font-semibold text-gray-900">Categories</h1>
             <p className="mt-2 text-sm text-gray-700">
-              A list of all the Categories in your account including their name of category, description and date of created category.
+              A list of all the Categories in your account including their name
+              of category, description and date of created category.
             </p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -249,81 +273,104 @@ export default function Example() {
           </div>
         </div>
         <div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
-          <table className="min-w-full divide-y divide-gray-300">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                >
-                  Number
-                </th>
-                <th
-                  scope="col"
-                  className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-                >
-                  Created at
-                </th>
-                <th
-                  scope="col"
-                  className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
-                >
-                  Title
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                >
-                  Description
-                </th>
-                <th scope="col" className="px-3 text-sm font-semibold text-gray-900">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {categories.map((item) => (
-                <tr key={item.id}>
-                  <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                    ## {item.id}
-                    <dl className="font-normal lg:hidden">
-                      <dt className="sr-only">Created at</dt>
-                      <dd className="mt-1 truncate text-gray-700">
-                        {item.created_at}
-                      </dd>
-                      <dt className="sr-only sm:hidden">Title</dt>
-                      <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                        {item.title}
-                      </dd>
-                    </dl>
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                    {item.created_at}
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {item.title}
-                  </td>
-                  <td className="px-3 py-4 text-sm text-gray-500">
-                    {item.description}
-                  </td>
-                  <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <button
-                      onClick={() => displayModalUpdate(item.id)}
-                      className="text-green-500 hover:text-green-700"
-                    >
-                     <Edit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="text-red-500 hover:text-red-600"
-                    >
-                      <Delete />
-                    </button>
-                  </td>
+          <form onSubmit={handleUpdate}>
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                  >
+                    Number
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                  >
+                    Created at
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+                  >
+                    Title
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Description
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 text-sm font-semibold text-gray-900"
+                  >
+                    Action
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {categories.map((item) => (
+                  //   <tr key={item.id}>
+                  //   <td className="max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                  //     ## {item.id}
+                  //     <dl className="font-normal lg:hidden">
+                  //       <dt className="sr-only">Title</dt>
+                  //       <dd className="mt-1 truncate text-gray-700">
+                  //         {item.title}
+                  //       </dd>
+                  //       <dt className="sr-only sm:hidden">Created at</dt>
+                  //       <dd className="mt-1 truncate text-gray-500 sm:hidden">
+                  //         {item.created_at}
+                  //       </dd>
+                  //     </dl>
+                  //   </td>
+                  //   <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
+                  //     {item.created_at}
+                  //   </td>
+                  //   <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                  //     {item.title}
+                  //   </td>
+                  //   <td className="px-3 py-4 text-sm text-gray-500">
+                  //     {item.description}
+                  //   </td>
+                  //   <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                  //     <button
+                  //       onClick={() => displayModalUpdate(item.id)}
+                  //       className="text-green-500 hover:text-green-700"
+                  //     >
+                  //      <Edit />
+                  //     </button>
+                  //     <button
+                  //       onClick={() => handleDelete(item.id)}
+                  //       className="text-red-500 hover:text-red-600"
+                  //     >
+                  //       <Delete />
+                  //     </button>
+                  //   </td>
+
+                  // </tr>
+                  <Fragment>
+                    {editItemId === item.id ? (
+                      <EditCategory
+                        item={item}
+                        handleCancel={handleCancel}
+                        handleUpdate={handleUpdate}
+                      />
+                    ) : (
+                      <HandleCategory
+                        item={item}
+                        handleClick={handleClick}
+                        handleDelete={handleDelete}
+                      />
+                    )}
+
+                    {/* <HandleCategory item={item} />  */}
+                  </Fragment>
+                ))}
+              </tbody>
+            </table>
+          </form>
         </div>
       </div>
     </>
