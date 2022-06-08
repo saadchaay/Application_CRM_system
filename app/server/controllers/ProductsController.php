@@ -59,6 +59,28 @@
                 }
             }
         }
+
+        public function changeStatus($id)
+        {
+            if($_SERVER["REQUEST_METHOD"] == "PUT") {
+                $product = $this->product->get_product($id);
+                print_r($product);
+                if($product){
+                    $data = [
+                        'id' => $id,
+                        'status' => $product->status ? false : true,
+                    ];
+                    $product = $this->product->change_status($data);
+                    if($product){
+                        http_response_code(201);
+                        echo json_encode(array('message' => 'Product status changed'));
+                    }else{
+                        http_response_code(404);
+                        echo json_encode(array('message' => 'Product status not changed'));
+                    }
+                }
+            }
+        }
         
         
     }

@@ -45,7 +45,6 @@ export default function Example() {
       "ProductsController/index/" + auth.id + "/" + type
     );
     if (res) {
-      setProducts(res.data);
       console.log(res.data);
       setProducts(res.data);
       setChecked(res.data.map((item) => item.status));
@@ -74,7 +73,7 @@ export default function Example() {
       return item;
     });
 
-    setStatus(newStatus);
+    // setProducts(newStatus);
     // const id = status[index].id;
     // const res = await axios.put(
     //   "ProductsController/changeStatus/" +id,

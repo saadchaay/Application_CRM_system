@@ -24,6 +24,17 @@ class Product {
         }
     }
 
+    public function get_product($id)
+    {
+        $this->db->query("SELECT * FROM `products` WHERE `id` = :id");
+        $this->db->bind(':id', $id);
+        if($this->db->single()) {
+            return $this->db->single();
+        } else {
+            return false;
+        }
+    }
+
     public function create_product($data)
     {
         if( $data['type'] === 'admin' ) {
@@ -49,6 +60,20 @@ class Product {
         $this->db->bind(":avatar", $data["avatar"]);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+
+        // check execution the query
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function change_status($data)
+    {
+        $this->db->query("UPDATE `products` SET `status` = :status WHERE `id` = :id");
+        $this->db->bind(":status", $data["status"]);
+        $this->db->bind(":id", $data["id"]);
 
         // check execution the query
         if ($this->db->execute()) {
