@@ -42,9 +42,9 @@ export default function Example() {
       "ProductsController/index/" + auth.id + "/" + type
     );
     if (res) {
-      console.log(res.data);
-      setProducts(res.data);
-      setChecked(res.data.map((item) => item.status));
+      console.log(res.data.data);
+      setProducts(res.data.data);
+      setChecked(res.data.data.map((item) => item.status));
     } else {
       console.log("There's no product");
     }
