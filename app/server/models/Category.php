@@ -11,15 +11,10 @@ class Category {
     
     public function get_all_category($data)
     {
-        if($data['type'] === 'admin'){
-            $this->db->query("SELECT * FROM `categories` WHERE `id_admin` = :id ORDER BY id DESC");
-            $this->db->bind(':id', $data['id']);
-        } else {
-            $this->db->query("SELECT * FROM `categories` WHERE `id_user` = :id ORDER BY id DESC");
-            // $this->db->bind(':type', $data['type']);
-            $this->db->bind(':id', $data['id']);
-
-        }
+        ($data['type'] === 'admin') ?  $this->db->query("SELECT * FROM `categories` WHERE `id_admin` = :id ORDER BY id DESC")
+            : $this->db->query("SELECT * FROM `categories` WHERE `id_user` = :id ORDER BY id DESC");
+        
+        $this->db->bind(':id', $data['id']);
         
         if($this->db->resultSet()) {
             return $this->db->resultSet();
