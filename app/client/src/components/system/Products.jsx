@@ -2,7 +2,7 @@ import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
 import Switch from "@material-ui/core/Switch";
-import Drop from "./Drop";
+import Drop from "../helpers/Drop";
 
 const statusStyles = {
   active: "bg-green-100 text-green-800",
@@ -51,9 +51,14 @@ export default function Example() {
   };
 
   // handle change input
-  const [optionSelected, setOptionSelected] = useState(null);
-  const handleChangeSelected = (selected) => {
-    setOptionSelected(selected);
+  const [colorsSelected, setColorsSelected] = useState(null);
+  const [sizesSelected, setSizesSelected] = useState(null);
+  const handleChangeColors = (selected) => {
+    setColorsSelected(selected);
+    console.log(selected);
+  };
+  const handleChangeSizes = (selected) => {
+    setSizesSelected(selected);
     console.log(selected);
   };
     
@@ -81,6 +86,8 @@ export default function Example() {
   const handleProduct = async (e) => {
     // add modal here.........
     e.preventDefault();
+    console.log(colorsSelected);
+    console.log(sizesSelected);
     console.log(JSON.parse(product));
   };
 
@@ -320,24 +327,7 @@ export default function Example() {
                                 >
                                   Colors
                                 </label>
-                                <Drop colors={colors} handleChangeSelected={handleChangeSelected} selectData={optionSelected} />
-                                {/* <select
-                                  id="role"
-                                  autoComplete="country-name"
-                                  onChange={(e) => handleValues(e)}
-                                  className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                >
-                                  <option>Select colors ...</option>
-                                  {colors.map((color) => (
-                                    <option
-                                      key={color.id}
-                                      value={color.id}
-                                      name={color.value}
-                                    >
-                                      {color.value}
-                                    </option>
-                                  ))}
-                                </select> */}
+                                <Drop data={colors} handleChangeSelected={handleChangeColors} selectData={colorsSelected} />
                               </div>
                             </div>
                           </div>
@@ -351,7 +341,7 @@ export default function Example() {
                                 >
                                   Sizes
                                 </label>
-                                <Drop sizes={sizes} handleChangeSelected={handleChangeSelected} selectData={optionSelected} />
+                                <Drop data={sizes} handleChangeSelected={handleChangeSizes} selectData={sizesSelected} />
                               </div>
                             </div>
                           </div>
