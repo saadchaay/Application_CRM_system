@@ -24,7 +24,7 @@ const Option = (props) => {
           checked={props.id}
           onChange={() => null}
         />{" "}
-        <label>{props.value}</label>
+        <label>{props.label}</label>
       </components.Option>
     </div>
   );
@@ -40,7 +40,7 @@ export default function Example({colors, handleChangeSelected, selectData}) {
       data-content="Please selecet account(s)"
     >
       <ReactSelect
-        options={colorsOptions}
+        options={colors}
         isMulti
         closeMenuOnSelect={false}
         hideSelectedOptions={false}
