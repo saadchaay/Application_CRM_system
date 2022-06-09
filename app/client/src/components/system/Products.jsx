@@ -88,6 +88,7 @@ export default function Example() {
     e.preventDefault();
     console.log(colorsSelected);
     console.log(sizesSelected);
+    console.log(imgPrv);
     // console.log(JSON.parse(product));
   };
 
