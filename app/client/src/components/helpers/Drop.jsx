@@ -21,7 +21,7 @@ export default function Example({data, handleChangeSelected, selectData}) {
   
   return (
     <span
-      class="d-inline-block"
+      className="d-inline-block"
       data-toggle="popover"
       data-trigger="focus"
       data-content="Please selecet account(s)"
