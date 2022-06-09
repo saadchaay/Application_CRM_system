@@ -317,7 +317,7 @@ export default function Example() {
                                   htmlFor="last-name"
                                   className="block text-sm font-medium text-gray-700"
                                 >
-                                  Category
+                                  Colors
                                 </label>
                                 <select
                                   id="role"
@@ -325,7 +325,7 @@ export default function Example() {
                                   onChange={(e) => handleValues(e)}
                                   className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 >
-                                  <option>Choose category ...</option>
+                                  <option>Select colors ...</option>
                                   {colors.map((color) => (
                                     <option
                                       key={color.id}
