@@ -117,6 +117,7 @@ export default function Example() {
 
   return (
     <>
+      <Drop />
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
