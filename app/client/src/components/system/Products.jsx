@@ -21,23 +21,29 @@ export default function Example() {
   const [categories, setCategories] = useState([]);
   const [imgPrv, setImgPrv] = useState(null);
   const [colors, setColors] = useState([]);
-  const [selectedColors, setSelectedColors] = useState([]);
   const [sizes, setSizes] = useState([]);
-
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [products, setProducts] = useState([]);
+  // product data::
+  const [avatar, setAvatar] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [color, setColor] = useState([]);
+  const [size, setSize] = useState([]);
 
-  const [product, setProduct] = useState([]);
+  const [errAvatar, setErrAvatar] = useState(null);
+  const [errTitle, setErrTitle] = useState(null);
+  const [errDescription, setErrDescription] = useState(null);
+  const [errQuantity, setErrQuantity] = useState(null);
+  const [errPrice, setErrPrice] = useState(null);
+  const [errCategory, setErrCategory] = useState(null);
+  const [errColor, setErrColor] = useState([]);
+  const [errSize, setErrSize] = useState([]);
 
-  const [errProduct, setErrProduct] = useState({
-    title: "",
-    description: "",
-    quantity: "",
-    price: "",
-    category_id: "",
-    avatar: "",
-  });
 
   // handle image preview
   const handleImageChange = (e) => {
@@ -46,6 +52,7 @@ export default function Example() {
     let file = e.target.files[0];
     reader.onloadend = () => {
       setImgPrv(reader.result);
+      setAvatar(file.name);
     };
     reader.readAsDataURL(file);
   };
@@ -53,6 +60,7 @@ export default function Example() {
   // handle change input
   const [colorsSelected, setColorsSelected] = useState(null);
   const [sizesSelected, setSizesSelected] = useState(null);
+
   const handleChangeColors = (selected) => {
     setColorsSelected(selected);
     console.log(selected);
@@ -86,10 +94,17 @@ export default function Example() {
   const handleProduct = async (e) => {
     // add modal here.........
     e.preventDefault();
-    console.log(colorsSelected);
-    console.log(sizesSelected);
-    console.log(imgPrv);
-    // console.log(JSON.parse(product));
+    const product = {
+      avatar: avatar,
+      title: title,
+      description: description,
+      quantity: quantity,
+      price: price,
+      category: category,
+      color: colorsSelected,
+      size: sizesSelected,
+    };
+    console.log(avatar);
   };
 
   // handle change
@@ -107,7 +122,7 @@ export default function Example() {
 
     setProducts(newProducts);
 
-    const id = product[index].id;
+    const id = products[index].id;
     const res = await axios.put("ProductsController/changeStatus/" + id, {
       headers: {
         "Content-Type": "application/json",
@@ -179,9 +194,8 @@ export default function Example() {
                                 <input
                                   type="text"
                                   id="title"
-                                  // ref={nameRef}
-                                  // value={name}
-                                  // onChange={(e) => setName(e.target.value)}
+                                  value={title}
+                                  onChange={(e) => setTitle(e.target.value)}
                                   autoComplete="title"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
@@ -198,6 +212,8 @@ export default function Example() {
                                 </label>
                                 <select
                                   id="role"
+                                  value={category}
+                                  onChange={(e) => setCategory(e.target.value)}
                                   autoComplete="country-name"
                                   className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 >
@@ -225,6 +241,8 @@ export default function Example() {
                                 <textarea
                                   type="text"
                                   id="description"
+                                  value={description}
+                                  onChange={(e) => setDescription(e.target.value)}
                                   autoComplete="description"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
@@ -242,6 +260,8 @@ export default function Example() {
                                 <input
                                   type="text"
                                   id="quantity"
+                                  value={quantity}
+                                  onChange={(e) => setQuantity(e.target.value)}
                                   autoComplete="quantity"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
@@ -256,6 +276,8 @@ export default function Example() {
                                 <input
                                   type="text"
                                   id="price"
+                                  value={price}
+                                  onChange={(e) => setPrice(e.target.value)}
                                   autoComplete="price"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
@@ -300,7 +322,7 @@ export default function Example() {
                                           name="file-upload"
                                           type="file"
                                           className="sr-only"
-                                          onChange={handleImageChange}
+                                          onChange={(e) => handleImageChange(e)}
                                         />
                                       </label>
                                       <p className="pl-1">or drag and drop</p>
@@ -443,7 +465,7 @@ export default function Example() {
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
                 {products.map((item, index) => (
-                  <tr key={index}>
+                  <tr key={item.id}>
                     <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
                       ## {item.id}
                       <dl className="font-normal lg:hidden">
