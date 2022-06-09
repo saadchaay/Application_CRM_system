@@ -51,10 +51,10 @@ export default function Example() {
   };
 
   // handle change input
-  const handleValues = (e) => {
-    console.log(e.target.value);
-    const newColors = [...colors];
-
+  const [optionSelected, setOptionSelected] = useState(null);
+  const handleChangeSelected = (selected) => {
+    setOptionSelected(selected);
+    console.log(selected);
   };
     
   // fetch all products
@@ -320,7 +320,7 @@ export default function Example() {
                                 >
                                   Colors
                                 </label>
-                                <Drop />
+                                <Drop colors={colors} handleChangeSelected={handleChangeSelected} selectData={optionSelected} />
                                 {/* <select
                                   id="role"
                                   autoComplete="country-name"

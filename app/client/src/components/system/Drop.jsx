@@ -21,20 +21,17 @@ const Option = (props) => {
       <components.Option {...props}>
         <input
           type="checkbox"
-          checked={props.isSelected}
+          checked={props.id}
           onChange={() => null}
         />{" "}
-        <label>{props.label}</label>
+        <label>{props.value}</label>
       </components.Option>
     </div>
   );
 };
 
-export default function Example(props) {
-  const [optionSelected, setOptionSelected] = useState(null);
-  const handleChange = (selected) => {
-    setOptionSelected(selected);
-  };
+export default function Example({colors, handleChangeSelected, selectData}) {
+  
   return (
     <span
       class="d-inline-block"
@@ -43,16 +40,16 @@ export default function Example(props) {
       data-content="Please selecet account(s)"
     >
       <ReactSelect
-        options={colorsOptions}
+        options={colors}
         isMulti
         closeMenuOnSelect={false}
         hideSelectedOptions={false}
         components={{
           Option,
         }}
-        onChange={(selected) => handleChange(selected)}
+        onChange={(selected) => handleChangeSelected(selected)}
         allowSelectAll={true}
-        value={optionSelected}
+        value={selectData}
       />
     </span>
   );
