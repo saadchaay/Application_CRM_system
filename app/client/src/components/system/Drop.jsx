@@ -1,7 +1,5 @@
 import {useState} from "react";
-import { colourOptions } from "./data.js";
 import { default as ReactSelect } from "react-select";
-import "./styles.css";
 
 export default function Example({props}) {
     const [selectedOption, setSelectedOption] = useState(null);
@@ -17,7 +15,7 @@ export default function Example({props}) {
         data-content="Please selecet account(s)"
       >
         <ReactSelect
-          options={colourOptions}
+          options={selectedOption}
           isMulti
           closeMenuOnSelect={false}
           hideSelectedOptions={false}
