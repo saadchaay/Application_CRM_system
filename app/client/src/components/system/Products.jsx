@@ -136,6 +136,14 @@ export default function Example() {
 
   useEffect(() => {
     fetchProducts();
+    // setAvatar(null);
+    // setTitle(null);
+    // setDescription(null);
+    // setQuantity(null);
+    // setPrice(null);
+    // setCategory(null);
+    // setColor([]);
+    // setSize([]);
   }, []);
 
   return (
