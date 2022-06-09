@@ -26,21 +26,21 @@ export default function Example() {
   const cancelButtonRef = useRef(null);
   const [products, setProducts] = useState([]);
   // product data::
-  const [avatar, setAvatar] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [quantity, setQuantity] = useState(null);
-  const [price, setPrice] = useState(null);
-  const [category, setCategory] = useState(null);
+  const [avatar, setAvatar] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [price, setPrice] = useState('');
+  const [category, setCategory] = useState('');
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
 
-  const [errAvatar, setErrAvatar] = useState(null);
-  const [errTitle, setErrTitle] = useState(null);
-  const [errDescription, setErrDescription] = useState(null);
-  const [errQuantity, setErrQuantity] = useState(null);
-  const [errPrice, setErrPrice] = useState(null);
-  const [errCategory, setErrCategory] = useState(null);
+  const [errAvatar, setErrAvatar] = useState('');
+  const [errTitle, setErrTitle] = useState('');
+  const [errDescription, setErrDescription] = useState('');
+  const [errQuantity, setErrQuantity] = useState('');
+  const [errPrice, setErrPrice] = useState('');
+  const [errCategory, setErrCategory] = useState('');
   const [errColor, setErrColor] = useState([]);
   const [errSize, setErrSize] = useState([]);
 
@@ -104,7 +104,7 @@ export default function Example() {
       color: colorsSelected,
       size: sizesSelected,
     };
-    console.log(avatar);
+    console.log(product);
   };
 
   // handle change
@@ -136,14 +136,6 @@ export default function Example() {
 
   useEffect(() => {
     fetchProducts();
-    // setAvatar(null);
-    // setTitle(null);
-    // setDescription(null);
-    // setQuantity(null);
-    // setPrice(null);
-    // setCategory(null);
-    // setColor([]);
-    // setSize([]);
   }, []);
 
   return (
