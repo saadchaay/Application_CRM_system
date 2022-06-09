@@ -17,7 +17,7 @@ const Option = (props) => {
   );
 };
 
-export default function Example({colors, handleChangeSelected, selectData}) {
+export default function Example({data, handleChangeSelected, selectData}) {
   
   return (
     <span
@@ -27,7 +27,7 @@ export default function Example({colors, handleChangeSelected, selectData}) {
       data-content="Please selecet account(s)"
     >
       <ReactSelect
-        options={colors}
+        options={data}
         isMulti
         closeMenuOnSelect={false}
         hideSelectedOptions={false}
