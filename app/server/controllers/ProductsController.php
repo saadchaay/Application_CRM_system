@@ -3,6 +3,9 @@
     class ProductsController extends Controller {
 
         private $product ;
+        private $category ;
+        private $property ;
+
         public function __construct()
         {
             header('Access-Control-Allow-Origin: *');
@@ -11,6 +14,7 @@
             header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
             $this->product = new Product();
             $this->category = new Category();
+            $this->property = new Property();
         }
 
         public function index($id, $type)
@@ -29,7 +33,11 @@
                     echo json_encode(array(
                         'status' => 'success',
                         'data' => $all_products,
-                        'categories' => $categories
+                        'categories' => $categories,
+                        'properties' => array(
+                            'colors' => $this->property->get_colors(),
+                            'sizes' => $this->property->get_sizes(),
+                        )
                     ));
                 }else{
                     http_response_code(404);
