@@ -10,28 +10,6 @@ const statusStyles = {
   processing: "bg-yellow-100 text-yellow-800",
   failed: "bg-gray-100 text-gray-800",
 };
-const colors = [
-  {
-    label: "Red",
-    value: "#F44336",
-  },
-  {
-    label: "Pink",
-    value: "#E91E63",
-  },
-  {
-    label: "Purple",
-    value: "#9C27B0",
-  },
-  {
-    label: "Deep Purple",
-    value: "#673AB7",
-  },
-  {
-    label: "Indigo",
-    value: "#3F51B5",
-  },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -42,10 +20,8 @@ export default function Example() {
   const [checked, setChecked] = useState([]);
   const [categories, setCategories] = useState([]);
   const [imgPrv, setImgPrv] = useState(null);
-  const [valuesColor, setValuesColor] = useState([]);
-  const handleOnchange = (val) => {
-    setValuesColor(val);
-  };
+  const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
 
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -73,6 +49,11 @@ export default function Example() {
     reader.readAsDataURL(file);
   };
 
+  // handle change input
+  const handleValues = (e) => {
+    console.log(e.target.value);
+  };
+    
   // fetch all products
   const fetchProducts = async () => {
     const type = auth.role === "admin" ? "admin" : "user";
@@ -85,6 +66,9 @@ export default function Example() {
       setChecked(res.data.data.map((item) => item.status));
       setCategories(res.data.categories);
       console.log(res.data.categories);
+      setColors(res.data.properties.colors);
+      setSizes(res.data.properties.sizes);
+      console.log(res.data.properties.colors);
     } else {
       console.log("There's no product");
     }
@@ -161,7 +145,7 @@ export default function Example() {
                   leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                   leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
-                  <Dialog.Panel className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+                  <Dialog.Panel className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                       <div className="sm:flex sm:items-start">
                         <div className="mt-3 text-center sm:mt-0 mx-3 sm:text-left">
@@ -335,15 +319,16 @@ export default function Example() {
                                 <select
                                   id="role"
                                   autoComplete="country-name"
+                                  onChange={(e) => handleValues(e)}
                                   className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 >
                                   <option>Choose category ...</option>
-                                  {options.map((category) => (
+                                  {colors.map((color) => (
                                     <option
-                                      key={category.id}
-                                      value={category.id}
+                                      key={color.id}
+                                      value={color.id}
                                     >
-                                      {category.name}
+                                      {color.value}
                                     </option>
                                   ))}
                                 </select>
