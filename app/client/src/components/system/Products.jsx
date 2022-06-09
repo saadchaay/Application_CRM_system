@@ -88,7 +88,7 @@ export default function Example() {
     e.preventDefault();
     console.log(colorsSelected);
     console.log(sizesSelected);
-    console.log(JSON.parse(product));
+    // console.log(JSON.parse(product));
   };
 
   // handle change
