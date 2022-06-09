@@ -2,7 +2,7 @@ import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
 import Switch from "@material-ui/core/Switch";
-import MultiSelect from "react-multiple-select-dropdown-lite";
+import Drop from "./Drop";
 
 const statusStyles = {
   active: "bg-green-100 text-green-800",
@@ -21,6 +21,7 @@ export default function Example() {
   const [categories, setCategories] = useState([]);
   const [imgPrv, setImgPrv] = useState(null);
   const [colors, setColors] = useState([]);
+  const [selectedColors, setSelectedColors] = useState([]);
   const [sizes, setSizes] = useState([]);
 
   const [open, setOpen] = useState(false);
@@ -52,6 +53,8 @@ export default function Example() {
   // handle change input
   const handleValues = (e) => {
     console.log(e.target.value);
+    const newColors = [...colors];
+
   };
     
   // fetch all products
@@ -327,6 +330,7 @@ export default function Example() {
                                     <option
                                       key={color.id}
                                       value={color.id}
+                                      name={color.value}
                                     >
                                       {color.value}
                                     </option>
