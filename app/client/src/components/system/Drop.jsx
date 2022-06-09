@@ -40,7 +40,7 @@ export default function Example({colors, handleChangeSelected, selectData}) {
       data-content="Please selecet account(s)"
     >
       <ReactSelect
-        options={colors}
+        options={colorsOptions}
         isMulti
         closeMenuOnSelect={false}
         hideSelectedOptions={false}

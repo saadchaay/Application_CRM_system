@@ -139,7 +139,7 @@ export default function Example() {
 
           <div className="fixed z-10 inset-0 overflow-y-auto mb-5">
             <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-              <form onSubmit={handleProduct}>
+              <form onSubmit={handleProduct} className="overscroll-contain">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -341,6 +341,21 @@ export default function Example() {
                               </div>
                             </div>
                           </div>
+
+                          <div className="mt-2">
+                            <div className="mt-3 grid grid-cols-2 gap-6">
+                              <div className="col-span-4 sm:col-span-2">
+                                <label
+                                  htmlFor="last-name"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Sizes
+                                </label>
+                                <Drop sizes={sizes} handleChangeSelected={handleChangeSelected} selectData={optionSelected} />
+                              </div>
+                            </div>
+                          </div>
+
                         </div>
                       </div>
                     </div>
