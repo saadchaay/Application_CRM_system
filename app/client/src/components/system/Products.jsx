@@ -36,6 +36,12 @@ export default function Example() {
   const [errors, setErrors] = useState({});
 
   const closeModal = () => {
+    setTitle("");
+    setDescription("");
+    setQuantity("");
+    setPrice("");
+    setCategory("");
+    setAvatar("");
     setErrors({});
     setOpen(false);
     setImgPrv(null);
