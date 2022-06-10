@@ -57,8 +57,8 @@
                     'category' => $dataJSON->category ? (int)($dataJSON->category) : null,
                     'title' => $dataJSON->title ? $dataJSON->title : "",
                     'description' => $dataJSON->description ? $dataJSON->description : "",
-                    'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
-                    'price' => $dataJSON->price ? $dataJSON->price : 0.00,
+                    'quantity' => $dataJSON->quantity ? (int)$dataJSON->quantity : 0,
+                    'price' => $dataJSON->price ? (double)$dataJSON->price : 0.00,
                     'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
                     'properties' => [
                         'color' => $dataJSON->color ? $dataJSON->color : [],
