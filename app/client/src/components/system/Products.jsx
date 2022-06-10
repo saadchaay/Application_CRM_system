@@ -177,9 +177,9 @@ export default function Example() {
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
-          <div className="fixed z-10 inset-0 overflow-y-auto mb-5">
+          <div className="fixed inset-0 overflow-y-auto mb-3">
             <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-              <form onSubmit={handleProduct} className="overscroll-contain">
+              <form onSubmit={handleProduct}>
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
