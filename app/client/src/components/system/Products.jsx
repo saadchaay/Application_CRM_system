@@ -80,22 +80,20 @@ export default function Example() {
   const handleProduct = async (e) => {
     // add modal here.........
     e.preventDefault();
-    if (
-      avatar === "" ||
-      title === "" ||
-      description === "" ||
-      quantity === "" ||
-      price === "" ||
-      category === ""
-    ) {
-      setErrors({
-        avatar: "Image is required",
-        title: "Title is required",
-        description: "Description is required",
-        quantity: "Quantity is required",
-        price: "Price is required",
-        category: "Category is required",
-      });
+    if (title === "") {
+      setErrors({ ...errors, title: "Title is required" });
+    } else if (description === "") {
+      setErrors({ ...errors, description: "Description is required" });
+     } else if (quantity === "") {
+      setErrors({ ...errors, quantity: "Quantity is required" });
+     } else if (price === "") {
+      setErrors({ ...errors, price: "Price is required" });
+      } else if (category === "") {
+      setErrors({ ...errors, category: "Category is required" });
+     } else if( price < 0 ){
+       setErrors({ ...errors, price: "Price must be greater than 0" });
+    } else if( quantity < 0 ){
+      setErrors({ ...errors, quantity: "Quantity must be greater than 0" });
     } else {
       const product = {
         creator: auth.id,
@@ -119,7 +117,7 @@ export default function Example() {
       );
       if(res.data){
         fetchProducts();
-        // setOpen(false);
+        setOpen(false);
         console.log(colorsSelected);
         console.log(sizesSelected);
         console.log(res);
