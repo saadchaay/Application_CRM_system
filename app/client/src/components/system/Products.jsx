@@ -177,7 +177,7 @@ export default function Example() {
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto mb-3">
+          <div className="fixed inset-0 z-10 mb-3">
             <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
               <form onSubmit={handleProduct}>
                 <Transition.Child
@@ -370,9 +370,9 @@ export default function Example() {
                                   Colors
                                 </label>
                                 <Drop
-                                  data={sizes}
-                                  handleChangeSelected={handleChangeSizes}
-                                  selectData={sizesSelected}
+                                  data={colors}
+                                  handleChangeSelected={handleChangeColors}
+                                  selectData={colorsSelected}
                                 />
                               </div>
                             </div>
@@ -388,14 +388,14 @@ export default function Example() {
                                   Sizes
                                 </label>
                                 <Drop
-                                  data={colors}
-                                  handleChangeSelected={handleChangeColors}
-                                  selectData={colorsSelected}
-                                />
-                                
+                                  data={sizes}
+                                  handleChangeSelected={handleChangeSizes}
+                                  selectData={sizesSelected}
+                                />                                
                               </div>
                             </div>
                           </div>
+                          
                         </div>
                       </div>
                     </div>
