@@ -106,6 +106,8 @@ export default function Example() {
         price: "Price is required",
         category: "Category is required",
       });
+      console.log(colorsSelected);
+      console.log(sizesSelected);
     } else {
       const product = {
         avatar: avatar,
@@ -384,11 +386,6 @@ export default function Example() {
                               <h3 className="text-lg font-medium leading-6 text-gray-900">
                                 Product properties
                               </h3>
-
-                              <p className="mt-1 text-sm text-gray-600">
-                                Use a permanent address where you can receive
-                                mail.
-                              </p>
 
                               <div className="mt-4 grid grid-cols-6 gap-6">
                                 <div className="col-span-6 sm:col-span-6">
