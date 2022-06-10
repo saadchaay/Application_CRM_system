@@ -54,7 +54,7 @@
                 $data = [
                     'id_creator' => $dataJSON->creator ? $dataJSON->creator : "",
                     'type' => $dataJSON->type ? $dataJSON->type : "",
-                    'category' => $dataJSON->category ? $dataJSON->category : "",
+                    'category' => $dataJSON->category ? (int)($dataJSON->category) : null,
                     'title' => $dataJSON->title ? $dataJSON->title : "",
                     'description' => $dataJSON->description ? $dataJSON->description : "",
                     'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
