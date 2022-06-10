@@ -122,7 +122,7 @@ export default function Example() {
 
     setProducts(newProducts);
 
-    const id = products[index].id;
+    const id = newProducts[index].id;
     const res = await axios.put("ProductsController/changeStatus/" + id, {
       headers: {
         "Content-Type": "application/json",
