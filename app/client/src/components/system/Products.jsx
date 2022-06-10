@@ -119,7 +119,7 @@ export default function Example() {
         color: colorsSelected,
         size: sizesSelected,
       };
-      const res = await axios.post("ProductsController/add",
+      const res = await axios.post("ProductsController/store",
         JSON.stringify(product),
         {
           headers: {
