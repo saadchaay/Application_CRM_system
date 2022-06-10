@@ -6,11 +6,7 @@ const Option = (props) => {
   return (
     <div>
       <components.Option {...props}>
-        <input
-          type="checkbox"
-          checked={props.id}
-          onChange={() => null}
-        />{" "}
+
         <label>{props.label}</label>
       </components.Option>
     </div>
