@@ -26,24 +26,25 @@ export default function Example() {
   const cancelButtonRef = useRef(null);
   const [products, setProducts] = useState([]);
   // product data::
-  const [avatar, setAvatar] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState('');
-  const [category, setCategory] = useState('');
+  const [avatar, setAvatar] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
 
-  const [errAvatar, setErrAvatar] = useState('');
-  const [errTitle, setErrTitle] = useState('');
-  const [errDescription, setErrDescription] = useState('');
-  const [errQuantity, setErrQuantity] = useState('');
-  const [errPrice, setErrPrice] = useState('');
-  const [errCategory, setErrCategory] = useState('');
-  const [errColor, setErrColor] = useState([]);
-  const [errSize, setErrSize] = useState([]);
+  const [errors, setErrors] = useState({});
 
+  // const [errAvatar, setErrAvatar] = useState('');
+  // const [errTitle, setErrTitle] = useState('');
+  // const [errDescription, setErrDescription] = useState('');
+  // const [errQuantity, setErrQuantity] = useState('');
+  // const [errPrice, setErrPrice] = useState('');
+  // const [errCategory, setErrCategory] = useState('');
+  // const [errColor, setErrColor] = useState([]);
+  // const [errSize, setErrSize] = useState([]);
 
   // handle image preview
   const handleImageChange = (e) => {
@@ -57,19 +58,17 @@ export default function Example() {
     reader.readAsDataURL(file);
   };
 
-  // handle change input
+  // handle change select input
   const [colorsSelected, setColorsSelected] = useState(null);
   const [sizesSelected, setSizesSelected] = useState(null);
 
   const handleChangeColors = (selected) => {
     setColorsSelected(selected);
-    console.log(selected);
   };
   const handleChangeSizes = (selected) => {
     setSizesSelected(selected);
-    console.log(selected);
   };
-    
+
   // fetch all products
   const fetchProducts = async () => {
     const type = auth.role === "admin" ? "admin" : "user";
@@ -77,14 +76,11 @@ export default function Example() {
       "ProductsController/index/" + auth.id + "/" + type
     );
     if (res) {
-      console.log(res.data.data);
       setProducts(res.data.data);
       setChecked(res.data.data.map((item) => item.status));
       setCategories(res.data.categories);
-      console.log(res.data.categories);
       setColors(res.data.properties.colors);
       setSizes(res.data.properties.sizes);
-      console.log(res.data.properties.colors);
     } else {
       console.log("There's no product");
     }
@@ -94,17 +90,39 @@ export default function Example() {
   const handleProduct = async (e) => {
     // add modal here.........
     e.preventDefault();
-    const product = {
-      avatar: avatar,
-      title: title,
-      description: description,
-      quantity: quantity,
-      price: price,
-      category: category,
-      color: colorsSelected,
-      size: sizesSelected,
-    };
-    console.log(product);
+    if (
+      avatar === "" ||
+      title === "" ||
+      description === "" ||
+      quantity === "" ||
+      price === "" ||
+      category === "" ||
+      colorsSelected === null ||
+      sizesSelected === null
+    ) {
+      setErrors({
+        avatar: "Avatar is required",
+        title: "Title is required",
+        description: "Description is required",
+        quantity: "Quantity is required",
+        price: "Price is required",
+        category: "Category is required",
+        color: "Color is required",
+        size: "Size is required",
+      });
+    } else {
+      const product = {
+        avatar: avatar,
+        title: title,
+        description: description,
+        quantity: quantity,
+        price: price,
+        category: category,
+        color: colorsSelected,
+        size: sizesSelected,
+      };
+      console.log(product);
+    }
   };
 
   // handle change
@@ -140,7 +158,6 @@ export default function Example() {
 
   return (
     <>
-
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -242,7 +259,9 @@ export default function Example() {
                                   type="text"
                                   id="description"
                                   value={description}
-                                  onChange={(e) => setDescription(e.target.value)}
+                                  onChange={(e) =>
+                                    setDescription(e.target.value)
+                                  }
                                   autoComplete="description"
                                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 />
@@ -350,7 +369,11 @@ export default function Example() {
                                 >
                                   Colors
                                 </label>
-                                <Drop data={colors} handleChangeSelected={handleChangeColors} selectData={colorsSelected} />
+                                <Drop
+                                  data={colors}
+                                  handleChangeSelected={handleChangeColors}
+                                  selectData={colorsSelected}
+                                />
                               </div>
                             </div>
                           </div>
@@ -364,11 +387,14 @@ export default function Example() {
                                 >
                                   Sizes
                                 </label>
-                                <Drop data={sizes} handleChangeSelected={handleChangeSizes} selectData={sizesSelected} />
+                                <Drop
+                                  data={sizes}
+                                  handleChangeSelected={handleChangeSizes}
+                                  selectData={sizesSelected}
+                                />
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                     </div>
@@ -471,7 +497,13 @@ export default function Example() {
                       <dl className="font-normal lg:hidden">
                         <dt className="sr-only">Category</dt>
                         <dd className="mt-1 truncate text-gray-700">
-                          {item.id_category}
+                          {categories.find(
+                            (category) => category.id === item.id_category
+                          ).title
+                            ? categories.find(
+                                (category) => category.id === item.id_category
+                              ).title
+                            : ""}
                         </dd>
                         <dt className="sr-only sm:hidden">Product name</dt>
                         <dd className="mt-1 truncate text-gray-500 sm:hidden">
@@ -486,7 +518,7 @@ export default function Example() {
                         ? categories.find(
                             (category) => category.id === item.id_category
                           ).title
-                        : "Unknown"}
+                        : ""}
                     </td>
                     <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       {item.title}
