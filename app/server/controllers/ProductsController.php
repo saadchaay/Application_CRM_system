@@ -69,8 +69,24 @@
                 // echo json_encode($data);
                 $product = $this->product->create_product($data);
                 if($product){
-                    http_response_code(201);
-                    echo json_encode(array('message' => 'Product created'));
+                    $last_product = $this->product->last_insertion($data);
+                    echo json_encode(array(
+                        'status' => 'success',
+                        'data' => $last_product,
+                    ));
+                    // $property = array()
+                    // foreach($data['properties']['color'] as $color){
+                    //     $property = $this->property->create_property();
+                    //     $property ? $success = true : $success = false;
+                    // }
+                    // if($success){
+                    //     http_response_code(201);
+                    //     echo json_encode(array(
+                    //         'status' => 'success',
+                    //         'message' => 'Product created',
+                    //         'data' => $product,
+                    //     ));
+                    // }
                 }else{
                     http_response_code(404);
                     echo json_encode(array('message' => 'Product not created'));

@@ -82,4 +82,14 @@ class Product {
             return false;
         }
     }
+
+    public function last_insertion()
+    {
+        $this->db->query("SELECT * FROM `products` ORDER BY id DESC LIMIT 1");
+        if($this->db->single()) {
+            return $this->db->single();
+        } else {
+            return false;
+        }
+    }
 }
