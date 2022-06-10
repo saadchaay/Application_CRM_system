@@ -28,5 +28,17 @@ class Property {
             return false;
         }
     }
+
+    public function create_property($data)
+    {
+        $this->db->query("INSERT INTO `property_product` (`id_product`, `id_property`) VALUES (:product, :property)");
+        $this->db->bind(":property", $data["property"]);
+        $this->db->bind(":product", $data["product"]);
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
 }
