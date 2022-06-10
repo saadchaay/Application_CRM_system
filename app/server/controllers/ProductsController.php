@@ -52,7 +52,7 @@
 
             if($_SERVER["REQUEST_METHOD"] === "POST"){
                 $data = [
-                    'id_creator' => $dataJSON->id_creator ? $dataJSON->id_creator : "",
+                    'id_creator' => $dataJSON->creator ? $dataJSON->creator : "",
                     'type' => $dataJSON->type ? $dataJSON->type : "",
                     'category' => $dataJSON->category ? $dataJSON->category : "",
                     'title' => $dataJSON->title ? $dataJSON->title : "",
