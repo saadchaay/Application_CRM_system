@@ -62,15 +62,16 @@
                     'price' => $dataJSON->price ? $dataJSON->price : 0.00,
                     'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
                 ];
-
-                $product = $this->product->create_product($data);
-                if($product){
-                    http_response_code(201);
-                    echo json_encode(array('message' => 'Product created'));
-                }else{
-                    http_response_code(404);
-                    echo json_encode(array('message' => 'Product not created'));
-                }
+                print_r($dataJSON);
+                echo json_encode($dataJSON);
+                // $product = $this->product->create_product($data);
+                // if($product){
+                //     http_response_code(201);
+                //     echo json_encode(array('message' => 'Product created'));
+                // }else{
+                //     http_response_code(404);
+                //     echo json_encode(array('message' => 'Product not created'));
+                // }
             }
         }
 
