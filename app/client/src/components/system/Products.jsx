@@ -370,9 +370,9 @@ export default function Example() {
                                   Colors
                                 </label>
                                 <Drop
-                                  data={colors}
-                                  handleChangeSelected={handleChangeColors}
-                                  selectData={colorsSelected}
+                                  data={sizes}
+                                  handleChangeSelected={handleChangeSizes}
+                                  selectData={sizesSelected}
                                 />
                               </div>
                             </div>
@@ -388,10 +388,11 @@ export default function Example() {
                                   Sizes
                                 </label>
                                 <Drop
-                                  data={sizes}
-                                  handleChangeSelected={handleChangeSizes}
-                                  selectData={sizesSelected}
+                                  data={colors}
+                                  handleChangeSelected={handleChangeColors}
+                                  selectData={colorsSelected}
                                 />
+                                
                               </div>
                             </div>
                           </div>
