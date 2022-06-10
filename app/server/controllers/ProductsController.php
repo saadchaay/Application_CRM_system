@@ -57,29 +57,40 @@
                     'category' => $dataJSON->category ? (int)($dataJSON->category) : null,
                     'title' => $dataJSON->title ? $dataJSON->title : "",
                     'description' => $dataJSON->description ? $dataJSON->description : "",
-                    'quantity' => $dataJSON->quantity ? (int)$dataJSON->quantity : 0,
-                    'price' => $dataJSON->price ? (double)$dataJSON->price : 0.00,
+                    'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
+                    'price' => $dataJSON->price ? $dataJSON->price : 0.00,
                     'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
                     'properties' => array_merge($dataJSON->color, $dataJSON->size),
                 ];
-                $product = $this->product->create_product($data);
-                if($product){
-                    $last_product = $this->product->last_insertion($data);
-                    foreach($data['properties'] as $property){
-                        $property = $this->property->create_property($last_product->id, $data['properties']);
-                        $property ? $success = true : $success = false;
+                $errors = $this->validation($data, $this->validate_regex);
+                if($errors) {
+                    http_response_code(200);
+                    echo json_encode($errors);
+                } else {
+                    $data['price'] = (double)$data['price'];
+                    $data['quantity'] = (int)$data['quantity'];
+                    $product = $this->product->create_product($data);
+                    if($product){
+                        $last_product = $this->product->last_insertion($data);
+                        $success =false ;
+                        if(!empty($data["properties"])){
+                            foreach($data["properties"] as $property){
+                                $this->property->create_property($last_product->id, $property->id);
+                                $success = true ;
+                            }
+                        }
+                        if($success){
+                            http_response_code(201);
+                            echo json_encode(array(
+                                'status' => 'success',
+                                'message' => 'Product created',
+                                'data' => $product,
+                            ));
+                        }
+                    }else{
+                        http_response_code(404);
+                        echo json_encode(array('message' => 'Product not created'));
                     }
-                    if($success){
-                        http_response_code(201);
-                        echo json_encode(array(
-                            'status' => 'success',
-                            'message' => 'Product created',
-                            'data' => $product,
-                        ));
-                    }
-                }else{
-                    http_response_code(404);
-                    echo json_encode(array('message' => 'Product not created'));
                 }
             }
         }

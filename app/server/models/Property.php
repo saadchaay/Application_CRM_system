@@ -32,7 +32,7 @@ class Property {
     public function create_property($product, $property)
     {
         $this->db->query("INSERT INTO `property_product` (`id_product`, `id_property`) VALUES (:product, :property)");
-        $this->db->bind(":pr", $property);
+        $this->db->bind(":property", $property);
         $this->db->bind(":product", $product);
         if($this->db->execute()) {
             return true;

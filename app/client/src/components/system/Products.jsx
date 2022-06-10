@@ -32,7 +32,6 @@ export default function Example() {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [properties, setProperties] = useState({});
 
   const [errors, setErrors] = useState({});
 
@@ -115,16 +114,36 @@ export default function Example() {
           },
         }
       );
-      if(res.data){
+      if(res.status === 201){
         fetchProducts();
         setOpen(false);
-        console.log(colorsSelected);
-        console.log(sizesSelected);
-        console.log(res);
+        setTitle("");
+        setDescription("");
+        setQuantity("");
+        setPrice("");
+        setCategory("");
+        setAvatar("");
+        setColorsSelected(null);
+        setSizesSelected(null);
+        setImgPrv(null);
+        setErrors({});
       } else {
-        console.log(res);
+        if(res.data.title){
+          setErrors({ ...errors, title: res.data.title });
+        }
+        if(res.data.description){
+          setErrors({ ...errors, title:res.data.title, description: res.data.description });
+        } 
+        if(res.data.quantity){
+          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity });
+        }
+        if(res.data.price){
+          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price });
+        }
+        if(res.data.category){
+          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price, category: res.data.category });
+        }
       }
-      // console.log(res);
     }
   };
 

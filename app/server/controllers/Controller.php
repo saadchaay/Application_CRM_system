@@ -10,6 +10,13 @@ use PHPMailer\PHPMailer\PHPMailer;
         
         protected $validate_regex = [
             'id' => '/^[0-9]+$/',
+            'id_creator' => '/^[0-9]+$/',
+            'category' => '/^[0-9]+$/',
+            'type' => '/^[a-zA-Z]+$/',
+            'price' => '/^[0-9]+(\.[0-9]{1,2})?$/',
+            'quantity' => '/^[0-9]+$/',
+            'title' => '/^([a-zA-Z' . "'" . ' ]+)$/',
+            'description' => '/^([a-zA-Z' . "'" . ' ]+)$/',
             'role' => '/^([a-zA-Z' . "'" . ' ]+)$/',
             'login' => '/^[a-zA-Z0-9]*$/',
             'email' => '/^[a-zA-Z0-9]*$/',
@@ -26,7 +33,7 @@ use PHPMailer\PHPMailer\PHPMailer;
             $errors = [];
             foreach ($data as $key => $value) {
                 if(!empty($value)){
-                    if($key != 'confirm_password' && $key != 'login'){
+                    if($key != 'confirm_password' && $key != 'login' && $key != 'properties' && $key != 'avatar'){
                         if($key == 'email' && $key != 'login'){
                             if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
                                 $errors[$key] = ucfirst($key) ." is not valid";
