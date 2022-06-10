@@ -367,7 +367,6 @@ export default function Example() {
                                   </div>
                                 </div>
                               </div>
-                              
                             </div>
                           </form>
                         </div>
@@ -383,7 +382,7 @@ export default function Example() {
                                 Use a permanent address where you can receive
                                 mail.
                               </p>
-                              
+
                               <div className="mt-4 grid grid-cols-6 gap-6">
                                 <div className="col-span-6 sm:col-span-6">
                                   <label
@@ -392,11 +391,11 @@ export default function Example() {
                                   >
                                     Colors
                                   </label>
-                                    <Drop
+                                  <Drop
                                     data={colors}
                                     handleChangeSelected={handleChangeColors}
                                     selectData={colorsSelected}
-                                  /> 
+                                  />
                                 </div>
 
                                 <div className="col-span-6 sm:col-span-6">
@@ -411,23 +410,27 @@ export default function Example() {
                                     handleChangeSelected={handleChangeSizes}
                                     selectData={sizesSelected}
                                   />
-
-
                                 </div>
                               </div>
                             </div>
                           </div>
 
-                          <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                <button
-                                  type="submit"
-                                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                  Save
-                                </button>
-                              </div>
+                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button
+                              type="submit"
+                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-cyan-600 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Submit
+                            </button>
+                            <button
+                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                              onClick={() => setOpen(false)}
+                              ref={cancelButtonRef}
+                            >
+                              Cancel
+                            </button>
+                          </div>
                         </div>
-
                       </div>
                     </div>
                   </Dialog.Panel>
