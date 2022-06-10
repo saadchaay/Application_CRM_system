@@ -97,18 +97,14 @@ export default function Example() {
       quantity === "" ||
       price === "" ||
       category === ""
-      // colorsSelected === null ||
-      // sizesSelected === null
     ) {
       setErrors({
-        avatar: "Avatar is required",
+        avatar: "Image is required",
         title: "Title is required",
         description: "Description is required",
         quantity: "Quantity is required",
         price: "Price is required",
         category: "Category is required",
-        // color: "Color is required",
-        // size: "Size is required",
       });
     } else {
       const product = {
@@ -190,249 +186,261 @@ export default function Example() {
                   leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
                   <Dialog.Panel className="relative bg-gray-100 rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full">
-                    <form onSubmit={handleProduct}>
-                      <div className="sm:mt-0 px-4 py-5">
-                        <div className="md:grid md:grid-cols-3 md:gap-6">
-                          <div className="md:mt-0 md:col-span-2">
-                            <div className="shadow overflow-hidden rounded-md">
-                              <div className="px-4 py-5 bg-white sm:p-6">
-                                <h3 className="text-lg font-medium leading-6 text-gray-900 pb-3">
-                                  Product Information
-                                </h3>
-                                <div className="grid grid-cols-6 gap-6">
-                                  <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                      htmlFor="first-name"
-                                      className="block text-sm font-medium text-gray-700"
-                                    >
-                                      Product name
-                                    </label>
-                                    <input
-                                      type="text"
-                                      id="title"
-                                      value={title}
-                                      onChange={(e) => setTitle(e.target.value)}
-                                      autoComplete="title"
-                                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    />
+                    {/* <form onSubmit={handleProduct}> */}
+                    <div className="sm:mt-0 px-4 py-5">
+                      <div className="md:grid md:grid-cols-3 md:gap-6">
+                        <div className="md:mt-0 md:col-span-2">
+                          <div className="shadow overflow-hidden rounded-md">
+                            <div className="px-4 py-5 bg-white sm:p-6">
+                              <h3 className="text-lg font-medium leading-6 text-gray-900 pb-3">
+                                Product Information
+                              </h3>
+                              <div className="grid grid-cols-6 gap-6">
+                                <div className="col-span-6 sm:col-span-3">
+                                  <label
+                                    htmlFor="first-name"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    Product name
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="title"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    autoComplete="title"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                  />
+                                  <div className="text-red-500 mb-3 text-sm">
+                                    {errors.title ? errors.title : null}
                                   </div>
+                                </div>
 
-                                  <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                      htmlFor="last-name"
-                                      className="block text-sm font-medium text-gray-700"
-                                    >
-                                      Category
-                                    </label>
-                                    <select
-                                      id="role"
-                                      value={category}
-                                      onChange={(e) =>
-                                        setCategory(e.target.value)
-                                      }
-                                      autoComplete="country-name"
-                                      className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    >
-                                      <option>Choose category ...</option>
-                                      {categories.map((category) => (
-                                        <option
-                                          key={category.id}
-                                          value={category.id}
+                                <div className="col-span-6 sm:col-span-3">
+                                  <label
+                                    htmlFor="last-name"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    Category
+                                  </label>
+                                  <select
+                                    id="role"
+                                    value={category}
+                                    onChange={(e) =>
+                                      setCategory(e.target.value)
+                                    }
+                                    autoComplete="country-name"
+                                    className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                  >
+                                    <option>Choose category ...</option>
+                                    {categories.map((category) => (
+                                      <option
+                                        key={category.id}
+                                        value={category.id}
+                                      >
+                                        {category.title}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  <div className="text-red-500 mb-3 text-sm">
+                                    {errors.category ? errors.category : null}
+                                  </div>
+                                </div>
+
+                                <div className="col-span-6 sm:col-span-6">
+                                  <label
+                                    htmlFor="email-address"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    Description
+                                  </label>
+                                  <textarea
+                                    type="text"
+                                    id="description"
+                                    value={description}
+                                    onChange={(e) =>
+                                      setDescription(e.target.value)
+                                    }
+                                    autoComplete="description"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                  />
+                                  <div className="text-red-500 mb-3 text-sm">
+                                    {errors.description
+                                      ? errors.description
+                                      : null}
+                                  </div>
+                                </div>
+
+                                <div className="col-span-6 sm:col-span-3">
+                                  <label
+                                    htmlFor="country"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    Quantity
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="quantity"
+                                    value={quantity}
+                                    onChange={(e) =>
+                                      setQuantity(e.target.value)
+                                    }
+                                    autoComplete="quantity"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                  />
+                                  <div className="text-red-500 mb-3 text-sm">
+                                    {errors.quantity ? errors.quantity : null}
+                                  </div>
+                                </div>
+
+                                <div className="col-span-6 sm:col-span-3">
+                                  <label
+                                    htmlFor="country"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    Price
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="price"
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    autoComplete="price"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                  />
+                                  <div className="text-red-500 mb-3 text-sm">
+                                    {errors.price ? errors.price : null}
+                                  </div>
+                                </div>
+
+                                <div className="col-span-6 sm:col-span-6">
+                                  <label
+                                    htmlFor="country"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    Product image
+                                  </label>
+                                  {imgPrv ? (
+                                    <img
+                                      src={imgPrv}
+                                      alt="preview"
+                                      className="w-60 h-auto object-cover"
+                                    />
+                                  ) : (
+                                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                      <div className="space-y-1 text-center">
+                                        <svg
+                                          className="mx-auto h-8 w-8 text-gray-400"
+                                          stroke="currentColor"
+                                          fill="none"
+                                          viewBox="0 0 48 48"
+                                          aria-hidden="true"
                                         >
-                                          {category.title}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-
-                                  <div className="col-span-6 sm:col-span-6">
-                                    <label
-                                      htmlFor="email-address"
-                                      className="block text-sm font-medium text-gray-700"
-                                    >
-                                      Description
-                                    </label>
-                                    <textarea
-                                      type="text"
-                                      id="description"
-                                      value={description}
-                                      onChange={(e) =>
-                                        setDescription(e.target.value)
-                                      }
-                                      autoComplete="description"
-                                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    />
-                                    <div className="text-red-500 mb-3 text-sm">
-                                      {errors.description
-                                        ? errors.description
-                                        : null}
-                                    </div>
-                                  </div>
-
-                                  <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                      htmlFor="country"
-                                      className="block text-sm font-medium text-gray-700"
-                                    >
-                                      Quantity
-                                    </label>
-                                    <input
-                                      type="text"
-                                      id="quantity"
-                                      value={quantity}
-                                      onChange={(e) =>
-                                        setQuantity(e.target.value)
-                                      }
-                                      autoComplete="quantity"
-                                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    />
-                                  </div>
-
-                                  <div className="col-span-6 sm:col-span-3">
-                                    <label
-                                      htmlFor="country"
-                                      className="block text-sm font-medium text-gray-700"
-                                    >
-                                      Price
-                                    </label>
-                                    <input
-                                      type="text"
-                                      id="price"
-                                      value={price}
-                                      onChange={(e) => setPrice(e.target.value)}
-                                      autoComplete="price"
-                                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    />
-                                  </div>
-
-                                  <div className="col-span-6 sm:col-span-6">
-                                    <label
-                                      htmlFor="country"
-                                      className="block text-sm font-medium text-gray-700"
-                                    >
-                                      Product image
-                                    </label>
-                                    {imgPrv ? (
-                                      <img
-                                        src={imgPrv}
-                                        alt="preview"
-                                        className="w-60 h-auto object-cover"
-                                      />
-                                    ) : (
-                                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                                        <div className="space-y-1 text-center">
-                                          <svg
-                                            className="mx-auto h-8 w-8 text-gray-400"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            viewBox="0 0 48 48"
-                                            aria-hidden="true"
+                                          <path
+                                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                            strokeWidth={2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                          />
+                                        </svg>
+                                        <div className="flex text-sm text-gray-600">
+                                          <label
+                                            htmlFor="file-upload"
+                                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                                           >
-                                            <path
-                                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                              strokeWidth={2}
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
+                                            <span>Upload a file</span>
+                                            <input
+                                              id="file-upload"
+                                              name="file-upload"
+                                              type="file"
+                                              className="sr-only"
+                                              onChange={(e) =>
+                                                handleImageChange(e)
+                                              }
                                             />
-                                          </svg>
-                                          <div className="flex text-sm text-gray-600">
-                                            <label
-                                              htmlFor="file-upload"
-                                              className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                                            >
-                                              <span>Upload a file</span>
-                                              <input
-                                                id="file-upload"
-                                                name="file-upload"
-                                                type="file"
-                                                className="sr-only"
-                                                onChange={(e) =>
-                                                  handleImageChange(e)
-                                                }
-                                              />
-                                            </label>
-                                            <p className="pl-1">
-                                              or drag and drop
-                                            </p>
-                                          </div>
-                                          <p className="text-xs text-gray-500">
-                                            PNG, JPG, GIF up to 10MB
+                                          </label>
+                                          <p className="pl-1">
+                                            or drag and drop
                                           </p>
                                         </div>
+                                        <p className="text-xs text-gray-500">
+                                          PNG, JPG, GIF up to 10MB
+                                        </p>
                                       </div>
-                                    )}
-                                    <div className="text-red-500 mb-3 text-sm">
-                                      {errors.avatar ? errors.avatar : null}
                                     </div>
+                                  )}
+                                  <div className="text-red-500 mb-3 text-sm">
+                                    {errors.avatar ? errors.avatar : null}
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-
-                          <div className="mt-4 md:col-span-1 sm:mt-0">
-                            <div className="shadow rounded-md">
-                              <div className="px-4 bg-white py-3 sm:px-3">
-                                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                                  Product properties
-                                </h3>
-
-                                <p className="mt-1 text-sm text-gray-600">
-                                  Use a permanent address where you can receive
-                                  mail.
-                                </p>
-
-                                <div className="mt-4 grid grid-cols-6 gap-6">
-                                  <div className="col-span-6 sm:col-span-6">
-                                    <label
-                                      htmlFor="first-name"
-                                      className="block text-sm font-medium text-gray-700"
-                                    >
-                                      Colors
-                                    </label>
-                                    <Drop
-                                      data={colors}
-                                      handleChangeSelected={handleChangeColors}
-                                      selectData={colorsSelected}
-                                    />
-                                  </div>
-
-                                  <div className="col-span-6 sm:col-span-6">
-                                    <label
-                                      htmlFor="email-address"
-                                      className="block text-sm font-medium text-gray-700"
-                                    >
-                                      Sisez
-                                    </label>
-                                    <Drop
-                                      data={sizes}
-                                      handleChangeSelected={handleChangeSizes}
-                                      selectData={sizesSelected}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                              <button
-                                type="submit"
-                                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-cyan-600 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                              >
-                                Submit
-                              </button>
-                              <button
-                                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                onClick={() => setOpen(false)}
-                                ref={cancelButtonRef}
-                              >
-                                Cancel
-                              </button>
                             </div>
                           </div>
                         </div>
+
+                        <div className="mt-4 md:col-span-1 sm:mt-0">
+                          <div className="shadow rounded-md">
+                            <div className="px-4 bg-white py-3 sm:px-3">
+                              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                                Product properties
+                              </h3>
+
+                              <p className="mt-1 text-sm text-gray-600">
+                                Use a permanent address where you can receive
+                                mail.
+                              </p>
+
+                              <div className="mt-4 grid grid-cols-6 gap-6">
+                                <div className="col-span-6 sm:col-span-6">
+                                  <label
+                                    htmlFor="first-name"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    Colors
+                                  </label>
+                                  <Drop
+                                    data={colors}
+                                    handleChangeSelected={handleChangeColors}
+                                    selectData={colorsSelected}
+                                  />
+                                </div>
+
+                                <div className="col-span-6 sm:col-span-6">
+                                  <label
+                                    htmlFor="email-address"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    Sisez
+                                  </label>
+                                  <Drop
+                                    data={sizes}
+                                    handleChangeSelected={handleChangeSizes}
+                                    selectData={sizesSelected}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button
+                              type="submit"
+                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-cyan-600 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Submit
+                            </button>
+                            <button
+                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                              onClick={() => setOpen(false)}
+                              ref={cancelButtonRef}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    </form>
+                    </div>
+                    {/* </form> */}
                   </Dialog.Panel>
                 </Transition.Child>
               </form>
