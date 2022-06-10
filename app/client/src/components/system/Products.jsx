@@ -127,7 +127,11 @@ export default function Example() {
           },
         }
       );
-      console.log(res);
+      if(res.data){
+        fetchProducts();
+        setOpen(false);
+      }
+      // console.log(res);
     }
   };
 
@@ -335,7 +339,8 @@ export default function Example() {
                                     <img
                                       src={imgPrv}
                                       alt="preview"
-                                      className="w-60 h-auto object-cover"
+                                      className="w-max-90 h-40 object-cover"
+
                                     />
                                   ) : (
                                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
