@@ -106,8 +106,6 @@ export default function Example() {
         price: "Price is required",
         category: "Category is required",
       });
-      console.log(colorsSelected);
-      console.log(sizesSelected);
     } else {
       const product = {
         avatar: avatar,
@@ -119,6 +117,15 @@ export default function Example() {
         color: colorsSelected,
         size: sizesSelected,
       };
+      const res = await axios.post("ProductsController/add",
+        JSON.stringify(product),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       console.log(product);
     }
   };
@@ -152,6 +159,7 @@ export default function Example() {
 
   useEffect(() => {
     fetchProducts();
+    setErrors({});
   }, []);
 
   return (
