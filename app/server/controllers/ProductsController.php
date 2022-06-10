@@ -60,9 +60,13 @@
                     'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
                     'price' => $dataJSON->price ? $dataJSON->price : 0.00,
                     'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
+                    'properties' => [
+                        'color' => $dataJSON->color ? $dataJSON->color : [],
+                        'size' => $dataJSON->size ? $dataJSON->size : [],
+                    ]
                 ];
-                print_r($dataJSON);
-                echo json_encode($dataJSON);
+                // print_r($dataJSON);
+                echo json_encode($data);
                 // $product = $this->product->create_product($data);
                 // if($product){
                 //     http_response_code(201);

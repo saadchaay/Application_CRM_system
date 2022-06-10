@@ -108,6 +108,8 @@ export default function Example() {
       });
     } else {
       const product = {
+        creator: auth.id,
+        type: auth.role === "admin" ? "admin" : "user",
         avatar: avatar,
         title: title,
         description: description,
