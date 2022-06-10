@@ -203,50 +203,7 @@ export default function Example() {
                             
                           </div>
 
-                          <div className="w-auto">
-                            <Dialog.Title
-                              as="h3"
-                              className="text-lg leading-6 font-bold text-gray-900"
-                            >
-                              Properties
-                            </Dialog.Title>
-                            <div className="mt-2">
-                              <div className="mt-3 grid grid-cols-2 gap-6">
-                                <div className="col-span-4 sm:col-span-2">
-                                  <label
-                                    htmlFor="last-name"
-                                    className="block text-sm font-medium text-gray-700"
-                                  >
-                                    Colors
-                                  </label>
-                                  <Drop
-                                    data={colors}
-                                    handleChangeSelected={handleChangeColors}
-                                    selectData={colorsSelected}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="mt-2">
-                              <div className="mt-3 grid grid-cols-2 gap-6">
-                                <div className="col-span-4 sm:col-span-2">
-                                  <label
-                                    htmlFor="last-name"
-                                    className="block text-sm font-medium text-gray-700"
-                                  >
-                                    Colors
-                                  </label>
-                                  <Drop
-                                    data={sizes}
-                                    handleChangeSelected={handleChangeSizes}
-                                    selectData={sizesSelected}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                          </div>
+                          
                         </div>
                       </div>
                     </div>
