@@ -125,8 +125,7 @@ export default function Example() {
           },
         }
       );
-
-      console.log(product);
+      console.log(res);
     }
   };
 
