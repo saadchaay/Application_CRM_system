@@ -55,6 +55,7 @@ class Product {
         $this->db->bind(":title", $data["title"]);
         $this->db->bind(":description", $data["description"]);
         $this->db->bind(":quantity", $data["quantity"]);
+        $this->db->bind(":status", 1);
         $this->db->bind(":price", $data["price"]);
         $this->db->bind(":avatar", $data["avatar"]);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));

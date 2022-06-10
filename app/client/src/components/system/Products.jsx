@@ -129,7 +129,10 @@ export default function Example() {
       );
       if(res.data){
         fetchProducts();
-        setOpen(false);
+        // setOpen(false);
+        console.log(res);
+      } else {
+        console.log(res);
       }
       // console.log(res);
     }

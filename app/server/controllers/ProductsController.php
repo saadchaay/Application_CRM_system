@@ -66,7 +66,7 @@
                     ]
                 ];
                 // print_r($dataJSON);
-                echo json_encode($data);
+                // echo json_encode($data);
                 $product = $this->product->create_product($data);
                 if($product){
                     http_response_code(201);
