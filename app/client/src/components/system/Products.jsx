@@ -190,10 +190,10 @@ export default function Example() {
                   leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
                   <Dialog.Panel className="relative bg-gray-100 rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full">
-                    <div className="sm:mt-0 px-4 py-5">
-                      <div className="md:grid md:grid-cols-3 md:gap-6">
-                        <div className="md:mt-0 md:col-span-2">
-                          <form action="#" method="POST">
+                    <form onSubmit={handleProduct}>
+                      <div className="sm:mt-0 px-4 py-5">
+                        <div className="md:grid md:grid-cols-3 md:gap-6">
+                          <div className="md:mt-0 md:col-span-2">
                             <div className="shadow overflow-hidden rounded-md">
                               <div className="px-4 py-5 bg-white sm:p-6">
                                 <h3 className="text-lg font-medium leading-6 text-gray-900 pb-3">
@@ -368,71 +368,71 @@ export default function Example() {
                                 </div>
                               </div>
                             </div>
-                          </form>
-                        </div>
+                          </div>
 
-                        <div className="mt-4 md:col-span-1 sm:mt-0">
-                          <div className="shadow rounded-md">
-                            <div className="px-4 bg-white py-3 sm:px-3">
-                              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                                Product properties
-                              </h3>
+                          <div className="mt-4 md:col-span-1 sm:mt-0">
+                            <div className="shadow rounded-md">
+                              <div className="px-4 bg-white py-3 sm:px-3">
+                                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                                  Product properties
+                                </h3>
 
-                              <p className="mt-1 text-sm text-gray-600">
-                                Use a permanent address where you can receive
-                                mail.
-                              </p>
+                                <p className="mt-1 text-sm text-gray-600">
+                                  Use a permanent address where you can receive
+                                  mail.
+                                </p>
 
-                              <div className="mt-4 grid grid-cols-6 gap-6">
-                                <div className="col-span-6 sm:col-span-6">
-                                  <label
-                                    htmlFor="first-name"
-                                    className="block text-sm font-medium text-gray-700"
-                                  >
-                                    Colors
-                                  </label>
-                                  <Drop
-                                    data={colors}
-                                    handleChangeSelected={handleChangeColors}
-                                    selectData={colorsSelected}
-                                  />
-                                </div>
+                                <div className="mt-4 grid grid-cols-6 gap-6">
+                                  <div className="col-span-6 sm:col-span-6">
+                                    <label
+                                      htmlFor="first-name"
+                                      className="block text-sm font-medium text-gray-700"
+                                    >
+                                      Colors
+                                    </label>
+                                    <Drop
+                                      data={colors}
+                                      handleChangeSelected={handleChangeColors}
+                                      selectData={colorsSelected}
+                                    />
+                                  </div>
 
-                                <div className="col-span-6 sm:col-span-6">
-                                  <label
-                                    htmlFor="email-address"
-                                    className="block text-sm font-medium text-gray-700"
-                                  >
-                                    Sisez
-                                  </label>
-                                  <Drop
-                                    data={sizes}
-                                    handleChangeSelected={handleChangeSizes}
-                                    selectData={sizesSelected}
-                                  />
+                                  <div className="col-span-6 sm:col-span-6">
+                                    <label
+                                      htmlFor="email-address"
+                                      className="block text-sm font-medium text-gray-700"
+                                    >
+                                      Sisez
+                                    </label>
+                                    <Drop
+                                      data={sizes}
+                                      handleChangeSelected={handleChangeSizes}
+                                      selectData={sizesSelected}
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button
-                              type="submit"
-                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-cyan-600 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            >
-                              Submit
-                            </button>
-                            <button
-                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                              onClick={() => setOpen(false)}
-                              ref={cancelButtonRef}
-                            >
-                              Cancel
-                            </button>
+                            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                              <button
+                                type="submit"
+                                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-cyan-600 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                              >
+                                Submit
+                              </button>
+                              <button
+                                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                onClick={() => setOpen(false)}
+                                ref={cancelButtonRef}
+                              >
+                                Cancel
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </form>
                   </Dialog.Panel>
                 </Transition.Child>
               </form>
