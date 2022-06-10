@@ -4,7 +4,7 @@ import { components } from "react-select";
 
 const Option = (props) => {
   return (
-    <div className="overflow-auto">
+    <div>
       <components.Option {...props}>
         <input
           type="checkbox"
