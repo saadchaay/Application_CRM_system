@@ -42,10 +42,10 @@ export default function Example() {
     setPrice("");
     setCategory("");
     setAvatar("");
-    setErrors({});
     setOpen(false);
     setImgPrv(null);
-  }
+    setErrors({});
+  };
   // handle image preview
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -90,21 +90,27 @@ export default function Example() {
   const handleProduct = async (e) => {
     // add modal here.........
     e.preventDefault();
+    const newErrors = {};
     if (title === "") {
-      setErrors({ ...errors, title: "Title is required" });
-    } else if (description === "") {
-      setErrors({ ...errors, description: "Description is required" });
-     } else if (quantity === "") {
-      setErrors({ ...errors, quantity: "Quantity is required" });
-     } else if (price === "") {
-      setErrors({ ...errors, price: "Price is required" });
-      } else if (category === "") {
-      setErrors({ ...errors, category: "Category is required" });
-     } else if( price < 0 ){
-       setErrors({ ...errors, price: "Price must be greater than 0" });
-    } else if( quantity < 0 ){
-      setErrors({ ...errors, quantity: "Quantity must be greater than 0" });
-    } else {
+      newErrors.title = "Title is required";
+    }
+    if (description === "") {
+      newErrors.description = "Description is required";
+    }
+    if (quantity === "") {
+      newErrors.quantity = "Quantity is required";
+    }
+    if (price === "") {
+      newErrors.price = "Price is required";
+    }
+    if (category === "") {
+      newErrors.category = "Category is required";
+    }
+    if (avatar === "") {
+      newErrors.avatar = "Avatar is required";
+    }
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
       const product = {
         creator: auth.id,
         type: auth.role === "admin" ? "admin" : "user",
@@ -117,7 +123,8 @@ export default function Example() {
         color: colorsSelected,
         size: sizesSelected,
       };
-      const res = await axios.post("ProductsController/store",
+      const res = await axios.post(
+        "ProductsController/store",
         JSON.stringify(product),
         {
           headers: {
@@ -125,7 +132,8 @@ export default function Example() {
           },
         }
       );
-      if(res.status === 201){
+
+      if (res.status === 201) {
         fetchProducts();
         setOpen(false);
         setTitle("");
@@ -138,21 +146,44 @@ export default function Example() {
         setSizesSelected(null);
         setImgPrv(null);
         setErrors({});
+        console.log("Product added");
       } else {
-        if(res.data.title){
+        if (res.data.title) {
           setErrors({ ...errors, title: res.data.title });
         }
-        if(res.data.description){
-          setErrors({ ...errors, title:res.data.title, description: res.data.description });
-        } 
-        if(res.data.quantity){
-          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity });
+        if (res.data.description) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+          });
         }
-        if(res.data.price){
-          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price });
+        if (res.data.quantity) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+          });
         }
-        if(res.data.category){
-          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price, category: res.data.category });
+        if (res.data.price) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+            price: res.data.price,
+          });
+        }
+        if (res.data.category) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+            price: res.data.price,
+            category: res.data.category,
+          });
         }
       }
     }
@@ -187,7 +218,6 @@ export default function Example() {
 
   useEffect(() => {
     fetchProducts();
-    setErrors({});
   }, []);
 
   return (
@@ -250,7 +280,11 @@ export default function Example() {
                                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                   />
                                   <div className="text-red-500 mb-3 text-sm">
-                                    {errors.title ? errors.title : null}
+                                    {open
+                                      ? errors.title
+                                        ? errors.title
+                                        : null
+                                      : null}
                                   </div>
                                 </div>
 
@@ -363,7 +397,6 @@ export default function Example() {
                                       src={imgPrv}
                                       alt="preview"
                                       className="w-max-90 h-40 object-cover"
-
                                     />
                                   ) : (
                                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
@@ -464,8 +497,9 @@ export default function Example() {
                               Submit
                             </button>
                             <button
+                              type="button"
                               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                              onClick={closeModal}
+                              onClick={() => closeModal()}
                               ref={cancelButtonRef}
                             >
                               Cancel
