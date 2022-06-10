@@ -21,10 +21,9 @@ export default function Example({data, handleChangeSelected, selectData}) {
   
   return (
     <span
-      className="d-inline-block"
       data-toggle="popover"
       data-trigger="focus"
-      data-content="Please selecet account(s)"
+      data-content=""
     >
       <ReactSelect
         options={data}
