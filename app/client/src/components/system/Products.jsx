@@ -32,19 +32,9 @@ export default function Example() {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [color, setColor] = useState([]);
-  const [size, setSize] = useState([]);
+  const [properties, setProperties] = useState({});
 
   const [errors, setErrors] = useState({});
-
-  // const [errAvatar, setErrAvatar] = useState('');
-  // const [errTitle, setErrTitle] = useState('');
-  // const [errDescription, setErrDescription] = useState('');
-  // const [errQuantity, setErrQuantity] = useState('');
-  // const [errPrice, setErrPrice] = useState('');
-  // const [errCategory, setErrCategory] = useState('');
-  // const [errColor, setErrColor] = useState([]);
-  // const [errSize, setErrSize] = useState([]);
 
   // handle image preview
   const handleImageChange = (e) => {
@@ -130,6 +120,8 @@ export default function Example() {
       if(res.data){
         fetchProducts();
         // setOpen(false);
+        console.log(colorsSelected);
+        console.log(sizesSelected);
         console.log(res);
       } else {
         console.log(res);

@@ -60,10 +60,7 @@
                     'quantity' => $dataJSON->quantity ? (int)$dataJSON->quantity : 0,
                     'price' => $dataJSON->price ? (double)$dataJSON->price : 0.00,
                     'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
-                    'properties' => [
-                        'color' => $dataJSON->color ? $dataJSON->color : [],
-                        'size' => $dataJSON->size ? $dataJSON->size : [],
-                    ]
+                    'properties' => array_merge($dataJSON->colors, $dataJSON->sizes),
                 ];
                 // print_r($dataJSON);
                 // echo json_encode($data);
