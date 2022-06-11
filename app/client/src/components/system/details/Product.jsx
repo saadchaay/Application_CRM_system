@@ -28,8 +28,10 @@ export default function Product() {
     if (res.status === 201) {
       setProduct(res.data.data);
       setCategories(res.data.categories);
+      setProperties(res.data.properties);
       console.log(res.data.data);
       console.log(res.data.categories);
+      console.log(res.data.properties);
     } else {
       setError(res);
       console.log(res);
@@ -172,8 +174,13 @@ export default function Product() {
                         Sizes
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900">
-                        {/* {admin.phone} */}
-                        S, M, L, XL, XXL
+                        {properties.map(
+                            (property) => (
+                                property.property === "size" ? 
+                                <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md"> {" "} {property.value} {" "} </span>  
+                                : null
+                            )
+                        )}
                       </dd>
                     </div>
 
@@ -182,8 +189,13 @@ export default function Product() {
                         Colors
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900">
-                        {/* {admin.phone} */}
-                        Black, White, Red, Blue, Green
+                      {properties.map(
+                            (property) => (
+                                property.property === "color" ? 
+                                <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md"> {" "} {property.value} {" "} </span>  
+                                : null
+                            )
+                        )}
                       </dd>
                     </div>
                     <div className="sm:col-span-2">
