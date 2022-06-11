@@ -100,7 +100,6 @@ export default function Product() {
 
   const handleUpdate = async (e, id) => {
     e.preventDefault();
-    const newErrors = {};
     const product = {
       creator: auth.id,
       type: auth.role === "admin" ? "admin" : "user",
@@ -181,6 +180,15 @@ export default function Product() {
     }
   };
 
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    const res = await axios.delete(`ProductsController/delete/${id}`);
+    if (res.status === 201) {
+      console.log("Product deleted");
+      fetchProduct(id);
+    }
+  };
+
   useEffect(() => {
     fetchProduct(id);
     setOpenInputs(false);
@@ -218,7 +226,7 @@ export default function Product() {
                           <Edit />
                         </button>
                         <button
-                          //   onClick={(e) => handleDelete(e, item.id)}
+                          onClick={(e) => handleDelete(e, product.id)}
                           className="text-red-700 hover:text-red-900"
                         >
                           <Delete />
@@ -240,15 +248,6 @@ export default function Product() {
                         </button>
                       </span>
                     )}
-                    <span>
-                      <Switch
-                        checked={false}
-                        onChange={() => true}
-                        color="primary"
-                        name="checkedB"
-                        inputProps={{ "aria-label": "primary checkbox" }}
-                      />
-                    </span>
                   </div>
                 </div>
 
