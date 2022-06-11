@@ -120,7 +120,6 @@ export default function Product() {
       newErrors.avatar = "Avatar is required";
     }
     setErrors(newErrors);
-
     if (Object.keys(newErrors).length === 0) {
         const product = {
           creator: auth.id,
@@ -134,6 +133,8 @@ export default function Product() {
           color: colorsSelected,
           size: sizesSelected,
         };
+        console.log(product);
+        console.log(id);
         const res = await axios.put(
           "ProductsController/update/" + id,
           JSON.stringify(product),
@@ -154,7 +155,8 @@ export default function Product() {
           setSizesSelected(null);
           setImgPrv(null);
           setErrors({});
-          fetchProduct();
+          fetchProduct(id);
+          setOpenInputs(false);
           console.log("Product updated");
         } else {
           console.log("Error");
@@ -224,7 +226,7 @@ export default function Product() {
                     ) : (
                       <span>
                         <button
-                          onClick={handleUpdate}
+                          onClick={(e) => handleUpdate(e, product.id)}
                           className="text-green-700 hover:text-green-900"
                         >
                           <SaveAlt />
