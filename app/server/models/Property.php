@@ -41,19 +41,6 @@ class Property {
         }
     }
 
-    // public function update_property($product, $property)
-    // {
-    //     // $this->delete_property($product);
-    //     $this->db->query("UPDATE `property_product` SET `id_property` = :property WHERE `id_product` = :product");
-    //     $this->db->bind(":property", $property);
-    //     $this->db->bind(":product", $product);
-    //     if($this->db->execute()) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     public function delete_properties($product)
     {
         $this->db->query("DELETE FROM `property_product` WHERE `id_product` = :product");
