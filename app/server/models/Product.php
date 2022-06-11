@@ -88,6 +88,19 @@ class Product {
         }
     }
 
+    public function delete_product($id)
+    {
+        $this->db->query("DELETE FROM `products` WHERE `id` = :id");
+        $this->db->bind(":id", $id);
+
+        // check execution the query
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function change_status($data)
     {
         $this->db->query("UPDATE `products` SET `status` = :status WHERE `id` = :id");
