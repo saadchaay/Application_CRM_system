@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import { Delete, Edit } from "@material-ui/icons";
 import { Cancel, SaveAlt } from "@material-ui/icons";
-import Switch from "@material-ui/core/Switch";
 import axios from "../../../api/axios";
 import Drop from "../../helpers/Drop";
 
@@ -185,7 +184,7 @@ export default function Product() {
     const res = await axios.delete(`ProductsController/delete/${id}`);
     if (res.status === 201) {
       console.log("Product deleted");
-      fetchProduct(id);
+      <Navigate to="/products" />;
     }
   };
 
