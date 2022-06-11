@@ -28,15 +28,15 @@ export default function Product() {
   const [imgPrv, setImgPrv] = useState(null);
   const { id } = useParams();
 
-    // product data::
-    const [avatar, setAvatar] = useState("");
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [price, setPrice] = useState("");
-    const [category, setCategory] = useState("");
-  
-    const [errors, setErrors] = useState({});
+  // product data::
+  const [avatar, setAvatar] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+
+  const [errors, setErrors] = useState({});
 
   // handle change select input
   const [colorsSelected, setColorsSelected] = useState(null);
@@ -61,7 +61,7 @@ export default function Product() {
     setCategory("");
     setColorsSelected(null);
     setSizesSelected(null);
-}
+  };
 
   // handle image preview
   const handleImageChange = (e) => {
@@ -99,7 +99,7 @@ export default function Product() {
   };
 
   const handleUpdate = async (e, id) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const newErrors = {};
     if (title === "") {
       newErrors.title = "Title is required";
@@ -121,64 +121,86 @@ export default function Product() {
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-        const product = {
-          creator: auth.id,
-          type: auth.role === "admin" ? "admin" : "user",
-          avatar: avatar,
-          title: title,
-          description: description,
-          quantity: quantity,
-          price: price,
-          category: category,
-          color: colorsSelected,
-          size: sizesSelected,
-        };
-        console.log(product);
-        console.log(id);
-        const res = await axios.put(
-          "ProductsController/update/" + id,
-          JSON.stringify(product),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (res.status === 201) {
-          setTitle("");
-          setDescription("");
-          setQuantity("");
-          setPrice("");
-          setCategory("");
-          setAvatar("");
-          setColorsSelected({});
-          setSizesSelected(null);
-          setImgPrv(null);
-          setErrors({});
-        //   fetchProduct(id);
-          setOpenInputs(false);
-          console.log("Product updated");
-        } else {
-          console.log("Error");
-          console.log(res);
-          if(res.data.title){
-            setErrors({ ...errors, title: res.data.title });
-          }
-          if(res.data.description){
-            setErrors({ ...errors, title:res.data.title, description: res.data.description });
-          } 
-          if(res.data.quantity){
-            setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity });
-          }
-          if(res.data.price){
-            setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price });
-          }
-          if(res.data.category){
-            setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price, category: res.data.category });
-          }
+      const product = {
+        creator: auth.id,
+        type: auth.role === "admin" ? "admin" : "user",
+        avatar: avatar,
+        title: title,
+        description: description,
+        quantity: quantity,
+        price: price,
+        category: category,
+        color: colorsSelected,
+        size: sizesSelected,
+      };
+      console.log(product);
+      console.log(id);
+      const res = await axios.put(
+        "ProductsController/update/" + id,
+        JSON.stringify(product),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
+      );
+      if (res.status === 201) {
+        setTitle("");
+        setDescription("");
+        setQuantity("");
+        setPrice("");
+        setCategory("");
+        setAvatar("");
+        setColorsSelected({});
+        setSizesSelected(null);
+        setImgPrv(null);
+        setErrors({});
+        //   fetchProduct(id);
+        setOpenInputs(false);
+        console.log("Product updated");
+      } else {
+        console.log("Error");
+        console.log(res);
+        if (res.data.title) {
+          setErrors({ ...errors, title: res.data.title });
+        }
+        if (res.data.description) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+          });
+        }
+        if (res.data.quantity) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+          });
+        }
+        if (res.data.price) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+            price: res.data.price,
+          });
+        }
+        if (res.data.category) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+            price: res.data.price,
+            category: res.data.category,
+          });
+        }
+      }
     }
-  }
+  };
 
   useEffect(() => {
     fetchProduct(id);
@@ -280,10 +302,8 @@ export default function Product() {
                       {openInputs ? (
                         <select
                           id="role"
-                            value={category}
-                            onChange={(e) =>
-                                setCategory(e.target.value)
-                            }
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
                           autoComplete="country-name"
                           className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         >
@@ -342,16 +362,16 @@ export default function Product() {
                       </dt>
                       {!openInputs ? (
                         <dd className="mt-1 text-sm text-gray-900">
-                        { !properties.length ? "No sizes" : properties.map(property => property.size).join(", ")}
-
-                          {/* {properties.map((property) =>
-                            property.property === "size" ? (
-                              <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
-                                {" "}
-                                {property.value}{" "}
-                              </span>
-                            ) : null
-                          )} */}
+                          {!properties.length
+                            ? "No sizes"
+                            : properties.map((property) =>
+                                property.property === "color" ? (
+                                  <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
+                                    {" "}
+                                    {property.value}{" "}
+                                  </span>
+                                ) : null
+                              )}
                         </dd>
                       ) : (
                         <Drop
@@ -368,15 +388,16 @@ export default function Product() {
                       </dt>
                       {!openInputs ? (
                         <dd className="mt-1 text-sm text-gray-900">
-                            { !properties.length ? "No colors" : properties.map(property => property.color).join(", ")}
-                          {/* {properties.map((property) =>
-                            property.property === "color" ? (
-                              <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
-                                {" "}
-                                {property.value}{" "}
-                              </span>
-                            ) : null
-                          )} */}
+                          {!properties.length
+                            ? "No colors"
+                            : properties.map((property) =>
+                                property.property === "color" ? (
+                                  <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
+                                    {" "}
+                                    {property.value}{" "}
+                                  </span>
+                                ) : null
+                              )}
                         </dd>
                       ) : (
                         <Drop
@@ -398,7 +419,7 @@ export default function Product() {
                         <textarea
                           type="text"
                           id="description"
-                          placeholder={product.description} 
+                          placeholder={product.description}
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
                           autoComplete="description"
@@ -406,64 +427,66 @@ export default function Product() {
                         />
                       )}
                     </div>
-                    
+
                     <div className="col-span-1 sm:col-span-3 flex justify-around">
-                        <div>
-                            <dt className="text-sm font-medium text-gray-500">
-                                Quantity
-                            </dt>
-                            {!openInputs ? (
-                                <dd className="mt-1 text-sm text-gray-900">
-                                {product.quantity}
-                                </dd>
-                            ) : (
-                                <input
-                                type="text"
-                                id="description"
-                                placeholder={product.quantity} 
-                                value={quantity}
-                                onChange={(e) => setQuantity(e.target.value)}
-                                autoComplete="description"
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                />
-                            )}
-                        </div>
-                    
-                        <div className="">
-                            <dt className="text-sm font-medium text-gray-500">
-                                Price
-                            </dt>
-                            {!openInputs ? (
-                                <dd className="mt-1 text-sm text-gray-900">
-                                {product.price}
-                                </dd>
-                            ) : (
-                                <input
-                                type="text"
-                                id="description"
-                                placeholder={product.price} 
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                                autoComplete="description"
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                />
-                            )}
-                        </div>
+                      <div>
+                        <dt className="text-sm font-medium text-gray-500">
+                          Quantity
+                        </dt>
+                        {!openInputs ? (
+                          <dd className="mt-1 text-sm text-gray-900">
+                            {product.quantity}
+                          </dd>
+                        ) : (
+                          <input
+                            type="text"
+                            id="description"
+                            placeholder={product.quantity}
+                            value={quantity}
+                            onChange={(e) => setQuantity(e.target.value)}
+                            autoComplete="description"
+                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                          />
+                        )}
+                      </div>
+
+                      <div className="">
+                        <dt className="text-sm font-medium text-gray-500">
+                          Price
+                        </dt>
+                        {!openInputs ? (
+                          <dd className="mt-1 text-sm text-gray-900">
+                            {product.price}
+                          </dd>
+                        ) : (
+                          <input
+                            type="text"
+                            id="description"
+                            placeholder={product.price}
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            autoComplete="description"
+                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                          />
+                        )}
+                      </div>
                     </div>
 
                     <div className="col-span-1 sm:col-span-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        { (!imgPrv || !openInputs) ? "Product image" : (
-                            <span className="flex justify-between">
-                                <span>Product image</span>
-                                <button
-                                    onClick={() => setImgPrv(false)} 
-                                    className="text-red-700 hover:text-red-900"
-                                    > 
-                                    <Delete /> 
-                                </button>
-                            </span> 
-                        )  } 
+                        {!imgPrv || !openInputs ? (
+                          "Product image"
+                        ) : (
+                          <span className="flex justify-between">
+                            <span>Product image</span>
+                            <button
+                              onClick={() => setImgPrv(false)}
+                              className="text-red-700 hover:text-red-900"
+                            >
+                              <Delete />
+                            </button>
+                          </span>
+                        )}
                       </dt>
                       {!openInputs ? (
                         <dd className="mt-1 text-sm text-gray-900">
