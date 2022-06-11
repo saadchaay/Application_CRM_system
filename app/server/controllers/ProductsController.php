@@ -202,6 +202,7 @@
             if($_SERVER["REQUEST_METHOD"] === "DELETE"){
                 $product = $this->product->get_product($id);
                 if($product){
+                    $this->property->delete_properties($id);
                     $product = $this->product->delete_product($id);
                     if($product){
                         http_response_code(201);
