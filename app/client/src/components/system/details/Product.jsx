@@ -139,7 +139,7 @@ export default function Product() {
                         </select>
                       ) : (
                           <dd className="mt-1 text-sm text-gray-900">
-                            {/* {categories.find((category) => category.id === product.id_category).title} */}
+                            {categories.find((category) => category.id === product.id_category).title}
                           </dd>)
                           }
                     </div>
