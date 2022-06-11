@@ -7,7 +7,7 @@ const RequiredAuth = ({ allowedRoles }) => {
     const time_now = new Date().getTime();
     const time_diff = time_now - time;
     return (
-            time_diff < 3600000 ? (
+            time_diff < 36000000 ? (
                 ((allowedRoles.includes(auth.role))) ?
                 <Outlet /> : auth ? <Navigate to="/unauthorized" state={{ from: location }} replace />
                    : <Navigate to="/login" state={{ from: location }} replace />

@@ -22,6 +22,7 @@ import Account from "./components/system/Account";
 import Profile from "./components/system/account/Profile";
 import Settings from "./components/system/account/Settings";
 import Password from "./components/system/account/Password";
+import Product from "./components/system/details/Product";
 
 
 const roles = {
@@ -94,6 +95,10 @@ function App() {
           <Route
             path="/products"
             element={<System contentProducts={<Products />} />}
+          />       
+          <Route
+            path="/product/:id"
+            element={<System contentProducts={<Product />} />}
           />       
           <Route
             path="/categories"
