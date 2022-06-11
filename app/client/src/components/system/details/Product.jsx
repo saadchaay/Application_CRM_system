@@ -17,7 +17,8 @@ function classNames(...classes) {
 
 export default function Product() {
   const [product, setProduct] = useState([]);
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [openInputs, setOpenInputs] = useState(false);
   const [error, setError] = useState(null);
   const { id } = useParams();
 
@@ -25,13 +26,18 @@ export default function Product() {
     const res = await axios.get(`ProductsController/show/${id}`);
     if (res.status === 201) {
       setProduct(res.data.data);
-      setCategory(res.data.category);
+      setCategories(res.data.categories);
       console.log(res.data.data);
       console.log(res.data.category);
     } else {
       setError(res);
       console.log(res);
     }
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setOpenInputs(!openInputs);
   };
 
   useEffect(() => {
@@ -43,13 +49,12 @@ export default function Product() {
       {/* settings details */}
 
       <main className="py-10 w-full">
-        {/* Page header */}
-
         <div className="mt-5 w-full mx-auto gap-6 sm:px-6 lg:w-full lg:grid-flow-col-dense lg:grid-cols-3">
           <div className="space-y-6 lg:col-start-1 lg:col-span-2">
-            {/* Description list*/}
+            {/* Product details */}
             <section aria-labelledby="applicant-information-title">
               <div className="bg-white shadow sm:rounded-lg">
+
                 <div className="flex justify-between px-4 py-5 sm:px-6">
                   <div>
                     <h2
@@ -65,7 +70,7 @@ export default function Product() {
                   <div className="flex flex-col items-end">
                     <span>
                       <button
-                        //   onClick={(event) => handleClick(event, item)}
+                        onClick={(e) => handleClick(e)}
                         className="text-green-700 hover:text-green-900"
                       >
                         <Edit />
@@ -80,7 +85,7 @@ export default function Product() {
                     <span>
                       <Switch
                         checked={false}
-                        onChange={() => (true)}
+                        onChange={() => true}
                         color="primary"
                         name="checkedB"
                         inputProps={{ "aria-label": "primary checkbox" }}
@@ -88,23 +93,57 @@ export default function Product() {
                     </span>
                   </div>
                 </div>
+
                 <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
                   <dl className="grid grid-cols-1 gap-x-4 gap-y-8 grid-cols-1 sm:grid-cols-6">
                     <div className="col-span-1 sm:col-span-2">
                       <dt className="text-sm font-medium text-gray-500">
                         Product Name
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-900">
-                        {product.title}
-                      </dd>
+                      {openInputs ? (
+                        <input
+                          type="text"
+                          name="title"
+                          placeholder={product.title}
+                          //   onChange={handleEditChange}
+                          autoComplete="title"
+                          className="mt-1 block w-auto border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        />
+                      ) : (
+                        <dd className="mt-1 text-sm text-gray-900">
+                          {product.title}
+                        </dd>
+                      )}
                     </div>
                     <div className="col-span-1 sm:col-span-4">
                       <dt className="text-sm font-medium text-gray-500">
                         Category
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-900">
-                        {category.title}
-                      </dd>
+                      { openInputs ? (
+                          <select
+                          id="role"
+                        //   value={category}
+                        //   onChange={(e) =>
+                            // setCategory(e.target.value)
+                        //   }
+                          autoComplete="country-name"
+                          className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        >
+                          <option value="">Choose category ...</option>
+                          {categories.map((category) => (
+                            <option
+                              key={category.id}
+                              value={category.id}
+                            >
+                              {category.title}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                          <dd className="mt-1 text-sm text-gray-900">
+                            {categories.find((category) => category.id === product.category_id).title}
+                          </dd>)
+                          }
                     </div>
 
                     <div className="col-span-1 sm:col-span-2">
@@ -154,6 +193,7 @@ export default function Product() {
                     </div>
                   </dl>
                 </div>
+
                 <div></div>
               </div>
             </section>
