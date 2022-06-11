@@ -25,9 +25,17 @@ export default function Product() {
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [imgPrv, setImgPrv] = useState(null);
-  const [avatar, setAvatar] = useState("");
-  const [error, setError] = useState(null);
   const { id } = useParams();
+
+    // product data::
+    const [avatar, setAvatar] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [price, setPrice] = useState("");
+    const [category, setCategory] = useState("");
+  
+    const [errors, setErrors] = useState({});
 
   // handle change select input
   const [colorsSelected, setColorsSelected] = useState(null);
@@ -36,9 +44,23 @@ export default function Product() {
   const handleChangeColors = (selected) => {
     setColorsSelected(selected);
   };
+
   const handleChangeSizes = (selected) => {
     setSizesSelected(selected);
   };
+  // handle cancel edit
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setOpenInputs(false);
+    setAvatar("");
+    setTitle("");
+    setDescription("");
+    setQuantity("");
+    setPrice("");
+    setCategory("");
+    setColorsSelected(null);
+    setSizesSelected(null);
+}
 
   // handle image preview
   const handleImageChange = (e) => {
@@ -52,6 +74,7 @@ export default function Product() {
     reader.readAsDataURL(file);
   };
 
+  // fetch data
   const fetchProduct = async (id) => {
     const res = await axios.get(`ProductsController/show/${id}`);
     if (res.status === 201) {
@@ -64,7 +87,7 @@ export default function Product() {
       console.log(res.data.categories);
       console.log(res.data.properties);
     } else {
-      setError(res);
+      setErrors(res);
       console.log(res);
     }
   };
@@ -126,7 +149,7 @@ export default function Product() {
                           <SaveAlt />
                         </button>
                         <button
-                          //   onClick={(e) => handleDelete(e, item.id)}
+                          onClick={(e) => handleCancel(e)}
                           className="text-red-700 hover:text-red-900"
                         >
                           <Cancel />
@@ -156,9 +179,9 @@ export default function Product() {
                           type="text"
                           name="title"
                           placeholder={product.title}
-                          //   onChange={handleEditChange}
+                          onChange={(e) => setTitle(e.target.value)}
                           autoComplete="title"
-                          className="mt-1 block w-auto border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
                       ) : (
                         <dd className="mt-1 text-sm text-gray-900">
@@ -173,10 +196,10 @@ export default function Product() {
                       {openInputs ? (
                         <select
                           id="role"
-                          //   value={category}
-                          //   onChange={(e) =>
-                          // setCategory(e.target.value)
-                          //   }
+                            value={category}
+                            onChange={(e) =>
+                                setCategory(e.target.value)
+                            }
                           autoComplete="country-name"
                           className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         >
@@ -247,8 +270,8 @@ export default function Product() {
                       ) : (
                         <Drop
                           data={sizes}
-                          handleChangeSelected={handleChangeColors}
-                          selectData={colorsSelected}
+                          handleChangeSelected={handleChangeSizes}
+                          selectData={sizesSelected}
                         />
                       )}
                     </div>
@@ -276,7 +299,7 @@ export default function Product() {
                         />
                       )}
                     </div>
-                    <div className="col-span-1 sm:col-span-6">
+                    <div className="col-span-1 sm:col-span-3">
                       <dt className="text-sm font-medium text-gray-500">
                         Description
                       </dt>
@@ -289,12 +312,56 @@ export default function Product() {
                           type="text"
                           id="description"
                           placeholder={product.description} 
-                          //   value={description}
-                          //   onChange={(e) => setDescription(e.target.value)}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                           autoComplete="description"
-                          className="mt-1 block w-1/2 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
                       )}
+                    </div>
+                    
+                    <div className="col-span-1 sm:col-span-3 flex justify-around">
+                        <div>
+                            <dt className="text-sm font-medium text-gray-500">
+                                Quantity
+                            </dt>
+                            {!openInputs ? (
+                                <dd className="mt-1 text-sm text-gray-900">
+                                {product.quantity}
+                                </dd>
+                            ) : (
+                                <input
+                                type="text"
+                                id="description"
+                                placeholder={product.quantity} 
+                                value={quantity}
+                                onChange={(e) => setQuantity(e.target.value)}
+                                autoComplete="description"
+                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                />
+                            )}
+                        </div>
+                    
+                        <div className="">
+                            <dt className="text-sm font-medium text-gray-500">
+                                Price
+                            </dt>
+                            {!openInputs ? (
+                                <dd className="mt-1 text-sm text-gray-900">
+                                {product.price}
+                                </dd>
+                            ) : (
+                                <input
+                                type="text"
+                                id="description"
+                                placeholder={product.price} 
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                                autoComplete="description"
+                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                />
+                            )}
+                        </div>
                     </div>
 
                     <div className="col-span-1 sm:col-span-6">
@@ -302,7 +369,10 @@ export default function Product() {
                         { (!imgPrv || !openInputs) ? "Product image" : (
                             <span className="flex justify-between">
                                 <span>Product image</span>
-                                <button className="text-red-700 hover:text-red-900"> 
+                                <button
+                                    onClick={() => setImgPrv(false)} 
+                                    className="text-red-700 hover:text-red-900"
+                                    > 
                                     <Delete /> 
                                 </button>
                             </span> 
