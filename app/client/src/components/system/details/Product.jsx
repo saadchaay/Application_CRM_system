@@ -18,6 +18,7 @@ function classNames(...classes) {
 export default function Product() {
   const [product, setProduct] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [properties, setProperties] = useState([]);
   const [openInputs, setOpenInputs] = useState(false);
   const [error, setError] = useState(null);
   const { id } = useParams();
@@ -139,7 +140,11 @@ export default function Product() {
                         </select>
                       ) : (
                           <dd className="mt-1 text-sm text-gray-900">
-                            {categories.find((category) => category.id === product.id_category).title}
+                            {categories.map((category) => (
+                                categories.find((category) => category.id === product.id_category).title === category.title ? (
+                                    <>{category.title}</>
+                                ) : null ))}
+                                    
                           </dd>)
                           }
                     </div>
