@@ -179,20 +179,6 @@ export default function Product() {
     }
   };
 
-  const handleDelete = (e, id) => {
-    e.preventDefault();
-    axios.delete("ProductsController/delete/" + id).then((res) => {
-        if (res.status === 201) {
-            console.log("Product deleted");
-            <Navigate to="/products" />
-        } else {
-            console.log("Error");
-            console.log(res);
-        }
-        }
-    );
-  };
-
   useEffect(() => {
     fetchProduct(id);
     setOpenInputs(false);

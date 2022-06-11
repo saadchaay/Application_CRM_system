@@ -170,6 +170,20 @@ export default function Example() {
     }
   };
 
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    axios.delete("ProductsController/delete/" + id).then((res) => {
+        if (res.status === 201) {
+            console.log("Product deleted");
+            fetchProducts();
+        } else {
+            console.log("Error");
+            console.log(res);
+        }
+        }
+    );
+  };
+
   // handle change
   const handleChange = async (index) => {
     const newChecked = [...checked];
