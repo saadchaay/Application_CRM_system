@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Delete, Edit } from "@material-ui/icons";
 import Switch from "@material-ui/core/Switch";
 import axios from "../../../api/axios";
+import Drop from "../../helpers/Drop";
 
 const statusStyles = {
   active: "bg-green-100 text-green-800",
@@ -20,8 +21,21 @@ export default function Product() {
   const [categories, setCategories] = useState([]);
   const [properties, setProperties] = useState([]);
   const [openInputs, setOpenInputs] = useState(false);
+  const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [error, setError] = useState(null);
   const { id } = useParams();
+
+    // handle change select input
+    const [colorsSelected, setColorsSelected] = useState(null);
+    const [sizesSelected, setSizesSelected] = useState(null);
+  
+    const handleChangeColors = (selected) => {
+      setColorsSelected(selected);
+    };
+    const handleChangeSizes = (selected) => {
+      setSizesSelected(selected);
+    };
 
   const fetchProduct = async (id) => {
     const res = await axios.get(`ProductsController/show/${id}`);
@@ -29,6 +43,8 @@ export default function Product() {
       setProduct(res.data.data);
       setCategories(res.data.categories);
       setProperties(res.data.properties);
+      setColors(res.data.properties.colors);
+      setSizes(res.data.properties.sizes);
       console.log(res.data.data);
       console.log(res.data.categories);
       console.log(res.data.properties);
@@ -58,7 +74,6 @@ export default function Product() {
             {/* Product details */}
             <section aria-labelledby="applicant-information-title">
               <div className="bg-white shadow sm:rounded-lg">
-
                 <div className="flex justify-between px-4 py-5 sm:px-6">
                   <div>
                     <h2
@@ -123,32 +138,45 @@ export default function Product() {
                       <dt className="text-sm font-medium text-gray-500">
                         Category
                       </dt>
-                      { openInputs ? (
-                          <select
+                      {openInputs ? (
+                        <select
                           id="role"
-                        //   value={category}
-                        //   onChange={(e) =>
-                            // setCategory(e.target.value)
-                        //   }
+                          //   value={category}
+                          //   onChange={(e) =>
+                          // setCategory(e.target.value)
+                          //   }
                           autoComplete="country-name"
                           className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         >
-                          <option value={product.id_category}>{categories.find((category) => category.id === product.id_category).title}</option>
-                            {categories.map((category) => (
-                                categories.find((category) => category.id === product.id_category).title !== category.title ? (
-                                    <option value={category.id}>{category.title}</option>
-                                ) : null
-                            ))}
+                          <option value={product.id_category}>
+                            {
+                              categories.find(
+                                (category) =>
+                                  category.id === product.id_category
+                              ).title
+                            }
+                          </option>
+                          {categories.map((category) =>
+                            categories.find(
+                              (category) => category.id === product.id_category
+                            ).title !== category.title ? (
+                              <option value={category.id}>
+                                {category.title}
+                              </option>
+                            ) : null
+                          )}
                         </select>
                       ) : (
-                          <dd className="mt-1 text-sm text-gray-900">
-                            {categories.map((category) => (
-                                categories.find((category) => category.id === product.id_category).title === category.title ? (
-                                    <>{category.title}</>
-                                ) : null ))}
-                                    
-                          </dd>)
-                          }
+                        <dd className="mt-1 text-sm text-gray-900">
+                          {categories.map((category) =>
+                            categories.find(
+                              (category) => category.id === product.id_category
+                            ).title === category.title ? (
+                              <>{category.title}</>
+                            ) : null
+                          )}
+                        </dd>
+                      )}
                     </div>
 
                     <div className="col-span-1 sm:col-span-2">
@@ -173,30 +201,48 @@ export default function Product() {
                       <dt className="text-sm font-medium text-gray-500">
                         Sizes
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-900">
-                        {properties.map(
-                            (property) => (
-                                property.property === "size" ? 
-                                <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md"> {" "} {property.value} {" "} </span>  
-                                : null
-                            )
-                        )}
-                      </dd>
+                      {!openInputs ? (
+                        <dd className="mt-1 text-sm text-gray-900">
+                          {properties.map((property) =>
+                            property.property === "size" ? (
+                              <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
+                                {" "}
+                                {property.value}{" "}
+                              </span>
+                            ) : null
+                          )}
+                        </dd>
+                      ) : (
+                        <Drop
+                          data={properties}
+                          //   handleChangeSelected={handleChangeColors}
+                          //   selectData={colorsSelected}
+                        />
+                      )}
                     </div>
 
                     <div className="col-span-1 sm:col-span-2">
                       <dt className="text-sm font-medium text-gray-500">
                         Colors
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-900">
-                      {properties.map(
-                            (property) => (
-                                property.property === "color" ? 
-                                <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md"> {" "} {property.value} {" "} </span>  
-                                : null
-                            )
-                        )}
-                      </dd>
+                      {!openInputs ? (
+                        <dd className="mt-1 text-sm text-gray-900">
+                          {properties.map((property) =>
+                            property.property === "color" ? (
+                              <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
+                                {" "}
+                                {property.value}{" "}
+                              </span>
+                            ) : null
+                          )}
+                        </dd>
+                      ) : (
+                        <Drop
+                          data={properties}
+                          //   handleChangeSelected={handleChangeColors}
+                          //   selectData={colorsSelected}
+                        />
+                      )}
                     </div>
                     <div className="sm:col-span-2">
                       <dt className="text-sm font-medium text-gray-500">
