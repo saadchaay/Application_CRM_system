@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Delete, Edit } from "@material-ui/icons";
+import { Cancel, SaveAlt } from "@material-ui/icons";
 import Switch from "@material-ui/core/Switch";
 import axios from "../../../api/axios";
 import Drop from "../../helpers/Drop";
@@ -23,26 +24,40 @@ export default function Product() {
   const [openInputs, setOpenInputs] = useState(false);
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
+  const [imgPrv, setImgPrv] = useState(null);
+  const [avatar, setAvatar] = useState("");
   const [error, setError] = useState(null);
   const { id } = useParams();
 
-    // handle change select input
-    const [colorsSelected, setColorsSelected] = useState(null);
-    const [sizesSelected, setSizesSelected] = useState(null);
-  
-    const handleChangeColors = (selected) => {
-      setColorsSelected(selected);
+  // handle change select input
+  const [colorsSelected, setColorsSelected] = useState(null);
+  const [sizesSelected, setSizesSelected] = useState(null);
+
+  const handleChangeColors = (selected) => {
+    setColorsSelected(selected);
+  };
+  const handleChangeSizes = (selected) => {
+    setSizesSelected(selected);
+  };
+
+  // handle image preview
+  const handleImageChange = (e) => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setImgPrv(reader.result);
+      setAvatar(file.name);
     };
-    const handleChangeSizes = (selected) => {
-      setSizesSelected(selected);
-    };
+    reader.readAsDataURL(file);
+  };
 
   const fetchProduct = async (id) => {
     const res = await axios.get(`ProductsController/show/${id}`);
     if (res.status === 201) {
       setProduct(res.data.data);
       setCategories(res.data.categories);
-      setProperties(res.data.properties);
+      setProperties(res.data.properties.data);
       setColors(res.data.properties.colors);
       setSizes(res.data.properties.sizes);
       console.log(res.data.data);
@@ -87,20 +102,37 @@ export default function Product() {
                     </p>
                   </div>
                   <div className="flex flex-col items-end">
-                    <span>
-                      <button
-                        onClick={(e) => handleClick(e)}
-                        className="text-green-700 hover:text-green-900"
-                      >
-                        <Edit />
-                      </button>
-                      <button
-                        //   onClick={(e) => handleDelete(e, item.id)}
-                        className="text-red-700 hover:text-red-900"
-                      >
-                        <Delete />
-                      </button>
-                    </span>
+                    {!openInputs ? (
+                      <span>
+                        <button
+                          onClick={(e) => handleClick(e)}
+                          className="text-green-700 hover:text-green-900"
+                        >
+                          <Edit />
+                        </button>
+                        <button
+                          //   onClick={(e) => handleDelete(e, item.id)}
+                          className="text-red-700 hover:text-red-900"
+                        >
+                          <Delete />
+                        </button>
+                      </span>
+                    ) : (
+                      <span>
+                        <button
+                          onClick={(e) => handleClick(e)}
+                          className="text-green-700 hover:text-green-900"
+                        >
+                          <SaveAlt />
+                        </button>
+                        <button
+                          //   onClick={(e) => handleDelete(e, item.id)}
+                          className="text-red-700 hover:text-red-900"
+                        >
+                          <Cancel />
+                        </button>
+                      </span>
+                    )}
                     <span>
                       <Switch
                         checked={false}
@@ -214,9 +246,9 @@ export default function Product() {
                         </dd>
                       ) : (
                         <Drop
-                          data={properties}
-                          //   handleChangeSelected={handleChangeColors}
-                          //   selectData={colorsSelected}
+                          data={sizes}
+                          handleChangeSelected={handleChangeColors}
+                          selectData={colorsSelected}
                         />
                       )}
                     </div>
@@ -238,19 +270,97 @@ export default function Product() {
                         </dd>
                       ) : (
                         <Drop
-                          data={properties}
-                          //   handleChangeSelected={handleChangeColors}
-                          //   selectData={colorsSelected}
+                          data={colors}
+                          handleChangeSelected={handleChangeColors}
+                          selectData={colorsSelected}
                         />
                       )}
                     </div>
-                    <div className="sm:col-span-2">
+                    <div className="col-span-1 sm:col-span-6">
                       <dt className="text-sm font-medium text-gray-500">
                         Description
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-900">
-                        {product.description}
-                      </dd>
+                      {!openInputs ? (
+                        <dd className="mt-1 text-sm text-gray-900">
+                          {product.description}
+                        </dd>
+                      ) : (
+                        <textarea
+                          type="text"
+                          id="description"
+                          placeholder={product.description} 
+                          //   value={description}
+                          //   onChange={(e) => setDescription(e.target.value)}
+                          autoComplete="description"
+                          className="mt-1 block w-1/2 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        />
+                      )}
+                    </div>
+
+                    <div className="col-span-1 sm:col-span-6">
+                      <dt className="text-sm font-medium text-gray-500">
+                        { (!imgPrv || !openInputs) ? "Product image" : (
+                            <span className="flex justify-between">
+                                <span>Product image</span>
+                                <button className="text-red-700 hover:text-red-900"> 
+                                    <Delete /> 
+                                </button>
+                            </span> 
+                        )  } 
+                      </dt>
+                      {!openInputs ? (
+                        <dd className="mt-1 text-sm text-gray-900">
+                          <img
+                            src={product.image}
+                            alt="product"
+                            className="w-full"
+                          />
+                        </dd>
+                      ) : imgPrv ? (
+                        <img
+                          src={imgPrv}
+                          alt="preview"
+                          className="w-max-90 h-40 object-cover"
+                        />
+                      ) : (
+                        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                          <div className="space-y-1 text-center">
+                            <svg
+                              className="mx-auto h-8 w-8 text-gray-400"
+                              stroke="currentColor"
+                              fill="none"
+                              viewBox="0 0 48 48"
+                              aria-hidden="true"
+                            >
+                              <path
+                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                strokeWidth={2}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                            <div className="flex text-sm text-gray-600">
+                              <label
+                                htmlFor="file-upload"
+                                className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                              >
+                                <span>Upload a file</span>
+                                <input
+                                  id="file-upload"
+                                  name="file-upload"
+                                  type="file"
+                                  className="sr-only"
+                                  onChange={(e) => handleImageChange(e)}
+                                />
+                              </label>
+                              <p className="pl-1">or drag and drop</p>
+                            </div>
+                            <p className="text-xs text-gray-500">
+                              PNG, JPG, GIF up to 10MB
+                            </p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </dl>
                 </div>
