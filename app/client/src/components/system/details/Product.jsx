@@ -120,6 +120,8 @@ export default function Product() {
       newErrors.avatar = "Avatar is required";
     }
     setErrors(newErrors);
+    // console.log(colorsSelected);
+    // console.log(sizesSelected);
     if (Object.keys(newErrors).length === 0) {
       const product = {
         creator: auth.id,
@@ -365,7 +367,7 @@ export default function Product() {
                           {!properties.length
                             ? "No sizes"
                             : properties.map((property) =>
-                                property.property === "color" ? (
+                                property.property === "size" ? (
                                   <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
                                     {" "}
                                     {property.value}{" "}
