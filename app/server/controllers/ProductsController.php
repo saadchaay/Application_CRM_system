@@ -117,5 +117,22 @@
             }
         }
         
+        public function show($id)
+        {
+            if($_SERVER["REQUEST_METHOD"] == "GET") {
+                $product = $this->product->get_product($id);
+                if($product){
+                    http_response_code(201);
+                    echo json_encode(array(
+                        'status' => 'success',
+                        'data' => $product,
+                        'categories' => $this->category->get_all_category($product),
+                    ));
+                }else{
+                    http_response_code(404);
+                    echo json_encode(array('message' => 'No product found'));
+                }
+            }
+        }
         
     }
