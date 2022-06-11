@@ -179,13 +179,18 @@ export default function Product() {
     }
   };
 
-  const handleDelete = async (e, id) => {
+  const handleDelete = (e, id) => {
     e.preventDefault();
-    const res = await axios.delete(`ProductsController/delete/${id}`);
-    if (res.status === 201) {
-      console.log("Product deleted");
-      <Navigate to="/products" />;
-    }
+    axios.delete("ProductsController/delete/" + id).then((res) => {
+        if (res.status === 201) {
+            console.log("Product deleted");
+            <Navigate to="/products" />
+        } else {
+            console.log("Error");
+            console.log(res);
+        }
+        }
+    );
   };
 
   useEffect(() => {
