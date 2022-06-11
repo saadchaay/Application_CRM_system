@@ -40,5 +40,16 @@ class Property {
             return false;
         }
     }
+
+    public function get_properties($id)
+    {
+        $this->db->query("SELECT * FROM `property_product` WHERE `id_product` = :id");
+        $this->db->bind(":id", $id);
+        if($this->db->resultSet()) {
+            return $this->db->resultSet();
+        } else {
+            return false;
+        }
+    }
     
 }
