@@ -176,7 +176,7 @@
                             if(!empty($data["properties"])){
                                 $this->property->delete_properties($id);
                                 foreach($data["properties"] as $property){
-                                    $this->property->update_property($id, $property->id);
+                                    $this->property->create_property($id, $property->id);
                                     $success = true ;
                                 }
                             }
