@@ -77,6 +77,7 @@ export default function Example() {
       "ProductsController/index/" + auth.id + "/" + type
     );
     if (res) {
+      console.log(res.data);
       setProducts(res.data.data);
       setChecked(res.data.data.map((item) => item.status));
       setCategories(res.data.categories);

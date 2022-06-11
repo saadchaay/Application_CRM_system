@@ -151,11 +151,11 @@ export default function Product() {
           setPrice("");
           setCategory("");
           setAvatar("");
-          setColorsSelected(null);
+          setColorsSelected({});
           setSizesSelected(null);
           setImgPrv(null);
           setErrors({});
-          fetchProduct(id);
+        //   fetchProduct(id);
           setOpenInputs(false);
           console.log("Product updated");
         } else {
@@ -342,14 +342,16 @@ export default function Product() {
                       </dt>
                       {!openInputs ? (
                         <dd className="mt-1 text-sm text-gray-900">
-                          {properties.map((property) =>
+                        { !properties.length ? "No sizes" : properties.map(property => property.size).join(", ")}
+
+                          {/* {properties.map((property) =>
                             property.property === "size" ? (
                               <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
                                 {" "}
                                 {property.value}{" "}
                               </span>
                             ) : null
-                          )}
+                          )} */}
                         </dd>
                       ) : (
                         <Drop
@@ -366,14 +368,15 @@ export default function Product() {
                       </dt>
                       {!openInputs ? (
                         <dd className="mt-1 text-sm text-gray-900">
-                          {properties.map((property) =>
+                            { !properties.length ? "No colors" : properties.map(property => property.color).join(", ")}
+                          {/* {properties.map((property) =>
                             property.property === "color" ? (
                               <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
                                 {" "}
                                 {property.value}{" "}
                               </span>
                             ) : null
-                          )}
+                          )} */}
                         </dd>
                       ) : (
                         <Drop
