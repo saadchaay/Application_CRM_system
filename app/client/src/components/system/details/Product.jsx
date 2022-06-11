@@ -97,6 +97,10 @@ export default function Product() {
     setOpenInputs(true);
   };
 
+  const handleUpdate = async (e, id) => {
+    e.preventDefault();
+  }
+
   useEffect(() => {
     fetchProduct(id);
     setOpenInputs(false);
@@ -143,7 +147,7 @@ export default function Product() {
                     ) : (
                       <span>
                         <button
-                          onClick={(e) => handleClick(e)}
+                          onClick={handleUpdate}
                           className="text-green-700 hover:text-green-900"
                         >
                           <SaveAlt />
