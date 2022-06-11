@@ -196,5 +196,22 @@
                 }
             }
         }
+
+        public function delete($id)
+        {
+            if($_SERVER["REQUEST_METHOD"] === "DELETE"){
+                $product = $this->product->get_product($id);
+                if($product){
+                    $product = $this->product->delete_product($id);
+                    if($product){
+                        http_response_code(201);
+                        echo json_encode(array('message' => 'Product deleted'));
+                    }else{
+                        http_response_code(404);
+                        echo json_encode(array('message' => 'Product not deleted'));
+                    }
+                }
+            }
+        }
         
     }
