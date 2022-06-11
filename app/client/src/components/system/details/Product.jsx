@@ -28,7 +28,7 @@ export default function Product() {
       setProduct(res.data.data);
       setCategories(res.data.categories);
       console.log(res.data.data);
-      console.log(res.data.category);
+      console.log(res.data.categories);
     } else {
       setError(res);
       console.log(res);
@@ -37,11 +37,12 @@ export default function Product() {
 
   const handleClick = (e) => {
     e.preventDefault();
-    setOpenInputs(!openInputs);
+    setOpenInputs(true);
   };
 
   useEffect(() => {
     fetchProduct(id);
+    setOpenInputs(false);
   }, [id]);
 
   return (
@@ -129,19 +130,16 @@ export default function Product() {
                           autoComplete="country-name"
                           className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         >
-                          <option value="">Choose category ...</option>
-                          {categories.map((category) => (
-                            <option
-                              key={category.id}
-                              value={category.id}
-                            >
-                              {category.title}
-                            </option>
-                          ))}
+                          <option value={product.id_category}>{categories.find((category) => category.id === product.id_category).title}</option>
+                            {categories.map((category) => (
+                                categories.find((category) => category.id === product.id_category).title !== category.title ? (
+                                    <option value={category.id}>{category.title}</option>
+                                ) : null
+                            ))}
                         </select>
                       ) : (
                           <dd className="mt-1 text-sm text-gray-900">
-                            {categories.find((category) => category.id === product.category_id).title}
+                            {categories.find((category) => category.id === product.id_category).title}
                           </dd>)
                           }
                     </div>
