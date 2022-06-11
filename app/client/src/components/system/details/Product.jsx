@@ -215,12 +215,6 @@ export default function Product() {
                         >
                           <Edit />
                         </button>
-                        <button
-                          onClick={(e) => handleDelete(e, product.id)}
-                          className="text-red-700 hover:text-red-900"
-                        >
-                          <Delete />
-                        </button>
                       </span>
                     ) : (
                       <span>
