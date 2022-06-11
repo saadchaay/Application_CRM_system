@@ -3,7 +3,7 @@ import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
 import Switch from "@material-ui/core/Switch";
 import Drop from "../helpers/Drop";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const statusStyles = {
   active: "bg-green-100 text-green-800",
