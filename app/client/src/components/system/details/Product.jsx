@@ -21,11 +21,11 @@ export default function Product() {
 
     useEffect(() => {
         fetchProduct();
-    })
+    }, [])
 
     return(
         <div>
-            {product.title}
+            {id}
         </div>
     );
 };
