@@ -74,7 +74,7 @@ export default function Product() {
     reader.readAsDataURL(file);
   };
 
-  // fetch data
+  // fetch data of product
   const fetchProduct = async (id) => {
     const res = await axios.get(`ProductsController/show/${id}`);
     if (res.status === 201) {
