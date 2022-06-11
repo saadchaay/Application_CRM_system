@@ -126,6 +126,7 @@
                     echo json_encode(array(
                         'status' => 'success',
                         'data' => $product,
+                        'category' => $this->category->get_category($product->id_category),
                     ));
                 }else{
                     http_response_code(404);
