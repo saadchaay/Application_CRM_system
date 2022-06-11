@@ -174,8 +174,9 @@
                         if($product){
                             $success =false ;
                             if(!empty($data["properties"])){
+                                $this->property->delete_properties($id);
                                 foreach($data["properties"] as $property){
-                                    $this->property->create_property($id, $property->id);
+                                    $this->property->update_property($id, $property->id);
                                     $success = true ;
                                 }
                             }
