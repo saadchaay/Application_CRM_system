@@ -18,6 +18,7 @@ function classNames(...classes) {
 }
 
 export default function Product() {
+  const auth = JSON.parse(localStorage.getItem("auth"));
   const [product, setProduct] = useState([]);
   const [categories, setCategories] = useState([]);
   const [properties, setProperties] = useState([]);
@@ -98,7 +99,83 @@ export default function Product() {
   };
 
   const handleUpdate = async (e, id) => {
-    e.preventDefault();
+    e.preventDefault(); 
+    const newErrors = {};
+    if (title === "") {
+      newErrors.title = "Title is required";
+    }
+    if (description === "") {
+      newErrors.description = "Description is required";
+    }
+    if (quantity === "") {
+      newErrors.quantity = "Quantity is required";
+    }
+    if (price === "") {
+      newErrors.price = "Price is required";
+    }
+    if (category === "") {
+      newErrors.category = "Category is required";
+    }
+    if (avatar === "") {
+      newErrors.avatar = "Avatar is required";
+    }
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+        const product = {
+          creator: auth.id,
+          type: auth.role === "admin" ? "admin" : "user",
+          avatar: avatar,
+          title: title,
+          description: description,
+          quantity: quantity,
+          price: price,
+          category: category,
+          color: colorsSelected,
+          size: sizesSelected,
+        };
+        const res = await axios.put(
+          "ProductsController/update/" + id,
+          JSON.stringify(product),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (res.status === 201) {
+          setTitle("");
+          setDescription("");
+          setQuantity("");
+          setPrice("");
+          setCategory("");
+          setAvatar("");
+          setColorsSelected(null);
+          setSizesSelected(null);
+          setImgPrv(null);
+          setErrors({});
+          fetchProduct();
+          console.log("Product updated");
+        } else {
+          console.log("Error");
+          console.log(res);
+          if(res.data.title){
+            setErrors({ ...errors, title: res.data.title });
+          }
+          if(res.data.description){
+            setErrors({ ...errors, title:res.data.title, description: res.data.description });
+          } 
+          if(res.data.quantity){
+            setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity });
+          }
+          if(res.data.price){
+            setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price });
+          }
+          if(res.data.category){
+            setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price, category: res.data.category });
+          }
+        }
+    }
   }
 
   useEffect(() => {
