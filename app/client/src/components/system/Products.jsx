@@ -149,6 +149,21 @@ export default function Example() {
       } else {
         console.log("Error");
         console.log(res);
+        if(res.data.title){
+          setErrors({ ...errors, title: res.data.title });
+        }
+        if(res.data.description){
+          setErrors({ ...errors, title:res.data.title, description: res.data.description });
+        } 
+        if(res.data.quantity){
+          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity });
+        }
+        if(res.data.price){
+          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price });
+        }
+        if(res.data.category){
+          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price, category: res.data.category });
+        }
       }
     }
   };
