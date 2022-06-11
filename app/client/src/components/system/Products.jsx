@@ -132,7 +132,6 @@ export default function Example() {
           },
         }
       );
-
       if (res.status === 201) {
         fetchProducts();
         setOpen(false);
@@ -148,43 +147,9 @@ export default function Example() {
         setErrors({});
         console.log("Product added");
       } else {
-        if (res.data.title) {
-          setErrors({ ...errors, title: res.data.title });
-        }
-        if (res.data.description) {
-          setErrors({
-            ...errors,
-            title: res.data.title,
-            description: res.data.description,
-          });
-        }
-        if (res.data.quantity) {
-          setErrors({
-            ...errors,
-            title: res.data.title,
-            description: res.data.description,
-            quantity: res.data.quantity,
-          });
-        }
-        if (res.data.price) {
-          setErrors({
-            ...errors,
-            title: res.data.title,
-            description: res.data.description,
-            quantity: res.data.quantity,
-            price: res.data.price,
-          });
-        }
-        if (res.data.category) {
-          setErrors({
-            ...errors,
-            title: res.data.title,
-            description: res.data.description,
-            quantity: res.data.quantity,
-            price: res.data.price,
-            category: res.data.category,
-          });
-        }
+        
+        // setErrors(newErrors); 
+        console.log(res.data);
       }
     }
   };
