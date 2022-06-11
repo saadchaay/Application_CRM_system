@@ -69,6 +69,25 @@ class Product {
         }
     }
 
+    public function update_product($data)
+    {
+        $this->db->query("UPDATE `products` SET `title` = :title, `description` = :description, `quantity` = :quantity, `price` = :price, `avatar` = :avatar, `updated_at` = :updated_at WHERE `id` = :id");
+        $this->db->bind(":title", $data["title"]);
+        $this->db->bind(":description", $data["description"]);
+        $this->db->bind(":quantity", $data["quantity"]);
+        $this->db->bind(":price", $data["price"]);
+        $this->db->bind(":avatar", $data["avatar"]);
+        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+        $this->db->bind(":id", $data["id"]);
+
+        // check execution the query
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function change_status($data)
     {
         $this->db->query("UPDATE `products` SET `status` = :status WHERE `id` = :id");
@@ -92,5 +111,5 @@ class Product {
             return false;
         }
     }
-    
+
 }
