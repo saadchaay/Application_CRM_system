@@ -43,7 +43,7 @@ class Property {
 
     public function get_properties($id)
     {
-        $this->db->query("SELECT * FROM `property_product` WHERE `id_product` = :id");
+        $this->db->query("SELECT * FROM `property_product` INNER JOIN `properties` ON `property_product`.id_property = `properties`.id WHERE `id_product` = :id");
         $this->db->bind(":id", $id);
         if($this->db->resultSet()) {
             return $this->db->resultSet();

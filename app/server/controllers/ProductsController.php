@@ -121,12 +121,17 @@
         {
             if($_SERVER["REQUEST_METHOD"] == "GET") {
                 $product = $this->product->get_product($id);
+                // print_r($product);
+                $data = [
+                    'id' => $product->id_admin,
+                    'type' => $product->type_creator
+                ];
                 if($product){
                     http_response_code(201);
                     echo json_encode(array(
                         'status' => 'success',
                         'data' => $product,
-                        'categories' => $this->category->get_all_category($product),
+                        'categories' => $this->category->get_all_category($data),
                         'properties' => $this->property->get_properties($id),
                     ));
                 }else{
