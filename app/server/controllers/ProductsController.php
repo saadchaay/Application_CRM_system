@@ -60,7 +60,7 @@
                     'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
                     'price' => $dataJSON->price ? $dataJSON->price : 0.00,
                     'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
-                    'properties' => array_merge($dataJSON->color, $dataJSON->size),
+                    'properties' => array_merge($dataJSON->color ? $dataJSON->color:[], $dataJSON->size ? $dataJSON->size:[]),
                 ];
                 $errors = $this->validation($data, $this->validate_regex);
                 if($errors) {
