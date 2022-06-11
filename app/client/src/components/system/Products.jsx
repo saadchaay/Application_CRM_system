@@ -3,6 +3,7 @@ import axios from "../../api/axios";
 import { Dialog, Transition } from "@headlessui/react";
 import Switch from "@material-ui/core/Switch";
 import Drop from "../helpers/Drop";
+import { Link, Navigate } from "react-router-dom";
 
 const statusStyles = {
   active: "bg-green-100 text-green-800",
@@ -566,7 +567,7 @@ export default function Example() {
                 {products.map((item, index) => (
                   <tr key={item.id}>
                     <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                      ## {item.id}
+                      <Link to={`/products/${item.id}`} > ## {item.id} </Link> 
                       <dl className="font-normal lg:hidden">
                         <dt className="sr-only">Category</dt>
                         <dd className="mt-1 truncate text-gray-700">
