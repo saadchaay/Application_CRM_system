@@ -1,5 +1,6 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
+import { Delete } from "@material-ui/icons";
 import { Dialog, Transition } from "@headlessui/react";
 import Switch from "@material-ui/core/Switch";
 import Drop from "../helpers/Drop";
@@ -639,6 +640,12 @@ export default function Example() {
                           name="checkedB"
                           inputProps={{ "aria-label": "primary checkbox" }}
                         />
+                        <button
+                          onClick={(e) => handleDelete(e, item.id)}
+                          className="text-red-700 hover:text-red-900"
+                        >
+                          <Delete />
+                        </button>
                       </span>
                     </td>
                   </tr>
