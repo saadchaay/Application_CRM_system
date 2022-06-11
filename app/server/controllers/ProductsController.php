@@ -132,7 +132,11 @@
                         'status' => 'success',
                         'data' => $product,
                         'categories' => $this->category->get_all_category($data),
-                        'properties' => $this->property->get_properties($id),
+                        'properties' => array(
+                            'data' => $this->property->get_properties($id),
+                            'colors' => $this->property->get_colors(),
+                            'sizes' => $this->property->get_sizes(),
+                        )
                     ));
                 }else{
                     http_response_code(404);
