@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Navigate } from "react-router-dom";
-import { Cancel, SaveAlt, Edit } from "@material-ui/icons";
+import { Cancel, SaveAlt, Edit, Delete } from "@material-ui/icons";
 import axios from "../../../api/axios";
 import Drop from "../../helpers/Drop";
 
