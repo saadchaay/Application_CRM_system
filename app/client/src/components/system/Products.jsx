@@ -147,9 +147,8 @@ export default function Example() {
         setErrors({});
         console.log("Product added");
       } else {
-        
-        // setErrors(newErrors); 
-        console.log(res.data);
+        console.log("Error");
+        console.log(res);
       }
     }
   };
@@ -166,9 +165,7 @@ export default function Example() {
       }
       return product;
     });
-
     setProducts(newProducts);
-
     const id = newProducts[index].id;
     const res = await axios.put("ProductsController/changeStatus/" + id, {
       headers: {
