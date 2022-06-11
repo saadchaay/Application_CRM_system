@@ -152,20 +152,42 @@ export default function Example() {
       } else {
         console.log("Error");
         console.log(res);
-        if(res.data.title){
+        if (res.data.title) {
           setErrors({ ...errors, title: res.data.title });
         }
-        if(res.data.description){
-          setErrors({ ...errors, title:res.data.title, description: res.data.description });
-        } 
-        if(res.data.quantity){
-          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity });
+        if (res.data.description) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+          });
         }
-        if(res.data.price){
-          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price });
+        if (res.data.quantity) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+          });
         }
-        if(res.data.category){
-          setErrors({ ...errors, title:res.data.title, description: res.data.description, quantity: res.data.quantity, price: res.data.price, category: res.data.category });
+        if (res.data.price) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+            price: res.data.price,
+          });
+        }
+        if (res.data.category) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+            price: res.data.price,
+            category: res.data.category,
+          });
         }
       }
     }
@@ -174,15 +196,14 @@ export default function Example() {
   const handleDelete = (e, id) => {
     e.preventDefault();
     axios.delete("ProductsController/delete/" + id).then((res) => {
-        if (res.status === 201) {
-            console.log("Product deleted");
-            fetchProducts();
-        } else {
-            console.log("Error");
-            console.log(res);
-        }
-        }
-    );
+      if (res.status === 201) {
+        console.log("Product deleted");
+        fetchProducts();
+      } else {
+        console.log("Error");
+        console.log(res);
+      }
+    });
   };
 
   // handle change
@@ -298,7 +319,9 @@ export default function Example() {
                                     autoComplete="country-name"
                                     className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                   >
-                                    <option value="">Choose category ...</option>
+                                    <option value="">
+                                      Choose category ...
+                                    </option>
                                     {categories.map((category) => (
                                       <option
                                         key={category.id}
@@ -384,7 +407,18 @@ export default function Example() {
                                     htmlFor="country"
                                     className="block text-sm font-medium text-gray-700"
                                   >
-                                    Product image
+                                    <span className="flex justify-between">
+                                      <span>Product image</span>
+                                      {imgPrv ? (
+                                      <button
+                                        type="button"
+                                        onClick={() => setImgPrv(false)}
+                                        className="text-red-700 hover:text-red-900"
+                                      >
+                                        <Delete />
+                                      </button>
+                                      ) : null }
+                                    </span>
                                   </label>
                                   {imgPrv ? (
                                     <img
@@ -583,7 +617,7 @@ export default function Example() {
                 {products.map((item, index) => (
                   <tr key={item.id}>
                     <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                      <Link to={`/product/${item.id}`} > ## {item.id} </Link> 
+                      <Link to={`/product/${item.id}`}> ## {item.id} </Link>
                       <dl className="font-normal lg:hidden">
                         <dt className="sr-only">Category</dt>
                         <dd className="mt-1 truncate text-gray-700">
