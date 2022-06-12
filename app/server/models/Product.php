@@ -71,12 +71,14 @@ class Product {
 
     public function update_product($data)
     {
+        $product = $this->get_product($data['id']);
+
         $this->db->query("UPDATE `products` SET `title` = :title, `description` = :description, `quantity` = :quantity, `price` = :price, `avatar` = :avatar, `updated_at` = :updated_at WHERE `id` = :id");
-        $this->db->bind(":title", $data["title"]);
-        $this->db->bind(":description", $data["description"]);
-        $this->db->bind(":quantity", $data["quantity"]);
-        $this->db->bind(":price", $data["price"]);
-        $this->db->bind(":avatar", $data["avatar"]);
+        $this->db->bind(":title", $data["title"] ? $data["title"] : $product->title);
+        $this->db->bind(":description", $data["description"] ? $data["description"] : $product->description);
+        $this->db->bind(":quantity", $data["quantity"] ? $data["quantity"] : $product->quantity);
+        $this->db->bind(":price", $data["price"] ? $data["price"] : $product->price);
+        $this->db->bind(":avatar", $data["avatar"] ? $data["avatar"] : $product->avatar);
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
         $this->db->bind(":id", $data["id"]);
 
