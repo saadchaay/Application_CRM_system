@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import { CogIcon, KeyIcon, UserCircleIcon,} from "@heroicons/react/outline";
-import { useEffect, useState } from "react";
   
   const subNavigation = [
     { name: "Profile", href: "/profile", icon: UserCircleIcon, current: false },

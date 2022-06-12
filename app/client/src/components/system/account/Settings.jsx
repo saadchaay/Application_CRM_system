@@ -43,9 +43,12 @@ export default function Example() {
     const formData = new FormData();
     formData.append("file", imgPrv);
     formData.append("upload_preset", "s7tgef8p");
-    const response = await Axios.post("https://api.cloudinary.com/v1_1/maggie-7223/image/upload", formData);
+    const response = await Axios.post(
+      "https://api.cloudinary.com/v1_1/maggie-7223/image/upload",
+      formData
+    );
     console.log(response);
-    if(response.status === 200){ 
+    if (response.status === 200) {
       const data = {
         name: name,
         username: username,
@@ -64,7 +67,7 @@ export default function Example() {
           },
         }
       );
-      if(res.status === 201){
+      if (res.status === 201) {
         localStorage.setItem("auth", JSON.stringify(res.data));
         setName("");
         setUsername("");
@@ -84,7 +87,6 @@ export default function Example() {
       }
     }
   };
-
 
   useEffect(() => {
     nameRef.current.focus();
@@ -241,7 +243,10 @@ export default function Example() {
                           <span>Change Profile Picture</span>
                           <span
                             className="text-sm hover:cursor-pointer hover:text-black hover:underline"
-                            onClick={() => [setDisplayUpload(false), setImgPrv(null)]}
+                            onClick={() => [
+                              setDisplayUpload(false),
+                              setImgPrv(null),
+                            ]}
                           >
                             Remove
                           </span>
@@ -250,11 +255,19 @@ export default function Example() {
                     </label>
                     {!displayUpload ? (
                       <div className="flex justify-start items-center">
-                        <Image
+                        {auth.avatar ? (
+                          <Image
                             className="h-20 w-20 rounded-full"
                             cloudName="maggie-7223"
                             public_id={auth.avatar}
-                        />
+                          />
+                        ) : (
+                          <img
+                            className="h-16 w-16 rounded-full"
+                            src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
+                            alt=""
+                          />
+                        )}
                         <button
                           type="submit"
                           onClick={() => setDisplayUpload(true)}
@@ -302,7 +315,11 @@ export default function Example() {
                         </div>
                       </div>
                     ) : (
-                      <img src={imgPrv} alt="picture_image" className="h-24 w-1/6" />
+                      <img
+                        src={imgPrv}
+                        alt="picture_image"
+                        className="h-24 w-1/6"
+                      />
                     )}
                   </div>
                 </div>
