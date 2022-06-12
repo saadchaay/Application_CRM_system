@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "../../../api/axios";
 import Axios from "axios";
-import { images } from "cloudinary-react";
+import { Image } from "cloudinary-react";
 
 export default function Example() {
   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -17,7 +17,6 @@ export default function Example() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [avatar, setAvatar] = useState("");
 
   const [errName, setErrName] = useState("");
   const [errUsername, setErrUsername] = useState("");
@@ -61,6 +60,7 @@ export default function Example() {
         setEmail("");
         setPhone("");
         setAddress("");
+        console.log(res.data);
       } else {
         console.log(res.data.errors.name);
         setErrName(res.data.errors.name);
@@ -79,7 +79,6 @@ export default function Example() {
     let file = e.target.files[0];
     reader.onloadend = () => {
       setImgPrv(reader.result);
-      setAvatar(file.name);
     };
     reader.readAsDataURL(file);
   };
@@ -248,6 +247,10 @@ export default function Example() {
                     </label>
                     {!displayUpload ? (
                       <div className="flex justify-start items-center">
+                        <Image
+                            cloudName="maggie-7223"
+                            public_id={auth.avatar}
+                        />
                         <img
                           className="h-16 w-16 rounded-full"
                           src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
