@@ -173,12 +173,14 @@
                         $product = $this->product->update_product($data);
                         if($product){
                             $success =false ;
+                            $this->property->delete_properties($id);
                             if(!empty($data["properties"])){
-                                $this->property->delete_properties($id);
                                 foreach($data["properties"] as $property){
                                     $this->property->create_property($id, $property->id);
                                     $success = true ;
                                 }
+                            } else {
+                                $success = true ;
                             }
                             if($success){
                                 http_response_code(201);

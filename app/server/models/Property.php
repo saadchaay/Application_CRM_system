@@ -42,7 +42,7 @@ class Property {
     }
 
     public function delete_properties($product)
-    {
+    {   
         $this->db->query("DELETE FROM `property_product` WHERE `id_product` = :product");
         $this->db->bind(":product", $product);
         if($this->db->execute()) {
