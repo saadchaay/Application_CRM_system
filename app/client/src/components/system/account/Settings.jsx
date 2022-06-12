@@ -29,47 +29,47 @@ export default function Example() {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    console.log(avatar);
     const id = auth.id;
-    const data = {
-      name: name,
-      username: username,
-      email: email,
-      phone: phone,
-      address: address,
-      avatar: avatar,
-      role: auth.role,
-    };
-    const res = await axios.put(
-      "ProfileController/update/" + id,
-      JSON.stringify(data),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const formData = new FormData();
+    formData.append("file", imgPrv);
+    formData.append("upload_preset", "s7tgef8p");
+    const response = await Axios.post("https://api.cloudinary.com/v1_1/maggie-7223/image/upload", formData);
+    if(response.status === 200){ 
+      const data = {
+        name: name,
+        username: username,
+        email: email,
+        phone: phone,
+        address: address,
+        avatar: response.public_id,
+        role: auth.role,
+      };
+      const res = await axios.put(
+        "ProfileController/update/" + id,
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if(avatar && res.status === 201){
+        console.log(response.data);
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        console.log(res);
+        setName("");
+        setUsername("");
+        setEmail("");
+        setPhone("");
+        setAddress("");
+      } else {
+        console.log(res.data.errors.name);
+        setErrName(res.data.errors.name);
+        setErrUsername(res.data.errors.username);
+        setErrEmail(res.data.errors.email);
+        setErrPhone(res.data.errors.phone);
+        setErrAddress(res.data.errors.address);
       }
-    );
-
-    if(avatar && res.status === 201){
-      const formData = new FormData();
-      formData.append("file", imgPrv);
-      formData.append("upload_preset", "s7tgef8p");
-      const response = await Axios.post("https://api.cloudinary.com/v1_1/maggie-7223/image/upload", formData);
-      console.log(response.data);
-      localStorage.setItem("auth", JSON.stringify(res.data));
-      console.log(res);
-      setName("");
-      setUsername("");
-      setEmail("");
-      setPhone("");
-      setAddress("");
-    } else {
-      console.log(res.data.errors.name);
-      setErrName(res.data.errors.name);
-      setErrUsername(res.data.errors.username);
-      setErrEmail(res.data.errors.email);
-      setErrPhone(res.data.errors.phone);
-      setErrAddress(res.data.errors.address);
     }
   };
 
