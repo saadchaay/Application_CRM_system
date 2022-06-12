@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "../../../api/axios";
 import Axios from "axios";
+import { images } from "cloudinary-react";
 
 export default function Example() {
   const auth = JSON.parse(localStorage.getItem("auth"));
