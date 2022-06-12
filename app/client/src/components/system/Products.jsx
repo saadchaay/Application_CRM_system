@@ -5,6 +5,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import Switch from "@material-ui/core/Switch";
 import Drop from "../helpers/Drop";
 import { Link } from "react-router-dom";
+import Axios from "axios";
+import { Image } from "cloudinary-react";
 
 const statusStyles = {
   active: "bg-green-100 text-green-800",
@@ -114,80 +116,91 @@ export default function Example() {
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      const product = {
-        creator: auth.id,
-        type: auth.role === "admin" ? "admin" : "user",
-        avatar: avatar,
-        title: title,
-        description: description,
-        quantity: quantity,
-        price: price,
-        category: category,
-        color: colorsSelected,
-        size: sizesSelected,
-      };
-      const res = await axios.post(
-        "ProductsController/store",
-        JSON.stringify(product),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const formData = new FormData();
+      formData.append("file", imgPrv);
+      formData.append("upload_preset", "product");
+      const response = await Axios.post(
+        "https://api.cloudinary.com/v1_1/maggie-7223/image/upload",
+        formData
       );
-      if (res.status === 201) {
-        fetchProducts();
-        setOpen(false);
-        setTitle("");
-        setDescription("");
-        setQuantity("");
-        setPrice("");
-        setCategory("");
-        setAvatar("");
-        setColorsSelected(null);
-        setSizesSelected(null);
-        setImgPrv(null);
-        setErrors({});
-        console.log("Product added");
-      } else {
-        console.log("Error");
-        console.log(res);
-        if (res.data.title) {
-          setErrors({ ...errors, title: res.data.title });
-        }
-        if (res.data.description) {
-          setErrors({
-            ...errors,
-            title: res.data.title,
-            description: res.data.description,
-          });
-        }
-        if (res.data.quantity) {
-          setErrors({
-            ...errors,
-            title: res.data.title,
-            description: res.data.description,
-            quantity: res.data.quantity,
-          });
-        }
-        if (res.data.price) {
-          setErrors({
-            ...errors,
-            title: res.data.title,
-            description: res.data.description,
-            quantity: res.data.quantity,
-            price: res.data.price,
-          });
-        }
-        if (res.data.category) {
-          setErrors({
-            ...errors,
-            title: res.data.title,
-            description: res.data.description,
-            quantity: res.data.quantity,
-            price: res.data.price,
-            category: res.data.category,
-          });
+      console.log(response);
+
+      if (response.status === 200) {
+        const product = {
+          creator: auth.id,
+          type: auth.role === "admin" ? "admin" : "user",
+          avatar: response.data.public_id,
+          title: title,
+          description: description,
+          quantity: quantity,
+          price: price,
+          category: category,
+          color: colorsSelected,
+          size: sizesSelected,
+        };
+        const res = await axios.post(
+          "ProductsController/store",
+          JSON.stringify(product),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (res.status === 201) {
+          fetchProducts();
+          setOpen(false);
+          setTitle("");
+          setDescription("");
+          setQuantity("");
+          setPrice("");
+          setCategory("");
+          setAvatar("");
+          setColorsSelected(null);
+          setSizesSelected(null);
+          setImgPrv(null);
+          setErrors({});
+          console.log("Product added");
+        } else {
+          console.log("Error");
+          console.log(res);
+          if (res.data.title) {
+            setErrors({ ...errors, title: res.data.title });
+          }
+          if (res.data.description) {
+            setErrors({
+              ...errors,
+              title: res.data.title,
+              description: res.data.description,
+            });
+          }
+          if (res.data.quantity) {
+            setErrors({
+              ...errors,
+              title: res.data.title,
+              description: res.data.description,
+              quantity: res.data.quantity,
+            });
+          }
+          if (res.data.price) {
+            setErrors({
+              ...errors,
+              title: res.data.title,
+              description: res.data.description,
+              quantity: res.data.quantity,
+              price: res.data.price,
+            });
+          }
+          if (res.data.category) {
+            setErrors({
+              ...errors,
+              title: res.data.title,
+              description: res.data.description,
+              quantity: res.data.quantity,
+              price: res.data.price,
+              category: res.data.category,
+            });
+          }
         }
       }
     }
@@ -410,14 +423,14 @@ export default function Example() {
                                     <span className="flex justify-between">
                                       <span>Product image</span>
                                       {imgPrv ? (
-                                      <button
-                                        type="button"
-                                        onClick={() => setImgPrv(false)}
-                                        className="text-red-700 hover:text-red-900"
-                                      >
-                                        <Delete />
-                                      </button>
-                                      ) : null }
+                                        <button
+                                          type="button"
+                                          onClick={() => setImgPrv(false)}
+                                          className="text-red-700 hover:text-red-900"
+                                        >
+                                          <Delete />
+                                        </button>
+                                      ) : null}
                                     </span>
                                   </label>
                                   {imgPrv ? (
@@ -645,7 +658,21 @@ export default function Example() {
                         : ""}
                     </td>
                     <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      {item.title}
+                      <div className="flex justify-start items-center">
+                      { item.avatar ? (
+                        <Image
+                          className="h-8 w-8 rounded-full"
+                          cloudName="maggie-7223"
+                          public_id={item.avatar}
+                        /> ) : (
+                          <img 
+                            className="h-8 w-8 rounded-full"
+                            src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
+                            alt="" 
+                          /> )
+                        }
+                        <span className="ml-1">{item.title}</span>
+                      </div>
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-500">
                       {item.description}
