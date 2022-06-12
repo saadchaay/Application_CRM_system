@@ -43,11 +43,11 @@ import axios from "../../../api/axios";
         setErrOld(res.data.errors.old_password);
         setErrNew(res.data.errors.password);
         setErrConfirmPwd(res.data.errors.confirm_password);
-        // if(res.data.errors){
-        //   setError(res.data.errors);
-        // } else {
-        //   setError(res.data);
-        // }
+        if(res.data.errors){
+          setError(res.data.errors);
+        } else {
+          setError(res.data);
+        }
       }
     };
 
