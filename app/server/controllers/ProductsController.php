@@ -153,14 +153,14 @@
                 if($product){
                     $data = [
                         'id' => $id,
-                        'id_creator' => $dataJSON->creator ? $dataJSON->creator : "",
-                        'type' => $dataJSON->type ? $dataJSON->type : "",
-                        'category' => $dataJSON->category ? (int)($dataJSON->category) : null,
-                        'title' => $dataJSON->title ? $dataJSON->title : "",
-                        'description' => $dataJSON->description ? $dataJSON->description : "",
-                        'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
-                        'price' => $dataJSON->price ? $dataJSON->price : 0.00,
-                        'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
+                        'id_creator' => $dataJSON->creator ,
+                        'type' => $dataJSON->type,
+                        'category' => (int)$dataJSON->category,
+                        'title' => $dataJSON->title,
+                        'description' => $dataJSON->description,
+                        'quantity' => $dataJSON->quantity,
+                        'price' => $dataJSON->price,
+                        'avatar' => $dataJSON->avatar,
                         'properties' => array_merge($dataJSON->color ? $dataJSON->color:[], $dataJSON->size ? $dataJSON->size:[]),
                     ];
                     $errors = $this->validation($data, $this->validate_regex);
@@ -187,6 +187,9 @@
                                     'message' => 'Product updated',
                                     'data' => $product,
                                 ));
+                            } else {
+                                http_response_code(404);
+                                echo json_encode(array('message' => 'Properties not updated'));
                             }
                         }else{
                             http_response_code(404);
