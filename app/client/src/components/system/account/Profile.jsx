@@ -1,3 +1,4 @@
+import { Image } from "cloudinary-react";
 const statusStyles = {
   active: "bg-green-100 text-green-800",
   inactive: "bg-red-100 text-red-800",
@@ -7,13 +8,11 @@ const statusStyles = {
   failed: "bg-gray-100 text-gray-800",
 };
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export default function Example() {
-  const admin = JSON.parse(localStorage.getItem('auth'));
-
+  const admin = JSON.parse(localStorage.getItem("auth"));
 
   return (
     <>
@@ -23,17 +22,17 @@ export default function Example() {
         {/* Page header */}
         <div className="max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-start md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex justify-start items-center space-x-5">
-              <div className="relative">
-                <img
-                  className="h-16 w-16 rounded-full"
-                  src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
-                  alt=""
-                />
-                <span
-                  className="absolute inset-0 shadow-inner rounded-full"
-                  aria-hidden="true"
-                />
-              </div>
+            <div className="relative">
+              <Image
+                className="h-16 w-20 rounded-lg"
+                cloudName="maggie-7223"
+                public_id={admin.avatar}
+              />
+              <span
+                className="absolute inset-0 shadow-inner rounded-full"
+                aria-hidden="true"
+              />
+            </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
                 {" "}
@@ -41,7 +40,7 @@ export default function Example() {
               </h1>
               <p className="text-sm font-medium text-gray-500">
                 Here <span> </span> From on{" "}
-                <time dateTime="2020-08-25">{" "}{admin.created_at}</time>
+                <time dateTime="2020-08-25"> {admin.created_at}</time>
               </p>
             </div>
           </div>

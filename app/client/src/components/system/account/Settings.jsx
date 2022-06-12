@@ -26,6 +26,17 @@ export default function Example() {
   const [displayUpload, setDisplayUpload] = useState(false);
   const [imgPrv, setImgPrv] = useState("");
 
+  const handleImage = (e) => {
+    e.preventDefault();
+    // console.log(e.target.files[0]);
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setImgPrv(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     const id = auth.id;
@@ -61,6 +72,8 @@ export default function Example() {
         setPhone("");
         setAddress("");
         console.log(res.data);
+        setImgPrv("");
+        setDisplayUpload(false);
       } else {
         console.log(res.data.errors.name);
         setErrName(res.data.errors.name);
@@ -72,16 +85,6 @@ export default function Example() {
     }
   };
 
-  const handleImage = (e) => {
-    e.preventDefault();
-    // console.log(e.target.files[0]);
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      setImgPrv(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
 
   useEffect(() => {
     nameRef.current.focus();
@@ -248,13 +251,9 @@ export default function Example() {
                     {!displayUpload ? (
                       <div className="flex justify-start items-center">
                         <Image
+                            className="h-24 w-24 rounded-full"
                             cloudName="maggie-7223"
                             public_id={auth.avatar}
-                        />
-                        <img
-                          className="h-16 w-16 rounded-full"
-                          src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
-                          alt=""
                         />
                         <button
                           type="submit"
