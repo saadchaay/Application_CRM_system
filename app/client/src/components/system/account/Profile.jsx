@@ -23,11 +23,19 @@ export default function Example() {
         <div className="max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-start md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex justify-start items-center space-x-5">
             <div className="relative">
-              <Image
-                className="h-20 w-20 rounded-full"
-                cloudName="maggie-7223"
-                public_id={admin.avatar}
-              />
+              {admin.avatar ? (
+                <Image
+                  className="h-20 w-20 rounded-full"
+                  cloudName="maggie-7223"
+                  public_id={admin.avatar}
+                />
+              ) : (
+                <img
+                  className="h-16 w-16 rounded-full"
+                  src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
+                  alt=""
+                />
+              )}
               <span
                 className="absolute inset-0 shadow-inner rounded-full"
                 aria-hidden="true"
