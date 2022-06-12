@@ -5,7 +5,7 @@ export default function Orders() {
       <>
         <main className="flex justify-center pb-8">
             <h1 className="text-xl font-bold">
-              This is orders here
+                Orders
             </h1>
         </main>
       </>
