@@ -207,11 +207,18 @@ export default function Example(props) {
                 <Menu as="div" className="ml-3 relative">
                   <div>
                     <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
-                      <Image
-                        className="h-8 w-8 rounded-full"
-                        cloudName="maggie-7223"
-                        public_id={auth.avatar}
-                      />
+                      { auth.avatar ? (
+                        <Image
+                          className="h-8 w-8 rounded-full"
+                          cloudName="maggie-7223"
+                          public_id={auth.avatar}
+                        /> ) : (
+                          <img 
+                            className="h-8 w-8 rounded-full"
+                            src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
+                            alt="" 
+                          /> )
+                        }
                       <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
                         <span className="sr-only">Open user menu for </span>
                         {auth.name}
