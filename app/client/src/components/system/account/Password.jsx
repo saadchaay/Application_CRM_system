@@ -18,6 +18,7 @@ import axios from "../../../api/axios";
       e.preventDefault();
       const id = auth.id;
       const data = {
+        type: auth.id_admin ? 'user' : 'admin',
         old_password: oldPwd,
         new_password: newPwd,
         confirm_password: confirmPwd
