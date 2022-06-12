@@ -667,7 +667,7 @@ export default function Example() {
                         /> ) : (
                           <img 
                             className="h-8 w-8 rounded-full"
-                            src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
+                            src="http://cdn.onlinewebfonts.com/svg/img_231353.png"
                             alt="" 
                           /> )
                         }
