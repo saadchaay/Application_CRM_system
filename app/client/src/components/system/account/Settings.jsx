@@ -34,6 +34,7 @@ export default function Example() {
     formData.append("file", imgPrv);
     formData.append("upload_preset", "s7tgef8p");
     const response = await Axios.post("https://api.cloudinary.com/v1_1/maggie-7223/image/upload", formData);
+    console.log(response);
     if(response.status === 200){ 
       const data = {
         name: name,
@@ -41,7 +42,7 @@ export default function Example() {
         email: email,
         phone: phone,
         address: address,
-        avatar: response.public_id,
+        avatar: response.data.public_id,
         role: auth.role,
       };
       const res = await axios.put(
@@ -53,10 +54,8 @@ export default function Example() {
           },
         }
       );
-      if(avatar && res.status === 201){
-        console.log(response.data);
+      if(res.status === 201){
         localStorage.setItem("auth", JSON.stringify(res.data));
-        console.log(res);
         setName("");
         setUsername("");
         setEmail("");
