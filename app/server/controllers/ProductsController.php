@@ -188,7 +188,7 @@
                                     'data' => $product,
                                 ));
                             } else {
-                                http_response_code(404);
+                                http_response_code(200);
                                 echo json_encode(array('message' => 'Properties not updated'));
                             }
                         }else{
