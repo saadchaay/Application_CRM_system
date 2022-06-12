@@ -251,7 +251,7 @@ export default function Example() {
                     {!displayUpload ? (
                       <div className="flex justify-start items-center">
                         <Image
-                            className="h-24 w-24 rounded-full"
+                            className="h-20 w-20 rounded-full"
                             cloudName="maggie-7223"
                             public_id={auth.avatar}
                         />

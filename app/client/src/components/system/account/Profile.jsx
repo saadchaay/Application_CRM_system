@@ -24,7 +24,7 @@ export default function Example() {
           <div className="flex justify-start items-center space-x-5">
             <div className="relative">
               <Image
-                className="h-16 w-20 rounded-lg"
+                className="h-20 w-20 rounded-full"
                 cloudName="maggie-7223"
                 public_id={admin.avatar}
               />
