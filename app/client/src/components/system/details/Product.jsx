@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Cancel, SaveAlt, Edit, Delete } from "@material-ui/icons";
 import axios from "../../../api/axios";
 import Drop from "../../helpers/Drop";
+import Axios from "axios";
 import { Image } from "cloudinary-react";
 
 const statusStyles = {
@@ -99,83 +100,90 @@ export default function Product() {
 
   const handleUpdate = async (e, id) => {
     e.preventDefault();
-    const product = {
-      creator: auth.id,
-      type: auth.role === "admin" ? "admin" : "user",
-      avatar: avatar,
-      title: title,
-      description: description,
-      quantity: quantity,
-      price: price,
-      category: category,
-      color: colorsSelected,
-      size: sizesSelected,
-    };
-    console.log(id);
-    const res = await axios.put(
-      "ProductsController/update/" + id,
-      JSON.stringify(product),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (res.status === 201) {
-      setTitle("");
-      setDescription("");
-      setQuantity("");
-      setPrice("");
-      setCategory("");
-      setAvatar("");
-      setColorsSelected({});
-      setSizesSelected(null);
-      setImgPrv(null);
-      setErrors({});
-      fetchProduct(id);
-      setOpenInputs(false);
-      console.log("Product updated");
-    } else {
-      console.log("Error");
-      console.log(res);
-      if (res.data.title) {
-        setErrors({ ...errors, title: res.data.title });
-      }
-      if (res.data.description) {
-        setErrors({
-          ...errors,
-          title: res.data.title,
-          description: res.data.description,
-        });
-      }
-      if (res.data.quantity) {
-        setErrors({
-          ...errors,
-          title: res.data.title,
-          description: res.data.description,
-          quantity: res.data.quantity,
-        });
-      }
-      if (res.data.price) {
-        setErrors({
-          ...errors,
-          title: res.data.title,
-          description: res.data.description,
-          quantity: res.data.quantity,
-          price: res.data.price,
-        });
-      }
-      if (res.data.category) {
-        setErrors({
-          ...errors,
-          title: res.data.title,
-          description: res.data.description,
-          quantity: res.data.quantity,
-          price: res.data.price,
-          category: res.data.category,
-        });
+    const formData = new FormData();
+    formData.append("file", imgPrv);
+    formData.append("upload_preset", "product");
+    const response = await Axios.post("https://api.cloudinary.com/v1_1/maggie-7223/image/upload", formData);
+    if(response.status === 200) {
+      const product = {
+        creator: auth.id,
+        type: auth.role === "admin" ? "admin" : "user",
+        avatar: response.data.public_id,
+        title: title,
+        description: description,
+        quantity: quantity,
+        price: price,
+        category: category,
+        color: colorsSelected,
+        size: sizesSelected,
+      };
+      console.log(id);
+      const res = await axios.put(
+        "ProductsController/update/" + id,
+        JSON.stringify(product),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.status === 201) {
+        setTitle("");
+        setDescription("");
+        setQuantity("");
+        setPrice("");
+        setCategory("");
+        setAvatar("");
+        setColorsSelected({});
+        setSizesSelected(null);
+        setImgPrv(null);
+        setErrors({});
+        fetchProduct(id);
+        setOpenInputs(false);
+        console.log("Product updated");
+      } else {
+        console.log("Error");
+        console.log(res);
+        if (res.data.title) {
+          setErrors({ ...errors, title: res.data.title });
+        }
+        if (res.data.description) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+          });
+        }
+        if (res.data.quantity) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+          });
+        }
+        if (res.data.price) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+            price: res.data.price,
+          });
+        }
+        if (res.data.category) {
+          setErrors({
+            ...errors,
+            title: res.data.title,
+            description: res.data.description,
+            quantity: res.data.quantity,
+            price: res.data.price,
+            category: res.data.category,
+          });
+        }
       }
     }
+
   };
 
   useEffect(() => {
