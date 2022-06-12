@@ -70,6 +70,7 @@
 
                 $data = [
                     'id' => $id,
+                    'type' => $dataJSON->type ? $dataJSON->type : "",
                     'old_password' => $dataJSON->old_password ? $dataJSON->old_password : "",
                     'password' => $dataJSON->new_password ? $dataJSON->new_password : "",
                     'confirm_password' => $dataJSON->confirm_password ? $dataJSON->confirm_password : "",
@@ -87,19 +88,35 @@
                         if($errors){
                             echo json_encode(array('errors' => $errors));
                         } else {
-                            $errors = $this->admin->get_admin($id);
-                            if(!$errors){
-                                echo json_encode(array('errors' => "Admin not found"));
-                            }else{
-                                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                                $res = $this->admin->update_password($data, $id);
-                                if(!$res){
-                                    echo json_encode(array('errors' => "The old password is incorrect"));
-                                } else {
-                                    http_response_code(201);
-                                    echo json_encode($res);
+                            if($data['type'] == "admin"){
+                                $errors = $this->admin->get_admin($id);
+                                if(!$errors){
+                                    echo json_encode(array('errors' => "Admin not found"));
+                                }else{
+                                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                                    $res = $this->admin->update_password($data, $id);
+                                    if(!$res){
+                                        echo json_encode(array('errors' => "The old password is incorrect"));
+                                    } else {
+                                        http_response_code(201);
+                                        echo json_encode($res);
+                                    }
                                 }
-                            }
+                            } else {
+                                $errors = $this->user->get_user($id);
+                                if(!$errors){
+                                    echo json_encode(array('errors' => "User not found"));
+                                }else{
+                                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                                    $res = $this->user->update_password($data, $id);
+                                    if(!$res){
+                                        echo json_encode(array('errors' => "The old password is incorrect"));
+                                    } else {
+                                        http_response_code(201);
+                                        echo json_encode($res);
+                                    }
+                                }
+                            } 
                         }
                     }
                 }

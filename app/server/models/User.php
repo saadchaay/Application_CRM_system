@@ -91,6 +91,20 @@ class User {
         }
     }
 
+    public function update_password($data, $id)
+    {
+        $this->db->query("UPDATE `users` SET `password` = :password WHERE `id` = :id");
+        $this->db->bind(":password", $data["password"]);
+        $this->db->bind(":id", $id);
+        $this->db->execute();
+        $res = $this->get_user($id);
+        if ($res) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
+
     public function delete_user($id)
     {
         $this->db->query("DELETE FROM `users` WHERE `id` = :id");
