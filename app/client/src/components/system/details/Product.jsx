@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Cancel, SaveAlt, Edit, Delete } from "@material-ui/icons";
 import axios from "../../../api/axios";
 import Drop from "../../helpers/Drop";
+import { Image } from "cloudinary-react";
 
 const statusStyles = {
   active: "bg-green-100 text-green-800",
@@ -224,7 +225,7 @@ export default function Product() {
                           <SaveAlt />
                         </button>
                         <button
-                          onClick={(e) => handleCancel(e)}
+                          onClick={(e) => [handleCancel(e), setImgPrv(false)]}
                           className="text-red-700 hover:text-red-900"
                         >
                           <Cancel />
@@ -268,7 +269,7 @@ export default function Product() {
                           autoComplete="country-name"
                           className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         >
-                          <option value={product.id_category}>
+                          <option key={product.id} value={product.id_category}>
                             {
                               categories.find(
                                 (category) =>
@@ -276,25 +277,31 @@ export default function Product() {
                               ).title
                             }
                           </option>
-                          {categories.map((category) =>
-                            categories.find(
-                              (category) => category.id === product.id_category
-                            ).title !== category.title ? (
-                              <option value={category.id}>
-                                {category.title}
-                              </option>
-                            ) : null
-                          )}
+                          {categories
+                            ? categories.map((category) =>
+                                categories.find(
+                                  (category) =>
+                                    category.id === product.id_category
+                                ).title !== category.title ? (
+                                  <option key={category.id} value={category.id}>
+                                    {category.title}
+                                  </option>
+                                ) : null
+                              )
+                            : "no categories"}
                         </select>
                       ) : (
                         <dd className="mt-1 text-sm text-gray-900">
-                          {categories.map((category) =>
-                            categories.find(
-                              (category) => category.id === product.id_category
-                            ).title === category.title ? (
-                              <>{category.title}</>
-                            ) : null
-                          )}
+                          {categories
+                            ? categories.map((category) =>
+                                categories.find(
+                                  (category) =>
+                                    category.id === product.id_category
+                                ).title === category.title ? (
+                                  <>{category.title}</>
+                                ) : null
+                              )
+                            : "no categories"}
                         </dd>
                       )}
                     </div>
@@ -327,7 +334,10 @@ export default function Product() {
                             ? "No sizes"
                             : properties.map((property) =>
                                 property.property === "size" ? (
-                                  <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
+                                  <span
+                                    key={property.id}
+                                    className="bg-gray-100 px-2 py-1 mx-1 rounded-md"
+                                  >
                                     {" "}
                                     {property.value}{" "}
                                   </span>
@@ -353,7 +363,10 @@ export default function Product() {
                             ? "No colors"
                             : properties.map((property) =>
                                 property.property === "color" ? (
-                                  <span className="bg-gray-100 px-2 py-1 mx-1 rounded-md">
+                                  <span
+                                    key={property.id}
+                                    className="bg-gray-100 px-2 py-1 mx-1 rounded-md"
+                                  >
                                     {" "}
                                     {property.value}{" "}
                                   </span>
@@ -451,18 +464,14 @@ export default function Product() {
                       </dt>
                       {!openInputs ? (
                         <dd className="mt-1 text-sm text-gray-900">
-                          <img
-                            src={product.image}
-                            alt="product"
-                            className="w-full"
+                          <Image
+                            className="h-20 w-20 rounded-lg"
+                            cloudName="maggie-7223"
+                            public_id={product.avatar}
                           />
                         </dd>
                       ) : imgPrv ? (
-                        <img
-                          src={imgPrv}
-                          alt="preview"
-                          className="w-max-90 h-40 object-cover"
-                        />
+                        <img src={imgPrv} alt="product" className="w-40 h-30" />
                       ) : (
                         <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                           <div className="space-y-1 text-center">

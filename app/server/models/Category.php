@@ -12,7 +12,7 @@ class Category {
     public function get_all_category($data)
     {
         ($data['type'] === 'admin') ?  $this->db->query("SELECT * FROM `categories` WHERE `id_admin` = :id ORDER BY id DESC")
-            : $this->db->query("SELECT * FROM `categories` WHERE `id_user` = :id ORDER BY id DESC");
+            : $this->db->query("SELECT * FROM `categories` WHERE `id_admin` = :id ORDER BY id DESC");
         
         $this->db->bind(':id', $data['id']);
         
