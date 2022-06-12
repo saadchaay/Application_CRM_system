@@ -73,13 +73,14 @@ class User {
     public function update($data, $id)
     {
         $user = $this->get_user($id);
-        $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `updated_at` = :updated_at WHERE `id` = :id");
+        $this->db->query("UPDATE `users` SET `name` = :name, `username` = :username, `email` = :email, `phone` = :phone, `address` = :address, `avatar` = :avatar, `updated_at` = :updated_at WHERE `id` = :id");
 
         $this->db->bind(":name", ($data["name"]) ? $data["name"] : $user->name);
         $this->db->bind(":username", ($data["username"]) ? $data["username"] : $user->username);
         $this->db->bind(":email", ($data["email"]) ? $data["email"] : $user->email);
         $this->db->bind(":phone", ($data["phone"]) ? $data["phone"] : $user->phone);
         $this->db->bind(":address", ($data["address"]) ? $data["address"] : $user->address);
+        $this->db->bind(":avatar", ($data["avatar"]) ? $data["avatar"] : $user->avatar);
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
         $this->db->bind(":id", $id);
         $this->db->execute();
