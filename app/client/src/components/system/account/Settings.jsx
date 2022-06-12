@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "../../../api/axios";
+import Axios from "axios";
 
 export default function Example() {
   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -47,6 +48,12 @@ export default function Example() {
         },
       }
     );
+
+    if(avatar !== ""){
+      const formData = new FormData();
+      formData.append("avatar", imgPrv);
+    }
+
     if (res.status === 201) {
       localStorage.setItem("auth", JSON.stringify(res.data));
       console.log(res);
