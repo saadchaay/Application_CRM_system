@@ -93,13 +93,23 @@ class User {
 
     public function update_password($data, $id)
     {
-        $this->db->query("UPDATE `users` SET `password` = :password WHERE `id` = :id");
-        $this->db->bind(":password", $data["password"]);
-        $this->db->bind(":id", $id);
-        $this->db->execute();
-        $res = $this->get_user($id);
-        if ($res) {
-            return $res;
+        $user = $this->get_user($id);
+        if($user) {
+            if(password_verify($data["old_password"], $user->password)) {
+                $this->db->query("UPDATE `users` SET `password` = :password, `updated_at` = :updated_at WHERE `id` = :id");
+                $this->db->bind(":password", $data["password"]);
+                $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+                $this->db->bind(":id", $id);
+                $this->db->execute();
+                $res = $this->get_user($id);
+                if ($res) {
+                    return $res;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

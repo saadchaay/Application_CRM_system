@@ -135,9 +135,9 @@ class Admin {
 
     public function update_password($data, $id)
     {
-        $user = $this->get_admin($id);
-        if($user) {
-            if(password_verify($data["old_password"], $user->password)) {
+        $admin = $this->get_admin($id);
+        if($admin) {
+            if(password_verify($data["old_password"], $admin->password)) {
                 $this->db->query("UPDATE `admins` SET `password` = :password, `updated_at` = :updated_at WHERE `id` = :id");
                 $this->db->bind(":password", $data["password"]);
                 $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
@@ -155,7 +155,6 @@ class Admin {
         } else {
             return false;
         }
-        
     }
 
     public function delete($id)
