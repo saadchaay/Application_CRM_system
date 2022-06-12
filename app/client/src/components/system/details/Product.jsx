@@ -111,7 +111,6 @@ export default function Product() {
       color: colorsSelected,
       size: sizesSelected,
     };
-    console.log(product);
     console.log(id);
     const res = await axios.put(
       "ProductsController/update/" + id,
