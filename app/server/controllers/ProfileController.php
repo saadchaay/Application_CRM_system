@@ -38,6 +38,7 @@
                     'email' => $dataJSON->email ? $dataJSON->email : "",
                     'phone' => $dataJSON->phone ? $dataJSON->phone : "",
                     'address' => $dataJSON->address ? $dataJSON->address : "",
+                    'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
                 ];
                 $role = $dataJSON->role ? $dataJSON->role : "";
 
