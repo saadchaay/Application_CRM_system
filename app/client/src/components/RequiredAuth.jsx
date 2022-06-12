@@ -8,7 +8,7 @@ const RequiredAuth = () => {
     const time_now = new Date().getTime();
     const time_diff = time_now - time;
     return (
-        time_diff < 36000000 ? (
+        time_diff < 3600000 ? (
             isLoggedIn ?
                 is_super ? 
                 <Outlet /> :
