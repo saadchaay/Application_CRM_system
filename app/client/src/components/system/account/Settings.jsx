@@ -52,7 +52,7 @@ export default function Example() {
     if(avatar && res.status === 201){
       const formData = new FormData();
       formData.append("file", imgPrv);
-      formData.append("upload_preset", "qwerty");
+      formData.append("upload_preset", "s7tgef8p");
       const response = await Axios.post("https://api.cloudinary.com/v1_1/maggie-7223/image/upload", formData);
       console.log(response.data);
       localStorage.setItem("auth", JSON.stringify(res.data));
