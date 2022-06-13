@@ -8,6 +8,8 @@ export default function Integration() {
 
   const handleGoogle = async () => {
     console.log("google");
+    console.log(clientId);
+    console.log(clientSecret);
   };
 
   return (
@@ -72,7 +74,7 @@ export default function Integration() {
                       Save
                     </span>
                   </button>
-                  <button className="mx-2">
+                  <button onClick={() => setOpenForm(false)} className="mx-2">
                     <span className="text-gray-600 bg-white border hover:bg-gray-200 rounded-md px-4 py-2">
                       Cancel
                     </span>
