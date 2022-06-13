@@ -9,6 +9,7 @@ import {
     SupervisorAccount,
     Ballot,
     Category,
+    AccountTree,
   } from "@material-ui/icons";
 import logo from "../assets/images/logo.v2.png";
 
@@ -25,7 +26,8 @@ const navigation = [
   }
 export default function Sidebar(allowedRoles) {
     const auth = JSON.parse(localStorage.getItem('auth'));
-    const [secondaryNavigation, setSecondaryNavigation] = useState([]); 
+    const [secondaryNavigation, setSecondaryNavigation] = useState([]);
+    const [thirdNavigation, setThirdNavigation] = useState([]); 
     
     const handleNavigation = () => {
         switch (auth.role) {
@@ -54,6 +56,9 @@ export default function Sidebar(allowedRoles) {
                     { name: 'Products', to: '/products', icon: Storefront },
                     { name: 'Categories', to: '/categories', icon: Category },
                 ]);
+                setThirdNavigation([
+                    {name: 'integration', to:'/apps', icon: AccountTree},
+                ])
                 break;
         }
     }
@@ -100,6 +105,25 @@ export default function Sidebar(allowedRoles) {
                 <div className="mt-6 pt-6">
                     <div className="px-2 space-y-1">
                     {secondaryNavigation.map((item) => (
+
+                        <span
+                            key={item.name}
+                            className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-cyan-100 hover:text-white hover:bg-cyan-600"
+                            >
+                            <item.icon
+                                className="mr-4 h-6 w-6 text-cyan-200"
+                                aria-hidden="true"
+                            />
+                            <Link to={item.to}>
+                                {item.name}
+                            </Link>
+                        </span>
+                    ))}
+                    </div>
+                </div>
+                <div className="mt-6 pt-6">
+                    <div className="px-2 space-y-1">
+                    {thirdNavigation.map((item) => (
 
                         <span
                             key={item.name}

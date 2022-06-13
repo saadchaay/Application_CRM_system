@@ -19,6 +19,7 @@ import Customers from "./components/system/Customers";
 import Products from "./components/system/Products";
 import Categories from "./components/system/Categories";
 import Account from "./components/system/Account";
+import Integration from "./components/system/Integration";
 import Profile from "./components/system/account/Profile";
 import Settings from "./components/system/account/Settings";
 import Password from "./components/system/account/Password";
@@ -74,6 +75,7 @@ function App() {
       </Route>
       <Route element={<Required allowedRoles={[roles.admin]} />}>
           <Route path="/users" element={<System contentUsers={<Users />} />} />
+          <Route path="/integration" element={<System contentIntegration={<Integration />} />} />
       </Route>
 
       <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer, roles.shipManager]} />}>
