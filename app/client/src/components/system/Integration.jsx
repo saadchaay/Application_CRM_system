@@ -1,5 +1,7 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
+import { gapi } from "gapi-script";
+import { GoogleLogin } from 'react-google-login';
 
 export default function Integration() {
   const [openForm, setOpenForm] = useState(false);
@@ -7,7 +9,10 @@ export default function Integration() {
   const [clientSecret, setClientSecret] = useState("");
 
   const handleGoogle = async () => {
-    console.log("google");
+    if(!clientId || !clientSecret) {
+      alert("Please enter client id and client secret");
+      return;
+    }
     console.log(clientId);
     console.log(clientSecret);
   };
