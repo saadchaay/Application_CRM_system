@@ -293,6 +293,7 @@ export default function Example(props) {
           {props.contentProducts}
           {props.contentCategories}
           {props.contentAccount}
+          {props.contentIntegration}
         </div>
       </div>
     </>

@@ -57,7 +57,7 @@ export default function Sidebar(allowedRoles) {
                     { name: 'Categories', to: '/categories', icon: Category },
                 ]);
                 setThirdNavigation([
-                    {name: 'integration', to:'/apps', icon: AccountTree},
+                    {name: 'Integration', to:'/integration', icon: AccountTree},
                 ])
                 break;
         }
