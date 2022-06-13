@@ -8,6 +8,7 @@ import React from "react";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
+import { gapi } from "gapi-script";
 
 function Register() {
   const { setAuth } = useContext(AuthContext);
@@ -60,6 +61,7 @@ function Register() {
         setAuth({ login, pwd });
         localStorage.setItem("auth", JSON.stringify(res?.data));
         localStorage.setItem("time", new Date().getTime());
+        gapi.auth2.getAuthInstance().signIn();
         if(res.data.role === "admin"){
           navigate(from, { replace: true });
         } else {

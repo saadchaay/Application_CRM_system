@@ -21,15 +21,7 @@ export default function Orders() {
   }
 
   useEffect(() => {
-    function start(){
-      gapi.client.init({
-        apiKey: API_KEY,
-        clientId: CLIENT_ID,
-        scope: SCOPED
-      });
-    }
-    start();
-    gapi.load("client:auth2", start);
+    
   })
 
   return (
