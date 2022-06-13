@@ -10,7 +10,7 @@ export default function Integration() {
               className="w-32"
             />
             <div>
-              <span className="font-bold text-green-500">+ $726 (15%)</span>
+              <span className="font-bold text-green-500"> Linked Your app with Google sheet </span>
               <br />
               <span className="font-medium text-xs text-gray-500 flex justify-end">
                 0.382 coin
