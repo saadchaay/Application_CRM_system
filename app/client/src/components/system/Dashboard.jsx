@@ -1,4 +1,5 @@
 import { ScaleIcon } from "@heroicons/react/outline";
+import { Image } from "cloudinary-react";
 import {
   CashIcon,
   CheckCircleIcon,
@@ -66,10 +67,31 @@ export default function Dashboard() {
   ]);
 
   const Orders = [
-    { Number: '#5627', date: '28-05-2022', customer: 'Saad Chaay', items: 'Product 1, Product 2', status: 'Pending', total: '$320' },
-    { Number: '#5627', date: '28-05-2022', customer: 'Saad Chaay', items: 'Product 1, Product 2', status: 'Pending', total: '$320' },
-    { Number: '#5627', date: '28-05-2022', customer: 'Saad Chaay', items: 'Product 1, Product 2', status: 'Pending', total: '$320' },
-  ]
+    {
+      Number: "#5627",
+      date: "28-05-2022",
+      customer: "Saad Chaay",
+      items: "Product 1, Product 2",
+      status: "Pending",
+      total: "$320",
+    },
+    {
+      Number: "#5627",
+      date: "28-05-2022",
+      customer: "Saad Chaay",
+      items: "Product 1, Product 2",
+      status: "Pending",
+      total: "$320",
+    },
+    {
+      Number: "#5627",
+      date: "28-05-2022",
+      customer: "Saad Chaay",
+      items: "Product 1, Product 2",
+      status: "Pending",
+      total: "$320",
+    },
+  ];
 
   return (
     <>
@@ -82,10 +104,10 @@ export default function Dashboard() {
                 {/* Profile */}
                 <div className="flex items-center">
                   {auth.avatar ? (
-                    <img
+                    <Image
                       className="hidden h-16 w-16 rounded-full sm:block"
-                      src={auth.avatar}
-                      alt=""
+                      cloudName="maggie-7223"
+                      publicId={auth.avatar}
                     />
                   ) : (
                     <img
@@ -97,11 +119,19 @@ export default function Dashboard() {
 
                   <div>
                     <div className="flex items-center">
-                      <img
-                        className="h-16 w-16 rounded-full sm:hidden"
-                        src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
-                        alt=""
-                      />
+                      {auth.avatar ? (
+                        <Image
+                          className="h-16 w-16 rounded-full sm:hidden"
+                          cloudName="maggie-7223"
+                          publicId={auth.avatar}
+                        />
+                      ) : (
+                        <img
+                          className="h-16 w-16 rounded-full sm:hidden"
+                          src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
+                          alt=""
+                        />
+                      )}
                       <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
                         Good morning, {auth.name}
                       </h1>
@@ -132,7 +162,6 @@ export default function Dashboard() {
         </div>
 
         <div className="mt-8">
-
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-lg leading-6 font-medium text-gray-900">
               Overview
@@ -228,7 +257,6 @@ export default function Dashboard() {
                     >
                       Total
                     </th>
-                    
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
@@ -268,9 +296,7 @@ export default function Dashboard() {
               </table>
             </div>
           </div>
-
         </div>
-
       </main>
     </>
   );
