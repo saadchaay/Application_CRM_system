@@ -2,13 +2,16 @@ import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
+import e from "express";
 
 export default function Integration() {
   const auth = JSON.parse(localStorage.getItem("auth"));
+  const tokenData = JSON.parse(localStorage.getItem("token"));
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [data, setData] = useState({});
+  const [disconnect, setDisconnect] = useState(false);
   const [token, setToken] = useState("");
 
   const onSuccess = (response) => {
@@ -46,6 +49,14 @@ export default function Integration() {
     }
   };
 
+  const HandleDisconnect = () => {
+    e.preventDefault();
+    axios.delete("ProfileController/deleteIntegration/" + auth.id).then((res) => {
+      console.log("Your account has been disconnected");
+      setDisconnect(true);
+      localStorage.removeItem("token");
+    });
+  }
   return (
     <>
       <div className="flex-1 lg:border-t pt-4 mx-3">
@@ -70,7 +81,7 @@ export default function Integration() {
           <div>
 
             {
-              !token   ? 
+              !tokenData   ? 
                   openForm ? (
                   !data.clientId && !data.clientSecret ? (
                     <div>
@@ -153,7 +164,7 @@ export default function Integration() {
                     <div className="text-cyan-600 text-md">
                       Your Account is connected with Google Sheets
                     </div>
-                    <button className="mt-3 w-36 text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3">
+                    <button onClick={(e) => HandleDisconnect(e)} className="mt-3 w-36 text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3">
                       <span>
                         Disconnect
                       </span>
