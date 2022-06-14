@@ -172,7 +172,7 @@ class Admin {
 
     public function integration($data)
     {
-        $integrated = $this->get_integration($data["id"]);
+        $integrated = $this->get_integration($data["admin"]);
         if(!$integrated) {
             $this->db->query("INSERT INTO `integrations` (`id_admin`, `token`, `clientId`, `clientSecret`) VALUES (:id, :token, :clientId, :clientSecret)");
             $this->db->bind(":id", $data["admin"]);
