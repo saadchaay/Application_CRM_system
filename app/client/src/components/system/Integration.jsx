@@ -79,8 +79,10 @@ export default function Integration() {
   const createSpreedSheet = (e) => {
     e.preventDefault();
   };
-  const start = async (data) => {
-    if (token.api_key) {
+  // const start = (data) => {
+  // }
+  function start(data) {
+    if (token) {
       gapi.client.init({
         apiKey: data.api_key,
         clientId: data.clientId,
@@ -88,9 +90,6 @@ export default function Integration() {
       });
     }
   }
-  // function start(data) {
-    
-  // }
   useEffect(() => {
     start(token);
     gapi.load("client:auth2", start);
