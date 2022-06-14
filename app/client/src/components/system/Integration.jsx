@@ -34,7 +34,6 @@ export default function Integration() {
     };
     axios.post("ProfileController/integration", dataJson).then((res) => {
       console.log(res);
-      // localStorage.setItem("token", response.tokenId);
       const data__ = {
         id_admin: auth.id,
         token: response.tokenId,
@@ -255,7 +254,7 @@ export default function Integration() {
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                           {transaction.date}
                         </td>
-                        
+
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                           {transaction.total}
                         </td>
