@@ -255,9 +255,7 @@ export default function Integration() {
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                           {transaction.date}
                         </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          {transaction.status}
-                        </td>
+                        
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                           {transaction.total}
                         </td>
