@@ -3,7 +3,6 @@ import axios from "../../api/axios";
 import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
 
-
 const SCOPE = "https://www.googleapis.com/auth/drive";
 const transactions = [
   {
@@ -93,7 +92,7 @@ export default function Integration() {
       gapi.load("client:auth2", start);
     }
   });
-  
+
   return (
     <>
       <div className="flex-1 lg:border-t pt-4 mx-3">
@@ -221,58 +220,33 @@ export default function Integration() {
                 <div className="text-cyan-600 text-md">
                   Your Account is connected with Google Sheets
                 </div>
-                <button
-                  onClick={(e) => HandleDisconnect(e)}
-                  className="mt-3 w-36 text-white bg-red-700 hover:bg-red-800 rounded-md px-4 py-3"
-                >
-                  <span>Disconnect</span>
-                </button>
+                <div className="flex justify-between">
+                  <button
+                    onClick={(e) => HandleDisconnect(e)}
+                    className="mt-3 w-36 text-white bg-red-700 hover:bg-red-800 rounded-md px-4 py-3"
+                  >
+                    <span>Disconnect</span>
+                  </button>
+                  <div>
+                    <button
+                      className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-2 py-3 whitespace-nowrap w-1/2"
+                      onClick={createSpreedSheet}
+                    >
+                      Add SpreedSheet
+                    </button>
+                    <button
+                      className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-2 py-3 whitespace-nowrap w-1/2"
+                      onClick={createSpreedSheet}
+                    >
+                      Create file
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
-
-      {token ? (
-        <div className="flex-1 pt-4 mx-3">
-          <div className="bg-white rounded-3xl border shadow-xl p-8 w-full sm:w-3/6">
-          <div className="flex flex-col mx-1">
-            <div className="w-full">
-              <label htmlFor="apiKey">API KEY:</label>
-              <input
-                type="text"
-                id="apiKey"
-                // value={token.api_key}
-                // onChange={(e) =>
-                //   setToken({ ...token, api_key: e.target.value })
-                // }
-                autoComplete="title"
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-              />
-            </div>
-            <div className="w-full mt-2">
-              <label htmlFor="apiKey">Sheet Link:</label>
-              <input
-                type="text"
-                id="apiKey"
-                value={token.link}
-                onChange={(e) =>
-                  setToken({ ...token, link: e.target.value })
-                }
-                autoComplete="title"
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-              />
-            </div>
-            <button
-              className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-2 py-3 whitespace-nowrap w-1/2"
-              onClick={createSpreedSheet}
-            >
-              Add SpreedSheet
-            </button>
-          </div>
-          </div>
-        </div>
-      ) : null}
 
       {/* Inputs for id client */}
     </>
