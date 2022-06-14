@@ -174,11 +174,12 @@ class Admin {
     {
         $integrated = $this->get_integration($data["admin"]);
         if(!$integrated) {
-            $this->db->query("INSERT INTO `integrations` (`id_admin`, `token`, `clientId`, `clientSecret`) VALUES (:id, :token, :clientId, :clientSecret)");
+            $this->db->query("INSERT INTO `integrations` (`id_admin`, `token`, `clientId`, `clientSecret`, `apiKey`) VALUES (:id, :token, :clientId, :clientSecret, :apiKey)");
             $this->db->bind(":id", $data["admin"]);
             $this->db->bind(":token", $data["token"]);
             $this->db->bind(":clientId", $data["clientId"]);
             $this->db->bind(":clientSecret", $data["clientSecret"]);
+            $this->db->bind(":apiKey", $data["apiKey"]);
             if($this->db->execute()){
                 return true;
             } else return false;
