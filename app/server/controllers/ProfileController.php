@@ -137,7 +137,6 @@
                     'clientId' => $dataJSON->clientId ? $dataJSON->clientId : "",
                     'clientSecret' => $dataJSON->clientSecret ? $dataJSON->clientSecret : "",
                 ];
-
                 $integrate = $this->admin->integration($data);
                 if($integrate){
                     http_response_code(201);
@@ -154,6 +153,18 @@
                 $integrate = $this->admin->get_integration($id);
                 if($integrate){
                     echo json_encode($integrate);
+                }else{
+                    echo json_encode(array('errors' => "Integration not found"));
+                }
+            }
+        }
+
+        public function deleteIntegration($id)
+        {
+            if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+                $integrate = $this->admin->delete_integration($id);
+                if($integrate){
+                    echo json_encode(array('message' => "Integration deleted"));
                 }else{
                     echo json_encode(array('errors' => "Integration not found"));
                 }
