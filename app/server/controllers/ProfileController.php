@@ -136,7 +136,7 @@
                     'token' => $dataJSON->token ? $dataJSON->token : "",
                 ];
 
-                
+                $integrate = $this->admin->integration($data);
             }
         }
     }
