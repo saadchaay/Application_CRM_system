@@ -3,6 +3,8 @@ import axios from "../../api/axios";
 import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
 
+
+const SCOPE = "https://www.googleapis.com/auth/drive";
 const transactions = [
   {
     id: "AAPS0L",
@@ -86,11 +88,10 @@ export default function Integration() {
     });
   }
   useEffect(() => {
-    // token.api_key = "AIzaSyD6qcc_ly4bgpxHw8pDc3OnR_9LlHqqgs4";
-    // if (token.api_key) {
-    //   start(token);
-    //   gapi.load("client:auth2", start);
-    // }
+    if (token.api_key) {
+      start(token);
+      gapi.load("client:auth2", start);
+    }
   });
   return (
     <>
