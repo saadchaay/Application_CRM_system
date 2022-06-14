@@ -8,6 +8,7 @@ export default function Integration() {
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [data, setData] = useState({});
+  const [buttonGoogle, setButtonGoogle] = useState(false);
 
   const handleGoogle = () => {
     if (!clientId || !clientSecret) {
@@ -17,9 +18,10 @@ export default function Integration() {
     console.log(clientId);
     console.log(clientSecret);
     setData({
-      clientId,
-      clientSecret,
+      clientId: clientId,
+      clientSecret: clientSecret,
     });
+    // setButtonGoogle(true);
     setClientId("");
     setClientSecret("");
   };
@@ -55,7 +57,7 @@ export default function Integration() {
                   >
                     CLIENT ID
                   </label>
-                  {data.clientId ? (
+                  { !data.clientId ? (
                     <input
                       type="text"
                       id="title"
@@ -75,7 +77,7 @@ export default function Integration() {
                   >
                     CLIENT Secret
                   </label>
-                  {data.clientSecret ? (
+                  { !data.clientSecret ? (
                     <input
                       type="text"
                       id="title"
@@ -89,14 +91,14 @@ export default function Integration() {
                   )}
                 </div>
                 <div className=" flex justify-start mt-10">
-                  {data.clientId && data.clientSecret ? (
+                  { data.clientId ? (
                     <GoogleLogin
                       className="rounded-circle"
                       icon={false}
                       clientId={process.env.REACT_APP_CLIENT_ID}
                       buttonText=""
-                      onSuccess={this.responseGoogle}
-                      onFailure={this.responseGoogle}
+                      // onSuccess={this.responseGoogle}
+                      // onFailure={this.responseGoogle}
                     />
                   ) : (
                     <button onClick={handleGoogle}>
