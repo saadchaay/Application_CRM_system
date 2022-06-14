@@ -147,4 +147,16 @@
                 }
             }
         }
+
+        public function getIntegration($id)
+        {
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                $integrate = $this->admin->get_integration($id);
+                if($integrate){
+                    echo json_encode($integrate);
+                }else{
+                    echo json_encode(array('errors' => "Integration not found"));
+                }
+            }
+        }
     }
