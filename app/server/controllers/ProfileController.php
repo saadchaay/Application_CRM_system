@@ -124,4 +124,19 @@
                 
             }
         }
+
+        public function integration()
+        {
+            $dataJSON = json_decode(file_get_contents("php://input"));
+
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+                $data = [
+                    'admin' => $dataJSON->admin ? $dataJSON->admin : "",
+                    'token' => $dataJSON->token ? $dataJSON->token : "",
+                ];
+
+                
+            }
+        }
     }
