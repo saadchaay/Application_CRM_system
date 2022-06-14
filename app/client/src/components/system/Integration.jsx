@@ -221,29 +221,12 @@ export default function Integration() {
                       >
                         Sheet Name
                       </th>
+                      
                       <th
                         scope="col"
                         className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Phone
-                      </th>
-                      <th
-                        scope="col"
-                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        City
-                      </th>
-                      <th
-                        scope="col"
-                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Date
-                      </th>
-                      <th
-                        scope="col"
-                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Status
+                        Sheet Link
                       </th>
                       <th
                         scope="col"
@@ -268,12 +251,7 @@ export default function Integration() {
                         <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
                           {transaction.customer}
                         </td>
-                        <td className="whitespace-nowrap px -2 py-2 text-sm text-gray-900">
-                          {transaction.phone}
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          {transaction.city}
-                        </td>
+                        
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                           {transaction.date}
                         </td>
