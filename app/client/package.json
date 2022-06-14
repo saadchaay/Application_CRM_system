@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "cloudinary-react": "^1.7.2",
     "gapi-script": "^1.2.0",
+    "google-spreadsheet": "^3.3.0",
     "multiselect-react-dropdown": "^2.0.22",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

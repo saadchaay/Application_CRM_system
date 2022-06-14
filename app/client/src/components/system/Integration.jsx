@@ -1,7 +1,13 @@
-import { useState, useEffect, Fragment, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "../../api/axios";
-import { loadGapiInsideDOM } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
+
+// const SPREADSHEET_ID = "1cmn121R0jCN3_yZWbqwSPuMwzr6u7XTMkCuSYCwng_k";
+// const SHEET_ID = 0;
+// const CLIENT_EMAIL =
+//   "crm-system-app@crm-system-integration.iam.gserviceaccount.com";
+// const PRIVATE_KEY =
+//   "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDkIBUCDhGPPiJy";
 
 const SCOPE = "https://www.googleapis.com/auth/drive";
 const transactions = [
@@ -24,7 +30,7 @@ export default function Integration() {
   const [apiKey, setApiKey] = useState("");
   const [data, setData] = useState({});
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
-  const gapi = await loadGapiInsideDOM();
+
   const onSuccess = (response) => {
     console.log(response);
     const dataJson = {
@@ -39,7 +45,7 @@ export default function Integration() {
       setToken(dataJson);
       localStorage.setItem("token", JSON.stringify(dataJson));
     });
-    start(dataJson);
+    // start(dataJson);
   };
 
   const onFailure = (response) => {
@@ -79,22 +85,27 @@ export default function Integration() {
 
   const createSpreedSheet = (e) => {
     e.preventDefault();
+    // const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+    // doc.useServiceAccountAuth({
+    //   client_email: CLIENT_EMAIL,
+    //   private_key: PRIVATE_KEY,
+    // });
+    // doc.loadInfo().then((info) => {
+    //   console.log(info);
+    //   const sheet = doc.sheetsByIndex[SHEET_ID];
+    //   sheet.addRow(transactions);
+    // });
   };
-  // const start = (data) => {
+  // function start(data) {
+  //   if (token) {
+  //     gapi.client.init({
+  //       apiKey: data.api_key,
+  //       clientId: data.clientId,
+  //       scope: SCOPE,
+  //     });
+  //   }
   // }
-  function start(data) {
-    if (token) {
-      gapi.client.init({
-        apiKey: data.api_key,
-        clientId: data.clientId,
-        scope: SCOPE,
-      });
-    }  
-  }
   useEffect(() => {
-    // start(token);
-    console.log(gapi);
-    
   });
 
   return (
@@ -234,7 +245,7 @@ export default function Integration() {
                   <div className="w-auto">
                     <button
                       className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap w-auto"
-                      onClick={createSpreedSheet}
+                      // onClick={createSpreedSheet}
                     >
                       Add SpreedSheet
                     </button>
