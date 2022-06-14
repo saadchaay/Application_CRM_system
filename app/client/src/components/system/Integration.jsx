@@ -60,6 +60,8 @@ export default function Integration() {
       console.log(res);
       localStorage.removeItem("token");
       setToken(null);
+      setData({});
+      setOpenForm(false);
     });
   }
   return (
@@ -169,7 +171,7 @@ export default function Integration() {
                     <div className="text-cyan-600 text-md">
                       Your Account is connected with Google Sheets
                     </div>
-                    <button onClick={(e) => HandleDisconnect(e)} className="mt-3 w-36 text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3">
+                    <button onClick={(e) => HandleDisconnect(e)} className="mt-3 w-36 text-white bg-red-700 hover:bg-red-800 rounded-md px-4 py-3">
                       <span>
                         Disconnect
                       </span>
