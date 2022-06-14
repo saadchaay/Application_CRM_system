@@ -136,8 +136,8 @@
                     'token' => $dataJSON->token ? $dataJSON->token : "",
                     'clientId' => $dataJSON->clientId ? $dataJSON->clientId : "",
                     'clientSecret' => $dataJSON->clientSecret ? $dataJSON->clientSecret : "",
+                    'apiKey' => $dataJSON->apiKey ? $dataJSON->apiKey : "",
                 ];
-                // if($this->admin>get_integration($data['admin']))
                 $integrate = $this->admin->integration($data);
                 if($integrate){
                     http_response_code(201);
