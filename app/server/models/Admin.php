@@ -194,4 +194,15 @@ class Admin {
             return false;
         }
     }
+
+    public function delete_integration($id)
+    {
+        $this->db->query("DELETE FROM `integrations` WHERE `id_admin` = :id");
+        $this->db->bind(":id", $id);
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
