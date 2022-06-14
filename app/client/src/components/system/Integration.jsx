@@ -5,13 +5,11 @@ import { GoogleLogin } from "react-google-login";
 
 export default function Integration() {
   const auth = JSON.parse(localStorage.getItem("auth"));
-  const tokenData = JSON.parse(localStorage.getItem("token"));
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [data, setData] = useState({});
-  const [disconnect, setDisconnect] = useState(false);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
 
   const onSuccess = (response) => {
     console.log(response);
@@ -23,9 +21,17 @@ export default function Integration() {
     };
     axios.post("ProfileController/integration", dataJson).then((res) => {
       console.log(res);
-      localStorage.setItem("token", response.tokenId);
+      // localStorage.setItem("token", response.tokenId);
+      const data__ = {
+        id_admin: auth.id,
+        token: response.tokenId,
+        clientId: data.clientId,
+        clientSecret: data.clientSecret,
+      }
+      setToken(data__);
+      localStorage.setItem("token", JSON.stringify(data__));
     });
-    setToken(response.tokenId);
+    
   };
 
   const onFailure = (response) => {
@@ -52,8 +58,8 @@ export default function Integration() {
     e.preventDefault();
     axios.delete("ProfileController/deleteIntegration/" + auth.id).then((res) => {
       console.log(res);
-      setDisconnect(true);
       localStorage.removeItem("token");
+      setToken(null);
     });
   }
   return (
@@ -80,7 +86,7 @@ export default function Integration() {
           <div>
 
             {
-              !tokenData   ? 
+              (!token) ? 
                   openForm ? (
                   !data.clientId && !data.clientSecret ? (
                     <div>
