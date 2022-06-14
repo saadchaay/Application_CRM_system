@@ -58,8 +58,14 @@ class LoginController extends Controller{
                             http_response_code(201);
                             echo json_encode($user_login);
                         }elseif(isset($admin_login->status) && $admin_login->status == 1){
-                            http_response_code(201);
-                            echo json_encode($admin_login);
+                            $integration = $this->admin->get_integration($admin_login->id);
+                            if($integration){
+                                http_response_code(201);
+                                echo json_encode(array('admin' => $admin_login, 'integration' => $integration));
+                            } else {
+                                http_response_code(201);
+                                echo json_encode(array('admin' => $admin_login));
+                            }
                         }else {
                             $errors = array('status' => 'Your Account is not active yet.');
                             echo json_encode(array('errors' => $errors));
