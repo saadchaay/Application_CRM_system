@@ -79,24 +79,27 @@ export default function Integration() {
   const createSpreedSheet = (e) => {
     e.preventDefault();
   };
-  function start(data) {
-    gapi.client.init({
-      apiKey: data.api_key,
-      clientId: data.clientId,
-      scope: SCOPE,
-    });
-  }
-  useEffect(() => {
+  const start = async (data) => {
     if (token.api_key) {
-      start(token);
-      gapi.load("client:auth2", start);
+      gapi.client.init({
+        apiKey: data.api_key,
+        clientId: data.clientId,
+        scope: SCOPE,
+      });
     }
+  }
+  // function start(data) {
+    
+  // }
+  useEffect(() => {
+    start(token);
+    gapi.load("client:auth2", start);
   });
 
   return (
     <>
       <div className="flex-1 lg:border-t pt-4 mx-3">
-        <div className="bg-white rounded-3xl border shadow-xl p-8 w-full sm:w-3/6">
+        <div className="bg-white rounded-3xl border shadow-md p-8 w-full sm:w-full">
           <div className="flex justify-between items-center mb-4">
             <img
               src="https://cdn.neow.in/news/images/uploaded/2019/10/1570089797_google-sheets_story.jpg"
@@ -227,18 +230,18 @@ export default function Integration() {
                   >
                     <span>Disconnect</span>
                   </button>
-                  <div>
+                  <div className="w-auto">
                     <button
-                      className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-2 py-3 whitespace-nowrap w-1/2"
+                      className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap w-auto"
                       onClick={createSpreedSheet}
                     >
                       Add SpreedSheet
                     </button>
                     <button
-                      className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-2 py-3 whitespace-nowrap w-1/2"
+                      className="mt-3 ml-1 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap w-auto"
                       onClick={createSpreedSheet}
                     >
-                      Create file
+                      Create one
                     </button>
                   </div>
                 </div>
