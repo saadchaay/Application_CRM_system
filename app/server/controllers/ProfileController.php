@@ -134,9 +134,17 @@
                 $data = [
                     'admin' => $dataJSON->admin ? $dataJSON->admin : "",
                     'token' => $dataJSON->token ? $dataJSON->token : "",
+                    'clientId' => $dataJSON->clientId ? $dataJSON->clientId : "",
+                    'clientSecret' => $dataJSON->clientSecret ? $dataJSON->clientSecret : "",
                 ];
 
                 $integrate = $this->admin->integration($data);
+                if($integrate){
+                    http_response_code(201);
+                    echo json_encode(array('message' => "Integration successful"));
+                }else{
+                    echo json_encode(array('errors' => "Integration failed"));
+                }
             }
         }
     }
