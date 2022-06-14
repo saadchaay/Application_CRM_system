@@ -61,7 +61,6 @@ function Register() {
         setAuth({ login, pwd });
         localStorage.setItem("auth", JSON.stringify(res?.data));
         localStorage.setItem("time", new Date().getTime());
-        // gapi.auth2.getAuthInstance().signIn();
         if(res.data.role === "admin"){
           navigate(from, { replace: true });
         } else {
