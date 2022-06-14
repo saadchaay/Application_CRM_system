@@ -93,10 +93,10 @@ export default function Integration() {
                 <div className=" flex justify-start mt-10">
                   { data.clientId ? (
                     <GoogleLogin
-                      className="rounded-circle"
+                      className="rounded-circle bg-cyan-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2"
                       icon={false}
                       clientId={process.env.REACT_APP_CLIENT_ID}
-                      buttonText=""
+                      buttonText="Save with Google"
                       // onSuccess={this.responseGoogle}
                       // onFailure={this.responseGoogle}
                     />
