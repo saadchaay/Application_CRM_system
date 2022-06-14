@@ -141,7 +141,7 @@ export default function Integration() {
                     <div className="text-cyan-600 text-md">
                       Your Account is connected with Google Sheets
                     </div>
-                    <button className="mt-5 w-36 text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3">
+                    <button className="mt-3 w-36 text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3">
                       <span>
                         Disconnect
                       </span>
