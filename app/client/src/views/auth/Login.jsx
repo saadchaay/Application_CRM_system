@@ -59,7 +59,8 @@ function Register() {
         setLogin("");
         console.log("ok");
         setAuth({ login, pwd });
-        localStorage.setItem("auth", JSON.stringify(res?.data));
+        localStorage.setItem("auth", JSON.stringify(res?.data.admin));
+        localStorage.setItem("token", res?.data.integration);
         localStorage.setItem("time", new Date().getTime());
         if(res.data.role === "admin"){
           navigate(from, { replace: true });
