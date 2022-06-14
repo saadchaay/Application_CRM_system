@@ -2,7 +2,6 @@ import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
-import e from "express";
 
 export default function Integration() {
   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -49,10 +48,10 @@ export default function Integration() {
     }
   };
 
-  const HandleDisconnect = () => {
+  const HandleDisconnect = (e) => {
     e.preventDefault();
     axios.delete("ProfileController/deleteIntegration/" + auth.id).then((res) => {
-      console.log("Your account has been disconnected");
+      console.log(res);
       setDisconnect(true);
       localStorage.removeItem("token");
     });
