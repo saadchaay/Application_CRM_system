@@ -84,7 +84,7 @@ export default function Integration() {
     gapi.client.init({
       apiKey: data.api_key,
       clientId: data.clientId,
-      scope: data.scopes,
+      scope: SCOPE,
     });
   }
   useEffect(() => {
