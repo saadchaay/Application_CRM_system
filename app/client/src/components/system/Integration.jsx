@@ -93,6 +93,7 @@ export default function Integration() {
       gapi.load("client:auth2", start);
     }
   });
+  
   return (
     <>
       <div className="flex-1 lg:border-t pt-4 mx-3">
