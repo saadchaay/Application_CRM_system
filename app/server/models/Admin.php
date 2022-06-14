@@ -172,8 +172,8 @@ class Admin {
 
     public function integration($data)
     {
-        $this->db->query("INSERT INTO `integrations` (`admin_id`, `token`, `clientId`, `clientSecret`) VALUES (:admin_id, :token, :clientId, :clientSecret)");
-        $this->db->bind(":admin_id", $data["admin_id"]);
+        $this->db->query("INSERT INTO `integrations` (`id_admin`, `token`, `clientId`, `clientSecret`) VALUES (:id, :token, :clientId, :clientSecret)");
+        $this->db->bind(":id", $data["admin"]);
         $this->db->bind(":token", $data["token"]);
         $this->db->bind(":clientId", $data["clientId"]);
         $this->db->bind(":clientSecret", $data["clientSecret"]);

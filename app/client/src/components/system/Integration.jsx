@@ -13,7 +13,6 @@ export default function Integration() {
 
   const onSuccess = (response) => {
     console.log(response);
-    localStorage.setItem("token", response.tokenId);
     const dataJson = {
       admin: auth.id,
       token: response.tokenId,
@@ -22,6 +21,7 @@ export default function Integration() {
     };
     axios.post("ProfileController/integration", dataJson).then((res) => {
       console.log(res);
+      localStorage.setItem("token", response.tokenId);
     });
     setToken(response.tokenId);
   };
