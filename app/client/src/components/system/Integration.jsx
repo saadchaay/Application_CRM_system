@@ -8,7 +8,15 @@ export default function Integration() {
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [data, setData] = useState({});
-  const [buttonGoogle, setButtonGoogle] = useState(false);
+
+  const onSuccess = (response) => {
+    console.log(response);
+    // setData(response);
+  }
+
+  const onFailure = (response) => {
+    console.log(response);
+  }
 
   const handleGoogle = () => {
     if (!clientId || !clientSecret) {
@@ -21,7 +29,6 @@ export default function Integration() {
       clientId: clientId,
       clientSecret: clientSecret,
     });
-    // setButtonGoogle(true);
     setClientId("");
     setClientSecret("");
   };
@@ -93,12 +100,12 @@ export default function Integration() {
                 <div className=" flex justify-start mt-10">
                   { data.clientId ? (
                     <GoogleLogin
-                      className="rounded-circle bg-cyan-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2"
+                      className=""
                       icon={false}
-                      clientId={process.env.REACT_APP_CLIENT_ID}
+                      clientId={data.clientId}
                       buttonText="Save with Google"
-                      // onSuccess={this.responseGoogle}
-                      // onFailure={this.responseGoogle}
+                      onSuccess={onSuccess}
+                      onFailure={onFailure}
                     />
                   ) : (
                     <button onClick={handleGoogle}>
