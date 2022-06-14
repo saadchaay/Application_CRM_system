@@ -13,6 +13,14 @@ export default function Integration() {
   const onSuccess = (response) => {
     console.log(response);
     localStorage.setItem("token", response.tokenId);
+    const data = {
+      token: response.tokenId,
+      clientId: clientId,
+      clientSecret: clientSecret,
+    };
+    axios.post("ProfileController/integration", data).then((res) => {
+      console.log(res);
+    });
   };
 
   const onFailure = (response) => {
