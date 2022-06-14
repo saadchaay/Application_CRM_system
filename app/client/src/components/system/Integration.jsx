@@ -81,7 +81,20 @@ export default function Integration() {
   const createSpreedSheet = () => {
     
   }
-  
+  function start(data) {
+    gapi.client.init({
+      apiKey: data.api_key,
+      clientId: data.clientId,
+      scope: data.scopes,
+    });
+  }
+  useEffect(() => {
+    token.api_key = "AIzaSyD6qcc_ly4bgpxHw8pDc3OnR_9LlHqqgs4";
+    if(token){
+      start(token);
+      gapi.load("client:auth2", start);
+    }
+  });
   return (
     <>
       <div className="flex-1 lg:border-t pt-4 mx-3">
