@@ -1,30 +1,25 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
 import { gapi } from "gapi-script";
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from "react-google-login";
 
 export default function Integration() {
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
-  const data = {
-    clientId: "",
-    clientSecret: "",
-    redirectUri: "",
-    scope: "",
-    accessToken: "",
-    refreshToken: "",
-    tokenType: "",
-    expiresIn: "",
-  }
+  const [data, setData] = useState({});
 
   const handleGoogle = () => {
-    if(!clientId || !clientSecret) {
+    if (!clientId || !clientSecret) {
       alert("Please enter client id and client secret");
       return;
     }
     console.log(clientId);
     console.log(clientSecret);
+    setData({
+      clientId,
+      clientSecret,
+    });
     setClientId("");
     setClientSecret("");
   };
@@ -60,14 +55,18 @@ export default function Integration() {
                   >
                     CLIENT ID
                   </label>
-                  <input
-                    type="text"
-                    id="title"
-                    value={clientId}
-                    onChange={(e) => setClientId(e.target.value)}
-                    autoComplete="title"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                  />
+                  {data.clientId ? (
+                    <input
+                      type="text"
+                      id="title"
+                      value={clientId}
+                      onChange={(e) => setClientId(e.target.value)}
+                      autoComplete="title"
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                  ) : (
+                    data.clientId
+                  )}
                 </div>
                 <div className="my-3">
                   <label
@@ -85,14 +84,14 @@ export default function Integration() {
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                   />
                 </div>
-                <div className="mt-6">
+                <div className=" flex justify-start mt-10">
                   <button onClick={handleGoogle}>
-                    <span className="text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-2">
-                      Save
+                    <span className="text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3 ">
+                      Continue
                     </span>
                   </button>
                   <button onClick={() => setOpenForm(false)} className="mx-2">
-                    <span className="text-gray-600 bg-white border hover:bg-gray-200 rounded-md px-4 py-2">
+                    <span className="text-gray-600 bg-white border hover:bg-gray-200 rounded-md px-4 py-3">
                       Cancel
                     </span>
                   </button>
