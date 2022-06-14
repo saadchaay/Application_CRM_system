@@ -183,6 +183,27 @@ export default function Integration() {
         </div>
       </div>
 
+      <div>
+        <div className="flex-1 pt-4 mx-3">
+          <div className="bg-white rounded-3xl border shadow-xl p-8 w-full sm:w-3/6">
+            <div className="flex justify-between items-center mb-4">
+              <img
+                src="https://cdn.neow.in/news/images/uploaded/2019/10/1570089797_google-sheets_story.jpg"
+                alt=""
+                className="w-32"
+              />
+              <div className="ml-1">
+                <span className="font-bold text-cyan-600">
+                  {" "}
+                  Linked Your app with Google sheet{" "}
+                </span>
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Inputs for id client */}
     </>
   );
