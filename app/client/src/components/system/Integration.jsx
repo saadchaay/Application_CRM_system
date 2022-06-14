@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
-import { gapi } from "gapi-script";
+import { loadGapiInsideDOM } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
 
 const SCOPE = "https://www.googleapis.com/auth/drive";
@@ -24,7 +24,7 @@ export default function Integration() {
   const [apiKey, setApiKey] = useState("");
   const [data, setData] = useState({});
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
-
+  const gapi = await loadGapiInsideDOM();
   const onSuccess = (response) => {
     console.log(response);
     const dataJson = {
@@ -39,6 +39,7 @@ export default function Integration() {
       setToken(dataJson);
       localStorage.setItem("token", JSON.stringify(dataJson));
     });
+    start(dataJson);
   };
 
   const onFailure = (response) => {
@@ -88,11 +89,12 @@ export default function Integration() {
         clientId: data.clientId,
         scope: SCOPE,
       });
-    }
+    }  
   }
   useEffect(() => {
-    start(token);
-    gapi.load("client:auth2", start);
+    // start(token);
+    console.log(gapi);
+    
   });
 
   return (
