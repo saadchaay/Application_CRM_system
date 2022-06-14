@@ -77,6 +77,10 @@ export default function Integration() {
         setOpenForm(false);
       });
   };
+
+  const createSpreedSheet = () => {
+    
+  }
   return (
     <>
       <div className="flex-1 lg:border-t pt-4 mx-3">
@@ -204,6 +208,7 @@ export default function Integration() {
         <div className="mt-8 flex justify-end mx-6">
           <button
             className="text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-4 py-3"
+            onClick={createSpreedSheet}
           >
             Add SpreedSheet
           </button>
