@@ -20,6 +20,7 @@ export default function Integration() {
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [apiKey, setApiKey] = useState("");
   const [data, setData] = useState({});
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
 
@@ -30,17 +31,12 @@ export default function Integration() {
       token: response.tokenId,
       clientId: data.clientId,
       clientSecret: data.clientSecret,
+      apiKey: data.apiKey,
     };
     axios.post("ProfileController/integration", dataJson).then((res) => {
       console.log(res);
-      const data__ = {
-        id_admin: auth.id,
-        token: response.tokenId,
-        clientId: data.clientId,
-        clientSecret: data.clientSecret,
-      };
-      setToken(data__);
-      localStorage.setItem("token", JSON.stringify(data__));
+      setToken(dataJson);
+      localStorage.setItem("token", JSON.stringify(dataJson));
     });
   };
 
@@ -58,9 +54,11 @@ export default function Integration() {
       setData({
         clientId: clientId,
         clientSecret: clientSecret,
+        apiKey: apiKey,
       });
       setClientId("");
       setClientSecret("");
+      setApiKey("");
     }
   };
 
@@ -89,10 +87,10 @@ export default function Integration() {
   }
   useEffect(() => {
     // token.api_key = "AIzaSyD6qcc_ly4bgpxHw8pDc3OnR_9LlHqqgs4";
-    if (token.api_key) {
-      start(token);
-      gapi.load("client:auth2", start);
-    }
+    // if (token.api_key) {
+    //   start(token);
+    //   gapi.load("client:auth2", start);
+    // }
   });
   return (
     <>
@@ -148,6 +146,22 @@ export default function Integration() {
                         id="title"
                         value={clientSecret}
                         onChange={(e) => setClientSecret(e.target.value)}
+                        autoComplete="title"
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                      />
+                    </div>
+                    <div className="my-3">
+                      <label
+                        htmlFor="first-name"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        API KEY
+                      </label>
+                      <input
+                        type="text"
+                        id="title"
+                        value={apiKey}
+                        onChange={(e) => setApiKey(e.target.value)}
                         autoComplete="title"
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                       />
@@ -220,22 +234,35 @@ export default function Integration() {
       {token ? (
         <div className="flex-1 pt-4 mx-3">
           <div className="bg-white rounded-3xl border shadow-xl p-8 w-full sm:w-3/6">
-          <div className="flex flex-col mx-6">
+          <div className="flex flex-col mx-1">
             <div className="w-full">
               <label htmlFor="apiKey">API KEY:</label>
               <input
                 type="text"
                 id="apiKey"
-                value={token.api_key}
+                // value={token.api_key}
+                // onChange={(e) =>
+                //   setToken({ ...token, api_key: e.target.value })
+                // }
+                autoComplete="title"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              />
+            </div>
+            <div className="w-full mt-2">
+              <label htmlFor="apiKey">Sheet Link:</label>
+              <input
+                type="text"
+                id="apiKey"
+                value={token.link}
                 onChange={(e) =>
-                  setToken({ ...token, api_key: e.target.value })
+                  setToken({ ...token, link: e.target.value })
                 }
                 autoComplete="title"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
             <button
-              className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-4 py-2 whitespace-nowrap"
+              className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-2 py-3 whitespace-nowrap w-1/2"
               onClick={createSpreedSheet}
             >
               Add SpreedSheet
