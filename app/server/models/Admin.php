@@ -182,4 +182,16 @@ class Admin {
         } else return false;
 
     }
+
+    public function get_integration($id)
+    {
+        $this->db->query("SELECT * FROM `integrations` WHERE `id_admin` = :id");
+        $this->db->bind(":id", $id);
+        $row = $this->db->single();
+        if($this->db->rowCount() > 0) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
 }
