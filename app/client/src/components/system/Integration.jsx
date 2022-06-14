@@ -3,7 +3,6 @@ import axios from "../../api/axios";
 import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
 
-
 const transactions = [
   {
     id: "AAPS0L",
@@ -78,9 +77,9 @@ export default function Integration() {
       });
   };
 
-  const createSpreedSheet = () => {
-    
-  }
+  const createSpreedSheet = (e) => {
+    e.preventDefault();
+  };
   function start(data) {
     gapi.client.init({
       apiKey: data.api_key,
@@ -89,8 +88,8 @@ export default function Integration() {
     });
   }
   useEffect(() => {
-    token.api_key = "AIzaSyD6qcc_ly4bgpxHw8pDc3OnR_9LlHqqgs4";
-    if(token){
+    // token.api_key = "AIzaSyD6qcc_ly4bgpxHw8pDc3OnR_9LlHqqgs4";
+    if (token.api_key) {
       start(token);
       gapi.load("client:auth2", start);
     }
@@ -218,16 +217,33 @@ export default function Integration() {
         </div>
       </div>
 
-      <div>
-        <div className="mt-8 flex justify-end mx-6">
-          <button
-            className="text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-4 py-3"
-            onClick={createSpreedSheet}
-          >
-            Add SpreedSheet
-          </button>
+      {token ? (
+        <div className="flex-1 pt-4 mx-3">
+          <div className="bg-white rounded-3xl border shadow-xl p-8 w-full sm:w-3/6">
+          <div className="flex flex-col mx-6">
+            <div className="w-full">
+              <label htmlFor="apiKey">API KEY:</label>
+              <input
+                type="text"
+                id="apiKey"
+                value={token.api_key}
+                onChange={(e) =>
+                  setToken({ ...token, api_key: e.target.value })
+                }
+                autoComplete="title"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              />
+            </div>
+            <button
+              className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-4 py-2 whitespace-nowrap"
+              onClick={createSpreedSheet}
+            >
+              Add SpreedSheet
+            </button>
+          </div>
+          </div>
         </div>
-      </div>
+      ) : null}
 
       {/* Inputs for id client */}
     </>
