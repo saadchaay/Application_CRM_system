@@ -89,11 +89,23 @@ export default function Integration() {
                   )}
                 </div>
                 <div className=" flex justify-start mt-10">
-                  <button onClick={handleGoogle}>
-                    <span className="text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3 ">
-                      Continue
-                    </span>
-                  </button>
+                  {data.clientId && data.clientSecret ? (
+                    <GoogleLogin
+                      className="rounded-circle"
+                      icon={false}
+                      clientId={process.env.REACT_APP_CLIENT_ID}
+                      buttonText=""
+                      onSuccess={this.responseGoogle}
+                      onFailure={this.responseGoogle}
+                    />
+                  ) : (
+                    <button onClick={handleGoogle}>
+                      <span className="text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3 ">
+                        Continue
+                      </span>
+                    </button>
+                  )}
+
                   <button onClick={() => setOpenForm(false)} className="mx-2">
                     <span className="text-gray-600 bg-white border hover:bg-gray-200 rounded-md px-4 py-3">
                       Cancel
