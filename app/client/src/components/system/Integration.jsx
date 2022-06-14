@@ -12,11 +12,11 @@ export default function Integration() {
   const onSuccess = (response) => {
     console.log(response);
     // setData(response);
-  }
+  };
 
   const onFailure = (response) => {
     console.log(response);
-  }
+  };
 
   const handleGoogle = () => {
     if (!clientId || !clientSecret) {
@@ -56,15 +56,15 @@ export default function Integration() {
           </div>
           <div>
             {openForm ? (
-              <div>
+              !data.clientId && !data.clientSecret ? (
                 <div>
-                  <label
-                    htmlFor="first-name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    CLIENT ID
-                  </label>
-                  { !data.clientId ? (
+                  <div>
+                    <label
+                      htmlFor="first-name"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      CLIENT ID
+                    </label>
                     <input
                       type="text"
                       id="title"
@@ -73,18 +73,14 @@ export default function Integration() {
                       autoComplete="title"
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                     />
-                  ) : (
-                    data.clientId
-                  )}
-                </div>
-                <div className="my-3">
-                  <label
-                    htmlFor="first-name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    CLIENT Secret
-                  </label>
-                  { !data.clientSecret ? (
+                  </div>
+                  <div className="my-3">
+                    <label
+                      htmlFor="first-name"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      CLIENT Secret
+                    </label>
                     <input
                       type="text"
                       id="title"
@@ -93,35 +89,53 @@ export default function Integration() {
                       autoComplete="title"
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                     />
-                  ) : (
-                    data.clientSecret
-                  )}
-                </div>
-                <div className=" flex justify-start mt-10">
-                  { data.clientId ? (
-                    <GoogleLogin
-                      className=""
-                      icon={false}
-                      clientId={data.clientId}
-                      buttonText="Save with Google"
-                      onSuccess={onSuccess}
-                      onFailure={onFailure}
-                    />
-                  ) : (
+                  </div>
+                  <div className=" flex justify-start mt-10">
+                    {/* //   <GoogleLogin
+                  render={renderProps => (
+                    <button onClick={renderProps.onClick} >This is my custom Google button</button>
+                    )}
+                  //     icon={false}
+                  //     clientId={data.clientId}
+                  //     buttonText="Connect Account"
+                  //     onSuccess={onSuccess}
+                  //     onFailure={onFailure}
+                  //   />
+                  // ) : ( */}
                     <button onClick={handleGoogle}>
                       <span className="text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-3 ">
                         Continue
                       </span>
                     </button>
-                  )}
 
-                  <button onClick={() => setOpenForm(false)} className="mx-2">
-                    <span className="text-gray-600 bg-white border hover:bg-gray-200 rounded-md px-4 py-3">
-                      Cancel
-                    </span>
-                  </button>
+                    <button onClick={() => setOpenForm(false)} className="mx-2">
+                      <span className="text-gray-600 bg-white border hover:bg-gray-200 rounded-md px-4 py-3">
+                        Cancel
+                      </span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <span className="text-cyan-600 text-md">
+                    Your Client ID and Client Secret Id has been added
+                  </span>
+                  <div className=" flex justify-start mt-4">
+                    <GoogleLogin
+                      render={(renderProps) => (
+                        <button className="text-white bg-cyan-500 hover:bg-cyan-700 py-2 px-3 rounded-lg" onClick={renderProps.onClick}>
+                          Connect Account
+                        </button>
+                      )}
+                      buttonText=""
+                      icon={false}
+                      clientId={data.clientId}
+                      onSuccess={onSuccess}
+                      onFailure={onFailure}
+                    />
+                  </div>
+                </div>
+              )
             ) : (
               <button
                 onClick={() => setOpenForm(true)}
