@@ -75,14 +75,18 @@ export default function Integration() {
                   >
                     CLIENT Secret
                   </label>
-                  <input
-                    type="text"
-                    id="title"
-                    value={clientSecret}
-                    onChange={(e) => setClientSecret(e.target.value)}
-                    autoComplete="title"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                  />
+                  {data.clientSecret ? (
+                    <input
+                      type="text"
+                      id="title"
+                      value={clientSecret}
+                      onChange={(e) => setClientSecret(e.target.value)}
+                      autoComplete="title"
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                  ) : (
+                    data.clientSecret
+                  )}
                 </div>
                 <div className=" flex justify-start mt-10">
                   <button onClick={handleGoogle}>
