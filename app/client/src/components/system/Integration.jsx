@@ -7,14 +7,26 @@ export default function Integration() {
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const data = {
+    clientId: "",
+    clientSecret: "",
+    redirectUri: "",
+    scope: "",
+    accessToken: "",
+    refreshToken: "",
+    tokenType: "",
+    expiresIn: "",
+  }
 
-  const handleGoogle = async () => {
+  const handleGoogle = () => {
     if(!clientId || !clientSecret) {
       alert("Please enter client id and client secret");
       return;
     }
     console.log(clientId);
     console.log(clientSecret);
+    setClientId("");
+    setClientSecret("");
   };
 
   return (
@@ -73,7 +85,7 @@ export default function Integration() {
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                   />
                 </div>
-                <div className="mt-3">
+                <div className="mt-6">
                   <button onClick={handleGoogle}>
                     <span className="text-white bg-cyan-600 hover:bg-cyan-700 rounded-md px-4 py-2">
                       Save
