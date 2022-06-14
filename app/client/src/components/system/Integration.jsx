@@ -4,23 +4,26 @@ import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
 
 export default function Integration() {
+  const auth = JSON.parse(localStorage.getItem("auth"));
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [data, setData] = useState({});
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState("");
 
   const onSuccess = (response) => {
     console.log(response);
     localStorage.setItem("token", response.tokenId);
-    const data = {
+    const dataJson = {
+      admin: auth.id,
       token: response.tokenId,
-      clientId: clientId,
-      clientSecret: clientSecret,
+      clientId: data.clientId,
+      clientSecret: data.clientSecret,
     };
-    axios.post("ProfileController/integration", data).then((res) => {
+    axios.post("ProfileController/integration", dataJson).then((res) => {
       console.log(res);
     });
+    setToken(response.tokenId);
   };
 
   const onFailure = (response) => {
@@ -31,15 +34,16 @@ export default function Integration() {
     if (!clientId || !clientSecret) {
       alert("Please enter client id and client secret");
       return;
+    } else {
+      console.log(clientId);
+      console.log(clientSecret);
+      setData({
+        clientId: clientId,
+        clientSecret: clientSecret,
+      });
+      setClientId("");
+      setClientSecret("");
     }
-    console.log(clientId);
-    console.log(clientSecret);
-    setData({
-      clientId: clientId,
-      clientSecret: clientSecret,
-    });
-    setClientId("");
-    setClientSecret("");
   };
 
   return (
