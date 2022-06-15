@@ -98,19 +98,18 @@ export default function Integration() {
     console.log(gapi);
     var accessToken = gapi.auth.getToken().access_token;
     console.log(accessToken);
-    
+    fetch("https://sheets.googleapis.com/v4/spreadsheets", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      }
+    }).then((res) => {
+      console.log(res);
+    });
+
   };
-        
-          
-  function start(data) {
-    if (token) {
-      gapi.client.init({
-        apiKey: data.api_key,
-        clientId: data.clientId,
-        scope: SCOPE,
-      });
-    }
-  }
+  
   useEffect(() => {
     // start(token);
   });
