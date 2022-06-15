@@ -83,15 +83,7 @@ export default function Integration() {
 
   const createSpreedSheet = (e) => {
     e.preventDefault();
-    gapi.client.init({
-      'apiKey': API_KEY,
-      'clientId': CLIENT_ID,
-      'scope': SCOPE,
-      'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-    }).then(function() {
-      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
-      updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    });
+    
     console.log(gapi);
     var accessToken = gapi.auth.getToken().access_token;
     console.log(accessToken);
@@ -106,35 +98,18 @@ export default function Integration() {
     });
 
   };
-  function makeApiCall() {
-    var spreadsheetBody = {
-      // TODO: Add desired properties to the request body.
-    };
-
-    var request = gapi.client.sheets.spreadsheets.create({}, spreadsheetBody);
-    request.then(function(response) {
-      // TODO: Change code below to process the `response` object:
-      console.log(response.result);
-    }, function(reason) {
-      console.error('error: ' + reason.result.error.message);
-    });
-  };
-  function updateSignInStatus(isSignedIn) {
-    if (isSignedIn) {
-      makeApiCall();
-    }
-  };
+  
   useEffect(() => {
-    gapi.auth2.getAuthInstance().signIn();
-    // function start(token) {
-    //   gapi.client.init({
-    //     apiKey: token.apiKey,
-    //     client_id: token.clientId,
-    //     scope: "https://www.googleapis.com/auth/drive",
-    //   });
-    // }
+    function start(token) {
+      gapi.client.init({
+        apiKey: token.apiKey,
+        client_id: token.clientId,
+        scope: "https://www.googleapis.com/auth/drive",
+        discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+      });
+    }
     // console.log(token);
-    // gapi.load('client:auth2', start);
+    gapi.load('client:auth2', start);
   });
 
   return (
