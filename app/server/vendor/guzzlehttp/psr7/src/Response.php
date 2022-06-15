@@ -1,11 +1,7 @@
 <?php
-
-declare(strict_types=1);
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * PSR-7 response implementation.
@@ -14,8 +10,8 @@ class Response implements ResponseInterface
 {
     use MessageTrait;
 
-    /** Map of standard HTTP status code/reason phrases */
-    private const PHRASES = [
+    /** @var array Map of standard HTTP status code/reason phrases */
+    private static $phrases = [
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',
@@ -36,7 +32,6 @@ class Response implements ResponseInterface
         305 => 'Use Proxy',
         306 => 'Switch Proxy',
         307 => 'Temporary Redirect',
-        308 => 'Permanent Redirect',
         400 => 'Bad Request',
         401 => 'Unauthorized',
         402 => 'Payment Required',
@@ -74,41 +69,38 @@ class Response implements ResponseInterface
         506 => 'Variant Also Negotiates',
         507 => 'Insufficient Storage',
         508 => 'Loop Detected',
-        510 => 'Not Extended',
         511 => 'Network Authentication Required',
     ];
 
-    /** @var string */
-    private $reasonPhrase;
+    /** @var null|string */
+    private $reasonPhrase = '';
 
     /** @var int */
-    private $statusCode;
+    private $statusCode = 200;
 
     /**
-     * @param int                                  $status  Status code
-     * @param array<string, string|string[]>       $headers Response headers
-     * @param string|resource|StreamInterface|null $body    Response body
-     * @param string                               $version Protocol version
-     * @param string|null                          $reason  Reason phrase (when empty a default will be used based on the status code)
+     * @param int    $status  Status code for the response, if any.
+     * @param array  $headers Headers for the response, if any.
+     * @param mixed  $body    Stream body.
+     * @param string $version Protocol version.
+     * @param string $reason  Reason phrase (a default will be used if possible).
      */
     public function __construct(
-        int $status = 200,
+        $status = 200,
         array $headers = [],
         $body = null,
-        string $version = '1.1',
-        string $reason = null
+        $version = '1.1',
+        $reason = null
     ) {
-        $this->assertStatusCodeRange($status);
+        $this->statusCode = (int) $status;
 
-        $this->statusCode = $status;
-
-        if ($body !== '' && $body !== null) {
-            $this->stream = Utils::streamFor($body);
+        if ($body !== null) {
+            $this->stream = stream_for($body);
         }
 
         $this->setHeaders($headers);
-        if ($reason == '' && isset(self::PHRASES[$this->statusCode])) {
-            $this->reasonPhrase = self::PHRASES[$this->statusCode];
+        if (!$reason && isset(self::$phrases[$this->statusCode])) {
+            $this->reasonPhrase = self::$phrases[$status];
         } else {
             $this->reasonPhrase = (string) $reason;
         }
@@ -116,45 +108,24 @@ class Response implements ResponseInterface
         $this->protocol = $version;
     }
 
-    public function getStatusCode(): int
+    public function getStatusCode()
     {
         return $this->statusCode;
     }
 
-    public function getReasonPhrase(): string
+    public function getReasonPhrase()
     {
         return $this->reasonPhrase;
     }
 
-    public function withStatus($code, $reasonPhrase = ''): ResponseInterface
+    public function withStatus($code, $reasonPhrase = '')
     {
-        $this->assertStatusCodeIsInteger($code);
-        $code = (int) $code;
-        $this->assertStatusCodeRange($code);
-
         $new = clone $this;
-        $new->statusCode = $code;
-        if ($reasonPhrase == '' && isset(self::PHRASES[$new->statusCode])) {
-            $reasonPhrase = self::PHRASES[$new->statusCode];
+        $new->statusCode = (int) $code;
+        if (!$reasonPhrase && isset(self::$phrases[$new->statusCode])) {
+            $reasonPhrase = self::$phrases[$new->statusCode];
         }
-        $new->reasonPhrase = (string) $reasonPhrase;
+        $new->reasonPhrase = $reasonPhrase;
         return $new;
-    }
-
-    /**
-     * @param mixed $statusCode
-     */
-    private function assertStatusCodeIsInteger($statusCode): void
-    {
-        if (filter_var($statusCode, FILTER_VALIDATE_INT) === false) {
-            throw new \InvalidArgumentException('Status code must be an integer value.');
-        }
-    }
-
-    private function assertStatusCodeRange(int $statusCode): void
-    {
-        if ($statusCode < 100 || $statusCode >= 600) {
-            throw new \InvalidArgumentException('Status code must be an integer value between 1xx and 5xx.');
-        }
     }
 }

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 /*
  * This file is part of the Monolog package.
@@ -12,7 +12,6 @@
 namespace Monolog\Processor;
 
 use Monolog\Utils;
-use Monolog\LogRecord;
 
 /**
  * Processes a record's message according to PSR-3 rules
@@ -23,50 +22,45 @@ use Monolog\LogRecord;
  */
 class PsrLogMessageProcessor implements ProcessorInterface
 {
-    public const SIMPLE_DATE = "Y-m-d\TH:i:s.uP";
+    const SIMPLE_DATE = "Y-m-d\TH:i:s.uP";
 
-    private ?string $dateFormat;
+    /** @var string|null */
+    private $dateFormat;
 
-    private bool $removeUsedContextFields;
+    /** @var bool */
+    private $removeUsedContextFields;
 
     /**
      * @param string|null $dateFormat              The format of the timestamp: one supported by DateTime::format
      * @param bool        $removeUsedContextFields If set to true the fields interpolated into message gets unset
      */
-    public function __construct(?string $dateFormat = null, bool $removeUsedContextFields = false)
+    public function __construct($dateFormat = null, $removeUsedContextFields = false)
     {
         $this->dateFormat = $dateFormat;
         $this->removeUsedContextFields = $removeUsedContextFields;
     }
 
     /**
-     * @inheritDoc
+     * @param  array $record
+     * @return array
      */
-    public function __invoke(LogRecord $record): LogRecord
+    public function __invoke(array $record)
     {
-        if (false === strpos($record->message, '{')) {
+        if (false === strpos($record['message'], '{')) {
             return $record;
         }
 
-        $replacements = [];
-        $context = $record->context;
-
-        foreach ($context as $key => $val) {
+        $replacements = array();
+        foreach ($record['context'] as $key => $val) {
             $placeholder = '{' . $key . '}';
-            if (strpos($record->message, $placeholder) === false) {
+            if (strpos($record['message'], $placeholder) === false) {
                 continue;
             }
 
             if (is_null($val) || is_scalar($val) || (is_object($val) && method_exists($val, "__toString"))) {
                 $replacements[$placeholder] = $val;
-            } elseif ($val instanceof \DateTimeInterface) {
-                if (null === $this->dateFormat && $val instanceof \Monolog\DateTimeImmutable) {
-                    // handle monolog dates using __toString if no specific dateFormat was asked for
-                    // so that it follows the useMicroseconds flag
-                    $replacements[$placeholder] = (string) $val;
-                } else {
-                    $replacements[$placeholder] = $val->format($this->dateFormat ?? static::SIMPLE_DATE);
-                }
+            } elseif ($val instanceof \DateTime) {
+                $replacements[$placeholder] = $val->format($this->dateFormat ?: static::SIMPLE_DATE);
             } elseif (is_object($val)) {
                 $replacements[$placeholder] = '[object '.Utils::getClass($val).']';
             } elseif (is_array($val)) {
@@ -76,10 +70,12 @@ class PsrLogMessageProcessor implements ProcessorInterface
             }
 
             if ($this->removeUsedContextFields) {
-                unset($context[$key]);
+                unset($record['context'][$key]);
             }
         }
 
-        return $record->with(message: strtr($record->message, $replacements), context: $context);
+        $record['message'] = strtr($record['message'], $replacements);
+
+        return $record;
     }
 }

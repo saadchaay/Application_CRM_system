@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 /*
  * This file is part of the Monolog package.
@@ -12,11 +12,7 @@
 namespace Monolog\Handler;
 
 use Monolog\Formatter\LineFormatter;
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Level;
-use Monolog\LogRecord;
-use Predis\Client as Predis;
-use Redis;
+use Monolog\Logger;
 
 /**
  * Logs to a Redis key using rpush
@@ -31,18 +27,23 @@ use Redis;
  */
 class RedisHandler extends AbstractProcessingHandler
 {
-    /** @var Predis<Predis>|Redis */
-    private Predis|Redis $redisClient;
-    private string $redisKey;
-    protected int $capSize;
+    private $redisClient;
+    private $redisKey;
+    protected $capSize;
 
     /**
-     * @param Predis<Predis>|Redis $redis   The redis instance
-     * @param string               $key     The key name to push records to
-     * @param int                  $capSize Number of entries to limit list size to, 0 = unlimited
+     * @param \Predis\Client|\Redis $redis   The redis instance
+     * @param string                $key     The key name to push records to
+     * @param int                   $level   The minimum logging level at which this handler will be triggered
+     * @param bool                  $bubble  Whether the messages that are handled can bubble up the stack or not
+     * @param int|false             $capSize Number of entries to limit list size to
      */
-    public function __construct(Predis|Redis $redis, string $key, int|string|Level $level = Level::Debug, bool $bubble = true, int $capSize = 0)
+    public function __construct($redis, $key, $level = Logger::DEBUG, $bubble = true, $capSize = false)
     {
+        if (!(($redis instanceof \Predis\Client) || ($redis instanceof \Redis))) {
+            throw new \InvalidArgumentException('Predis\Client or Redis instance required');
+        }
+
         $this->redisClient = $redis;
         $this->redisKey = $key;
         $this->capSize = $capSize;
@@ -51,43 +52,46 @@ class RedisHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    protected function write(LogRecord $record): void
+    protected function write(array $record)
     {
-        if ($this->capSize > 0) {
+        if ($this->capSize) {
             $this->writeCapped($record);
         } else {
-            $this->redisClient->rpush($this->redisKey, $record->formatted);
+            $this->redisClient->rpush($this->redisKey, $record["formatted"]);
         }
     }
 
     /**
      * Write and cap the collection
      * Writes the record to the redis list and caps its
+     *
+     * @param  array $record associative record array
+     * @return void
      */
-    protected function writeCapped(LogRecord $record): void
+    protected function writeCapped(array $record)
     {
-        if ($this->redisClient instanceof Redis) {
-            $mode = defined('Redis::MULTI') ? Redis::MULTI : 1;
+        if ($this->redisClient instanceof \Redis) {
+            $mode = defined('\Redis::MULTI') ? \Redis::MULTI : 1;
             $this->redisClient->multi($mode)
-                ->rPush($this->redisKey, $record->formatted)
+                ->rpush($this->redisKey, $record["formatted"])
                 ->ltrim($this->redisKey, -$this->capSize, -1)
                 ->exec();
         } else {
             $redisKey = $this->redisKey;
             $capSize = $this->capSize;
             $this->redisClient->transaction(function ($tx) use ($record, $redisKey, $capSize) {
-                $tx->rpush($redisKey, $record->formatted);
+                $tx->rpush($redisKey, $record["formatted"]);
                 $tx->ltrim($redisKey, -$capSize, -1);
             });
         }
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    protected function getDefaultFormatter(): FormatterInterface
+    protected function getDefaultFormatter()
     {
         return new LineFormatter();
     }

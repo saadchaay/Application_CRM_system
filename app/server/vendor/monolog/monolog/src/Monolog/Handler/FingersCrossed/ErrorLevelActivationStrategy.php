@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 /*
  * This file is part of the Monolog package.
@@ -11,10 +11,7 @@
 
 namespace Monolog\Handler\FingersCrossed;
 
-use Monolog\Level;
-use Monolog\LogRecord;
 use Monolog\Logger;
-use Psr\Log\LogLevel;
 
 /**
  * Error level based activation strategy.
@@ -23,20 +20,15 @@ use Psr\Log\LogLevel;
  */
 class ErrorLevelActivationStrategy implements ActivationStrategyInterface
 {
-    private Level $actionLevel;
+    private $actionLevel;
 
-    /**
-     * @param int|string|Level $actionLevel Level or name or value
-     *
-     * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $actionLevel
-     */
-    public function __construct(int|string|Level $actionLevel)
+    public function __construct($actionLevel)
     {
         $this->actionLevel = Logger::toMonologLevel($actionLevel);
     }
 
-    public function isHandlerActivated(LogRecord $record): bool
+    public function isHandlerActivated(array $record)
     {
-        return $record->level->value >= $this->actionLevel->value;
+        return $record['level'] >= $this->actionLevel;
     }
 }

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 /*
  * This file is part of the Monolog package.
@@ -11,11 +11,10 @@
 
 namespace Monolog\Handler\Slack;
 
-use Monolog\Level;
+use Monolog\Logger;
 use Monolog\Utils;
 use Monolog\Formatter\NormalizerFormatter;
 use Monolog\Formatter\FormatterInterface;
-use Monolog\LogRecord;
 
 /**
  * Slack record utility helping to log to Slack webhooks or API.
@@ -27,156 +26,148 @@ use Monolog\LogRecord;
  */
 class SlackRecord
 {
-    public const COLOR_DANGER = 'danger';
+    const COLOR_DANGER = 'danger';
 
-    public const COLOR_WARNING = 'warning';
+    const COLOR_WARNING = 'warning';
 
-    public const COLOR_GOOD = 'good';
+    const COLOR_GOOD = 'good';
 
-    public const COLOR_DEFAULT = '#e3e4e6';
+    const COLOR_DEFAULT = '#e3e4e6';
 
     /**
      * Slack channel (encoded ID or name)
+     * @var string|null
      */
-    private string|null $channel;
+    private $channel;
 
     /**
      * Name of a bot
+     * @var string|null
      */
-    private string|null $username;
+    private $username;
 
     /**
      * User icon e.g. 'ghost', 'http://example.com/user.png'
+     * @var string
      */
-    private string|null $userIcon;
+    private $userIcon;
 
     /**
      * Whether the message should be added to Slack as attachment (plain text otherwise)
+     * @var bool
      */
-    private bool $useAttachment;
+    private $useAttachment;
 
     /**
      * Whether the the context/extra messages added to Slack as attachments are in a short style
+     * @var bool
      */
-    private bool $useShortAttachment;
+    private $useShortAttachment;
 
     /**
      * Whether the attachment should include context and extra data
+     * @var bool
      */
-    private bool $includeContextAndExtra;
+    private $includeContextAndExtra;
 
     /**
      * Dot separated list of fields to exclude from slack message. E.g. ['context.field1', 'extra.field2']
-     * @var string[]
+     * @var array
      */
-    private array $excludeFields;
-
-    private FormatterInterface|null $formatter;
-
-    private NormalizerFormatter $normalizerFormatter;
+    private $excludeFields;
 
     /**
-     * @param string[] $excludeFields
+     * @var FormatterInterface
      */
-    public function __construct(
-        ?string $channel = null,
-        ?string $username = null,
-        bool $useAttachment = true,
-        ?string $userIcon = null,
-        bool $useShortAttachment = false,
-        bool $includeContextAndExtra = false,
-        array $excludeFields = [],
-        FormatterInterface $formatter = null
-    ) {
-        $this
-            ->setChannel($channel)
-            ->setUsername($username)
-            ->useAttachment($useAttachment)
-            ->setUserIcon($userIcon)
-            ->useShortAttachment($useShortAttachment)
-            ->includeContextAndExtra($includeContextAndExtra)
-            ->excludeFields($excludeFields)
-            ->setFormatter($formatter);
+    private $formatter;
+
+    /**
+     * @var NormalizerFormatter
+     */
+    private $normalizerFormatter;
+
+    public function __construct($channel = null, $username = null, $useAttachment = true, $userIcon = null, $useShortAttachment = false, $includeContextAndExtra = false, array $excludeFields = array(), FormatterInterface $formatter = null)
+    {
+        $this->channel = $channel;
+        $this->username = $username;
+        $this->userIcon = trim($userIcon, ':');
+        $this->useAttachment = $useAttachment;
+        $this->useShortAttachment = $useShortAttachment;
+        $this->includeContextAndExtra = $includeContextAndExtra;
+        $this->excludeFields = $excludeFields;
+        $this->formatter = $formatter;
 
         if ($this->includeContextAndExtra) {
             $this->normalizerFormatter = new NormalizerFormatter();
         }
     }
 
-    /**
-     * Returns required data in format that Slack
-     * is expecting.
-     *
-     * @phpstan-return mixed[]
-     */
-    public function getSlackData(LogRecord $record): array
+    public function getSlackData(array $record)
     {
-        $dataArray = [];
+        $dataArray = array();
+        $record = $this->excludeFields($record);
 
-        if ($this->username !== null) {
+        if ($this->username) {
             $dataArray['username'] = $this->username;
         }
 
-        if ($this->channel !== null) {
+        if ($this->channel) {
             $dataArray['channel'] = $this->channel;
         }
 
-        if ($this->formatter !== null && !$this->useAttachment) {
+        if ($this->formatter && !$this->useAttachment) {
             $message = $this->formatter->format($record);
         } else {
-            $message = $record->message;
+            $message = $record['message'];
         }
 
-        $recordData = $this->removeExcludedFields($record);
-
         if ($this->useAttachment) {
-            $attachment = [
+            $attachment = array(
                 'fallback'  => $message,
                 'text'      => $message,
-                'color'     => $this->getAttachmentColor($record->level),
-                'fields'    => [],
-                'mrkdwn_in' => ['fields'],
-                'ts'        => $recordData['datetime']->getTimestamp(),
-                'footer'      => $this->username,
-                'footer_icon' => $this->userIcon,
-            ];
+                'color'     => $this->getAttachmentColor($record['level']),
+                'fields'    => array(),
+                'mrkdwn_in' => array('fields'),
+                'ts'        => $record['datetime']->getTimestamp()
+            );
 
             if ($this->useShortAttachment) {
-                $attachment['title'] = $recordData['level_name'];
+                $attachment['title'] = $record['level_name'];
             } else {
                 $attachment['title'] = 'Message';
-                $attachment['fields'][] = $this->generateAttachmentField('Level', $recordData['level_name']);
+                $attachment['fields'][] = $this->generateAttachmentField('Level', $record['level_name']);
             }
 
+
             if ($this->includeContextAndExtra) {
-                foreach (['extra', 'context'] as $key) {
-                    if (!isset($recordData[$key]) || \count($recordData[$key]) === 0) {
+                foreach (array('extra', 'context') as $key) {
+                    if (empty($record[$key])) {
                         continue;
                     }
 
                     if ($this->useShortAttachment) {
                         $attachment['fields'][] = $this->generateAttachmentField(
                             $key,
-                            $recordData[$key]
+                            $record[$key]
                         );
                     } else {
                         // Add all extra fields as individual fields in attachment
                         $attachment['fields'] = array_merge(
                             $attachment['fields'],
-                            $this->generateAttachmentFields($recordData[$key])
+                            $this->generateAttachmentFields($record[$key])
                         );
                     }
                 }
             }
 
-            $dataArray['attachments'] = [$attachment];
+            $dataArray['attachments'] = array($attachment);
         } else {
             $dataArray['text'] = $message;
         }
 
-        if ($this->userIcon !== null) {
-            if (false !== ($iconUrl = filter_var($this->userIcon, FILTER_VALIDATE_URL))) {
-                $dataArray['icon_url'] = $iconUrl;
+        if ($this->userIcon) {
+            if (filter_var($this->userIcon, FILTER_VALIDATE_URL)) {
+                $dataArray['icon_url'] = $this->userIcon;
             } else {
                 $dataArray['icon_emoji'] = ":{$this->userIcon}:";
             }
@@ -186,153 +177,93 @@ class SlackRecord
     }
 
     /**
-     * Returns a Slack message attachment color associated with
+     * Returned a Slack message attachment color associated with
      * provided level.
+     *
+     * @param  int    $level
+     * @return string
      */
-    public function getAttachmentColor(Level $level): string
+    public function getAttachmentColor($level)
     {
-        return match ($level) {
-            Level::Error, Level::Critical, Level::Alert, Level::Emergency => static::COLOR_DANGER,
-            Level::Warning => static::COLOR_WARNING,
-            Level::Info, Level::Notice => static::COLOR_GOOD,
-            Level::Debug => static::COLOR_DEFAULT
-        };
+        switch (true) {
+            case $level >= Logger::ERROR:
+                return self::COLOR_DANGER;
+            case $level >= Logger::WARNING:
+                return self::COLOR_WARNING;
+            case $level >= Logger::INFO:
+                return self::COLOR_GOOD;
+            default:
+                return self::COLOR_DEFAULT;
+        }
     }
 
     /**
      * Stringifies an array of key/value pairs to be used in attachment fields
      *
-     * @param mixed[] $fields
+     * @param array $fields
+     *
+     * @return string
      */
-    public function stringify(array $fields): string
+    public function stringify($fields)
     {
-        /** @var array<mixed> $normalized */
-        $normalized = $this->normalizerFormatter->normalizeValue($fields);
-
-        $hasSecondDimension = \count(array_filter($normalized, 'is_array')) > 0;
-        $hasOnlyNonNumericKeys = \count(array_filter(array_keys($normalized), 'is_numeric')) === 0;
-
-        return $hasSecondDimension || $hasOnlyNonNumericKeys
-            ? Utils::jsonEncode($normalized, JSON_PRETTY_PRINT|Utils::DEFAULT_JSON_FLAGS)
-            : Utils::jsonEncode($normalized, Utils::DEFAULT_JSON_FLAGS);
-    }
-
-    /**
-     * Channel used by the bot when posting
-     *
-     * @param ?string $channel
-     *
-     * @return static
-     */
-    public function setChannel(?string $channel = null): self
-    {
-        $this->channel = $channel;
-
-        return $this;
-    }
-
-    /**
-     * Username used by the bot when posting
-     *
-     * @param ?string $username
-     *
-     * @return static
-     */
-    public function setUsername(?string $username = null): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function useAttachment(bool $useAttachment = true): self
-    {
-        $this->useAttachment = $useAttachment;
-
-        return $this;
-    }
-
-    public function setUserIcon(?string $userIcon = null): self
-    {
-        $this->userIcon = $userIcon;
-
-        if (\is_string($userIcon)) {
-            $this->userIcon = trim($userIcon, ':');
+        $normalized = $this->normalizerFormatter->format($fields);
+        $prettyPrintFlag = defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 128;
+        $flags = 0;
+        if (PHP_VERSION_ID >= 50400) {
+            $flags = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
         }
 
-        return $this;
-    }
+        $hasSecondDimension = count(array_filter($normalized, 'is_array'));
+        $hasNonNumericKeys = !count(array_filter(array_keys($normalized), 'is_numeric'));
 
-    public function useShortAttachment(bool $useShortAttachment = false): self
-    {
-        $this->useShortAttachment = $useShortAttachment;
-
-        return $this;
-    }
-
-    public function includeContextAndExtra(bool $includeContextAndExtra = false): self
-    {
-        $this->includeContextAndExtra = $includeContextAndExtra;
-
-        if ($this->includeContextAndExtra) {
-            $this->normalizerFormatter = new NormalizerFormatter();
-        }
-
-        return $this;
+        return $hasSecondDimension || $hasNonNumericKeys
+            ? Utils::jsonEncode($normalized, $prettyPrintFlag | $flags)
+            : Utils::jsonEncode($normalized, $flags);
     }
 
     /**
-     * @param string[] $excludeFields
+     * Sets the formatter
+     *
+     * @param FormatterInterface $formatter
      */
-    public function excludeFields(array $excludeFields = []): self
-    {
-        $this->excludeFields = $excludeFields;
-
-        return $this;
-    }
-
-    public function setFormatter(?FormatterInterface $formatter = null): self
+    public function setFormatter(FormatterInterface $formatter)
     {
         $this->formatter = $formatter;
-
-        return $this;
     }
 
     /**
      * Generates attachment field
      *
-     * @param string|mixed[] $value
+     * @param string       $title
+     * @param string|array $value
      *
-     * @return array{title: string, value: string, short: false}
+     * @return array
      */
-    private function generateAttachmentField(string $title, $value): array
+    private function generateAttachmentField($title, $value)
     {
         $value = is_array($value)
-            ? sprintf('```%s```', substr($this->stringify($value), 0, 1990))
+            ? sprintf('```%s```', $this->stringify($value))
             : $value;
 
-        return [
+        return array(
             'title' => ucfirst($title),
             'value' => $value,
-            'short' => false,
-        ];
+            'short' => false
+        );
     }
 
     /**
      * Generates a collection of attachment fields from array
      *
-     * @param mixed[] $data
+     * @param array $data
      *
-     * @return array<array{title: string, value: string, short: false}>
+     * @return array
      */
-    private function generateAttachmentFields(array $data): array
+    private function generateAttachmentFields(array $data)
     {
-        /** @var array<mixed> $normalized */
-        $normalized = $this->normalizerFormatter->normalizeValue($data);
-
-        $fields = [];
-        foreach ($normalized as $key => $value) {
-            $fields[] = $this->generateAttachmentField((string) $key, $value);
+        $fields = array();
+        foreach ($this->normalizerFormatter->format($data) as $key => $value) {
+            $fields[] = $this->generateAttachmentField($key, $value);
         }
 
         return $fields;
@@ -341,14 +272,15 @@ class SlackRecord
     /**
      * Get a copy of record with fields excluded according to $this->excludeFields
      *
-     * @return mixed[]
+     * @param array $record
+     *
+     * @return array
      */
-    private function removeExcludedFields(LogRecord $record): array
+    private function excludeFields(array $record)
     {
-        $recordData = $record->toArray();
         foreach ($this->excludeFields as $field) {
             $keys = explode('.', $field);
-            $node = &$recordData;
+            $node = &$record;
             $lastKey = end($keys);
             foreach ($keys as $key) {
                 if (!isset($node[$key])) {
@@ -362,6 +294,6 @@ class SlackRecord
             }
         }
 
-        return $recordData;
+        return $record;
     }
 }

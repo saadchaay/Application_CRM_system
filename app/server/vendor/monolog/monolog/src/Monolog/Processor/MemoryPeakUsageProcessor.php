@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 /*
  * This file is part of the Monolog package.
@@ -11,8 +11,6 @@
 
 namespace Monolog\Processor;
 
-use Monolog\LogRecord;
-
 /**
  * Injects memory_get_peak_usage in all records
  *
@@ -22,17 +20,15 @@ use Monolog\LogRecord;
 class MemoryPeakUsageProcessor extends MemoryProcessor
 {
     /**
-     * @inheritDoc
+     * @param  array $record
+     * @return array
      */
-    public function __invoke(LogRecord $record): LogRecord
+    public function __invoke(array $record)
     {
-        $usage = memory_get_peak_usage($this->realUsage);
+        $bytes = memory_get_peak_usage($this->realUsage);
+        $formatted = $this->formatBytes($bytes);
 
-        if ($this->useFormatting) {
-            $usage = $this->formatBytes($usage);
-        }
-
-        $record->extra['memory_peak_usage'] = $usage;
+        $record['extra']['memory_peak_usage'] = $formatted;
 
         return $record;
     }

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 /*
  * This file is part of the Monolog package.
@@ -11,8 +11,7 @@
 
 namespace Monolog\Formatter;
 
-use Monolog\Level;
-use Monolog\LogRecord;
+use Monolog\Logger;
 
 /**
  * Serializes a log message according to Wildfire's header requirements
@@ -23,112 +22,89 @@ use Monolog\LogRecord;
  */
 class WildfireFormatter extends NormalizerFormatter
 {
-    /**
-     * @param string|null $dateFormat The format of the timestamp: one supported by DateTime::format
-     */
-    public function __construct(?string $dateFormat = null)
-    {
-        parent::__construct($dateFormat);
-
-        // http headers do not like non-ISO-8559-1 characters
-        $this->removeJsonEncodeOption(JSON_UNESCAPED_UNICODE);
-    }
+    const TABLE = 'table';
 
     /**
      * Translates Monolog log levels to Wildfire levels.
-     *
-     * @return 'LOG'|'INFO'|'WARN'|'ERROR'
      */
-    private function toWildfireLevel(Level $level): string
-    {
-        return match ($level) {
-            Level::Debug     => 'LOG',
-            Level::Info      => 'INFO',
-            Level::Notice    => 'INFO',
-            Level::Warning   => 'WARN',
-            Level::Error     => 'ERROR',
-            Level::Critical  => 'ERROR',
-            Level::Alert     => 'ERROR',
-            Level::Emergency => 'ERROR',
-        };
-    }
+    private $logLevels = array(
+        Logger::DEBUG     => 'LOG',
+        Logger::INFO      => 'INFO',
+        Logger::NOTICE    => 'INFO',
+        Logger::WARNING   => 'WARN',
+        Logger::ERROR     => 'ERROR',
+        Logger::CRITICAL  => 'ERROR',
+        Logger::ALERT     => 'ERROR',
+        Logger::EMERGENCY => 'ERROR',
+    );
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function format(LogRecord $record): string
+    public function format(array $record)
     {
         // Retrieve the line and file if set and remove them from the formatted extra
         $file = $line = '';
-        if (isset($record->extra['file'])) {
-            $file = $record->extra['file'];
-            unset($record->extra['file']);
+        if (isset($record['extra']['file'])) {
+            $file = $record['extra']['file'];
+            unset($record['extra']['file']);
         }
-        if (isset($record->extra['line'])) {
-            $line = $record->extra['line'];
-            unset($record->extra['line']);
+        if (isset($record['extra']['line'])) {
+            $line = $record['extra']['line'];
+            unset($record['extra']['line']);
         }
 
-        $message = ['message' => $record->message];
+        $record = $this->normalize($record);
+        $message = array('message' => $record['message']);
         $handleError = false;
-        if (count($record->context) > 0) {
-            $message['context'] = $this->normalize($record->context);
+        if ($record['context']) {
+            $message['context'] = $record['context'];
             $handleError = true;
         }
-        if (count($record->extra) > 0) {
-            $message['extra'] = $this->normalize($record->extra);
+        if ($record['extra']) {
+            $message['extra'] = $record['extra'];
             $handleError = true;
         }
         if (count($message) === 1) {
             $message = reset($message);
         }
 
-        if (is_array($message) && isset($message['context']['table'])) {
+        if (isset($record['context'][self::TABLE])) {
             $type  = 'TABLE';
-            $label = $record->channel .': '. $record->message;
-            $message = $message['context']['table'];
+            $label = $record['channel'] .': '. $record['message'];
+            $message = $record['context'][self::TABLE];
         } else {
-            $type  = $this->toWildfireLevel($record->level);
-            $label = $record->channel;
+            $type  = $this->logLevels[$record['level']];
+            $label = $record['channel'];
         }
 
         // Create JSON object describing the appearance of the message in the console
-        $json = $this->toJson([
-            [
+        $json = $this->toJson(array(
+            array(
                 'Type'  => $type,
                 'File'  => $file,
                 'Line'  => $line,
                 'Label' => $label,
-            ],
+            ),
             $message,
-        ], $handleError);
+        ), $handleError);
 
         // The message itself is a serialization of the above JSON object + it's length
         return sprintf(
-            '%d|%s|',
+            '%s|%s|',
             strlen($json),
             $json
         );
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @phpstan-return never
-     */
     public function formatBatch(array $records)
     {
         throw new \BadMethodCallException('Batch formatting does not make sense for the WildfireFormatter');
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return null|scalar|array<mixed[]|scalar|null>|object
-     */
-    protected function normalize(mixed $data, int $depth = 0): mixed
+    protected function normalize($data, $depth = 0)
     {
-        if (is_object($data) && !$data instanceof \DateTimeInterface) {
+        if (is_object($data) && !$data instanceof \DateTime) {
             return $data;
         }
 

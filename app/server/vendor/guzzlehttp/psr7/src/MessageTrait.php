@@ -1,10 +1,6 @@
 <?php
-
-declare(strict_types=1);
-
 namespace GuzzleHttp\Psr7;
 
-use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -12,24 +8,24 @@ use Psr\Http\Message\StreamInterface;
  */
 trait MessageTrait
 {
-    /** @var array<string, string[]> Map of all registered headers, as original name => array of values */
+    /** @var array Cached HTTP header collection with lowercase key to values */
     private $headers = [];
 
-    /** @var array<string, string> Map of lowercase header name => original name at registration */
-    private $headerNames  = [];
+    /** @var array Actual key to list of values per header. */
+    private $headerLines = [];
 
     /** @var string */
     private $protocol = '1.1';
 
-    /** @var StreamInterface|null */
+    /** @var StreamInterface */
     private $stream;
 
-    public function getProtocolVersion(): string
+    public function getProtocolVersion()
     {
         return $this->protocol;
     }
 
-    public function withProtocolVersion($version): MessageInterface
+    public function withProtocolVersion($version)
     {
         if ($this->protocol === $version) {
             return $this;
@@ -40,94 +36,96 @@ trait MessageTrait
         return $new;
     }
 
-    public function getHeaders(): array
+    public function getHeaders()
     {
-        return $this->headers;
+        return $this->headerLines;
     }
 
-    public function hasHeader($header): bool
+    public function hasHeader($header)
     {
-        return isset($this->headerNames[strtolower($header)]);
+        return isset($this->headers[strtolower($header)]);
     }
 
-    public function getHeader($header): array
+    public function getHeader($header)
     {
-        $header = strtolower($header);
-
-        if (!isset($this->headerNames[$header])) {
-            return [];
-        }
-
-        $header = $this->headerNames[$header];
-
-        return $this->headers[$header];
+        $name = strtolower($header);
+        return isset($this->headers[$name]) ? $this->headers[$name] : [];
     }
 
-    public function getHeaderLine($header): string
+    public function getHeaderLine($header)
     {
         return implode(', ', $this->getHeader($header));
     }
 
-    public function withHeader($header, $value): MessageInterface
+    public function withHeader($header, $value)
     {
-        $this->assertHeader($header);
-        $value = $this->normalizeHeaderValue($value);
-        $normalized = strtolower($header);
-
         $new = clone $this;
-        if (isset($new->headerNames[$normalized])) {
-            unset($new->headers[$new->headerNames[$normalized]]);
-        }
-        $new->headerNames[$normalized] = $header;
-        $new->headers[$header] = $value;
+        $header = trim($header);
+        $name = strtolower($header);
 
-        return $new;
-    }
-
-    public function withAddedHeader($header, $value): MessageInterface
-    {
-        $this->assertHeader($header);
-        $value = $this->normalizeHeaderValue($value);
-        $normalized = strtolower($header);
-
-        $new = clone $this;
-        if (isset($new->headerNames[$normalized])) {
-            $header = $this->headerNames[$normalized];
-            $new->headers[$header] = array_merge($this->headers[$header], $value);
+        if (!is_array($value)) {
+            $new->headers[$name] = [trim($value)];
         } else {
-            $new->headerNames[$normalized] = $header;
-            $new->headers[$header] = $value;
+            $new->headers[$name] = $value;
+            foreach ($new->headers[$name] as &$v) {
+                $v = trim($v);
+            }
         }
+
+        // Remove the header lines.
+        foreach (array_keys($new->headerLines) as $key) {
+            if (strtolower($key) === $name) {
+                unset($new->headerLines[$key]);
+            }
+        }
+
+        // Add the header line.
+        $new->headerLines[$header] = $new->headers[$name];
 
         return $new;
     }
 
-    public function withoutHeader($header): MessageInterface
+    public function withAddedHeader($header, $value)
     {
-        $normalized = strtolower($header);
+        if (!$this->hasHeader($header)) {
+            return $this->withHeader($header, $value);
+        }
 
-        if (!isset($this->headerNames[$normalized])) {
+        $new = clone $this;
+        $new->headers[strtolower($header)][] = $value;
+        $new->headerLines[$header][] = $value;
+        return $new;
+    }
+
+    public function withoutHeader($header)
+    {
+        if (!$this->hasHeader($header)) {
             return $this;
         }
 
-        $header = $this->headerNames[$normalized];
-
         $new = clone $this;
-        unset($new->headers[$header], $new->headerNames[$normalized]);
+        $name = strtolower($header);
+        unset($new->headers[$name]);
+
+        foreach (array_keys($new->headerLines) as $key) {
+            if (strtolower($key) === $name) {
+                unset($new->headerLines[$key]);
+            }
+        }
 
         return $new;
     }
 
-    public function getBody(): StreamInterface
+    public function getBody()
     {
         if (!$this->stream) {
-            $this->stream = Utils::streamFor('');
+            $this->stream = stream_for('');
         }
 
         return $this->stream;
     }
 
-    public function withBody(StreamInterface $body): MessageInterface
+    public function withBody(StreamInterface $body)
     {
         if ($body === $this->stream) {
             return $this;
@@ -138,127 +136,23 @@ trait MessageTrait
         return $new;
     }
 
-    /**
-     * @param array<string|int, string|string[]> $headers
-     */
-    private function setHeaders(array $headers): void
+    private function setHeaders(array $headers)
     {
-        $this->headerNames = $this->headers = [];
+        $this->headerLines = $this->headers = [];
         foreach ($headers as $header => $value) {
-            // Numeric array keys are converted to int by PHP.
-            $header = (string) $header;
-
-            $this->assertHeader($header);
-            $value = $this->normalizeHeaderValue($value);
-            $normalized = strtolower($header);
-            if (isset($this->headerNames[$normalized])) {
-                $header = $this->headerNames[$normalized];
-                $this->headers[$header] = array_merge($this->headers[$header], $value);
+            $header = trim($header);
+            $name = strtolower($header);
+            if (!is_array($value)) {
+                $value = trim($value);
+                $this->headers[$name][] = $value;
+                $this->headerLines[$header][] = $value;
             } else {
-                $this->headerNames[$normalized] = $header;
-                $this->headers[$header] = $value;
+                foreach ($value as $v) {
+                    $v = trim($v);
+                    $this->headers[$name][] = $v;
+                    $this->headerLines[$header][] = $v;
+                }
             }
-        }
-    }
-
-    /**
-     * @param mixed $value
-     *
-     * @return string[]
-     */
-    private function normalizeHeaderValue($value): array
-    {
-        if (!is_array($value)) {
-            return $this->trimAndValidateHeaderValues([$value]);
-        }
-
-        if (count($value) === 0) {
-            throw new \InvalidArgumentException('Header value can not be an empty array.');
-        }
-
-        return $this->trimAndValidateHeaderValues($value);
-    }
-
-    /**
-     * Trims whitespace from the header values.
-     *
-     * Spaces and tabs ought to be excluded by parsers when extracting the field value from a header field.
-     *
-     * header-field = field-name ":" OWS field-value OWS
-     * OWS          = *( SP / HTAB )
-     *
-     * @param mixed[] $values Header values
-     *
-     * @return string[] Trimmed header values
-     *
-     * @see https://tools.ietf.org/html/rfc7230#section-3.2.4
-     */
-    private function trimAndValidateHeaderValues(array $values): array
-    {
-        return array_map(function ($value) {
-            if (!is_scalar($value) && null !== $value) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Header value must be scalar or null but %s provided.',
-                    is_object($value) ? get_class($value) : gettype($value)
-                ));
-            }
-
-            $trimmed = trim((string) $value, " \t");
-            $this->assertValue($trimmed);
-
-            return $trimmed;
-        }, array_values($values));
-    }
-
-    /**
-     * @see https://tools.ietf.org/html/rfc7230#section-3.2
-     *
-     * @param mixed $header
-     */
-    private function assertHeader($header): void
-    {
-        if (!is_string($header)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Header name must be a string but %s provided.',
-                is_object($header) ? get_class($header) : gettype($header)
-            ));
-        }
-
-        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/', $header)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    '"%s" is not valid header name',
-                    $header
-                )
-            );
-        }
-    }
-
-    /**
-     * @see https://tools.ietf.org/html/rfc7230#section-3.2
-     *
-     * field-value    = *( field-content / obs-fold )
-     * field-content  = field-vchar [ 1*( SP / HTAB ) field-vchar ]
-     * field-vchar    = VCHAR / obs-text
-     * VCHAR          = %x21-7E
-     * obs-text       = %x80-FF
-     * obs-fold       = CRLF 1*( SP / HTAB )
-     */
-    private function assertValue(string $value): void
-    {
-        // The regular expression intentionally does not support the obs-fold production, because as
-        // per RFC 7230#3.2.4:
-        //
-        // A sender MUST NOT generate a message that includes
-        // line folding (i.e., that has any field-value that contains a match to
-        // the obs-fold rule) unless the message is intended for packaging
-        // within the message/http media type.
-        //
-        // Clients must not send a request with line folding and a server sending folded headers is
-        // likely very rare. Line folding is a fairly obscure feature of HTTP/1.1 and thus not accepting
-        // folding is not likely to break any legitimate use case.
-        if (! preg_match('/^[\x20\x09\x21-\x7E\x80-\xFF]*$/', $value)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not valid header value', $value));
         }
     }
 }

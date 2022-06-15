@@ -1,7 +1,6 @@
 <?php 
 require 'autoload.php' ;
 require 'config/config.php' ;
-require_once __DIR__ . '/vendor/autoload.php';
 
     $controller = "Pages";
     $method = "home";
@@ -18,8 +17,6 @@ require_once __DIR__ . '/vendor/autoload.php';
     }
 
     $url = getUrl(); 
-    
-    
 
     if(isset($url[0])){
         if(is_file("controllers/$url[0].php")){

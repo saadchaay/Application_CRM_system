@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 /*
  * This file is part of the Monolog package.
@@ -11,8 +11,6 @@
 
 namespace Monolog\Processor;
 
-use Monolog\LogRecord;
-
 /**
  * Adds value of getmypid into records
  *
@@ -21,11 +19,12 @@ use Monolog\LogRecord;
 class ProcessIdProcessor implements ProcessorInterface
 {
     /**
-     * @inheritDoc
+     * @param  array $record
+     * @return array
      */
-    public function __invoke(LogRecord $record): LogRecord
+    public function __invoke(array $record)
     {
-        $record->extra['process_id'] = getmypid();
+        $record['extra']['process_id'] = getmypid();
 
         return $record;
     }

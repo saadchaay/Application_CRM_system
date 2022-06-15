@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 /*
  * This file is part of the Monolog package.
@@ -11,8 +11,6 @@
 
 namespace Monolog\Processor;
 
-use Monolog\LogRecord;
-
 /**
  * An optional interface to allow labelling Monolog processors.
  *
@@ -21,7 +19,7 @@ use Monolog\LogRecord;
 interface ProcessorInterface
 {
     /**
-     * @return LogRecord The processed record
+     * @return array The processed records
      */
-    public function __invoke(LogRecord $record);
+    public function __invoke(array $records);
 }
