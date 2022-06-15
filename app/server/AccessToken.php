@@ -1,12 +1,19 @@
 <?php 
 
-require_once '/vendor/autoload.php';
-  
-define('GOOGLE_CLIENT_ID', 'PASTE_CLIENT_ID_HERE');
-define('GOOGLE_CLIENT_SECRET', 'PASTE_CLIENT_SECRET_HERE');
+require __DIR__ . '/vendor/autoload.php';
+
+$client = new \Google_Client();
+$client->setApplicationName('Google Calendar API PHP Quickstart');
+$client->setScopes(\Google_Service_Calendar::CALENDAR);
+$client->setAuthConfig('credentials.json');
+$client->setAccessType('offline');
+$client->setPrompt('select_account');
+
+define('GOOGLE_CLIENT_ID', '902170722306-736ta1oeknlfjhj0gvv4ug1ga99li3c7.apps.googleusercontent.com');
+define('GOOGLE_CLIENT_SECRET', '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');
   
 $config = [
-    'callback' => 'YOUR_DOMAIN_URL/callback.php',
+    'callback' => 'http://localhost/fil_rouge_project/app/server/callback.php',
     'keys'     => [
                     'id' => GOOGLE_CLIENT_ID,
                     'secret' => GOOGLE_CLIENT_SECRET
@@ -19,5 +26,4 @@ $config = [
 ];
   
 $adapter = new Hybridauth\Provider\Google( $config );
-
 ?>
