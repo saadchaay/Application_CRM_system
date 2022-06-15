@@ -111,10 +111,11 @@ export default function Integration() {
       });
 
       if(dataJson.spreadsheetId){
-        axios.post("ProfileController/createSpreadsheet", dataJson).then((res) => {
+        axios.post("SheetsController/store", dataJson).then((res) => {
           console.log(res);
-          setCreateOne(true);
-        }
+          setCreateOne(false);
+        });
+      }
 
   };
 
