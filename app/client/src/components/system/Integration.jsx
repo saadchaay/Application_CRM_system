@@ -3,14 +3,11 @@ import axios from "../../api/axios";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 
-// const SPREADSHEET_ID = "1cmn121R0jCN3_yZWbqwSPuMwzr6u7XTMkCuSYCwng_k";
-// const SHEET_ID = 0;
-// const CLIENT_EMAIL =
-//   "crm-system-app@crm-system-integration.iam.gserviceaccount.com";
-// const PRIVATE_KEY =
-//   "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDkIBUCDhGPPiJy";
+const API_KEY = "AIzaSyCER60a4a5mEevpsH8uE__5G4kz1vSUpuQ";
+const CLIENT_ID = "902170722306-6cbiq8gv13ft9vm91tuk0s99ableif54.apps.googleusercontent.com";
+const Secret = "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";
+const SCOPE = "https://www.googleapis.com/auth/drive";
 
-const SCOPE = "https://www.googleapis.com/auth/spreadsheets";
 const transactions = [
   {
     id: "AAPS0L",
@@ -86,37 +83,58 @@ export default function Integration() {
 
   const createSpreedSheet = (e) => {
     e.preventDefault();
-    // start(token);
-    // console.log(gapi);
-    // gapi.load('client:auth2', () => {
-    //   gapi.client.init({
-    //     apiKey: token.apiKey,
-    //     client_id: token.clientId,
-    //     scope: SCOPE,
-    //   });
-    // });
+    gapi.client.init({
+      'apiKey': API_KEY,
+      'clientId': CLIENT_ID,
+      'scope': SCOPE,
+      'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+    }).then(function() {
+      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+      updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    });
     console.log(gapi);
     var accessToken = gapi.auth.getToken().access_token;
     console.log(accessToken);
-    fetch("https://sheets.googleapis.com/v4/spreadsheets", {
+    fetch("https://docs.googleapis.com/v1/documents", {
       method: "POST",
-      headers: new Headers({ 'Authorization': "Bearer " + accessToken }),
+      headers: new Headers({ 'Authorization': 'Bearer ' +accessToken }),
     }).then((res) => {
       return res.json();
     }).then( function(val){
       console.log(val);
+      // console.log(val.spreedsheets.id);
     });
 
   };
-  
-  useEffect(() => {
-    gapi.load('client:auth2', () => {
-      gapi.client.init({
-        apiKey: token.apiKey,
-        client_id: token.clientId,
-        scope: SCOPE,
-      });
+  function makeApiCall() {
+    var spreadsheetBody = {
+      // TODO: Add desired properties to the request body.
+    };
+
+    var request = gapi.client.sheets.spreadsheets.create({}, spreadsheetBody);
+    request.then(function(response) {
+      // TODO: Change code below to process the `response` object:
+      console.log(response.result);
+    }, function(reason) {
+      console.error('error: ' + reason.result.error.message);
     });
+  };
+  function updateSignInStatus(isSignedIn) {
+    if (isSignedIn) {
+      makeApiCall();
+    }
+  };
+  useEffect(() => {
+    gapi.auth2.getAuthInstance().signIn();
+    // function start(token) {
+    //   gapi.client.init({
+    //     apiKey: token.apiKey,
+    //     client_id: token.clientId,
+    //     scope: "https://www.googleapis.com/auth/drive",
+    //   });
+    // }
+    // console.log(token);
+    // gapi.load('client:auth2', start);
   });
 
   return (
