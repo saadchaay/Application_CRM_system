@@ -77,7 +77,7 @@ export default function Example() {
   const fetchProducts = async () => {
     const type = auth.role === "admin" ? "admin" : "admin";
     const res = await axios.get(
-      "ProductsController/index/" + auth.id_admin + "/" + type
+      "ProductsController/index/" + auth.id + "/" + type
     );
     if (res) {
       console.log(res.data);
