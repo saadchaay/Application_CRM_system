@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import { GoogleLogin } from "react-google-login";
+import { gapi } from "gapi-script";
 
 // const SPREADSHEET_ID = "1cmn121R0jCN3_yZWbqwSPuMwzr6u7XTMkCuSYCwng_k";
 // const SHEET_ID = 0;
@@ -85,27 +86,33 @@ export default function Integration() {
 
   const createSpreedSheet = (e) => {
     e.preventDefault();
-    // const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
-    // doc.useServiceAccountAuth({
-    //   client_email: CLIENT_EMAIL,
-    //   private_key: PRIVATE_KEY,
-    // });
-    // doc.loadInfo().then((info) => {
-    //   console.log(info);
-    //   const sheet = doc.sheetsByIndex[SHEET_ID];
-    //   sheet.addRow(transactions);
-    // });
+    // start(token);
+    // console.log(gapi);
+    gapi.load('client:auth2', () => {
+      gapi.client.init({
+        apiKey: token.apiKey,
+        client_id: token.clientId,
+        scope: SCOPE,
+      });
+    });
+    console.log(gapi);
+    var accessToken = gapi.auth.getToken().access_token;
+    console.log(accessToken);
+    
   };
-  // function start(data) {
-  //   if (token) {
-  //     gapi.client.init({
-  //       apiKey: data.api_key,
-  //       clientId: data.clientId,
-  //       scope: SCOPE,
-  //     });
-  //   }
-  // }
+        
+          
+  function start(data) {
+    if (token) {
+      gapi.client.init({
+        apiKey: data.api_key,
+        clientId: data.clientId,
+        scope: SCOPE,
+      });
+    }
+  }
   useEffect(() => {
+    // start(token);
   });
 
   return (
