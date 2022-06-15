@@ -100,16 +100,15 @@ export default function Integration() {
   };
   
   useEffect(() => {
-    function start(token) {
+    // console.log(token);
+    gapi.load('client:auth2', () => {
       gapi.client.init({
-        apiKey: token.apiKey,
-        client_id: token.clientId,
+        apiKey: API_KEY,
+        client_id: clientId,
         scope: "https://www.googleapis.com/auth/drive",
         discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-      });
-    }
-    // console.log(token);
-    gapi.load('client:auth2', start);
+
+    });
   });
 
   return (
