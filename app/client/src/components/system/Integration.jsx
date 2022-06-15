@@ -7,7 +7,7 @@ const API_KEY = "AIzaSyD8sJuOu8T7-LPBhUFbrGOKh_tzTUnj0xs";
 const CLIENT_ID =
   "280216831650-f9dn7qig5117unbvtfsnlusk5kjda32l.apps.googleusercontent.com";
 const Secret = "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";
-const SCOPE = "https://www.googleapis.com/auth/drive"; 
+const SCOPE = "https://www.googleapis.com/auth/drive";
 
 const transactions = [
   {
@@ -29,6 +29,8 @@ export default function Integration() {
   const [apiKey, setApiKey] = useState("");
   const [data, setData] = useState({});
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
+  const [createOne, setCreateOne] = useState(false);
+  const [fileName, setFileName] = useState("");
 
   const onSuccess = (response) => {
     console.log(response);
@@ -91,6 +93,11 @@ export default function Integration() {
     fetch("https://sheets.googleapis.com/v4/spreadsheets/", {
       method: "POST",
       headers: new Headers({ Authorization: "Bearer " + accessToken }),
+      body: JSON.stringify({
+        properties: {
+          title: fileName,
+        },
+      }),
     })
       .then((res) => {
         return res.json();
@@ -104,8 +111,8 @@ export default function Integration() {
   useEffect(() => {
     function start() {
       gapi.client.init({
-        apiKey: API_KEY,
-        client_id: CLIENT_ID,
+        apiKey: token.apiKey ? token.apiKey : API_KEY,
+        client_id: token.clientId ? token.clientId : CLIENT_ID,
         scope: SCOPE,
         discoveryDocs: [
           "https://sheets.googleapis.com/$discovery/rest?version=v4",
@@ -113,16 +120,6 @@ export default function Integration() {
       });
     }
     gapi.load("client:auth2", start);
-    // gapi.load("client:auth2", () => {
-    //   gapi.client.init({
-    //     apiKey: API_KEY,
-    //     client_id: CLIENT_ID,
-    //     scope: SCOPE,
-    //     discoveryDocs: [
-    //       "https://sheets.googleapis.com/$discovery/rest?version=v4",
-    //     ],
-    //   });
-    // });
   });
 
   return (
@@ -252,27 +249,49 @@ export default function Integration() {
                 <div className="text-cyan-600 text-md">
                   Your Account is connected with Google Sheets
                 </div>
-                <div className="flex justify-between">
+                <div className="flex flex-col sm:justify-between sm:flex-row">
                   <button
                     onClick={(e) => HandleDisconnect(e)}
-                    className="mt-3 w-36 text-white bg-red-700 hover:bg-red-800 rounded-md px-4 py-3"
+                    className="mt-3 text-white bg-red-700 hover:bg-red-800 rounded-md px-4 py-3 w-full sm:w-36"
                   >
                     <span>Disconnect</span>
                   </button>
-                  <div className="w-auto">
-                    <button
-                      className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap w-auto"
-                      // onClick={createSpreedSheet}
-                    >
-                      Add SpreedSheet
-                    </button>
-                    <button
-                      className="mt-3 ml-1 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap w-auto"
-                      onClick={createSpreedSheet}
-                    >
-                      Create one
-                    </button>
-                  </div>
+                  {createOne ? (
+                    <div className="flex flex-col justify-between w-full sm:w-auto sm:flex-row">
+                      <div className="flex items-end">
+                        <input
+                          type="text"
+                          id="title"
+                          placeholder="File Name"
+                          value={fileName}
+                          onChange={(e) => setFileName(e.target.value)}
+                          autoComplete="title"
+                          className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm h-auto sm:py-4 mt-2"
+                        />
+                      </div>
+                      <button
+                        className="mt-2 ml-1 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap w-20"
+                        onClick={createSpreedSheet}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex justify-between w-full sm:w-auto">
+                      <button
+                        className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap flex-1"
+                        // onClick={createSpreedSheet}
+                      >
+                        Add SpreedSheet
+                      </button>
+                      <button
+                        className="mt-3 ml-1 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap"
+                        onClick={() => setCreateOne(true)}
+                      >
+                        Create one
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
