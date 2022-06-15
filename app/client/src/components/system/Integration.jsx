@@ -3,10 +3,11 @@ import axios from "../../api/axios";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 
-const API_KEY = "AIzaSyCER60a4a5mEevpsH8uE__5G4kz1vSUpuQ";
-const CLIENT_ID = "902170722306-6cbiq8gv13ft9vm91tuk0s99ableif54.apps.googleusercontent.com";
-const Secret = "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";
-const SCOPE = "https://www.googleapis.com/auth/drive";
+const API_KEY = "AIzaSyD8sJuOu8T7-LPBhUFbrGOKh_tzTUnj0xs";
+const CLIENT_ID =
+  "280216831650-f9dn7qig5117unbvtfsnlusk5kjda32l.apps.googleusercontent.com";
+const Secret = "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";
+const SCOPE = "https://www.googleapis.com/auth/drive"; 
 
 const transactions = [
   {
@@ -81,34 +82,47 @@ export default function Integration() {
       });
   };
 
-  const createSpreedSheet = (e) => {
+  const createSpreedSheet = async (e) => {
     e.preventDefault();
-    
+
     console.log(gapi);
     var accessToken = gapi.auth.getToken().access_token;
     console.log(accessToken);
-    fetch("https://docs.googleapis.com/v1/documents", {
+    fetch("https://sheets.googleapis.com/v4/spreadsheets/", {
       method: "POST",
-      headers: new Headers({ 'Authorization': 'Bearer ' +accessToken }),
-    }).then((res) => {
-      return res.json();
-    }).then( function(val){
-      console.log(val);
-      // console.log(val.spreedsheets.id);
-    });
-
+      headers: new Headers({ Authorization: "Bearer " + accessToken }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then(function (val) {
+        console.log(val);
+        console.log(val.spreedsheets.id);
+      });
   };
-  
+
   useEffect(() => {
-    // console.log(token);
-    gapi.load('client:auth2', () => {
+    function start() {
       gapi.client.init({
         apiKey: API_KEY,
-        client_id: clientId,
-        scope: "https://www.googleapis.com/auth/drive",
-        discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-
-    });
+        client_id: CLIENT_ID,
+        scope: SCOPE,
+        discoveryDocs: [
+          "https://sheets.googleapis.com/$discovery/rest?version=v4",
+        ],
+      });
+    }
+    gapi.load("client:auth2", start);
+    // gapi.load("client:auth2", () => {
+    //   gapi.client.init({
+    //     apiKey: API_KEY,
+    //     client_id: CLIENT_ID,
+    //     scope: SCOPE,
+    //     discoveryDocs: [
+    //       "https://sheets.googleapis.com/$discovery/rest?version=v4",
+    //     ],
+    //   });
+    // });
   });
 
   return (
