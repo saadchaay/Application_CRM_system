@@ -86,9 +86,12 @@ export default function Integration() {
 
   const createSpreedSheet = async (e) => {
     e.preventDefault();
-
-    console.log(gapi);
     var accessToken = gapi.auth.getToken().access_token;
+    const dataJson = {
+      id: auth.id,
+      fileName: fileName,
+      spreadsheetId: "",
+    };
     console.log(accessToken);
     fetch("https://sheets.googleapis.com/v4/spreadsheets/", {
       method: "POST",
@@ -104,8 +107,15 @@ export default function Integration() {
       })
       .then(function (val) {
         console.log(val);
-        console.log(val.spreadsheetId);
+        dataJson.spreadsheetId = val.spreadsheetId;
       });
+
+      if(dataJson.spreadsheetId){
+        axios.post("ProfileController/createSpreadsheet", dataJson).then((res) => {
+          console.log(res);
+          setCreateOne(true);
+        }
+
   };
 
   useEffect(() => {
