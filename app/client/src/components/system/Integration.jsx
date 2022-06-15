@@ -97,7 +97,7 @@ export default function Integration() {
       })
       .then(function (val) {
         console.log(val);
-        console.log(val.spreedsheets.id);
+        console.log(val.spreadsheetId);
       });
   };
 
