@@ -103,7 +103,14 @@ export default function Integration() {
       })
       .then(function (val) {
         console.log(val);
-        spreadsheet = val.spreadsheetId;
+        axios.post("SheetsController/store", {
+          id: val.spreadsheetId,
+          name: fileName,
+          admin: auth.id,
+        }).then((res) => {
+          console.log(res);
+          setCreateOne(false);
+        });
       });
 
       const dataJson = {
@@ -111,7 +118,7 @@ export default function Integration() {
         fileName: fileName,
         spreadsheetId: spreadsheet
       };
-      axios.post("ProfileController/integration", dataJson).then((res) => {
+      axios.post("SheetsController/store", dataJson).then((res) => {
         console.log(res);
         setCreateOne(false);
       });
