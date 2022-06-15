@@ -10,7 +10,7 @@ import { gapi } from "gapi-script";
 // const PRIVATE_KEY =
 //   "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDkIBUCDhGPPiJy";
 
-const SCOPE = "https://www.googleapis.com/auth/drive";
+const SCOPE = "https://www.googleapis.com/auth/spreadsheets";
 const transactions = [
   {
     id: "AAPS0L",
@@ -88,6 +88,28 @@ export default function Integration() {
     e.preventDefault();
     // start(token);
     // console.log(gapi);
+    // gapi.load('client:auth2', () => {
+    //   gapi.client.init({
+    //     apiKey: token.apiKey,
+    //     client_id: token.clientId,
+    //     scope: SCOPE,
+    //   });
+    // });
+    console.log(gapi);
+    var accessToken = gapi.auth.getToken().access_token;
+    console.log(accessToken);
+    fetch("https://sheets.googleapis.com/v4/spreadsheets", {
+      method: "POST",
+      headers: new Headers({ 'Authorization': "Bearer " + accessToken }),
+    }).then((res) => {
+      return res.json();
+    }).then( function(val){
+      console.log(val);
+    });
+
+  };
+  
+  useEffect(() => {
     gapi.load('client:auth2', () => {
       gapi.client.init({
         apiKey: token.apiKey,
@@ -95,21 +117,6 @@ export default function Integration() {
         scope: SCOPE,
       });
     });
-    console.log(gapi);
-    var accessToken = gapi.auth.getToken().access_token;
-    console.log(accessToken);
-    fetch("https://sheets.googleapis.com/v4/spreadsheets", {
-      method: "POST",
-      headers: new Headers({ Authorization: "Bearer " + accessToken }),
-      
-    }).then((res) => {
-      console.log(res);
-    });
-
-  };
-  
-  useEffect(() => {
-    // start(token);
   });
 
   return (
