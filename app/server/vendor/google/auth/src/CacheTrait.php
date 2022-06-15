@@ -17,39 +17,66 @@
 
 namespace Google\Auth;
 
+use Psr\Cache\CacheItemPoolInterface;
+
 trait CacheTrait
 {
     /**
+     * @var int
+     */
+    private $maxKeyLength = 64;
+
+    /**
+     * @var array<mixed>
+     */
+    private $cacheConfig;
+
+    /**
+     * @var ?CacheItemPoolInterface
+     */
+    private $cache;
+
+    /**
      * Gets the cached value if it is present in the cache when that is
      * available.
+     *
+     * @param mixed $k
+     *
+     * @return mixed
      */
-    private function getCachedValue()
+    private function getCachedValue($k)
     {
         if (is_null($this->cache)) {
-            return;
+            return null;
         }
 
-        $key = $this->getFullCacheKey();
+        $key = $this->getFullCacheKey($k);
         if (is_null($key)) {
-            return;
+            return null;
         }
 
         $cacheItem = $this->cache->getItem($key);
-        return $cacheItem->get();
+        if ($cacheItem->isHit()) {
+            return $cacheItem->get();
+        }
     }
 
     /**
      * Saves the value in the cache when that is available.
+     *
+     * @param mixed $k
+     * @param mixed $v
+     * @return mixed
      */
-    private function setCachedValue($v)
+    private function setCachedValue($k, $v)
     {
         if (is_null($this->cache)) {
-            return;
+            return null;
         }
 
-        $key = $this->getFullCacheKey();
+        $key = $this->getFullCacheKey($k);
         if (is_null($key)) {
-            return;
+            return null;
         }
 
         $cacheItem = $this->cache->getItem($key);
@@ -58,21 +85,26 @@ trait CacheTrait
         return $this->cache->save($cacheItem);
     }
 
-    private function getFullCacheKey()
+    /**
+     * @param null|string $key
+     * @return null|string
+     */
+    private function getFullCacheKey($key)
     {
-        if (isset($this->fetcher)) {
-            $fetcherKey = $this->fetcher->getCacheKey();
-        } else {
-            $fetcherKey = $this->getCacheKey();
+        if (is_null($key)) {
+            return null;
         }
 
-        if (is_null($fetcherKey)) {
-            return;
-        }
-
-        $key = $this->cacheConfig['prefix'] . $fetcherKey;
+        $key = $this->cacheConfig['prefix'] . $key;
 
         // ensure we do not have illegal characters
-        return str_replace(['{', '}', '(', ')', '/', '\\', '@', ':'], '-', $key);
+        $key = preg_replace('|[^a-zA-Z0-9_\.!]|', '', $key);
+
+        // Hash keys if they exceed $maxKeyLength (defaults to 64)
+        if ($this->maxKeyLength && strlen($key) > $this->maxKeyLength) {
+            $key = substr(hash('sha256', $key), 0, $this->maxKeyLength);
+        }
+
+        return $key;
     }
 }

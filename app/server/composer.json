@@ -1,5 +1,14 @@
 {
     "require": {
-        "google/apiclient": "2.0"
+        "google/apiclient": "^2.10",
+        "hybridauth/hybridauth" : "~3.0"
+    },
+    "scripts": {
+        "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
+    },
+    "extra": {
+        "google/apiclient-services": [
+            "Sheets"
+        ]
     }
 }

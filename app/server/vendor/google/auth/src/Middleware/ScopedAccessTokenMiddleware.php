@@ -18,7 +18,6 @@
 namespace Google\Auth\Middleware;
 
 use Google\Auth\CacheTrait;
-use Google\Auth\FetchAuthTokenInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -32,7 +31,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * Requests will be accessed with the authorization header:
  *
- * 'Authorization' 'Bearer <value of auth_token>'
+ * 'authorization' 'Bearer <value of auth_token>'
  */
 class ScopedAccessTokenMiddleware
 {
@@ -41,32 +40,12 @@ class ScopedAccessTokenMiddleware
     const DEFAULT_CACHE_LIFETIME = 1500;
 
     /**
-     * @var CacheItemPoolInterface
-     */
-    private $cache;
-
-    /**
-     * @var callback
-     */
-    private $httpHandler;
-
-    /**
-     * @var FetchAuthTokenInterface
-     */
-    private $fetcher;
-
-    /**
-     * @var array configuration
-     */
-    private $cacheConfig;
-
-    /**
      * @var callable
      */
     private $tokenFunc;
 
     /**
-     * @var array|string
+     * @var array<string>|string
      */
     private $scopes;
 
@@ -74,8 +53,8 @@ class ScopedAccessTokenMiddleware
      * Creates a new ScopedAccessTokenMiddleware.
      *
      * @param callable $tokenFunc a token generator function
-     * @param array|string $scopes the token authentication scopes
-     * @param array $cacheConfig configuration for the cache when it's present
+     * @param array<string>|string $scopes the token authentication scopes
+     * @param array<mixed> $cacheConfig configuration for the cache when it's present
      * @param CacheItemPoolInterface $cache an implementation of CacheItemPoolInterface
      */
     public function __construct(
@@ -87,7 +66,8 @@ class ScopedAccessTokenMiddleware
         $this->tokenFunc = $tokenFunc;
         if (!(is_string($scopes) || is_array($scopes))) {
             throw new \InvalidArgumentException(
-                'wants scope should be string or array');
+                'wants scope should be string or array'
+            );
         }
         $this->scopes = $scopes;
 
@@ -124,13 +104,12 @@ class ScopedAccessTokenMiddleware
      *   $client = new Client([
      *       'handler' => $stack,
      *       'base_url' => 'https://www.googleapis.com/taskqueue/v1beta2/projects/',
-     *       'auth' => 'google_auth' // authorize all requests
+     *       'auth' => 'scoped' // authorize all requests
      *   ]);
      *
      *   $res = $client->get('myproject/taskqueues/myqueue');
      *
      * @param callable $handler
-     *
      * @return \Closure
      */
     public function __invoke(callable $handler)
@@ -141,7 +120,7 @@ class ScopedAccessTokenMiddleware
                 return $handler($request, $options);
             }
 
-            $request = $request->withHeader('Authorization', 'Bearer ' . $this->fetchToken());
+            $request = $request->withHeader('authorization', 'Bearer ' . $this->fetchToken());
 
             return $handler($request, $options);
         };
@@ -171,14 +150,15 @@ class ScopedAccessTokenMiddleware
      */
     private function fetchToken()
     {
-        $cached = $this->getCachedValue();
+        $cacheKey = $this->getCacheKey();
+        $cached = $this->getCachedValue($cacheKey);
 
         if (!empty($cached)) {
             return $cached;
         }
 
         $token = call_user_func($this->tokenFunc, $this->scopes);
-        $this->setCachedValue($token);
+        $this->setCachedValue($cacheKey, $token);
 
         return $token;
     }
