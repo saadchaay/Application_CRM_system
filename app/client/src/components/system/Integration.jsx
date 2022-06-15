@@ -100,10 +100,8 @@ export default function Integration() {
     console.log(accessToken);
     fetch("https://sheets.googleapis.com/v4/spreadsheets", {
       method: "POST",
-      headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }
+      headers: new Headers({ Authorization: "Bearer " + accessToken }),
+      
     }).then((res) => {
       console.log(res);
     });
