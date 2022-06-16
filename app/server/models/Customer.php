@@ -10,7 +10,7 @@ class Customer {
 
     public function get_customers($id)
     {
-        $this->db->query('SELECT * FROM customers WHERE id_admin = :id');
+        $this->db->query('SELECT * FROM customers WHERE id_admin = :id ORDER BY id DESC');
         $this->db->bind(':id', $id);
         $result = $this->db->resultSet();
         if($result) {

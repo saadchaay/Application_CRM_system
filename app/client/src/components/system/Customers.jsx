@@ -19,6 +19,19 @@ export default function Customers() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const [customers, setCustomers] = useState([]);
 
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    axios.delete("CustomersController/delete/" + id).then((res) => {
+      if (res.status === 201) {
+        console.log("Customer deleted");
+        fetchCustomers();
+      } else {
+        console.log("Error");
+        console.log(res);
+      }
+    });
+  };
+
   const fetchCustomers = async () => {
     const res = await axios.get("CustomersController/index/" + auth.id);
     if(res.status === 201){
@@ -26,13 +39,6 @@ export default function Customers() {
       console.log(res.data.data);
     }
   };
-
-  // const handleDelete = async (id) => {
-  //   const res = await axios.delete("CustomersController/delete/" + id);
-  //   if(res.status === 200){
-  //     fetchCustomers();
-  //   }
-  // }
 
   useEffect(() => {
     fetchCustomers();
@@ -104,22 +110,22 @@ export default function Customers() {
                     {customers.map((customer) => (
                       <tr key={customer.id}>
                         <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                          {customer.id}
+                          ## {customer.id}
                         </td>
                         <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                          {customer.customer}
+                          {customer.name}
                         </td>
                         <td className="whitespace-nowrap px -2 py-2 text-sm text-gray-900">
                           {customer.phone}
                         </td>
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                          {customer.address}
+                        </td>
+                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                           {customer.city}
                         </td>
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          {customer.date}
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          {customer.total}
+                          6788.38
                         </td>
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                           <button

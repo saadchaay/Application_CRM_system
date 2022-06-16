@@ -42,7 +42,6 @@
             if($_SERVER["REQUEST_METHOD"] === "DELETE"){
                 $customer = $this->customer->get_customer($id);
                 if($customer){
-                    $this->property->delete_properties($id);
                     $customer = $this->customer->delete($id);
                     if($customer){
                         http_response_code(201);
