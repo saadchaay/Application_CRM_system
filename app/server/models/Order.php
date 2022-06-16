@@ -93,7 +93,7 @@ class Order {
     {
         $this->db->query("INSERT INTO `order_properties` (`id_order_detail`, `property`, `value`) VALUES (:order_detail, :property, :value)");
 
-        $this->db->bind(':order_detail', $data['order']);
+        $this->db->bind(':order_detail', $data['order_detail']);
         $this->db->bind(":property", $data["property"]);
         $this->db->bind(":value", $data["value"]);
 
