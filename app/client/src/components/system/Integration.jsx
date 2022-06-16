@@ -31,6 +31,7 @@ export default function Integration() {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
   const [createOne, setCreateOne] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [spreadsheet, setSpreadsheet] = useState(false);
 
   const onSuccess = (response) => {
     console.log(response);
@@ -86,7 +87,6 @@ export default function Integration() {
 
   const createSpreedSheet = async (e) => {
     e.preventDefault();
-    var spreadsheet = "";
     var accessToken = gapi.auth.getToken().access_token;
     console.log(accessToken);
     const response = await fetch(
@@ -104,8 +104,9 @@ export default function Integration() {
     if (response.status === 200) {
       response.json().then((res) => {
         console.log(res.spreadsheetId);
-        spreadsheet = res.spreadsheetId;
+        setSpreadsheet(res.spreadsheetId);
       });
+      console.log(spreadsheet);
       const sheets = {
         id_admin: auth.id,
         fileName: fileName,
