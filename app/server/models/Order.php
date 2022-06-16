@@ -66,9 +66,19 @@ class Order {
         }
     }
 
-    public function create_order_properties()
+    public function create_order_properties($data)
     {
-        # code...
+        $this->db->query("INSERT INTO `order_properties` (`id_order_detail`, `property`, `value`) VALUES (:order_detail, :property, :value)");
+
+        $this->db->bind(':order_detail', $data['order']);
+        $this->db->bind(":property", $data["property"]);
+        $this->db->bind(":value", $data["value"]);
+
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function delete($id)
