@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
+import { Delete } from "@material-ui/icons";
 
 const API_KEY = "AIzaSyD8sJuOu8T7-LPBhUFbrGOKh_tzTUnj0xs";
 const CLIENT_ID =
@@ -123,6 +124,13 @@ export default function Integration() {
     const res = await axios.get("SheetsController/index/" + auth.id);
     console.log(res);
     setSpreadsheet(res.data);
+  }
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    const res = await axios.delete("SheetsController/delete/" + id);
+    console.log(res);
+    fetchAllFiles();
   }
 
   useEffect(() => {
@@ -363,14 +371,7 @@ export default function Integration() {
                     {sheet.spreadsheetId}
                   </td>
                   <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <button
-                      onClick={() => {
-                        window.location.href = `/users/edit/${sheet.id}`;
-                      }}
-                      className="text-green-500 hover:text-green-700"
-                    >
-                     <Edit />
-                    </button>
+                    
                     <button
                       onClick={() => handleDelete(sheet.id)}
                       className="text-red-500 hover:text-red-600"
