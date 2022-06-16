@@ -27,6 +27,7 @@ class SheetsController extends Controller
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $data = [
+                'id' => $dataJSON->id_admin ? $dataJSON->id_admin : "",
                 'fileName' => $dataJSON->fileName ? $dataJSON->fileName : "",
                 'spreadsheetId' => $dataJSON->spreadsheetId ? $dataJSON->spreadsheetId : "",
             ];

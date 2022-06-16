@@ -28,10 +28,11 @@
         public function create($data)
         {
             //create a query
-            $this->db->query("INSERT INTO `spreadsheets` (`fileName`, `spreadsheetId`) VALUES (:name, :spreadsheetId");
+            $this->db->query("INSERT INTO `spreadsheets` (`id_admin`, `fileName`, `spreadsheetId`) VALUES (:id, :name, :spreadsheetId)");
             
             // bind the values
-            $this->db->bind(":name", $data["name"]);
+            $this->db->bind(':id', $data['id']);
+            $this->db->bind(":name", $data["fileName"]);
             $this->db->bind(":spreadsheetId", $data["spreadsheetId"]);
 
             // check execution the query

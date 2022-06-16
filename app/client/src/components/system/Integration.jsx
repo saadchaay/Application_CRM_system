@@ -118,10 +118,21 @@ export default function Integration() {
         fileName: fileName,
         spreadsheetId: spreadsheet
       };
-      axios.post("SheetsController/store", dataJson).then((res) => {
+      const res = await axios.post(
+        "SheetsController/store",
+        JSON.stringify(dataJson),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if(res.status === 201) {
         console.log(res);
         setCreateOne(false);
-      });
+      } else {
+        console.log(res);
+      }
 
 
   };
