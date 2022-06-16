@@ -43,7 +43,7 @@
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
                     $orderData = [
-                        'customer' => $customer_id->id,
+                        'customer' => $customer_id->id ? $customer_id->id : 4,
                         'admin' => $admin,
                         'date' => $order->date ? $order->date : "",
                         'total' => $order->total ? $order->total : "",
