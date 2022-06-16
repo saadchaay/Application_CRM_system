@@ -97,42 +97,33 @@ export default function Integration() {
         body: JSON.stringify({
           properties: {
             title: fileName,
-          },
+          }
         }),
       }
     );
     if (response.status === 200) {
       response.json().then((res) => {
         console.log(res.spreadsheetId);
-        setSpreadsheet(res.spreadsheetId);
+        axios.post("SheetsController/store", {
+          id_admin: auth.id,
+          fileName: fileName,
+          spreadsheetId: res.spreadsheetId,
+        }).then((res) => {
+          console.log(res);
+          alert("Spreadsheet created successfully");
+          setCreateOne(false);
+          setFileName("");
+        });
       });
-      console.log(spreadsheet);
-      const sheets = {
-        id_admin: auth.id,
-        fileName: fileName,
-        spreadsheetId: spreadsheet,
-      };
-      const res = await axios.post(
-        "SheetsController/store",
-        JSON.stringify(sheets),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if(res.status === 201) {
-        alert("Sheet created successfully");
-        setCreateOne(false);
-        setFileName("");
-      } else {
-        alert("Something went wrong");
-      }
     }
-
-    
     
   };
+
+  const fetchAllFiles = async () => {
+    const res = await axios.get("SheetsController/index/" + auth.id);
+    console.log(res);
+    setSpreadsheet(res.data);
+  }
 
   useEffect(() => {
     function start() {
@@ -146,6 +137,7 @@ export default function Integration() {
       });
     }
     gapi.load("client:auth2", start);
+    fetchAllFiles();
   });
 
   return (
@@ -324,6 +316,73 @@ export default function Integration() {
           </div>
         </div>
       </div>
+
+      <div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+          <table className="min-w-full divide-y divide-gray-300">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                >
+                  Name
+                </th>
+                <th
+                  scope="col"
+                  className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                >
+                  Created User
+                </th>
+                <th
+                  scope="col"
+                  className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+                >
+                  Email
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                  Role
+                </th>
+                <th scope="col" className="px-3 text-sm font-semibold text-gray-900">
+                  Edit
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {spreadsheet.map((sheet) => (
+                <tr key={sheet.id}>
+                  <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                    {sheet.id}
+                  </td>
+                  <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                    {sheet.fileName}
+                  </td>
+                  <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                    {sheet.spreadsheetId}
+                  </td>
+                  <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <button
+                      onClick={() => {
+                        window.location.href = `/users/edit/${sheet.id}`;
+                      }}
+                      className="text-green-500 hover:text-green-700"
+                    >
+                     <Edit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(sheet.id)}
+                      className="text-red-500 hover:text-red-600"
+                    >
+                      <Delete />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
       {/* Inputs for id client */}
     </>

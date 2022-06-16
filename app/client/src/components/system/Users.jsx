@@ -382,14 +382,6 @@ export default function Example() {
                   </td>
                   <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                     <button
-                      onClick={() => {
-                        window.location.href = `/users/edit/${person.id}`;
-                      }}
-                      className="text-green-500 hover:text-green-700"
-                    >
-                     <Edit />
-                    </button>
-                    <button
                       onClick={() => handleDelete(person.id)}
                       className="text-red-500 hover:text-red-600"
                     >
