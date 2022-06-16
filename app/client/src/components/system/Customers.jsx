@@ -61,9 +61,13 @@
         newErr.city = "City is required";
       }
       setErrors(newErr);
-      if(Object.keys(newErr).length > 0){
-        const res = await axios.post("CustomersController/store", data);
-        if(res.data.success){
+      if (Object.keys(newErr).length === 0) {
+        const res = await axios.post("CustomersController/store", JSON.stringify(data), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if(res.status === 201){
           setOpen(false);
           setAddress("");
           setCity("");
@@ -71,9 +75,10 @@
           setPhone("");
           setErrors({});
           fetchCustomers();
+        } else {
+          alert("Something went wrong");
         }
       }
-      
     };
 
     const handleDelete = (e, id) => {

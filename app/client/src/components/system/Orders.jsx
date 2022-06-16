@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import { GoogleLogin } from "react-google-login";
 import { Delete } from "@material-ui/icons";
+import { gapi } from "gapi-script";
+
+const API_KEY = "AIzaSyD8sJuOu8T7-LPBhUFbrGOKh_tzTUnj0xs";
+const CLIENT_ID =
+  "280216831650-f9dn7qig5117unbvtfsnlusk5kjda32l.apps.googleusercontent.com";
+const SCOPE = "https://www.googleapis.com/auth/drive";
 
 const transactions = [
   {
@@ -17,6 +22,39 @@ const transactions = [
 ];
 export default function Orders() {
   const auth = JSON.parse(localStorage.getItem("auth"));
+  const token = JSON.parse(localStorage.getItem("token"));
+  const [orders, setOrders] = useState([]);
+
+  const handleOrderFromSheet = async () => {
+    var accessToken = gapi.auth.getToken().access_token;
+    const response = await fetch(
+      "https://sheets.googleapis.com/v4/spreadsheets/1W4sXanZLLuHi3xjobdtDuXToGnFnPWLVzAHuZP-qCVE/values/A1:Z1000",
+      {
+        method: "GET",
+        headers: new Headers({ Authorization: "Bearer " + accessToken }),
+      }
+    );
+    response.json().then((data) => {
+      // console.log(JSON.parse(JSON.stringify(data.values)));
+      setOrders(JSON.stringify(data.values));
+    }
+    );
+  };
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        apiKey: token.apiKey ? token.apiKey : API_KEY,
+        client_id: token.clientId ? token.clientId : CLIENT_ID,
+        scope: SCOPE,
+        discoveryDocs: [
+          "https://sheets.googleapis.com/$discovery/rest?version=v4",
+        ],
+      });
+    }
+    gapi.load("client:auth2", start);
+    console.log(orders);
+  });
 
   return (
     <>
@@ -34,6 +72,7 @@ export default function Orders() {
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
               type="button"
+              onClick={handleOrderFromSheet}
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
               Export

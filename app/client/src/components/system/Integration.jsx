@@ -7,7 +7,6 @@ import { Delete } from "@material-ui/icons";
 const API_KEY = "AIzaSyD8sJuOu8T7-LPBhUFbrGOKh_tzTUnj0xs";
 const CLIENT_ID =
   "280216831650-f9dn7qig5117unbvtfsnlusk5kjda32l.apps.googleusercontent.com";
-const Secret = "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";
 const SCOPE = "https://www.googleapis.com/auth/drive";
 
 const transactions = [
