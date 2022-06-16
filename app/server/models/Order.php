@@ -132,7 +132,7 @@ class Order {
 
     public function order_customer($id)
     {
-        $this->db->query("SELECT * FROM orders INNER JOIN customers ON `orders`.`id_customer` = `customers`.`id` WHERE `orders`.id_admin = :id");
+        $this->db->query("SELECT O.*, C.`name`, C.`phone`, C.`city`  FROM orders O INNER JOIN customers C ON O.`id_customer` = C.`id` WHERE C.`id_admin` = :id");
         $this->db->bind(':id', $id);
         $res = $this->db->resultSet();
         if($res) {
