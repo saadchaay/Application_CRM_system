@@ -18,13 +18,13 @@
         public function index($id)
         {   
             $all_orders = $this->order->get_all_orders($id);
+
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($all_orders){
                     http_response_code(201);
                     echo json_encode(array(
-                        'status' => 'success',
-                        'data' => $all_orders,
-                        'customer' => $this->customer->get_customer($id),
+                        'orders' => $all_orders,
+                        'customers' => $this->customer->get_customers($id),
                     ));
                 }else{
                     http_response_code(404);
@@ -36,41 +36,13 @@
         public function store()
         {
             $dataJSON = json_decode(file_get_contents("php://input"));
-
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $data = [
-                    'id' => $dataJSON->id_admin ? $dataJSON->id_admin : "",
-                    'name' => $dataJSON->name ? $dataJSON->name : "",
-                    'phone' => $dataJSON->phone ? $dataJSON->phone : "",
-                    'address' => $dataJSON->address ? $dataJSON->address : "",
-                    'city' => $dataJSON->city ? $dataJSON->city : "",
-                ];
-
-                $customer = $this->customer->create($data);
-                if($customer){
-                    http_response_code(201);
-                    echo json_encode(array("message" => "Customer created"));
-                } else {
-                    http_response_code(500);
-                    echo json_encode(array("errors" => "Customer not created"));
-                }
-            }
+            print_r($dataJSON);
         }
 
         public function delete($id)
         {
             if($_SERVER["REQUEST_METHOD"] === "DELETE"){
-                $customer = $this->customer->get_customer($id);
-                if($customer){
-                    $customer = $this->customer->delete($id);
-                    if($customer){
-                        http_response_code(201);
-                        echo json_encode(array('message' => 'customer deleted'));
-                    }else{
-                        http_response_code(404);
-                        echo json_encode(array('message' => 'customer not deleted'));
-                    }
-                }
+                echo json_encode(array("message" => "Order deleted"));
             }
         }
         
