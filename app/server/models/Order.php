@@ -33,8 +33,10 @@ class Order {
 
     public function create($data)
     {
-        $this->db->query("INSERT INTO `orders` (`id_admin`, `id_customer`, `status`, `tracking`, `total`, `created_at`, `updated_at`) VALUES (:id, :customer, :status, :tracking, :total, :created_at, :updated_at)");
+        $this->db->query("INSERT INTO `orders` (`reference`, `date_order`, `id_admin`, `id_customer`, `status`, `tracking`, `total`, `created_at`, `updated_at`) VALUES (:reference, :date_order, :id, :customer, :status, :tracking, :total, :created_at, :updated_at)");
 
+        $this->db->bind(':reference', $data['reference']);
+        $this->db->bind(':date_order', $data['date_order']);
         $this->db->bind(':id', $data['admin']);
         $this->db->bind(":customer", $data["customer"]);
         $this->db->bind(":status", "pending");
@@ -63,7 +65,7 @@ class Order {
 
     public function create_detail($data)
     {
-        $this->db->query("INSERT INTO `orders` (`id_order`, `id_product`, `quantity`) VALUES (:order, :product, :quantity)");
+        $this->db->query("INSERT INTO `order_detail` (`id_order`, `id_product`, `quantity`) VALUES (:order, :product, :quantity)");
 
         $this->db->bind(':order', $data['order']);
         $this->db->bind(":product", $data["product"]);

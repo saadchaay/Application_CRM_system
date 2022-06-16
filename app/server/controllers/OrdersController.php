@@ -42,23 +42,27 @@
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
-                    // print_r($customer_id);
                     $orderData = [
+                        'reference' => $order->id ? $order->id : "",
+                        'date_order' => $order->date ? $order->date : null,
                         'customer' => $customer_id->id,
                         'admin' => $admin,
                         'date' => $order->date ? $order->date : "",
                         'total' => $order->total ? $order->total : "",
                     ];
+
                     if($this->order->create($orderData)){
+                        // get product id 
                         $product_id = $this->product->get_product_id($order->product);
+                        // create order_details
                         $detail_order = [
-                            'order' => $this->order->get_last_insert_order($admin)->id,
+                            'order' => $this->order->get_last_insert_order($admin)->id, // get last insert order
                             'product' => $product_id->id,
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
+                        print_r($detail_order);
                         if($this->order->create_detail($detail_order)){
-                            http_response_code(201);
-                            echo json_encode(array("message" => "Order created"));
+                            
                         } else {
                             http_response_code(500);
                             echo json_encode(array("errors" => "Order not created"));
