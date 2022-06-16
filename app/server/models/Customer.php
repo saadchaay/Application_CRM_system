@@ -12,8 +12,9 @@ class Customer {
     {
         $this->db->query('SELECT * FROM customers WHERE id_admin = :id');
         $this->db->bind(':id', $id);
-        if($this->db->execute()) {
-            return $this->db->execute();
+        $result = $this->db->resultSet();
+        if($result) {
+            return $result;
         } else {
             return false;
         }

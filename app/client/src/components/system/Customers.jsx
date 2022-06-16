@@ -21,8 +21,9 @@ export default function Customers() {
 
   const fetchCustomers = async () => {
     const res = await axios.get("CustomersController/index/" + auth.id);
-    if(res.status === 200){
+    if(res.status === 201){
       setCustomers(res.data.data);
+      console.log(res.data.data);
     }
   };
 
