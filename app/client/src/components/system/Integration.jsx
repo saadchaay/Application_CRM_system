@@ -32,7 +32,7 @@ export default function Integration() {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
   const [createOne, setCreateOne] = useState(false);
   const [fileName, setFileName] = useState("");
-  const [spreadsheet, setSpreadsheet] = useState(false);
+  const [spreadsheet, setSpreadsheet] = useState([]);
 
   const onSuccess = (response) => {
     console.log(response);
