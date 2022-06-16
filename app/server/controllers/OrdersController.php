@@ -42,8 +42,9 @@
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
+                    // print_r($customer_id);
                     $orderData = [
-                        'customer' => $customer_id->id ? $customer_id->id : 4,
+                        'customer' => $customer_id->id,
                         'admin' => $admin,
                         'date' => $order->date ? $order->date : "",
                         'total' => $order->total ? $order->total : "",
@@ -51,8 +52,8 @@
                     if($this->order->create($orderData)){
                         $product_id = $this->product->get_product_id($order->product);
                         $detail_order = [
-                            'id_order' => $this->order->get_last_insert_order($orderData['id_admin'])->id,
-                            'id_product' => $product_id->id,
+                            'order' => $this->order->get_last_insert_order($admin)->id,
+                            'product' => $product_id->id,
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
                         if($this->order->create_detail($detail_order)){
