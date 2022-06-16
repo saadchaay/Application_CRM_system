@@ -23,7 +23,7 @@ const transactions = [
 export default function Orders() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const token = JSON.parse(localStorage.getItem("token"));
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState(null);
 
   const handleOrderFromSheet = async (e) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ export default function Orders() {
       });
       delete object[0];
       setOrders(object);
-      console.log(object);
+      console.log(JSON.stringify(object));
     });
   };
 
@@ -78,7 +78,7 @@ export default function Orders() {
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-xl font-semibold text-gray-900">
-              Transactions
+              Orders
             </h1>
             <p className="mt-2 text-sm text-gray-700">
               A table of placeholder stock market data that does not make any
@@ -189,7 +189,17 @@ export default function Orders() {
                             </td>
                           </tr>
                         ))
-                      ) : "No orders"
+                      ) : (
+                        <tr >
+                          <td colSpan="8">
+                            <div className="text-center py-2">
+                              <div className="text-gray-500">
+                                No Orders found.
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )
                     }
                   </tbody>
                 </table>
