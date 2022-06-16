@@ -8,20 +8,21 @@ class Order {
         $this->db = new Database();
     }
 
-    public function get_customers($id)
+    public function get_all_orders($id)
     {
-        $this->db->query('SELECT * FROM customers WHERE id_admin = :id');
+        $this->db->query('SELECT * FROM orders WHERE id_admin = :id');
         $this->db->bind(':id', $id);
-        if($this->db->execute()) {
-            return $this->db->execute();
+        $res = $this->db->resultSet();
+        if($res) {
+            return $res;
         } else {
             return false;
         }
     }
 
-    public function get_customer($id)
+    public function get_order($id)
     {
-        $this->db->query('SELECT * FROM customers WHERE id = :id');
+        $this->db->query('SELECT * FROM orders WHERE id = :id');
         $this->db->bind(':id', $id);
         if($this->db->single()) {
             return $this->db->single();
@@ -32,13 +33,13 @@ class Order {
 
     public function create($data)
     {
-        $this->db->query("INSERT INTO `customers` (`id_admin`, `name`, `phone`, `address`, `city`, `created_at`, `updated_at`) VALUES (:id, :name, :phone, :address, :city, :created_at, :updated_at)");
+        $this->db->query("INSERT INTO `orders` (`id_admin`, `id_customer`, `status`, `tracking`, `total`, `created_at`, `updated_at`) VALUES (:id, :customer, :status, :tracking, :total, :created_at, :updated_at)");
 
         $this->db->bind(':id', $data['id']);
-        $this->db->bind(":name", $data["name"]);
-        $this->db->bind(":phone", $data["phone"]);
-        $this->db->bind(":address", $data["address"]);
-        $this->db->bind(":city", $data["city"]);
+        $this->db->bind(":customer", $data["customer"]);
+        $this->db->bind(":status", $data["status"]);
+        $this->db->bind(":tracking", $data["tracking"]);
+        $this->db->bind(":total", $data["total"]);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
 
@@ -50,18 +51,14 @@ class Order {
 
     }
 
-    public function update($data, $id)
+    public function create_detail($data)
     {
-        $customer = $this->get_customer($id);
-        $this->db->query("UPDATE `customers` SET `name` = :name, `phone` = :phone, `address` = :address, `city` = :city, `updated_at` = :updated_at WHERE `id` = :id");
+        $this->db->query("INSERT INTO `orders` (`id_order`, `id_product`, `quantity`) VALUES (:order, :product, :quantity)");
 
-        $this->db->bind(':id', $id);
-        $this->db->bind(":name", $data["name"] ? $data["name"] : $customer->name);
-        $this->db->bind(":phone", $data["phone"] ? $data["phone"] : $customer->phone);
-        $this->db->bind(":address", $data["address"] ? $data["address"] : $customer->address);
-        $this->db->bind(":city", $data["city"] ? $data["city"] : $customer->city);
-        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
-        
+        $this->db->bind(':order', $data['order']);
+        $this->db->bind(":product", $data["product"]);
+        $this->db->bind(":quantity", $data["quantity"]);
+
         if($this->db->execute()) {
             return true;
         } else {
@@ -69,9 +66,14 @@ class Order {
         }
     }
 
+    public function create_order_properties()
+    {
+        # code...
+    }
+
     public function delete($id)
     {
-        $this->db->query("DELETE FROM `customers` WHERE `id` = :id");
+        $this->db->query("DELETE FROM `orders` WHERE `id` = :id");
         $this->db->bind(":id", $id);
 
         if($this->db->execute()) {
