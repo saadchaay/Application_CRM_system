@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import { GoogleLogin } from "react-google-login";
 
-const API_KEY = "AIzaSyD6qcc_ly4bgpxHw8pDc3OnR_9LlHqqgs4";
-const CLIENT_ID =
-  "902170722306-736ta1oeknlfjhj0gvv4ug1ga99li3c7.apps.googleusercontent.com";
-const SCOPED = "https://www.googleapis.com/auth/drive";
+
 const transactions = [
   {
     id: "AAPS0L",
