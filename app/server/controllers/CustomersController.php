@@ -3,8 +3,6 @@
     class CustomersController extends Controller {
 
         private $customer ;
-        private $category ;
-        private $property ;
 
         public function __construct()
         {
@@ -13,8 +11,6 @@
             header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
             header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
             $this->customer = new Customer();
-            $this->category = new Category();
-            $this->property = new Property();
         }
 
         public function index($id)
