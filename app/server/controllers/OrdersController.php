@@ -2,6 +2,7 @@
 
     class OrdersController extends Controller {
 
+        private $order ;
         private $customer ;
 
         public function __construct()
@@ -10,24 +11,24 @@
             header('Content-Type: application/json');
             header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
             header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
+            $this->order = new Order();
             $this->customer = new Customer();
         }
 
         public function index($id)
-        {
-            
-            
-            $all_customers = $this->customer->get_customers($id);
+        {   
+            $all_orders = $this->order->get_all_orders($id);
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                if($all_customers){
+                if($all_orders){
                     http_response_code(201);
                     echo json_encode(array(
                         'status' => 'success',
-                        'data' => $all_customers,
+                        'data' => $all_orders,
+                        'customer' => $this->customer->get_customer($id),
                     ));
                 }else{
                     http_response_code(404);
-                    echo json_encode(array('message' => 'No customers found'));
+                    echo json_encode(array('message' => 'No orders found'));
                 }
             }
         }
