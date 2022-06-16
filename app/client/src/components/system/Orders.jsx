@@ -55,22 +55,38 @@ export default function Orders() {
       });
       delete object[0];
       setOrders(object);
+
+      axios
+        .post(
+          "OrdersController/store",
+          JSON.stringify({
+            admin: auth.id,
+            orders: object,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
-    console.log(object);
-    const data = {
-      admin: auth.id,
-      orders: object,
-    };
-    const res = await axios.post(
-      "OrdersController/store",
-      JSON.stringify(data),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log(res);
+    // console.log("data");
+    // const res = await axios.post(
+    //   "OrdersController/store",
+    //   JSON.stringify(data),
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // console.log(res);
   };
 
   const fetchOrder = async () => {
