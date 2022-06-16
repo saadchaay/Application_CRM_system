@@ -37,7 +37,13 @@ class Product {
 
     public function get_id_by_name($name)
     {
-        $this->db->query("SELECT * FROM `products` WHERE `name` = :name");
+        $this->db->query("SELECT * FROM `products` WHERE `title` = :name");
+        $this->db->bind(':name', $name);
+        if($this->db->single()) {
+            return $this->db->single();
+        } else {
+            return false;
+        }
     }
 
     public function create_product($data)
