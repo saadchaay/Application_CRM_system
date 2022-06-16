@@ -43,6 +43,17 @@
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
+                    if(!$customer_id){
+                        if($this->customer->create(array(
+                            'id' => $admin,
+                            'name' => $order->customer,
+                            'phone' => $order->phone,
+                            'address' => $order->address,
+                            'city' => $order->city,
+                        ))){
+                            $customer_id = $this->customer->get_customer_id($order->customer);
+                        }
+                    }
                     $orderData = [
                         'reference' => $order->id ? $order->id : "",
                         'date_order' => $order->date ? $order->date : null,
