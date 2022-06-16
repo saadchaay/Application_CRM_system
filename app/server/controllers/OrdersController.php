@@ -69,7 +69,7 @@
                         // create order_details
                         $detail_order = [
                             'order' => $this->order->get_last_insert_order($admin)->id, // get last insert order
-                            'product' => $product_id->id,
+                            'product' => $product_id->id ? $product_id : $this->product->last_insertion()->id, // get last insert product),
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
                         $is_success = true;
