@@ -63,13 +63,13 @@
                     if($this->order->create($orderData)){
                         // get product id 
                         $product_id = $this->product->get_product_id($order->product);
-                        // if(!$product_id){
-                        //     $product_id = 0;
-                        // }
+                        if(!$product_id){
+                            $product_id = $this->product->last_insertion()->id;
+                        }
                         // create order_details
                         $detail_order = [
                             'order' => $this->order->get_last_insert_order($admin)->id, // get last insert order
-                            'product' => $product_id->id ? $product_id : $this->product->last_insertion()->id, // get last insert product),
+                            'product' => $product_id->id, // get last insert product),
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
                         $is_success = true;
