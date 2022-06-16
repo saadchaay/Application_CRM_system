@@ -36,7 +36,18 @@
         public function store()
         {
             $dataJSON = json_decode(file_get_contents("php://input"));
-            print_r($dataJSON);
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                foreach($dataJSON->orders as $order){
+                    $data = [
+                        'id_customer' => $order->id_customer ? $order->id_customer : "",
+                        'id_admin' => $order->id_admin ? $order->id_admin : "",
+                        'date' => $order->date ? $order->date : "",
+                        'total' => $order->total ? $order->total : "",
+                    ];
+                    $order = $this->order->create($data);
+                    
+                }
+            }
         }
 
         public function delete($id)
