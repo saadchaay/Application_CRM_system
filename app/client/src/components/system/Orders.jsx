@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Axios from "axios";
+import { Link } from "react-router-dom";
 import { Delete } from "@material-ui/icons";
 import { gapi } from "gapi-script";
 import axios from "../../api/axios";
@@ -76,17 +76,6 @@ export default function Orders() {
           console.log(err);
         });
     });
-    // console.log("data");
-    // const res = await axios.post(
-    //   "OrdersController/store",
-    //   JSON.stringify(data),
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // console.log(res);
   };
 
   const fetchOrder = async () => {
@@ -94,6 +83,13 @@ export default function Orders() {
     setOrders(response.data);
     console.log(response.data);
   };
+
+  const handleDeleteOrder = async (e, id) => {
+    e.preventDefault();
+    const response = await axios.delete("OrdersController/destroy/" + id);
+    console.log(response);
+    fetchOrder();
+  }
 
   useEffect(() => {
     fetchOrder();
@@ -172,6 +168,12 @@ export default function Orders() {
                         scope="col"
                         className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
+                        Tracking
+                      </th>
+                      <th
+                        scope="col"
+                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
                         Total order
                       </th>
                       <th
@@ -202,16 +204,26 @@ export default function Orders() {
                             {order.status}
                           </td>
                           <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                            {order.tracking}
+                          </td>
+                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                             $ {order.total}
                           </td>
                           <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <a
-                              href="/"
+                            <Link
+                              to="/"
                               className="text-indigo-600 hover:text-indigo-900"
                             >
                               details
                               <span className="sr-only">, {order.id}</span>
-                            </a>
+                            </Link>
+                            <button
+                              onClick={handleDeleteOrder}
+                              className="text-sm text-gray-500 hover:text-gray-900"
+                              data-id={order.id}
+                            >
+                              <Delete />  
+                            </button>
                           </td>
                         </tr>
                       ))
