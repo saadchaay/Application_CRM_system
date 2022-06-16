@@ -22,11 +22,11 @@
     const [customers, setCustomers] = useState([]);
     // for add one
     const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPwd, setConfirmPwd] = useState("");
-    const [role, setRole] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    // errors 
+    const [errors, setErrors] = useState({});
 
     const handleAddCustomer = () => {
       setOpen(true);
@@ -118,7 +118,7 @@
                                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                   />
                                   <div className="text-red-500 mb-3 text-sm">
-                                    {/* {errName ? errName : null} */}
+                                    {errors.name ? errors.name : ""}
                                   </div>
                                 </div>
                                 <div className="col-span-4 sm:col-span-2">
@@ -126,18 +126,18 @@
                                     htmlFor="last-name"
                                     className="block text-sm font-medium text-gray-700"
                                   >
-                                    Username
+                                    Phone
                                   </label>
                                   <input
                                     type="text"
-                                    id="username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    autoComplete="username"
+                                    id="phone"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    autoComplete="phone"
                                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                   />
                                   <div className="text-red-500 mb-3 text-sm">
-                                    {/* {errUsername ? errUsername : null} */}
+                                    { errors.phone ? errors.phone : "" }
                                   </div>
                                 </div>
                               </div>
@@ -148,61 +148,40 @@
                                     htmlFor="last-name"
                                     className="block text-sm font-medium text-gray-700"
                                   >
-                                    Email
+                                    Address
                                   </label>
                                   <input
                                     type="text"
-                                    id="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    autoComplete="email"
+                                    id="address"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    autoComplete="address"
                                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                   />
                                   <div className="text-red-500 mb-3 text-sm">
-                                    {/* {errEmail ? errEmail : null} */}
+                                    { errors.address ? errors.address : "" }
                                   </div>
                                 </div>
                               </div>
 
                               <div className="mt-3 grid grid-cols-4 gap-6">
-                                <div className="col-span-4 sm:col-span-2">
+                                <div className="col-span-4 sm:col-span-4">
                                   <label
                                     htmlFor="first-name"
                                     className="block text-sm font-medium text-gray-700"
                                   >
-                                    Password
+                                    City
                                   </label>
                                   <input
-                                    type="password"
-                                    id="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    autoComplete="name"
+                                    type="text"
+                                    id="city"
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
+                                    autoComplete="city"
                                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                   />
                                   <div className="text-red-500 mb-3 text-sm">
-                                    {/* {errPwd ? errPwd : null} */}
-                                  </div>
-                                </div>
-                                <div className="col-span-4 sm:col-span-2">
-                                  <label
-                                    htmlFor="last-name"
-                                    className="block text-sm font-medium text-gray-700"
-                                  >
-                                    Confirm Password
-                                  </label>
-                                  <input
-                                    type="password"
-                                    id="confirmPwd"
-                                    value={confirmPwd}
-                                    onChange={(e) =>
-                                      setConfirmPwd(e.target.value)
-                                    }
-                                    autoComplete="username"
-                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                  />
-                                  <div className="text-red-500 mb-3 text-sm">
-                                    {/* {errConfirmPwd ? errConfirmPwd : null} */}
+                                    { errors.city ? errors.city : "" }
                                   </div>
                                 </div>
                               </div>
