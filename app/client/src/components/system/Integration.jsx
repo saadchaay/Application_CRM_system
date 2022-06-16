@@ -86,55 +86,55 @@ export default function Integration() {
 
   const createSpreedSheet = async (e) => {
     e.preventDefault();
-    const spreadsheet = "";
-    var accessToken = gapi.auth.getToken().access_token;
-    console.log(accessToken);
-    fetch("https://sheets.googleapis.com/v4/spreadsheets/", {
+    // var spreadsheet = "";
+    // var accessToken = gapi.auth.getToken().access_token;
+    // console.log(accessToken);
+    // const response = await fetch(
+    //   "https://sheets.googleapis.com/v4/spreadsheets/",
+    //   {
+    //     method: "POST",
+    //     headers: new Headers({ Authorization: "Bearer " + accessToken }),
+    //     body: JSON.stringify({
+    //       properties: {
+    //         title: fileName,
+    //       },
+    //     }),
+    //   }
+    // );
+    // if (response.status === 200) {
+    //   response.json().then((res) => {
+    //     console.log(res.spreadsheetId);
+    //     spreadsheet = res.spreadsheetId;
+    //   });
+    // }
+    const response2 = await fetch("http://localhost/fil_rouge_project/app/server/SheetsController/store", 
+    {
       method: "POST",
-      headers: new Headers({ Authorization: "Bearer " + accessToken }),
-      body: JSON.stringify({
-        properties: {
-          title: fileName,
+      headers: {
+        "Content-Type": "application/json"
         },
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then(function (val) {
-        console.log(val);
-        axios.post("SheetsController/store", {
-          id: val.spreadsheetId,
-          name: fileName,
-          admin: auth.id,
-        }).then((res) => {
-          console.log(res);
-          setCreateOne(false);
-        });
-      });
-
-      const dataJson = {
+      body: JSON.stringify({
         admin: auth.id,
         fileName: fileName,
-        spreadsheetId: spreadsheet
-      };
-      const res = await axios.post(
-        "SheetsController/store",
-        JSON.stringify(dataJson),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if(res.status === 201) {
-        console.log(res);
-        setCreateOne(false);
-      } else {
-        console.log(res);
-      }
-
-
+        spreadsheetId: "spreadsheetId"
+      }),
+    });
+    console.log(response2);
+    // axios.get(
+    //   "SheetsController/store"
+      // JSON.stringify({
+      //   admin: auth.id,
+      //   fileName: fileName,
+      //   spreadsheetId: "spreadsheetId",
+      // }),
+      // {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "Access-Control-Allow-Origin": "*",
+      //   },
+      // }
+    // );
+    // console.log(response2);
   };
 
   useEffect(() => {

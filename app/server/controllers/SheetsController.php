@@ -7,6 +7,10 @@ class SheetsController extends Controller
 
     public function __construct()
     {
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
+        header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
         $this->sheet = new Sheet();
     }
 
@@ -25,6 +29,10 @@ class SheetsController extends Controller
     {
         $dataJSON = json_decode(file_get_contents("php://input"));
 
+        if($_SERVER["REQUEST_METHOD"] == "GET"){
+            echo json_encode(array("message" => "This fucking message"));
+        }
+        
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $data = [
                 'id' => $dataJSON->id_admin ? $dataJSON->id_admin : "",
