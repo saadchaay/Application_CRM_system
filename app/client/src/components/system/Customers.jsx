@@ -25,11 +25,43 @@
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
+
     // errors 
     const [errors, setErrors] = useState({});
 
-    const handleAddCustomer = () => {
-      setOpen(true);
+    const closeDialog = (e) => {
+      e.preventDefault();
+      setOpen(false);
+      setAddress("");
+      setCity("");
+      setName("");
+      setPhone("");
+      setErrors({});
+    }
+    const handleAddCustomer = (e) => {
+      e.preventDefault();
+      const newErr = {};
+      const data = {
+        name,
+        phone,
+        address,
+        city,
+      };
+      if(name === ""){
+        newErr.name = "Name is required";
+      }
+      if(phone === ""){
+        newErr.phone = "Phone is required";
+      }
+      if(address === ""){
+        newErr.address = "Address is required";
+      }
+      if(city === ""){
+        newErr.city = "City is required";
+      }
+      setErrors(newErr);
+      // if(Object.keys(errors).length === 0){
+      //   axios.post("/customers", data, {headers: {Authorization: `Bearer ${auth.token}`}}).then(res => {
     };
 
     const handleDelete = (e, id) => {
@@ -197,8 +229,9 @@
                           Submit
                         </button>
                         <button
+                          type="button"
                           className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                          onClick={(e) => [ e.preventDefault() ,setOpen(false)]}
+                          onClick={closeDialog}
                           ref={cancelButtonRef}
                         >
                           Cancel
