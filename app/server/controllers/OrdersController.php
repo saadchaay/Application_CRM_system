@@ -36,6 +36,7 @@
         {
             $dataJSON = json_decode(file_get_contents("php://input"));
             $is_success = false;
+
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 foreach($dataJSON->orders as $order){
@@ -48,15 +49,14 @@
                             'address' => $order->address,
                             'city' => $order->city,
                         ))){
-                            $customer_id = $this->customer->get_customer_id($order->customer);
+                            $newCustomer = $this->customer->get_customer_id($order->customer);
                         }
                     }
                     $orderData = [
                         'reference' => $order->id ? $order->id : "",
                         'date_order' => $order->date ? $order->date : null,
-                        'customer' => $customer_id->id,
+                        'customer' => $customer_id->id ? $customer_id->id : $newCustomer->id,
                         'admin' => $admin,
-                        'date' => $order->date ? $order->date : "",
                         'total' => $order->total ? $order->total : "",
                     ];
 
@@ -72,7 +72,6 @@
                             'product' => $product_id->id, // get last insert product),
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
-                        $is_success = true;
                         if($this->order->create_detail($detail_order)){
                             $colors = explode(",", $order->colors);
                             $sizes = explode(",", $order->sizes);
@@ -99,13 +98,18 @@
                                 $this->order->create_order_properties($tmp);
                                 $is_success = true;
                             }
+                        } else {
+                            $this->order->delete($this->order->get_last_insert_order($admin)->id);
                         }
+                    } else {
+                        $this->customer->delete($newCustomer->id);
                     }
                 }
                 if($is_success){
                     http_response_code(201);
                     echo json_encode(array('message' => 'Orders created'));
                 } else {
+                    $this->order->delete_detail($this->order->get_last_insert_order_detail($admin)->id);
                     http_response_code(400);
                     echo json_encode(array('message' => 'Orders not created'));
                 }

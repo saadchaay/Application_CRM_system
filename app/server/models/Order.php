@@ -116,6 +116,18 @@ class Order {
         }
     }
 
+    public function delete_detail($id)
+    {
+        $this->db->query("DELETE FROM `order_detail` WHERE `id_order` = :id");
+        $this->db->bind(":id", $id);
+
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // jointure between orders and customer
 
     public function order_customer($id)
@@ -125,7 +137,7 @@ class Order {
         $res = $this->db->resultSet();
         if($res) {
             return $res;
-        } else {
+        } else {    
             return false;
         }
     }
