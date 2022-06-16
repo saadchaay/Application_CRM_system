@@ -35,6 +35,11 @@ class Product {
         }
     }
 
+    public function get_id_by_name($name)
+    {
+        $this->db->query("SELECT * FROM `products` WHERE `name` = :name");
+    }
+
     public function create_product($data)
     {
         if( $data['type'] === 'admin' ) {

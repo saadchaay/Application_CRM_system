@@ -45,11 +45,11 @@
                         'total' => $order->total ? $order->total : "",
                     ];
                     if($this->order->create($orderData)){
+                        
                         $detail_order = [
-                            'id_order' => $order->id,
-                            'id_product' => $this->order->get_last_insert_order($orderData['id_admin'])->id,
+                            'id_order' => $this->order->get_last_insert_order($orderData['id_admin'])->id,
+                            'id_product' => 23,
                             'quantity' => $order->quantity ? $order->quantity : "",
-                            'price' => $order->price ? $order->price : "",
                         ];
                         if($this->order->create_detail($detail_order)){
                             http_response_code(201);
