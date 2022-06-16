@@ -333,28 +333,22 @@ export default function Integration() {
                   scope="col"
                   className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                 >
-                  Name
+                  Sheet ID
                 </th>
                 <th
                   scope="col"
                   className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                 >
-                  Created User
+                  File Name
                 </th>
                 <th
                   scope="col"
                   className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
                 >
-                  Email
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                >
-                  Role
+                  Spreadsheet ID
                 </th>
                 <th scope="col" className="px-3 text-sm font-semibold text-gray-900">
-                  Edit
+                  Action
                 </th>
               </tr>
             </thead>
