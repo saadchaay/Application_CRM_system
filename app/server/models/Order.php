@@ -116,4 +116,18 @@ class Order {
         }
     }
 
+    // jointure between orders and customer
+
+    public function order_customer($id)
+    {
+        $this->db->query("SELECT * FROM orders INNER JOIN customers ON `orders`.`id_customer` = `customers`.`id` WHERE `orders`.id_admin = :id");
+        $this->db->bind(':id', $id);
+        $res = $this->db->resultSet();
+        if($res) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
+
 }

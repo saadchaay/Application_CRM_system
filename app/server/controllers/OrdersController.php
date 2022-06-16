@@ -19,14 +19,14 @@
 
         public function index($id)
         {   
-            $all_orders = $this->order->get_all_orders($id);
+            $all_orders = $this->order->order_customer($id);
 
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($all_orders){
                     http_response_code(201);
                     echo json_encode(array(
                         'orders' => $all_orders,
-                        'customers' => $this->customer->get_customers($id),
+                        'customers' => $all_Customer,
                     ));
                 }else{
                     http_response_code(404);
