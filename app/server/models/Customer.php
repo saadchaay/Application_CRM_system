@@ -31,6 +31,17 @@ class Customer {
         }
     }
 
+    public function get_customer_id($name)
+    {
+        $this->db->query('SELECT id FROM customers WHERE name = :name');
+        $this->db->bind(':name', $name);
+        if($this->db->single()) {
+            return $this->db->single();
+        } else {
+            return false;
+        }
+    }
+
     public function create($data)
     {
         $this->db->query("INSERT INTO `customers` (`id_admin`, `name`, `phone`, `address`, `city`, `created_at`, `updated_at`) VALUES (:id, :name, :phone, :address, :city, :created_at, :updated_at)");

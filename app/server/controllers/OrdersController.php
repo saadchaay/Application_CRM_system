@@ -39,18 +39,19 @@
         {
             $dataJSON = json_decode(file_get_contents("php://input"));
             if($_SERVER["REQUEST_METHOD"] == "POST"){
+                $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 foreach($dataJSON->orders as $order){
                     $orderData = [
-                        'id_customer' => $order->id_customer ? $order->id_customer : "",
-                        'id_admin' => $order->id_admin ? $order->id_admin : "",
+                        'customer' => $order->customer ? $order->customer : "",
+                        'admin' => $admin,
                         'date' => $order->date ? $order->date : "",
                         'total' => $order->total ? $order->total : "",
                     ];
                     if($this->order->create($orderData)){
-                        $product_id = $this->product->get_product_id($order->id_product);
+                        $product_id = $this->product->get_product_id($order->product);
                         $detail_order = [
                             'id_order' => $this->order->get_last_insert_order($orderData['id_admin'])->id,
-                            'id_product' => 23,
+                            'id_product' => $product_id->id,
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
                         if($this->order->create_detail($detail_order)){

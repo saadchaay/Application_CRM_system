@@ -35,7 +35,7 @@ class Order {
     {
         $this->db->query("INSERT INTO `orders` (`id_admin`, `id_customer`, `status`, `tracking`, `total`, `created_at`, `updated_at`) VALUES (:id, :customer, :status, :tracking, :total, :created_at, :updated_at)");
 
-        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':id', $data['admin']);
         $this->db->bind(":customer", $data["customer"]);
         $this->db->bind(":status", "pending");
         $this->db->bind(":tracking", "pending");
