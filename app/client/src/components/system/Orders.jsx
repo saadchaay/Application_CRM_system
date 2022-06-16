@@ -23,7 +23,7 @@ const transactions = [
 export default function Orders() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const token = JSON.parse(localStorage.getItem("token"));
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState({});
 
   const handleOrderFromSheet = async () => {
     var accessToken = gapi.auth.getToken().access_token;
@@ -35,10 +35,26 @@ export default function Orders() {
       }
     );
     response.json().then((data) => {
-      // console.log(JSON.parse(JSON.stringify(data.values)));
-      setOrders(JSON.stringify(data.values));
-    }
-    );
+      console.log(data.values);
+      const object = {};
+      data.values.forEach((item, index) => {
+        object[index] = {
+          id: item[0],
+          date: item[1],
+          customer: item[2],
+          product: item[3],
+          colors: item[4],
+          sizes: item[5],
+          quantity: item[6],
+          total: item[7],
+          address: item[8],
+          city: item[9],
+          phone: item[10],
+
+        };
+      });
+      console.log(object);
+    });
   };
 
   useEffect(() => {
