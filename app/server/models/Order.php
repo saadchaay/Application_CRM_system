@@ -37,8 +37,8 @@ class Order {
 
         $this->db->bind(':id', $data['id']);
         $this->db->bind(":customer", $data["customer"]);
-        $this->db->bind(":status", $data["status"]);
-        $this->db->bind(":tracking", $data["tracking"]);
+        $this->db->bind(":status", "pending");
+        $this->db->bind(":tracking", "pending");
         $this->db->bind(":total", $data["total"]);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
@@ -48,7 +48,17 @@ class Order {
         } else {
             return false;
         }
+    }
 
+    public function get_last_insert_order($id)
+    {
+        $this->db->query('SELECT * FROM orders WHERE id_admin = :id ORDER BY id DESC LIMIT 1');
+        $this->db->bind(':id', $id);
+        if($this->db->single()) {
+            return $this->db->single();
+        } else {
+            return false;
+        }
     }
 
     public function create_detail($data)
