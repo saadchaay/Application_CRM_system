@@ -62,15 +62,20 @@
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
                         if($this->order->create_detail($detail_order)){
+                            $colors = explode(",", $order->colors);
+                            $sizes = explode(",", $order->sizes);
                             $order_properties = [
                                 'order_detail' => $this->order->get_last_insert_order_detail()->id, // get last insert order
-                                'property' => $order->property ? $order->property : "",
-                                'value' => $order->value ? $order->value : "",
+                                'colors' => $colors,
+                                'sizes' => $sizes
                             ];
-                            print_r($order_properties);
-                        } else {
-                            http_response_code(500);
-                            echo json_encode(array("errors" => "Order not created"));
+                            if($this->order->create_properties($order_properties)){
+                                http_response_code(201);
+                                echo json_encode(array('message' => 'Order created'));
+                            }else {
+                                http_response_code(500);
+                                echo json_encode(array("errors" => "Order not created"));
+                            }
                         }
                     }
 
