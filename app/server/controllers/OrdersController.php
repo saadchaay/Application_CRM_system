@@ -41,8 +41,9 @@
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 foreach($dataJSON->orders as $order){
+                    $customer_id = $this->customer->get_customer_id($order->customer);
                     $orderData = [
-                        'customer' => $order->customer ? $order->customer : "",
+                        'customer' => $customer_id->id,
                         'admin' => $admin,
                         'date' => $order->date ? $order->date : "",
                         'total' => $order->total ? $order->total : "",
