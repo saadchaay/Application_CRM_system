@@ -38,14 +38,15 @@
       setPhone("");
       setErrors({});
     }
-    const handleAddCustomer = (e) => {
+    const handleAddCustomer = async (e) => {
       e.preventDefault();
       const newErr = {};
       const data = {
-        name,
-        phone,
-        address,
-        city,
+        id_admin: auth.id,
+        name: name,
+        phone: phone,
+        address: address,
+        city: city,
       };
       if(name === ""){
         newErr.name = "Name is required";
@@ -60,8 +61,19 @@
         newErr.city = "City is required";
       }
       setErrors(newErr);
-      // if(Object.keys(errors).length === 0){
-      //   axios.post("/customers", data, {headers: {Authorization: `Bearer ${auth.token}`}}).then(res => {
+      if(Object.keys(newErr).length > 0){
+        const res = await axios.post("CustomersController/store", data);
+        if(res.data.success){
+          setOpen(false);
+          setAddress("");
+          setCity("");
+          setName("");
+          setPhone("");
+          setErrors({});
+          fetchCustomers();
+        }
+      }
+      
     };
 
     const handleDelete = (e, id) => {
@@ -161,7 +173,7 @@
                                     Phone
                                   </label>
                                   <input
-                                    type="text"
+                                    type="number"
                                     id="phone"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}

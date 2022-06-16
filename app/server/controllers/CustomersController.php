@@ -36,6 +36,29 @@
             }
         }
 
+        public function store()
+        {
+            $dataJSON = json_decode(file_get_contents("php://input"));
+
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                $data = [
+                    'id' => $dataJSON->id_admin ? $dataJSON->id_admin : "",
+                    'name' => $dataJSON->name ? $dataJSON->name : "",
+                    'phone' => $dataJSON->phone ? $dataJSON->phone : "",
+                    'address' => $dataJSON->address ? $dataJSON->address : "",
+                    'city' => $dataJSON->city ? $dataJSON->city : "",
+                ];
+
+                $customer = $this->customer->create($data);
+                if($customer){
+                    http_response_code(201);
+                    echo json_encode(array("message" => "Customer created"));
+                } else {
+                    http_response_code(500);
+                    echo json_encode(array("errors" => "Customer not created"));
+                }
+            }
+        }
 
         public function delete($id)
         {
