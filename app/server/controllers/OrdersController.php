@@ -38,14 +38,15 @@
             $dataJSON = json_decode(file_get_contents("php://input"));
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 foreach($dataJSON->orders as $order){
-                    $data = [
+                    $orderData = [
                         'id_customer' => $order->id_customer ? $order->id_customer : "",
                         'id_admin' => $order->id_admin ? $order->id_admin : "",
                         'date' => $order->date ? $order->date : "",
                         'total' => $order->total ? $order->total : "",
                     ];
-                    $order = $this->order->create($data);
+                    $order = $this->order->create($orderData);
                     
+
                 }
             }
         }
