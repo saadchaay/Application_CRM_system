@@ -126,8 +126,8 @@ export default function Integration() {
     setSpreadsheet(res.data);
   }
 
-  const handleDelete = async (e, id) => {
-    e.preventDefault();
+  const handleDelete = async (id) => {
+    // e.preventDefault();
     const res = await axios.delete("SheetsController/delete/" + id);
     console.log(res);
     fetchAllFiles();
@@ -356,7 +356,7 @@ export default function Integration() {
               {spreadsheet.map((sheet) => (
                 <tr key={sheet.id}>
                   <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                    {sheet.id}
+                    ## {sheet.id}
                   </td>
                   <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
                     {sheet.fileName}
