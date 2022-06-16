@@ -44,8 +44,22 @@
                         'date' => $order->date ? $order->date : "",
                         'total' => $order->total ? $order->total : "",
                     ];
-                    $order = $this->order->create($orderData);
-                    
+                    if($this->order->create($orderData)){
+                        $detail_order = [
+                            'id_order' => $order->id,
+                            'id_product' => $this->order->get_last_insert_order($orderData['id_admin'])->id,
+                            'quantity' => $order->quantity ? $order->quantity : "",
+                            'price' => $order->price ? $order->price : "",
+                        ];
+                        if($this->order->create_detail($detail_order)){
+                            http_response_code(201);
+                            echo json_encode(array("message" => "Order created"));
+                        } else {
+                            http_response_code(500);
+                            echo json_encode(array("errors" => "Order not created"));
+                        }
+                    }
+
 
                 }
             }
