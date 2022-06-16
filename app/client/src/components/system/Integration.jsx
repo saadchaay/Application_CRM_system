@@ -107,19 +107,21 @@ export default function Integration() {
     //     spreadsheet = res.spreadsheetId;
     //   });
     // }
-    const response2 = await fetch("http://localhost/fil_rouge_project/app/server/SheetsController/store", 
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
+    const sheets = {
+      id_admin: auth.id,
+      fileName: fileName,
+      spreadsheetId: "hello"
+    }
+    const res = await axios.post(
+      "ProductsController/store",
+      JSON.stringify(sheets),
+      {
+        headers: {
+          "Content-Type": "application/json",
         },
-      body: JSON.stringify({
-        admin: auth.id,
-        fileName: fileName,
-        spreadsheetId: "spreadsheetId"
-      }),
-    });
-    console.log(response2);
+      }
+    );
+    console.log(res);
     // axios.get(
     //   "SheetsController/store"
       // JSON.stringify({

@@ -32,7 +32,7 @@ class SheetsController extends Controller
         if($_SERVER["REQUEST_METHOD"] == "GET"){
             echo json_encode(array("message" => "This fucking message"));
         }
-        
+
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $data = [
                 'id' => $dataJSON->id_admin ? $dataJSON->id_admin : "",
@@ -44,6 +44,7 @@ class SheetsController extends Controller
                 http_response_code(201);
                 echo json_encode(array("message" => "Sheet created"));
             } else {
+                http_response_code(500);
                 echo json_encode(array("errors" => "Sheet not created"));
             }
         }
