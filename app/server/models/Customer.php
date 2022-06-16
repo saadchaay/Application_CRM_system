@@ -33,7 +33,7 @@ class Customer {
 
     public function get_customer_id($name)
     {
-        $this->db->query('SELECT id FROM customers WHERE name = :name');
+        $this->db->query('SELECT * FROM customers WHERE name = :name');
         $this->db->bind(':name', $name);
         if($this->db->single()) {
             return $this->db->single();
