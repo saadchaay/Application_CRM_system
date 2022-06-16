@@ -23,10 +23,12 @@ const transactions = [
 export default function Orders() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const token = JSON.parse(localStorage.getItem("token"));
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState([]);
 
-  const handleOrderFromSheet = async () => {
+  const handleOrderFromSheet = async (e) => {
+    e.preventDefault();
     var accessToken = gapi.auth.getToken().access_token;
+    const object = {};
     const response = await fetch(
       "https://sheets.googleapis.com/v4/spreadsheets/1W4sXanZLLuHi3xjobdtDuXToGnFnPWLVzAHuZP-qCVE/values/A1:Z1000",
       {
@@ -35,8 +37,6 @@ export default function Orders() {
       }
     );
     response.json().then((data) => {
-      console.log(data.values);
-      const object = {};
       data.values.forEach((item, index) => {
         object[index] = {
           id: item[0],
@@ -50,9 +50,10 @@ export default function Orders() {
           address: item[8],
           city: item[9],
           phone: item[10],
-
         };
       });
+      delete object[0];
+      setOrders(object);
       console.log(object);
     });
   };
@@ -69,7 +70,6 @@ export default function Orders() {
       });
     }
     gapi.load("client:auth2", start);
-    console.log(orders);
   });
 
   return (
@@ -91,7 +91,7 @@ export default function Orders() {
               onClick={handleOrderFromSheet}
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
-              Export
+              Import Data
             </button>
           </div>
         </div>
@@ -153,40 +153,44 @@ export default function Orders() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {transactions.map((transaction) => (
-                      <tr key={transaction.id}>
-                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                          {transaction.id}
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                          {transaction.customer}
-                        </td>
-                        <td className="whitespace-nowrap px -2 py-2 text-sm text-gray-900">
-                          {transaction.phone}
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          {transaction.city}
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          {transaction.date}
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          {transaction.status}
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          {transaction.total}
-                        </td>
-                        <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <a
-                            href="/"
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            details
-                            <span className="sr-only">, {transaction.id}</span>
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
+                    {
+                      orders ? (
+                        transactions.map((order) => (
+                          <tr key={order.id}>
+                            <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
+                              {order.id}
+                            </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                              {order.customer}
+                            </td>
+                            <td className="whitespace-nowrap px -2 py-2 text-sm text-gray-900">
+                              {order.phone}
+                            </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                              {order.city}
+                            </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                              {order.date}
+                            </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                              {order.status}
+                            </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                              {order.total}
+                            </td>
+                            <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                              <a
+                                href="/"
+                                className="text-indigo-600 hover:text-indigo-900"
+                              >
+                                details
+                                <span className="sr-only">, {order.id}</span>
+                              </a>
+                            </td>
+                          </tr>
+                        ))
+                      ) : "No orders"
+                    }
                   </tbody>
                 </table>
               </div>
