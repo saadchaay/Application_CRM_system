@@ -33,7 +33,7 @@ class Order {
 
     public function create($data)
     {
-        $this->db->query("INSERT INTO `orders` (`reference`, `date_order`, `id_admin`, `id_customer`, `status`, `tracking`, `total`, `created_at`, `updated_at`) VALUES (:reference, :date_order, :id, :customer, :status, :tracking, :total, :created_at, :updated_at)");
+        $this->db->query("INSERT INTO `orders` (`reference`, `order_date`, `id_admin`, `id_customer`, `status`, `tracking`, `total`, `created_at`, `updated_at`) VALUES (:reference, :date_order, :id, :customer, :status, :tracking, :total, :created_at, :updated_at)");
 
         $this->db->bind(':reference', $data['reference']);
         $this->db->bind(':date_order', $data['date_order']);
@@ -73,6 +73,17 @@ class Order {
 
         if($this->db->execute()) {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_last_insert_order_detail()
+    {
+        $this->db->query('SELECT * FROM order_detail ORDER BY id DESC LIMIT 1');
+
+        if($this->db->single()) {
+            return $this->db->single();
         } else {
             return false;
         }

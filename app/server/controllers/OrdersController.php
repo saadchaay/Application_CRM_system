@@ -54,15 +54,20 @@
                     if($this->order->create($orderData)){
                         // get product id 
                         $product_id = $this->product->get_product_id($order->product);
+
                         // create order_details
                         $detail_order = [
                             'order' => $this->order->get_last_insert_order($admin)->id, // get last insert order
                             'product' => $product_id->id,
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
-                        print_r($detail_order);
                         if($this->order->create_detail($detail_order)){
-                            
+                            $order_properties = [
+                                'order_detail' => $this->order->get_last_insert_order_detail()->id, // get last insert order
+                                'property' => $order->property ? $order->property : "",
+                                'value' => $order->value ? $order->value : "",
+                            ];
+                            print_r($order_properties);
                         } else {
                             http_response_code(500);
                             echo json_encode(array("errors" => "Order not created"));
