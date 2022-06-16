@@ -4,6 +4,7 @@
 
         private $order ;
         private $customer ;
+        private $product ;
 
         public function __construct()
         {
@@ -13,6 +14,7 @@
             header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
             $this->order = new Order();
             $this->customer = new Customer();
+            $this->product = new Product();
         }
 
         public function index($id)
@@ -45,7 +47,7 @@
                         'total' => $order->total ? $order->total : "",
                     ];
                     if($this->order->create($orderData)){
-                        
+                        $product_id = $this->product->get_product_id($order->id_product);
                         $detail_order = [
                             'id_order' => $this->order->get_last_insert_order($orderData['id_admin'])->id,
                             'id_product' => 23,
