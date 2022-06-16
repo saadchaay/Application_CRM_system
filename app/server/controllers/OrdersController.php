@@ -38,6 +38,7 @@
         public function store()
         {
             $dataJSON = json_decode(file_get_contents("php://input"));
+            $is_success = false;
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 foreach($dataJSON->orders as $order){
@@ -61,6 +62,7 @@
                             'product' => $product_id->id,
                             'quantity' => $order->quantity ? $order->quantity : "",
                         ];
+                        $is_success = true;
                         if($this->order->create_detail($detail_order)){
                             $colors = explode(",", $order->colors);
                             $sizes = explode(",", $order->sizes);
@@ -69,17 +71,33 @@
                                 'colors' => $colors,
                                 'sizes' => $sizes
                             ];
-                            if($this->order->create_properties($order_properties)){
-                                http_response_code(201);
-                                echo json_encode(array('message' => 'Order created'));
-                            }else {
-                                http_response_code(500);
-                                echo json_encode(array("errors" => "Order not created"));
+                            foreach($order_properties['colors'] as $color){
+                                $tmp = [
+                                    'property' => "color",
+                                    'value' => $color,
+                                    'order_detail' => $order_properties['order_detail'],
+                                ];
+                                $this->order->create_order_properties($tmp);
+                                $is_success = true;
+                            }
+                            foreach($order_properties['sizes'] as $size){
+                                $tmp = [
+                                    'property' => "size",
+                                    'value' => $size,
+                                    'order_detail' => $order_properties['order_detail'],
+                                ];
+                                $this->order->create_order_properties($tmp);
+                                $is_success = true;
                             }
                         }
                     }
-
-
+                }
+                if($is_success){
+                    http_response_code(201);
+                    echo json_encode(array('message' => 'Orders created'));
+                } else {
+                    http_response_code(400);
+                    echo json_encode(array('message' => 'Orders not created'));
                 }
             }
         }
