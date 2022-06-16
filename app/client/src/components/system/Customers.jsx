@@ -130,7 +130,7 @@ export default function Customers() {
                         <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                           <button
                             type="button"
-                            // onClick={handleDelete(customer.id)}
+                            onClick={(e) => handleDelete(e, customer.id)}
                             className="text-red-500 hover:text-red-700"
                             >
                             <Delete />
