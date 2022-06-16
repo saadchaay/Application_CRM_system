@@ -35,7 +35,7 @@ class Product {
         }
     }
 
-    public function get_id_by_name($name)
+    public function get_product_id($name)
     {
         $this->db->query("SELECT * FROM `products` WHERE `title` = :name");
         $this->db->bind(':name', $name);
