@@ -44,10 +44,11 @@ export default function Example() {
   return (
     <>
       <div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex items-center justify-start">
           <h2>Management Status of this order</h2>
         </div>
       </div>
+
       <div className="flex flex-col justify-center  mt-4 md:flex-row md:mt-0">
         <div className="bg-white shadow overflow-hidden sm:rounded-lg md:w-4/5 mx-2">
           <div className="px-4 py-5 sm:px-6">
