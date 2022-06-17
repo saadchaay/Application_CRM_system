@@ -153,14 +153,20 @@
                 $order = $this->order->get_join_all($id);
                 $product = $this->product->get_product($order->id_product);
                 $customer = $this->customer->get_customer($order->id_customer);
+                $total = $this->customer->get_all_transaction($order->customer);
                 if($order){
                     http_response_code(200);
-                    echo json_encode(array('order' => $order, 'customer' => $customer, 'product' => $product));
+                    echo json_encode(array('order' => $order, 'customer' => $customer, 'product' => $product, 'total' => $total));
                 }else{
                     http_response_code(404);
                     echo json_encode(array('message' => 'Order not found'));
                 }
             }
+        }
+
+        public function total_transaction($id)  
+        {
+            echo json_encode(array('total' => $this->customer->get_all_transaction($id)));
         }
         
     }
