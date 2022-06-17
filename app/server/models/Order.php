@@ -175,7 +175,7 @@ class Order {
     {
         $this->db->query("SELECT O.*, OD.* FROM orders O INNER JOIN order_detail OD ON O.`id` = OD.`id_order` WHERE id_order = :id");
         $this->db->bind(':id', $id);
-        $res = $this->db->resultSet();
+        $res = $this->db->single();
         if($res) {
             return $res;
         } else {

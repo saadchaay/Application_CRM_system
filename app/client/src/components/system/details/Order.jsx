@@ -5,6 +5,7 @@ import axios from "../../../api/axios";
 export default function Example() {
     const { id } = useParams();
     const [order, setOrder] = useState([]);
+    const [product, setProduct] = useState([]);
     const [customer, setCustomer] = useState([]);
 
     const fetchOrder = async (id) => {
@@ -12,6 +13,8 @@ export default function Example() {
         if(res.status === 200) {
             console.log(res.data);
             setCustomer(res.data.customer);
+            setOrder(res.data.order);
+            setProduct(res.data.product);
         } else {
             console.log(res.data);
         }
@@ -29,7 +32,7 @@ export default function Example() {
             Order Information
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Personal details and application.
+            Order Reference: {"  "+ product.sku+"_"+order.reference} 
           </p>
         </div>
         <div className="border-t border-gray-200">
@@ -37,15 +40,15 @@ export default function Example() {
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">SKU Product</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {/* {order.sku} */}
+                {product.sku}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
-                Application for
+                Product Name
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                Backend Developer
+                {product.title}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

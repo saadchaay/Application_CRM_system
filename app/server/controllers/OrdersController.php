@@ -151,8 +151,8 @@
         {
             if($_SERVER["REQUEST_METHOD"] === "GET"){
                 $order = $this->order->get_join_all($id);
-                $product = $this->product->get_product($order[0]->id_product);
-                $customer = $this->customer->get_customer($order[0]->id_customer);
+                $product = $this->product->get_product($order->id_product);
+                $customer = $this->customer->get_customer($order->id_customer);
                 if($order){
                     http_response_code(200);
                     echo json_encode(array('order' => $order, 'customer' => $customer, 'product' => $product));
