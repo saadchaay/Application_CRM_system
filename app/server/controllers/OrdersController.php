@@ -40,9 +40,10 @@
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 $productErr = '';
+                $idOrder = '';
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
-                    if($this->order->check_order_ref($order->id)){
+                    // if(!($this->order->check_order_ref($order->id))){
                         if(!$customer_id){
                             if($this->customer->create(array(
                                 'id' => $admin,
@@ -106,18 +107,23 @@
                             }
                         } else {
                             $this->customer->delete($newCustomer->id);
+                            $productErr = 'Customer not found blablabla';
                         }
+                    // }else {
+                    //     $productErr = 'Order already exists';
+                    //     $idOrder = $order->id;
+                    //     break;
+                    // }
+                }
+                if($is_success){
+                    http_response_code(201);
+                    echo json_encode(array('message' => 'Orders Imported'));
+                } else {
+                    if($this->order->get_last_insert_order_detail($admin)){
+                        $this->order->delete($this->order->get_last_insert_order($admin)->id);
                     }
-                    if($is_success){
-                        http_response_code(201);
-                        echo json_encode(array('message' => 'Orders created'));
-                    } else {
-                        if($this->order->get_last_insert_order_detail($admin)){
-                            $this->order->delete($this->order->get_last_insert_order($admin)->id);
-                        }
-                        http_response_code(400);
-                        echo json_encode(array('orderError' => 'Orders not created', 'productError' => $productErr));
-                    }
+                    http_response_code(200);
+                    echo json_encode(array('orderError' => 'Orders number '. $idOrder .' not imported', 'productError' => $productErr));
                 }
             }
         }
