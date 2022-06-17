@@ -8,6 +8,7 @@ export default function Example() {
     const [product, setProduct] = useState([]);
     const [customer, setCustomer] = useState([]);
     const [total, setTotal] = useState([]);
+    const [properties, setProperties] = useState([]);
 
     const fetchOrder = async (id) => {
         const res = await axios.get(`OrdersController/show/${id}`);
@@ -17,6 +18,7 @@ export default function Example() {
             setOrder(res.data.order);
             setProduct(res.data.product);
             setTotal(res.data.total);
+            setProperties(res.data.properties);
         } else {
             console.log(res.data);
         }

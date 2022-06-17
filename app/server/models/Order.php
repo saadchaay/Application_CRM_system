@@ -161,7 +161,13 @@ class Order {
     public function get_order_properties($id)
     {
         $this->db->query("SELECT * FROM order_properties WHERE id_order_detail = :id");
-        
+        $this->db->bind(':id', $id);
+        $res = $this->db->resultSet();
+        if($res) {
+            return $res;
+        } else {
+            return false;
+        }
     }
 
     // jointure between Orders and Order_detail
