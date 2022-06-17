@@ -62,7 +62,7 @@
 
                     if($this->order->create($orderData)){
                         // get product id 
-                        $product_id = $this->product->get_product_id($order->product);
+                        $product_id = $this->product->get_product_id($order->sku);
                         if(!$product_id){
                             $product_id = $this->product->last_insertion()->id;
                         }
