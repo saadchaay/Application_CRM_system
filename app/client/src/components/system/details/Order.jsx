@@ -89,13 +89,14 @@ export default function Example() {
                 <div className="col-span-6 sm:col-span-6">
                 <label
                   htmlFor="email-address"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-600"
                 >
-                  Order Note :
+                  Order Note (optional) :
                 </label>
                 <textarea
                   type="text"
                   id="description"
+                  placeholder="Add a note about this order"
                   // value={description}
                   // onChange={(e) =>
                   // //   setDescription(e.target.value)
