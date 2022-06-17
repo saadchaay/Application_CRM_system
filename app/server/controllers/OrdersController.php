@@ -41,8 +41,8 @@
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 $productErr = '';
                 $orderErr = '';
-                $countOr = count($dataJSON->orders);
-                foreach($dataJSON->orders as $order){
+                $countOr = count(array($dataJSON->orders));
+                foreach($dataJSON->orders as $order){ 
                     $customer_id = $this->customer->get_customer_id($order->customer);
                     // check if customer exist
                     if(!$customer_id){
@@ -118,9 +118,9 @@
                         echo json_encode(array('message' => 'Orders Imported'));
                     }
                 }
-                if($is_success < $countOr && $is_success > 0){
+                if(($is_success < $countOr) && ($is_success > 0)){
                     http_response_code(200);
-                    echo json_encode(array('productErr' => $productErr, 'orderErr' => $orderErr));
+                    echo json_encode(array('productErr' => 'Some Order already exist', 'orderErr' => $orderErr));
                 }elseif($is_success == 0){
                     http_response_code(200);
                     echo json_encode(array('message' => 'No orders imported'));
@@ -135,9 +135,11 @@
             }
         }
 
-        public function count($ref)
+        public function count()
         {
-            print_r($this->order->check_order_ref($ref));
+            $dataJSON = json_decode(file_get_contents("php://input"));
+
+            print_r(count(array($dataJSON->orders)));
         }
         
     }

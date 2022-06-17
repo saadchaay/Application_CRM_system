@@ -154,7 +154,7 @@ export default function Orders() {
               <span className="ml-2 block sm:inline">Orders Not Imported</span>
               <span
                 className="absolute top-0 bottom-0 right-0 px-4 py-3"
-                onClick={() => setSuccess(false)}
+                onClick={() => setError(null)}
               >
                 <svg
                   className="fill-current h-6 w-6 text-red-500"
