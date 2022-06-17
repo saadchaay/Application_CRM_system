@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import axios from "../../../api/axios";
 
 const statusStyles = {
-  pending: "bg-gray-500 text-white",
-  confirmed: "bg-green-600 text-white",
-  canceled: "bg-orange-500 text-white",
-  processing: "bg-blue-600 text-white",
-  failed: "bg-pink-700 text-white",
+  Pending: "bg-gray-500 text-white",
+  Confirmed: "bg-green-600 text-white",
+  Canceled: "bg-orange-500 text-white",
+  Processing: "bg-blue-600 text-white",
+  Failed: "bg-pink-700 text-white",
   Payed: "bg-green-700 text-white",
 };
 
@@ -16,6 +16,7 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const auth = JSON.parse(localStorage.getItem("auth"));
   const { id } = useParams();
   const [order, setOrder] = useState([]);
   const [product, setProduct] = useState([]);
@@ -44,8 +45,69 @@ export default function Example() {
   return (
     <>
       <div>
-        <div className="flex items-center justify-start">
-          <h2>Management Status of this order</h2>
+        <div className="flex items-center justify-start mx-2 my-5">
+          <div className="flex-1 lg:border-t pt-4 mx-2">
+            <div className="bg-white rounded-3xl border shadow-md p-8 w-full sm:w-full">
+              <div className="flex justify-between items-center mb-4">
+                {/* title with the manager */}
+                <div className="flex flex-col">
+                  <h2 className="text-lg font-bold">
+                    Management Status of this order
+                  </h2>
+                  <p>
+                    <span className="ml-3 text-gray-600 text-sm">
+                      Manager name: {auth.name}
+                    </span>
+                  </p>
+                </div>
+              </div>
+              {/* body card */}
+              <div className="flex justify-around">
+                <div
+                  className={classNames(
+                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
+                    statusStyles["Pending"]
+                  )}
+                >
+                  <input type="radio" name="" hidden />
+                  <label className="hover:cursor-pointer">Pending</label>
+                </div>
+                <div
+                className={classNames(
+                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
+                    statusStyles["Confirmed"]
+                  )}
+                >
+                  <input type="radio" name="" hidden />
+                  <label className="hover:cursor-pointer">Confirmed</label>
+                </div>
+                <div
+                className={classNames(
+                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
+                    statusStyles["Canceled"]
+                  )}>
+                  <input type="radio" name="" hidden />
+                  <label className="hover:cursor-pointer">Canceled</label>
+                </div>
+                <div
+                className={classNames(
+                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
+                    statusStyles["Processing"]
+                  )}>
+                  <input type="radio" name="" hidden />
+                  <label className="hover:cursor-pointer">Processing</label>
+                </div>
+                <div
+                className={classNames(
+                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
+                    statusStyles["Failed"]
+                  )}>
+                  <input type="radio" name="" hidden />
+                  <label className="hover:cursor-pointer">Failed</label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
