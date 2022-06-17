@@ -25,6 +25,8 @@ export default function Orders() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const token = JSON.parse(localStorage.getItem("token"));
   const [orders, setOrders] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleOrderFromSheet = async (e) => {
     e.preventDefault();
@@ -71,17 +73,26 @@ export default function Orders() {
         )
         .then((res) => {
           console.log(res);
-          fetchOrder();
-        })
-        .catch((err) => {
-          console.log(err);
+          if (res.status === 201) {
+            fetchOrder();
+            setSuccess(true);
+          } else {
+            fetchOrder();
+            const newErr = {};
+            if (res.data.message) {
+              newErr.message = res.data.message;
+            } else if (res.data.orderErr) {
+              newErr.orderErr = res.data.orderErr;
+            }
+            setError(newErr);
+          }
         });
     });
   };
 
   const fetchOrder = async () => {
     const response = await axios.get("OrdersController/index/" + auth.id);
-    if(response.status === 201){
+    if (response.status === 201) {
       setOrders(response.data);
       console.log(response.data);
     } else {
@@ -94,7 +105,7 @@ export default function Orders() {
     const response = await axios.delete("OrdersController/destroy/" + id);
     console.log(response);
     fetchOrder();
-  }
+  };
 
   useEffect(() => {
     function start() {
@@ -132,6 +143,77 @@ export default function Orders() {
             </button>
           </div>
         </div>
+        {error.message ? (
+          <div
+            className="mt-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <strong className="font-bold">Failed!</strong>
+            <span className="ml-2 block sm:inline">Orders Not Imported</span>
+            <span
+              className="absolute top-0 bottom-0 right-0 px-4 py-3"
+              onClick={() => setSuccess(false)}
+            >
+              <svg
+                className="fill-current h-6 w-6 text-red-500"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+              </svg>
+            </span>
+          </div>
+        ) : error.orderErr ? (
+          <div
+            className="mt-2 bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <strong className="font-bold">Warning!</strong>
+            <span className="ml-2 block sm:inline">
+              Some orders is already exists
+            </span>
+            <span
+              className="absolute top-0 bottom-0 right-0 px-4 py-3"
+              onClick={() => setSuccess(false)}
+            >
+              <svg
+                className="fill-current h-6 w-6 text-orange-500"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+              </svg>
+            </span>
+          </div>
+        ) : success ? (
+          <div
+            className="mt-2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <strong className="font-bold">Success!</strong>
+            <span className="ml-2 block sm:inline">
+              Imported all orders successfully
+            </span>
+            <span
+              className="absolute top-0 bottom-0 right-0 px-4 py-3"
+              onClick={() => setSuccess(false)}
+            >
+              <svg
+                className="fill-current h-6 w-6 text-green-500"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+              </svg>
+            </span>
+          </div>
+        ) : null}
         <div className="mt-8 flex flex-col">
           <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -227,7 +309,7 @@ export default function Orders() {
                               className="text-sm text-red-600 hover:text-red-800"
                               data-id={order.id}
                             >
-                              <Delete />  
+                              <Delete />
                             </button>
                           </td>
                         </tr>

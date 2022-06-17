@@ -51,6 +51,7 @@ class Order {
         } else {
             return false;
         }
+
         
     }
 
@@ -93,6 +94,7 @@ class Order {
 
     public function create_order_properties($data)
     {
+        
         $this->db->query("INSERT INTO `order_properties` (`id_order_detail`, `property`, `value`) VALUES (:order_detail, :property, :value)");
 
         $this->db->bind(':order_detail', $data['order_detail']);
