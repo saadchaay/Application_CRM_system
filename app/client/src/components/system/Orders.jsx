@@ -43,14 +43,15 @@ export default function Orders() {
           id: item[0],
           date: item[1],
           customer: item[2],
-          product: item[3],
-          colors: item[4],
-          sizes: item[5],
-          quantity: item[6],
-          total: item[7],
-          address: item[8],
-          city: item[9],
-          phone: item[10],
+          address: item[3],
+          city: item[4],
+          phone: item[5],
+          product: item[6],
+          sku: item[7],
+          colors: item[8],
+          sizes: item[9],
+          quantity: item[10],
+          total: item[11],
         };
       });
       delete object[0];
