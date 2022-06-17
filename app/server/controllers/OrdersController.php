@@ -154,9 +154,10 @@
                 $product = $this->product->get_product($order->id_product);
                 $customer = $this->customer->get_customer($order->id_customer);
                 $total = $this->customer->get_all_transaction($order->id_customer);
+                $properties = $this->order->get_order_properties($order->id);
                 if($order){
                     http_response_code(200);
-                    echo json_encode(array('order' => $order, 'customer' => $customer, 'product' => $product, 'total' => $total));
+                    echo json_encode(array('order' => $order, 'customer' => $customer, 'product' => $product, 'total' => $total, 'properties' => $properties));
                 }else{
                     http_response_code(404);
                     echo json_encode(array('message' => 'Order not found'));
