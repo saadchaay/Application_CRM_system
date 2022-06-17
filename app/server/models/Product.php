@@ -50,19 +50,20 @@ class Product {
     {
         if( $data['type'] === 'admin' ) {
             $this->db->query("INSERT INTO `products` 
-                (`id_admin`, `type_creator`, `id_category`, `title`, `description`, `quantity`, `status`, `price`, `avatar`, `created_at`, `updated_at`) 
-                VALUES (:id, :type, :category, :title, :description, :quantity, :status, :price, :avatar, :created_at, :updated_at)");
+                (`id_admin`, `type_creator`, `id_category`, `sku`, `title`, `description`, `quantity`, `status`, `price`, `avatar`, `created_at`, `updated_at`) 
+                VALUES (:id, :type, :category, :sku, :title, :description, :quantity, :status, :price, :avatar, :created_at, :updated_at)");
             $this->db->bind(":id", $data["id_creator"]);
         } else {
             $id_admin = $this->user->get_user($data['id_creator'])->id_admin;
             $this->db->query("INSERT INTO `products` 
-                (`id_admin`, `id_user`, `type_creator`, `id_category`, `title`, `description`, `quantity`, `status`, `price`, `avatar`, `created_at`, `updated_at`) 
-                VALUES (:id_admin, :id_user, :type, :category, :title, :description, :quantity, :status, :price, :avatar, :created_at, :updated_at)");
+                (`id_admin`, `id_user`, `type_creator`, `id_category`, `sku`, `title`, `description`, `quantity`, `status`, `price`, `avatar`, `created_at`, `updated_at`) 
+                VALUES (:id_admin, :id_user, :type, :category, :sku, :title, :description, :quantity, :status, :price, :avatar, :created_at, :updated_at)");
             $this->db->bind(":id_admin", $id_admin);
             $this->db->bind(":id_user", $data["id_creator"]);
         }
         $this->db->bind(":type", $data["type"]);
         $this->db->bind(":category", $data["category"]);
+        $this->db->bind(":sku", $data["sku"]);
         $this->db->bind(":title", $data["title"]);
         $this->db->bind(":description", $data["description"]);
         $this->db->bind(":quantity", $data["quantity"]);
@@ -138,6 +139,6 @@ class Product {
         }
     }
 
-    
+
 
 }

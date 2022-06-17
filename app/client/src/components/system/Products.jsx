@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment, useRef } from "react";
 import axios from "../../api/axios";
-import { Delete } from "@material-ui/icons";
+import { Delete, SkipNextOutlined } from "@material-ui/icons";
 import { Dialog, Transition } from "@headlessui/react";
 import Switch from "@material-ui/core/Switch";
 import Drop from "../helpers/Drop";
@@ -36,6 +36,7 @@ export default function Example() {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
+  const [sku, setSku] = useState("");
 
   const [errors, setErrors] = useState({});
 
@@ -109,6 +110,9 @@ export default function Example() {
     if (price === "") {
       newErrors.price = "Price is required";
     }
+    if(sku === ""){
+      newErrors.sku = "SKU is required";
+    }
     if (category === "") {
       newErrors.category = "Category is required";
     }
@@ -135,6 +139,7 @@ export default function Example() {
           description: description,
           quantity: quantity,
           price: price,
+          sku: sku,
           category: category,
           color: colorsSelected,
           size: sizesSelected,
@@ -155,6 +160,7 @@ export default function Example() {
           setDescription("");
           setQuantity("");
           setPrice("");
+          setSku("");
           setCategory("");
           setAvatar("");
           setColorsSelected(null);
@@ -413,6 +419,26 @@ export default function Example() {
                                   />
                                   <div className="text-red-500 mb-3 text-sm">
                                     {errors.price ? errors.price : null}
+                                  </div>
+                                </div>
+
+                                <div className="col-span-6 sm:col-span-3">
+                                  <label
+                                    htmlFor="country"
+                                    className="block text-sm font-medium text-gray-700"
+                                  >
+                                    SKU (Stock Keeping Unit)
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="sku"
+                                    value={sku}
+                                    onChange={(e) => setSku(e.target.value)}
+                                    autoComplete="sku"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                  />
+                                  <div className="text-red-500 mb-3 text-sm">
+                                    {errors.sku ? errors.sku : null}
                                   </div>
                                 </div>
 
