@@ -16,6 +16,7 @@ use PHPMailer\PHPMailer\PHPMailer;
             'price' => '/^[0-9]+(\.[0-9]{1,2})?$/',
             'quantity' => '/^[0-9]+$/',
             'title' => '/^([a-zA-Z' . "'" . ' ]+)$/',
+            'sku' => '/^([a-zA-Z0-9]+)$/',
             'description' => '/^([a-zA-Z' . "'" . ' ]+)$/',
             'role' => '/^([a-zA-Z' . "'" . ' ]+)$/',
             'login' => '/^[a-zA-Z0-9]*$/',

@@ -59,6 +59,7 @@
                     'description' => $dataJSON->description ? $dataJSON->description : "",
                     'quantity' => $dataJSON->quantity ? $dataJSON->quantity : 0,
                     'price' => $dataJSON->price ? $dataJSON->price : 0.00,
+                    'sku' => $dataJSON->sku ? $dataJSON->sku : "",
                     'avatar' => $dataJSON->avatar ? $dataJSON->avatar : "",
                     'properties' => array_merge($dataJSON->color ? $dataJSON->color:[], $dataJSON->size ? $dataJSON->size:[]),
                 ];
