@@ -41,6 +41,7 @@
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 $productErr = '';
                 $orderErr = '';
+                $countOr = count($dataJSON->order);
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
                     // check if customer exist
@@ -117,7 +118,7 @@
                         echo json_encode(array('message' => 'Orders Imported'));
                     }
                 }
-                if($is_success < count($dataJSON->orders) && $is_success > 0){
+                if($is_success < $countOr && $is_success > 0){
                     http_response_code(200);
                     echo json_encode(array('productErr' => $productErr, 'orderErr' => $orderErr));
                 }elseif($is_success == 0){
