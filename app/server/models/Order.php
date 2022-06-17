@@ -142,4 +142,15 @@ class Order {
         }
     }
 
+    public function check_order_ref($ref)
+    {
+        $this->db->query("SELECT * FROM orders WHERE reference = :ref");
+        $this->db->bind(':ref', $ref);
+        if($this->db->single()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

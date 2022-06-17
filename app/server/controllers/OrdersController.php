@@ -42,6 +42,7 @@
                 $productErr = '';
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
+                    // if($this->order->get_order_id)
                     if(!$customer_id){
                         if($this->customer->create(array(
                             'id' => $admin,

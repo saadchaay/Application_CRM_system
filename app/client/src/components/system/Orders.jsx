@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Delete } from "@material-ui/icons";
+import { Delete, Info } from "@material-ui/icons";
 import { gapi } from "gapi-script";
 import axios from "../../api/axios";
 
@@ -55,7 +55,6 @@ export default function Orders() {
         };
       });
       delete object[0];
-      setOrders(object);
 
       axios
         .post(
@@ -72,6 +71,7 @@ export default function Orders() {
         )
         .then((res) => {
           console.log(res);
+          fetchOrder();
         })
         .catch((err) => {
           console.log(err);
@@ -81,8 +81,12 @@ export default function Orders() {
 
   const fetchOrder = async () => {
     const response = await axios.get("OrdersController/index/" + auth.id);
-    setOrders(response.data);
-    console.log(response.data);
+    if(response.status === 201){
+      setOrders(response.data);
+      console.log(response.data);
+    } else {
+      console.log(response.status);
+    }
   };
 
   const handleDeleteOrder = async (e, id) => {
@@ -93,7 +97,6 @@ export default function Orders() {
   }
 
   useEffect(() => {
-    fetchOrder();
     function start() {
       gapi.client.init({
         apiKey: token.apiKey ? token.apiKey : API_KEY,
@@ -105,6 +108,7 @@ export default function Orders() {
       });
     }
     gapi.load("client:auth2", start);
+    fetchOrder();
   }, []);
 
   return (
@@ -215,12 +219,12 @@ export default function Orders() {
                               to="/"
                               className="text-indigo-600 hover:text-indigo-900"
                             >
-                              details
+                              <Info />
                               <span className="sr-only">, {order.id}</span>
                             </Link>
                             <button
                               onClick={handleDeleteOrder}
-                              className="text-sm text-gray-500 hover:text-gray-900"
+                              className="text-sm text-red-600 hover:text-red-800"
                               data-id={order.id}
                             >
                               <Delete />  
