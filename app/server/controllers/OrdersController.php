@@ -44,69 +44,69 @@
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
                     // check if customer exist
-                        if(!$customer_id){
-                            if($this->customer->create(array(
-                                'id' => $admin,
-                                'name' => $order->customer,
-                                'phone' => $order->phone,
-                                'address' => $order->address,
-                                'city' => $order->city,
-                            ))){
-                                $newCustomer = $this->customer->get_customer_id($order->customer);
-                            }
+                    if(!$customer_id){
+                        if($this->customer->create(array(
+                            'id' => $admin,
+                            'name' => $order->customer,
+                            'phone' => $order->phone,
+                            'address' => $order->address,
+                            'city' => $order->city,
+                        ))){
+                            $newCustomer = $this->customer->get_customer_id($order->customer);
                         }
-                        $orderData = [
-                            'reference' => $order->id ? $order->id : "",
-                            'date_order' => $order->date ? $order->date : null,
-                            'customer' => $customer_id->id ? $customer_id->id : $newCustomer->id,
-                            'admin' => $admin,
-                            'total' => $order->total ? $order->total : "",
+                    }
+                    $orderData = [
+                        'reference' => $order->id ? $order->id : "",
+                        'date_order' => $order->date ? $order->date : null,
+                        'customer' => $customer_id->id ? $customer_id->id : $newCustomer->id,
+                        'admin' => $admin,
+                        'total' => $order->total ? $order->total : "",
+                    ];
+
+                    if($this->order->create($orderData)){
+                        // get product id 
+                        $product_id = $this->product->get_product_id($order->sku);
+                        if(!$product_id){
+                            $productErr = 'Product not found';
+                            break;
+                        }
+                        // create order_details
+                        $detail_order = [
+                            'order' => $this->order->get_last_insert_order($admin)->id, // get last insert order
+                            'product' => $product_id->id, // get last insert product),
+                            'quantity' => $order->quantity ? $order->quantity : "",
                         ];
-    
-                        if($this->order->create($orderData)){
-                            // get product id 
-                            $product_id = $this->product->get_product_id($order->sku);
-                            if(!$product_id){
-                                $productErr = 'Product not found';
-                                break;
-                            }
-                            // create order_details
-                            $detail_order = [
-                                'order' => $this->order->get_last_insert_order($admin)->id, // get last insert order
-                                'product' => $product_id->id, // get last insert product),
-                                'quantity' => $order->quantity ? $order->quantity : "",
+                        if($this->order->create_detail($detail_order)){
+                            $colors = explode(",", $order->colors);
+                            $sizes = explode(",", $order->sizes);
+                            $order_properties = [
+                                'order_detail' => $this->order->get_last_insert_order_detail()->id, // get last insert order
+                                'colors' => $colors,
+                                'sizes' => $sizes
                             ];
-                            if($this->order->create_detail($detail_order)){
-                                $colors = explode(",", $order->colors);
-                                $sizes = explode(",", $order->sizes);
-                                $order_properties = [
-                                    'order_detail' => $this->order->get_last_insert_order_detail()->id, // get last insert order
-                                    'colors' => $colors,
-                                    'sizes' => $sizes
+                            foreach($order_properties['colors'] as $color){
+                                $tmp = [
+                                    'property' => "color",
+                                    'value' => $color,
+                                    'order_detail' => $order_properties['order_detail'],
                                 ];
-                                foreach($order_properties['colors'] as $color){
-                                    $tmp = [
-                                        'property' => "color",
-                                        'value' => $color,
-                                        'order_detail' => $order_properties['order_detail'],
-                                    ];
-                                    $this->order->create_order_properties($tmp);
-                                    $is_success = true;
-                                }
-                                foreach($order_properties['sizes'] as $size){
-                                    $tmp = [
-                                        'property' => "size",
-                                        'value' => $size,
-                                        'order_detail' => $order_properties['order_detail'],
-                                    ];
-                                    $this->order->create_order_properties($tmp);
-                                    $is_success = true;
-                                }
+                                $this->order->create_order_properties($tmp);
+                                $is_success = true;
                             }
-                        } else {
-                            print_r("error");
-                            $this->customer->delete($newCustomer->id);
+                            foreach($order_properties['sizes'] as $size){
+                                $tmp = [
+                                    'property' => "size",
+                                    'value' => $size,
+                                    'order_detail' => $order_properties['order_detail'],
+                                ];
+                                $this->order->create_order_properties($tmp);
+                                $is_success = true;
+                            }
                         }
+                    } else {
+                        print_r("error");
+                        $this->customer->delete($newCustomer->id);
+                    }
                 }
                 if($is_success){
                     http_response_code(201);
@@ -114,7 +114,6 @@
                 } else {
                     if($this->order->get_last_insert_order_detail($admin)){
                         $this->order->delete($this->order->get_last_insert_order($admin)->id);
-                        // print_r("error insert order detail");
                     }
                     http_response_code(200);
                     echo json_encode(array('orderError' => 'Orders number '. $idOrder .' not imported', 'productError' => $productErr));

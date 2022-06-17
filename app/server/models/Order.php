@@ -33,28 +33,25 @@ class Order {
 
     public function create($data)
     {
-        $order = $this->check_order_ref($data['reference']);
-        if($order) {
-            return false;
+        
+        $this->db->query("INSERT INTO `orders` (`reference`, `order_date`, `id_admin`, `id_customer`, `status`, `tracking`, `total`, `created_at`, `updated_at`) VALUES (:reference, :date_order, :id, :customer, :status, :tracking, :total, :created_at, :updated_at)");
+
+        $this->db->bind(':reference', $data['reference']);
+        $this->db->bind(':date_order', $data['date_order']);
+        $this->db->bind(':id', $data['admin']);
+        $this->db->bind(":customer", $data["customer"]);
+        $this->db->bind(":status", "pending");
+        $this->db->bind(":tracking", "pending");
+        $this->db->bind(":total", $data["total"]);
+        $this->db->bind(":created_at", date("Y-m-d H:i:s"));
+        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+
+        if($this->db->execute()) {
+            return true;
         } else {
-            $this->db->query("INSERT INTO `orders` (`reference`, `order_date`, `id_admin`, `id_customer`, `status`, `tracking`, `total`, `created_at`, `updated_at`) VALUES (:reference, :date_order, :id, :customer, :status, :tracking, :total, :created_at, :updated_at)");
-    
-            $this->db->bind(':reference', $data['reference']);
-            $this->db->bind(':date_order', $data['date_order']);
-            $this->db->bind(':id', $data['admin']);
-            $this->db->bind(":customer", $data["customer"]);
-            $this->db->bind(":status", "pending");
-            $this->db->bind(":tracking", "pending");
-            $this->db->bind(":total", $data["total"]);
-            $this->db->bind(":created_at", date("Y-m-d H:i:s"));
-            $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
-    
-            if($this->db->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
+        
     }
 
     public function get_last_insert_order($id)
@@ -152,7 +149,7 @@ class Order {
         $this->db->query("SELECT * FROM orders WHERE reference = :ref");
         $this->db->bind(':ref', $ref);
         $this->db->execute();
-        if($this->db->rowCount() > 1) {
+        if($this->db->rowCount() > 0) {
             return true;
         } else {
             return false;
