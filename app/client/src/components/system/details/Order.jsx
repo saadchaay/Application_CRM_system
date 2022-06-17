@@ -7,6 +7,7 @@ export default function Example() {
     const [order, setOrder] = useState([]);
     const [product, setProduct] = useState([]);
     const [customer, setCustomer] = useState([]);
+    const [total, setTotal] = useState([]);
 
     const fetchOrder = async (id) => {
         const res = await axios.get(`OrdersController/show/${id}`);
@@ -15,6 +16,7 @@ export default function Example() {
             setCustomer(res.data.customer);
             setOrder(res.data.order);
             setProduct(res.data.product);
+            setTotal(res.data.total);
         } else {
             console.log(res.data);
         }
@@ -53,7 +55,7 @@ export default function Example() {
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
-                
+                Colors
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 margotfoster@example.com
@@ -115,7 +117,7 @@ export default function Example() {
                 Total Transaction
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {order.total}
+                {total.transactions}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

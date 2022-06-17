@@ -95,7 +95,7 @@ class Customer {
 
     public function get_all_transaction($id)
     {
-        $this->db->query("SELECT C.`name`, sum(O.`total`) as t_transaction FROM `customers` C INNER JOIN `orders` O ON C.`id` = O.`id_customer` WHERE `id_customer` = :id GROUP BY `id_customer`");
+        $this->db->query("SELECT C.`name`, sum(O.`total`) as transactions FROM `customers` C INNER JOIN `orders` O ON C.`id` = O.`id_customer` WHERE `id_customer` = :id GROUP BY `id_customer`");
         $this->db->bind(":id", $id);
         $result = $this->db->single();
         if($result) {
