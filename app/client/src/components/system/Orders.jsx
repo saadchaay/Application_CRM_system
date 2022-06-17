@@ -378,9 +378,8 @@ export default function Orders() {
                               <span className="sr-only">, {order.id}</span>
                             </Link>
                             <button
-                              onClick={handleDeleteOrder}
+                              onClick={(e) => handleDeleteOrder(e, order.id)}
                               className="text-sm text-red-600 hover:text-red-800"
-                              data-id={order.id}
                             >
                               <Delete />
                             </button>

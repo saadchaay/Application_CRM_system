@@ -128,18 +128,38 @@
             }
         }
 
-        public function delete($id)
+        public function destroy($id)
         {
             if($_SERVER["REQUEST_METHOD"] === "DELETE"){
-                echo json_encode(array("message" => "Order deleted"));
+                $order = $this->order->get_order($id);
+                if($order){
+                    if($this->order->delete($id)){
+                        http_response_code(200);
+                        echo json_encode(array('message' => 'Order deleted'));
+                    }else{
+                        http_response_code(500);
+                        echo json_encode(array('message' => 'Error deleting order'));
+                    }
+                }else{
+                    http_response_code(404);
+                    echo json_encode(array('message' => 'Order not found'));
+                }
             }
         }
 
-        public function count()
+        public function show($id)
         {
-            $dataJSON = json_decode(file_get_contents("php://input"));
-
-            print_r(count(array($dataJSON->orders)));
+            if($_SERVER["REQUEST_METHOD"] === "GET"){
+                $order = $this->order->get_order($id);
+                $customer = $this->customer->get_customer($order->id_customer);
+                if($order){
+                    http_response_code(200);
+                    echo json_encode(array('order' => $order, 'customer' => $customer));
+                }else{
+                    http_response_code(404);
+                    echo json_encode(array('message' => 'Order not found'));
+                }
+            }
         }
         
     }
