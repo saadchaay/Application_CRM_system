@@ -23,6 +23,8 @@ export default function Example() {
   const [customer, setCustomer] = useState([]);
   const [total, setTotal] = useState([]);
   const [properties, setProperties] = useState([]);
+  // new status
+  const [newStatus, setNewStatus] = useState("");
 
   const fetchOrder = async (id) => {
     const res = await axios.get(`OrdersController/show/${id}`);
@@ -46,66 +48,41 @@ export default function Example() {
     <>
       <div>
         <div className="flex items-center justify-start mx-2 my-5">
-          <div className="flex-1 lg:border-t pt-4 mx-2">
+          <div className="flex-1 lg:border-t lg:border-b py-4 mx-2">
             <div className="bg-white rounded-3xl border shadow-md p-8 w-full sm:w-full">
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
                 {/* title with the manager */}
                 <div className="flex flex-col">
                   <h2 className="text-lg font-bold">
                     Management Status of this order
                   </h2>
                   <p>
-                    <span className="ml-3 text-gray-600 text-sm">
+                    <span className="text-gray-600 text-sm">
                       Manager name: {auth.name}
                     </span>
                   </p>
                 </div>
+                <div className="mt-3 md:mt-0 w-full sm:w-auto">
+                  <select
+                    id="role"
+                    value={newStatus}
+                    onChange={(e) => setNewStatus(e.target.value)}
+                    autoComplete="country-name"
+                    className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  >
+                    <option className="text-gray-400">Update Order Status</option>
+                    {Object.keys(statusStyles).map((status) =>
+                      order.status !== status ? (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                      ) : null
+                    )}
+                  </select>
+                </div>
               </div>
               {/* body card */}
-              <div className="flex justify-around">
-                <div
-                  className={classNames(
-                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
-                    statusStyles["Pending"]
-                  )}
-                >
-                  <input type="radio" name="" hidden />
-                  <label className="hover:cursor-pointer">Pending</label>
-                </div>
-                <div
-                className={classNames(
-                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
-                    statusStyles["Confirmed"]
-                  )}
-                >
-                  <input type="radio" name="" hidden />
-                  <label className="hover:cursor-pointer">Confirmed</label>
-                </div>
-                <div
-                className={classNames(
-                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
-                    statusStyles["Canceled"]
-                  )}>
-                  <input type="radio" name="" hidden />
-                  <label className="hover:cursor-pointer">Canceled</label>
-                </div>
-                <div
-                className={classNames(
-                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
-                    statusStyles["Processing"]
-                  )}>
-                  <input type="radio" name="" hidden />
-                  <label className="hover:cursor-pointer">Processing</label>
-                </div>
-                <div
-                className={classNames(
-                    "px-5 py-3 rounded-md text-lg font-medium leading-5 hover:cursor-pointer",
-                    statusStyles["Failed"]
-                  )}>
-                  <input type="radio" name="" hidden />
-                  <label className="hover:cursor-pointer">Failed</label>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
