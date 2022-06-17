@@ -35,10 +35,10 @@ class Product {
         }
     }
 
-    public function get_product_id($name)
+    public function get_product_id($sku)
     {
-        $this->db->query("SELECT * FROM `products` WHERE `title` = :name");
-        $this->db->bind(':name', $name);
+        $this->db->query("SELECT * FROM `products` WHERE `sku` = :sku");
+        $this->db->bind(':sku', $sku);
         if($this->db->single()) {
             return $this->db->single();
         } else {

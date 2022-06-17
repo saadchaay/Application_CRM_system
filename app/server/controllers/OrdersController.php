@@ -39,6 +39,7 @@
 
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
+                $productErr = '';
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
                     if(!$customer_id){
@@ -64,7 +65,8 @@
                         // get product id 
                         $product_id = $this->product->get_product_id($order->sku);
                         if(!$product_id){
-                            $product_id = $this->product->last_insertion()->id;
+                            $productErr = 'Product not found';
+                            break;
                         }
                         // create order_details
                         $detail_order = [
@@ -109,9 +111,11 @@
                     http_response_code(201);
                     echo json_encode(array('message' => 'Orders created'));
                 } else {
-                    $this->order->delete_detail($this->order->get_last_insert_order_detail($admin)->id);
+                    if($this->order->get_last_insert_order_detail($admin)){
+                        $this->order->delete($this->order->get_last_insert_order($admin)->id);
+                    }
                     http_response_code(400);
-                    echo json_encode(array('message' => 'Orders not created'));
+                    echo json_encode(array('orderError' => 'Orders not created', 'productError' => $productErr));
                 }
             }
         }
