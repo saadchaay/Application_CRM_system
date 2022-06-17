@@ -43,7 +43,7 @@
                 $idOrder = '';
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
-                    // if(!($this->order->check_order_ref($order->id))){
+                    // check if customer exist
                         if(!$customer_id){
                             if($this->customer->create(array(
                                 'id' => $admin,
@@ -102,25 +102,19 @@
                                     $this->order->create_order_properties($tmp);
                                     $is_success = true;
                                 }
-                            } else {
-                                $this->order->delete($this->order->get_last_insert_order($admin)->id);
                             }
                         } else {
+                            print_r("error");
                             $this->customer->delete($newCustomer->id);
-                            $productErr = 'Customer not found blablabla';
                         }
-                    // }else {
-                    //     $productErr = 'Order already exists';
-                    //     $idOrder = $order->id;
-                    //     break;
-                    // }
                 }
                 if($is_success){
                     http_response_code(201);
                     echo json_encode(array('message' => 'Orders Imported'));
                 } else {
                     if($this->order->get_last_insert_order_detail($admin)){
-                        $this->order->delete($this->order->get_last_insert_order($admin)->id);
+                        // $this->order->delete($this->order->get_last_insert_order($admin)->id);
+                        print_r("error insert order detail");
                     }
                     http_response_code(200);
                     echo json_encode(array('orderError' => 'Orders number '. $idOrder .' not imported', 'productError' => $productErr));
