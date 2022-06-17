@@ -4,19 +4,22 @@ import axios from "../../../api/axios";
 
 export default function Example() {
     const { id } = useParams();
-    const [order, setOrder] = useState(null);
-    const [customer, setCustomer] = useState(null);
+    const [order, setOrder] = useState([]);
+    const [customer, setCustomer] = useState([]);
 
     const fetchOrder = async (id) => {
         const res = await axios.get(`OrdersController/show/${id}`);
-        setOrder(res.data.order);
-        setCustomer(res.data.customer);
-        console.log(res);
+        if(res.status === 200) {
+            console.log(res.data);
+            setCustomer(res.data.customer);
+        } else {
+            console.log(res.data);
+        }
     }
 
     useEffect(() => {
         fetchOrder(id);
-    }, []);
+    }, [id]);
 
   return (
     <div className="flex flex-col justify-center  mt-4 md:flex-row md:mt-0">
@@ -34,7 +37,7 @@ export default function Example() {
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">SKU Product</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {order.sku}
+                {/* {order.sku} */}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -109,7 +112,7 @@ export default function Example() {
                 Total Transaction
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {order.total}
+                {/* {order.total} */}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

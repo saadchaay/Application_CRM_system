@@ -158,10 +158,23 @@ class Order {
         }
     }
 
-    // jointure between Orders and Order_detail and Order_properties and Products
-    public function get_join_all()
+    public function get_order_detail($id)
     {
-        $this->db->query("SELECT O.*, OD.*, OP.*, P.* FROM orders O INNER JOIN customers C ON O.`id_customer` = C.`id` INNER JOIN order_detail OD ON O.`id` = OD.`id_order` INNER JOIN order_properties OP ON OD.`id` = OP.`id_order_detail` INNER JOIN products P ON OP.`id_product` = P.`id`");
+        $this->db->query("SELECT * FROM order_detail WHERE id_order = :id");
+        $this->db->bind(':id', $id);
+        $res = $this->db->resultSet();
+        if($res) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
+
+    // jointure between Orders and Order_detail
+    public function get_join_all($id)
+    {
+        $this->db->query("SELECT O.*, OD.* FROM orders O INNER JOIN order_detail OD ON O.`id` = OD.`id_order` WHERE id_order = :id");
+        $this->db->bind(':id', $id);
         $res = $this->db->resultSet();
         if($res) {
             return $res;
