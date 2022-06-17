@@ -69,7 +69,8 @@
                             // get product id 
                             $product_id = $this->product->get_product_id($order->sku);
                             if(!$product_id){
-                                $productErr = 'Product not found';
+                                $this->order->delete($this->order->get_last_insert_order($admin)->id);
+                                $productErr = 'Some product not found';
                                 break;
                             }
                             // create order_details
@@ -113,17 +114,16 @@
                     } else {
                         $orderErr = 'Some Order already exist';
                     }
-                    if($is_success){
-                        http_response_code(201);
-                        echo json_encode(array('message' => 'Orders Imported'));
-                    }
                 }
                 if(($is_success < $countOr) && ($is_success > 0)){
                     http_response_code(200);
-                    echo json_encode(array('productErr' => 'Some Order already exist', 'orderErr' => $orderErr));
+                    echo json_encode(array('productErr' => $productErr, 'orderErr' => $orderErr));
                 }elseif($is_success == 0){
                     http_response_code(200);
                     echo json_encode(array('message' => 'No orders imported'));
+                }else {
+                    http_response_code(201);
+                    echo json_encode(array('message' => 'Orders Imported'));
                 }
             }
         }

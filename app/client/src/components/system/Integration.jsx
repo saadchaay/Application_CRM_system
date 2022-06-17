@@ -145,7 +145,7 @@ export default function Integration() {
     }
     gapi.load("client:auth2", start);
     fetchAllFiles();
-  });
+  },[]);
 
   return (
     <>
