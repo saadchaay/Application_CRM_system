@@ -113,8 +113,8 @@
                     echo json_encode(array('message' => 'Orders Imported'));
                 } else {
                     if($this->order->get_last_insert_order_detail($admin)){
-                        // $this->order->delete($this->order->get_last_insert_order($admin)->id);
-                        print_r("error insert order detail");
+                        $this->order->delete($this->order->get_last_insert_order($admin)->id);
+                        // print_r("error insert order detail");
                     }
                     http_response_code(200);
                     echo json_encode(array('orderError' => 'Orders number '. $idOrder .' not imported', 'productError' => $productErr));
