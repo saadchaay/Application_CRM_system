@@ -70,7 +70,9 @@ export default function Example() {
                     autoComplete="country-name"
                     className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                   >
-                    <option className="text-gray-400">Update Order Status</option>
+                    <option className="text-gray-400">
+                      Update Order Status
+                    </option>
                     {Object.keys(statusStyles).map((status) =>
                       order.status !== status ? (
                         <option key={status} value={status}>
@@ -82,6 +84,31 @@ export default function Example() {
                 </div>
               </div>
               {/* body card */}
+              {
+                newStatus ? (
+                <div className="col-span-6 sm:col-span-6">
+                <label
+                  htmlFor="email-address"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Order Note :
+                </label>
+                <textarea
+                  type="text"
+                  id="description"
+                  // value={description}
+                  // onChange={(e) =>
+                  // //   setDescription(e.target.value)
+                  // }
+                  autoComplete="description"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                />
+                <button
+                    className="mt-3 w-full sm:w-auto bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                >Submit</button>
+              </div>
+                ) : null
+              }
               
             </div>
           </div>
