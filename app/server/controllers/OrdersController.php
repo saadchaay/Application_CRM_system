@@ -41,7 +41,7 @@
                 $admin = $dataJSON->admin ? $dataJSON->admin : "";
                 $productErr = '';
                 $orderErr = '';
-                $countOr = count($dataJSON->order);
+                $countOr = count($dataJSON->orders);
                 foreach($dataJSON->orders as $order){
                     $customer_id = $this->customer->get_customer_id($order->customer);
                     // check if customer exist
