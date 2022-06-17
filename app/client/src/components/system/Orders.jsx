@@ -9,18 +9,19 @@ const CLIENT_ID =
   "280216831650-f9dn7qig5117unbvtfsnlusk5kjda32l.apps.googleusercontent.com";
 const SCOPE = "https://www.googleapis.com/auth/drive";
 
-const transactions = [
-  {
-    id: "AAPS0L",
-    customer: "saad chaay",
-    phone: "+212615207417",
-    city: "Rabat",
-    date: "02/01/2020",
-    status: "Pending",
-    total: "$4,397.00",
-  },
-  // More transactions...
-];
+const statusStyles = {
+  pending: "bg-gray-500 text-white",
+  confirmed: "bg-green-600 text-white",
+  canceled: "bg-orange-500 text-white",
+  processing: "bg-blue-600 text-white",
+  failed: "bg-pink-700 text-white",
+  payed: "bg-green-700 text-white",
+};
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 export default function Orders() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const token = JSON.parse(localStorage.getItem("token"));
@@ -42,7 +43,9 @@ export default function Orders() {
     var accessToken = gapi.auth.getToken().access_token;
     const object = {};
     const response = await fetch(
-      "https://sheets.googleapis.com/v4/spreadsheets/"+ sheetID +"/values/A1:Z1000",
+      "https://sheets.googleapis.com/v4/spreadsheets/" +
+        sheetID +
+        "/values/A1:Z1000",
       {
         method: "GET",
         headers: new Headers({ Authorization: "Bearer " + accessToken }),
@@ -141,7 +144,8 @@ export default function Orders() {
           <div className="sm:flex-auto">
             <h1 className="text-xl font-semibold text-gray-900">Orders</h1>
             <p className="mt-2 text-sm text-gray-700">
-              A table of all your orders ..., you can also import your orders to our system from a google sheet.
+              A table of all your orders ..., you can also import your orders to
+              our system from a google sheet.
             </p>
           </div>
           <div className="mt-4 flex flex-col sm:mt-0 sm:ml-16 sm:flex-none">
@@ -321,17 +325,53 @@ export default function Orders() {
                             {order.order_date}
                           </td>
                           <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                            {order.status}
+                            <span
+                              className={classNames(
+                                (order.status === "Pending" &&
+                                  statusStyles["pending"]) ||
+                                  (order.status === "Processing" &&
+                                    statusStyles["processing"]) ||
+                                  (order.status === "Canceled" &&
+                                    statusStyles["canceled"]) ||
+                                  (order.status === "Failed" &&
+                                    statusStyles["failed"]) ||
+                                  (order.status === "Confirmed" &&
+                                    statusStyles["confirmed"]) ||
+                                  (order.status === "Payed" &&
+                                    statusStyles["payed"]),
+                                "inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium capitalize"
+                              )}
+                            >
+                              {order.status}
+                            </span>
                           </td>
                           <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                            {order.tracking}
+                          <span
+                              className={classNames(
+                                (order.tracking === "No Answer" &&
+                                statusStyles["pending"]) ||
+                                  (order.tracking === "In Progress" &&
+                                    statusStyles["processing"]) ||
+                                  (order.tracking === "Returned" &&
+                                    statusStyles["canceled"]) ||
+                                  (order.tracking === "Refused" &&
+                                    statusStyles["failed"]) ||
+                                  (order.tracking === "Delivered" &&
+                                    statusStyles["confirmed"]) ||
+                                  (order.tracking === "Payed" &&
+                                    statusStyles["payed"]),
+                                "inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium capitalize"
+                              )}
+                            >
+                              {order.tracking}
+                            </span>
                           </td>
                           <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                             $ {order.total}
                           </td>
                           <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                             <Link
-                              to="/"
+                              to={`/orders/${order.id}`}
                               className="text-indigo-600 hover:text-indigo-900"
                             >
                               <Info />
