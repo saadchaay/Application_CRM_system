@@ -173,15 +173,10 @@
         public function changeStatus($id)
         {
             $dataJSON = json_decode(file_get_contents("php://input"));
-            
             if($_SERVER["REQUEST_METHOD"] === "PUT"){
                 $order = $this->order->get_order($id);
                 if($order){
-                    $orderData = [
-                        'id' => $id,
-                        'status' => $dataJSON->status,
-                    ];
-                    if($this->order->change_status($id, $orderData['status'])){
+                    if($this->order->change_status($id, $dataJSON->status)){
                         http_response_code(200);
                         echo json_encode(array('message' => 'Order status updated'));
                     }else{
