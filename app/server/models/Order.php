@@ -195,6 +195,18 @@ class Order {
         }
     }
 
+    public function change_tracking($id, $tracking)
+    {
+        $this->db->query("UPDATE orders SET tracking = :tracking WHERE id = :id");
+        $this->db->bind(':id', $id);
+        $this->db->bind(':tracking', $tracking);
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function get_confirmed_order($id)
     {
         $this->db->query('SELECT O.*, C.`name`, C.`phone`, C.`city`  FROM orders O INNER JOIN customers C ON O.`id_customer` = C.`id` WHERE C.`id_admin` = :id AND status = "Confirmed"');

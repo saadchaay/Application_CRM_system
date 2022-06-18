@@ -195,6 +195,31 @@
                 }
             }
         }
+        
+        public function changeTracking($id)
+        {
+            $dataJSON = json_decode(file_get_contents("php://input"));
+            if($_SERVER["REQUEST_METHOD"] === "PUT"){
+                $order = $this->order->get_order($id);
+                if($order){
+                    if($this->order->change_tracking($id, $dataJSON->status)){
+                        $this->note->create([
+                            'id' => $id,
+                            'belongTo' => $dataJSON->belongTo,
+                            'note' => $dataJSON->note,
+                        ]);
+                        http_response_code(200);
+                        echo json_encode(array('message' => 'Order status updated'));
+                    }else{
+                        http_response_code(500);
+                        echo json_encode(array('message' => 'Error updating order status'));
+                    }
+                }else{
+                    http_response_code(404);
+                    echo json_encode(array('message' => 'Order not found'));
+                }
+            }
+        }
 
         public function confirmedOrders($id)
         {

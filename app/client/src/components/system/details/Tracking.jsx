@@ -56,11 +56,12 @@ export default function Example() {
   const changeStatus = async () => {
     const data = {
       status: newStatus,
+      belongTo: 'tracking',
       note: note,
     };
     console.log(data);
     const res = await axios.put(
-      `OrdersController/changeStatus/${id}`,
+      `OrdersController/changeTracking/${id}`,
       JSON.stringify(data),
       {
         headers: {

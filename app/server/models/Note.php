@@ -23,9 +23,10 @@ class Note {
 
     public function create($data)
     {
-        $this->db->query("INSERT INTO `order_notes` (`id_order`, `note`, `created_at`, `updated_at`) VALUES (:id, :note, :created_at, :updated_at)");
+        $this->db->query("INSERT INTO `order_notes` (`id_order`, `belongTo`, `note`, `created_at`, `updated_at`) VALUES (:id, :belongTo, :note, :created_at, :updated_at)");
 
         $this->db->bind(':id', $data['id']);
+        $this->db->bind(':belongTo', $data['belongTo']);
         $this->db->bind(":note", $data["note"]);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));

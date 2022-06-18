@@ -47,6 +47,7 @@ export default function Example() {
   const changeStatus = async () => {
     const data = {
       status: newStatus,
+      belongTo: 'status',
       note: note,
     };
     console.log(data);
