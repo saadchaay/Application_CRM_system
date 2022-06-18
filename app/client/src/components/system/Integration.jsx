@@ -23,12 +23,16 @@ const transactions = [
 ];
 export default function Integration() {
   const auth = JSON.parse(localStorage.getItem("auth"));
+  const token_data = JSON.parse(localStorage.getItem("token"));
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [apiKey, setApiKey] = useState("");
   const [data, setData] = useState({});
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
+  const [token, setToken] = useState({
+    apiKey: token_data.apiKey ? token_data.apiKey : API_KEY,
+    clientId: token_data.clientId ? token_data.clientId : CLIENT_ID,
+  });
   const [createOne, setCreateOne] = useState(false);
   const [fileName, setFileName] = useState("");
   const [spreadsheet, setSpreadsheet] = useState([]);
@@ -97,40 +101,48 @@ export default function Integration() {
         body: JSON.stringify({
           properties: {
             title: fileName,
-          }
+          },
         }),
       }
     );
-    if (response.status === 200) {
-      response.json().then((res) => {
-        console.log(res.spreadsheetId);
-        axios.post("SheetsController/store", {
-          id_admin: auth.id,
-          fileName: fileName,
-          spreadsheetId: res.spreadsheetId,
-        }).then((res) => {
-          console.log(res);
-          alert("Spreadsheet created successfully");
-          setCreateOne(false);
-          setFileName("");
-        });
-      });
+    const data = await response.json();
+    console.log(data);
+    console.log(data.spreadsheetId);
+    if (data.spreadsheetId) {
+      const dataJS = {
+        id_admin: auth.id,
+        fileName: fileName,
+        spreadsheetId: data.spreadsheetId,
+      };
+      const resStore = await axios.post(
+        "SheetsController/store",
+        JSON.stringify(dataJS),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(resStore);
+      alert("Spreadsheet created successfully");
+      fetchAllFiles();
+      setCreateOne(false);
+      setFileName("");
     }
-    
   };
 
   const fetchAllFiles = async () => {
     const res = await axios.get("SheetsController/index/" + auth.id);
     console.log(res);
     setSpreadsheet(res.data);
-  }
+  };
 
   const handleDelete = async (id) => {
     // e.preventDefault();
     const res = await axios.delete("SheetsController/delete/" + id);
     console.log(res);
     fetchAllFiles();
-  }
+  };
 
   useEffect(() => {
     function start() {
@@ -145,7 +157,7 @@ export default function Integration() {
     }
     gapi.load("client:auth2", start);
     fetchAllFiles();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -169,7 +181,7 @@ export default function Integration() {
             </div>
           </div>
           <div>
-            {!token ? (
+            {!token_data.apiKey ? (
               openForm ? (
                 !data.clientId && !data.clientSecret ? (
                   <div>
@@ -274,7 +286,7 @@ export default function Integration() {
                 <div className="text-cyan-600 text-md">
                   Your Account is connected with Google Sheets
                 </div>
-                <div className="flex flex-col sm:justify-between sm:flex-row">
+                <div className="flex flex-col sm:justify-start sm:flex-row">
                   <button
                     onClick={(e) => HandleDisconnect(e)}
                     className="mt-3 text-white bg-red-700 hover:bg-red-800 rounded-md px-4 py-3 w-full sm:w-36"
@@ -282,20 +294,18 @@ export default function Integration() {
                     <span>Disconnect</span>
                   </button>
                   {createOne ? (
-                    <div className="flex flex-col justify-between w-full sm:w-auto sm:flex-row">
-                      <div className="flex items-end">
-                        <input
-                          type="text"
-                          id="title"
-                          placeholder="File Name"
-                          value={fileName}
-                          onChange={(e) => setFileName(e.target.value)}
-                          autoComplete="title"
-                          className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm h-auto sm:py-4 mt-2"
-                        />
-                      </div>
+                    <div className="flex flex-col justify-between w-full sm:w-full sm:flex-row">
+                      <input
+                        type="text"
+                        id="title"
+                        placeholder="File Name"
+                        value={fileName}
+                        onChange={(e) => setFileName(e.target.value)}
+                        autoComplete="title"
+                        className="block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm sm:py-2 mt-3 sm:ml-6"
+                      />
                       <button
-                        className="mt-2 ml-1 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap w-20"
+                        className="mt-3 sm:ml-1.5 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md p-3 w-36"
                         onClick={createSpreedSheet}
                       >
                         Save
@@ -304,13 +314,7 @@ export default function Integration() {
                   ) : (
                     <div className="flex justify-between w-full sm:w-auto">
                       <button
-                        className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap flex-1"
-                        // onClick={createSpreedSheet}
-                      >
-                        Add SpreedSheet
-                      </button>
-                      <button
-                        className="mt-3 ml-1 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-3 py-3 whitespace-nowrap"
+                        className="mt-3 text-white bg-cyan-700 hover:bg-cyan-800 rounded-md px-4 py-2 whitespace-nowrap sm:ml-1 w-full sm:w-36"
                         onClick={() => setCreateOne(true)}
                       >
                         Create one
@@ -324,59 +328,77 @@ export default function Integration() {
         </div>
       </div>
 
-      <div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
-          <table className="min-w-full divide-y divide-gray-300">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                >
-                  Sheet ID
-                </th>
-                <th
-                  scope="col"
-                  className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-                >
-                  File Name
-                </th>
-                <th
-                  scope="col"
-                  className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
-                >
-                  Spreadsheet ID
-                </th>
-                <th scope="col" className="px-3 text-sm font-semibold text-gray-900">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {spreadsheet.map((sheet) => (
-                <tr key={sheet.id}>
-                  <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                    ## {sheet.id}
-                  </td>
-                  <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                    {sheet.fileName}
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {sheet.spreadsheetId}
-                  </td>
-                  <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    
-                    <button
-                      onClick={() => handleDelete(sheet.id)}
-                      className="text-red-500 hover:text-red-600"
+      <div className="mt-8 mx-4 sm:mx-6 lg:mx-4 flex flex-col">
+        <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
-                      <Delete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      Sheet ID
+                    </th>
+                    <th
+                      scope="col"
+                      className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      File Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Spreadsheet ID
+                    </th>
+                    <th
+                      scope="col"
+                      className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {spreadsheet.length > 0 ? (
+                    spreadsheet.map((order) => (
+                      <tr key={order.id}>
+                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
+                          ## {order.id}
+                        </td>
+                        <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                          {order.fileName}
+                        </td>
+                        <td className="whitespace-nowrap px -2 py-2 text-sm text-gray-900">
+                          {order.spreadsheetId}
+                        </td>
+                        <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                          <button
+                            onClick={() => handleDelete(order.id)}
+                            className="text-red-500 hover:text-red-600"
+                          >
+                            <Delete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="8">
+                        <div className="text-center py-2">
+                          <div className="text-gray-500">No File found.</div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+      </div>
 
       {/* Inputs for id client */}
     </>

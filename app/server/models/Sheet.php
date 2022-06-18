@@ -8,9 +8,10 @@
             $this->db = new Database();
         }
 
-        public function get_all_sheets()
+        public function get_all_sheets($id)
         {
-            $this->db->query('SELECT * FROM spreadsheets ORDER BY id DESC');
+            $this->db->query('SELECT * FROM spreadsheets WHERE id_admin = :id ORDER BY id DESC');
+            $this->db->bind(':id', $id);
             return $this->db->resultSet();
         }
 

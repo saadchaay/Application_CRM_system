@@ -97,7 +97,7 @@
                                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                                     $res = $this->admin->update_password($data, $id);
                                     if(!$res){
-                                        echo json_encode(array('errors' => "The old password is incorrect"));
+                                        echo json_encode(array('errors' => array("old_password" => "Old password is incorrect")));
                                     } else {
                                         http_response_code(201);
                                         echo json_encode($res);

@@ -14,9 +14,9 @@ class SheetsController extends Controller
         $this->sheet = new Sheet();
     }
 
-    public function index()
+    public function index($id)
     {
-        $sheets = $this->sheet->get_all_sheets();
+        $sheets = $this->sheet->get_all_sheets($id);
         if($_SERVER["REQUEST_METHOD"] == "GET"){
             echo json_encode($sheets);
         } else {

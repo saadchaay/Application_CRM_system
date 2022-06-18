@@ -11,6 +11,8 @@ import {
   SupervisorAccount,
   Ballot,
   Category,
+  LocalShipping,
+  AccountTree,
 } from "@material-ui/icons";
 import { MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
@@ -27,6 +29,7 @@ const adminRole = [
   { name: "Users", href: "/users", icon: SupervisorAccount },
   { name: "Customers", href: "/customers", icon: PermIdentity },
   { name: "Orders", href: "/orders", icon: Ballot },
+  { name: "Tracking Orders", href: "/tracking-order", icon: LocalShipping },
   { name: "Products", href: "/products", icon: Storefront },
   { name: "Categories", href: "/categories", icon: Category },
 ];
@@ -34,7 +37,9 @@ const agentRole = [
   { name: "Customers", href: "/customers", icon: PermIdentity },
   { name: "Orders", href: "/orders", icon: Ballot },
 ];
-const shipRole = [{ name: "Orders should track", href: "/tracking-order", icon: Ballot }];
+const shipRole = [
+  { name: "Orders should track", href: "/tracking-order", icon: Ballot },
+];
 const stockRole = [
   { name: "Products", to: "/products", icon: Storefront },
   { name: "Categories", to: "/categories", icon: Category },
@@ -46,6 +51,7 @@ function classNames(...classes) {
 
 export default function Example(props) {
   const [secondaryNavigation, setSecondaryNavigation] = useState([]);
+  const [thirdNavigation, setThirdNavigation] = useState([]);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -62,6 +68,9 @@ export default function Example(props) {
         break;
       default:
         setSecondaryNavigation(adminRole);
+        setThirdNavigation([
+          { name: "Integration", to: "/integration", icon: AccountTree },
+        ]);
         break;
     }
     // setSecondaryNavigation();
@@ -158,6 +167,7 @@ export default function Example(props) {
                         </span>
                       ))}
                     </div>
+
                     <div className="mt-6 pt-6">
                       <div className="px-2 space-y-1">
                         {secondaryNavigation.map((item) => (
@@ -170,6 +180,23 @@ export default function Example(props) {
                               aria-hidden="true"
                             />
                             <Link to={item.href}>{item.name}</Link>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-6 pt-6">
+                      <div className="px-2 space-y-1">
+                        {thirdNavigation.map((item) => (
+                          <span
+                            key={item.name}
+                            className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-cyan-100 hover:text-white hover:bg-cyan-600"
+                          >
+                            <item.icon
+                              className="mr-4 h-6 w-6 text-cyan-200"
+                              aria-hidden="true"
+                            />
+                            <Link to={item.to}>{item.name}</Link>
                           </span>
                         ))}
                       </div>
@@ -207,18 +234,19 @@ export default function Example(props) {
                 <Menu as="div" className="ml-3 relative">
                   <div>
                     <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
-                      { auth.avatar ? (
+                      {auth.avatar ? (
                         <Image
                           className="h-8 w-8 rounded-full"
                           cloudName="maggie-7223"
                           public_id={auth.avatar}
-                        /> ) : (
-                          <img 
-                            className="h-8 w-8 rounded-full"
-                            src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
-                            alt="" 
-                          /> )
-                        }
+                        />
+                      ) : (
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
+                          alt=""
+                        />
+                      )}
                       <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
                         <span className="sr-only">Open user menu for </span>
                         {auth.name}

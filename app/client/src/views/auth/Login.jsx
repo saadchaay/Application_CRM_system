@@ -58,12 +58,15 @@ function Register() {
         setPwd("");
         setLogin("");
         setAuth({ login, pwd });
-        if(res.data.admin){
-          localStorage.setItem("auth", JSON.stringify(res?.data.admin));
+        if(res?.data.integration) {
           localStorage.setItem("token", JSON.stringify(res?.data.integration));
         }else {
+          localStorage.setItem("token", JSON.stringify({}));
+        }
+        if(res.data.admin){
+          localStorage.setItem("auth", JSON.stringify(res?.data.admin));
+        }else {
           localStorage.setItem("auth", JSON.stringify(res?.data.user));
-          localStorage.setItem("token", JSON.stringify(res?.data.integration));
         }
         localStorage.setItem("time", new Date().getTime());
         if(res.data.role === "admin"){
@@ -76,9 +79,9 @@ function Register() {
           setErrLogin(res.data.errors.login);
           setErrPwd(res.data.errors.password);
           setErrAll(res.data.errors.login_password);
-          if (res.data.errors.status) {
-            setOpen(true);
-          }
+        }
+        if (res.data.errorStatus) {
+          setOpen(true);
         }
       }
 
