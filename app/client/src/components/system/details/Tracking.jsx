@@ -12,7 +12,6 @@ const statusStyles = {
 };
 
 const trackingStyles = {
-  Waiting: "bg-gray-500 text-white",
   Delivered: "bg-green-600 text-white",
   Returned: "bg-orange-500 text-white",
   Processing: "bg-blue-600 text-white",
@@ -27,7 +26,7 @@ function classNames(...classes) {
 export default function Example() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/orders";
+  const from = location.state?.from?.pathname || "/tracking-order";
   const navigate = useNavigate();
   const { id } = useParams();
   const [order, setOrder] = useState([]);
@@ -191,7 +190,7 @@ export default function Example() {
                       return (
                         <span
                           key={property.id}
-                          className="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-blue-100 text-blue-800"
+                          className="inline-flex items-center px-3 mx-0.5 py-0.5 rounded-full text-xs font-medium leading-5 bg-blue-100 text-blue-800"
                         >
                           {property.value}
                         </span>
@@ -208,7 +207,7 @@ export default function Example() {
                       return (
                         <span
                           key={property.id}
-                          className="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-blue-100 text-blue-800"
+                          className="inline-flex items-center px-3 mx-0.5 py-0.5 rounded-full text-xs font-medium leading-5 bg-blue-100 text-blue-800"
                         >
                           {property.value}
                         </span>

@@ -145,7 +145,7 @@ export default function Orders() {
                               className={classNames(
                                 (order.tracking === "No Answer" &&
                                 statusStyles["pending"]) ||
-                                  (order.tracking === "In Progress" &&
+                                  (order.tracking === "Processing" &&
                                     statusStyles["processing"]) ||
                                   (order.tracking === "Returned" &&
                                     statusStyles["canceled"]) ||
@@ -158,7 +158,7 @@ export default function Orders() {
                                 "inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium capitalize"
                               )}
                             >
-                              {order.tracking}
+                              {order.tracking === "Processing" ? "Processing ..." : order.tracking}
                             </span>
                           </td>
                           <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
