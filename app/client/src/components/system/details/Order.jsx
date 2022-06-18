@@ -23,6 +23,7 @@ export default function Example() {
   const [customer, setCustomer] = useState([]);
   const [total, setTotal] = useState([]);
   const [properties, setProperties] = useState([]);
+  const [note, setNote] = useState("");
   // new status
   const [newStatus, setNewStatus] = useState("");
 
@@ -38,6 +39,24 @@ export default function Example() {
     } else {
       console.log(res.data);
     }
+  };
+
+  const changeStatus = async () => {
+    const data = {
+      id: id,
+      status: newStatus,
+      note: note,
+    };
+    console.log(data);
+    // const res = await axios.post(`OrdersController/changeStatus/${id}`, {
+    //   status,
+    // });
+    // if (res.status === 200) {
+    //   console.log(res.data);
+    //   fetchOrder(id);
+    // } else {
+    //   console.log(res.data);
+    // }
   };
 
   useEffect(() => {
@@ -84,39 +103,37 @@ export default function Example() {
                 </div>
               </div>
               {/* body card */}
-              {
-                newStatus ? (
+              {newStatus ? (
                 <div className="col-span-6 sm:col-span-6">
-                <label
-                  htmlFor="email-address"
-                  className="block text-sm font-medium text-gray-600"
-                >
-                  Order Note (optional) :
-                </label>
-                <textarea
-                  type="text"
-                  id="description"
-                  placeholder="Add a note about this order"
-                  // value={description}
-                  // onChange={(e) =>
-                  // //   setDescription(e.target.value)
-                  // }
-                  autoComplete="description"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                />
-                <button
-                    className="mt-3 w-full sm:w-auto bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                >Submit</button>
-              </div>
-                ) : null
-              }
-              
+                  <label
+                    htmlFor="email-address"
+                    className="block text-sm font-medium text-gray-600"
+                  >
+                    Order Note (optional) :
+                  </label>
+                  <textarea
+                    type="text"
+                    id="note"
+                    placeholder="Add a note about this order"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    autoComplete="note"
+                    className="mt-1 block w-full sm:w-1/2 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  />
+                  <button
+                    onClick={changeStatus}
+                    className="mt-3 w-full sm:w-auto bg-cyan-500 text-white font-bold py-2 px-4 rounded-md hover:bg-cyan-700 focus:outline-none focus:shadow-outline"
+                  >
+                    Submit
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col justify-center  mt-4 md:flex-row md:mt-0">
+      <div className="flex flex-col justify-center my-4 md:flex-row md:mt-0">
         <div className="bg-white shadow overflow-hidden sm:rounded-lg md:w-4/5 mx-2">
           <div className="px-4 py-5 sm:px-6">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -188,6 +205,16 @@ export default function Example() {
                     )}
                   >
                     {order.status}
+                  </span>
+                </dd>
+              </div>
+              <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-gray-500">
+                  Total Order
+                </dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                  <span className="px-2 py-0.5 rounded-full text-sm font-medium leading-5">
+                    {order.total} $$
                   </span>
                 </dd>
               </div>
