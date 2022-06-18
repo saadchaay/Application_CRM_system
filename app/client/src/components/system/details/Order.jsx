@@ -48,7 +48,7 @@ export default function Example() {
       note: note,
     };
     console.log(data);
-    // const res = await axios.post(`OrdersController/changeStatus/${id}`, {
+    // const res = await axios.put(`OrdersController/changeStatus/${id}`, {
     //   status,
     // });
     // if (res.status === 200) {

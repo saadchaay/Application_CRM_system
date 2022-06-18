@@ -183,4 +183,16 @@ class Order {
         }
     }
 
+    public function change_status($id, $status)
+    {
+        $this->db->query("UPDATE orders SET status = :status WHERE id = :id");
+        $this->db->bind(':id', $id);
+        $this->db->bind(':status', $status);
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
