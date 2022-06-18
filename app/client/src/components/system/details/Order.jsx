@@ -43,20 +43,25 @@ export default function Example() {
 
   const changeStatus = async () => {
     const data = {
-      id: id,
       status: newStatus,
       note: note,
     };
     console.log(data);
-    // const res = await axios.put(`OrdersController/changeStatus/${id}`, {
-    //   status,
-    // });
-    // if (res.status === 200) {
-    //   console.log(res.data);
-    //   fetchOrder(id);
-    // } else {
-    //   console.log(res.data);
-    // }
+    const res = await axios.put(
+      `OrdersController/changeStatus/${id}`,
+      JSON.stringify(data),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (res.status === 200) {
+      console.log(res.data);
+      fetchOrder(id);
+    } else {
+      console.log(res.data);
+    }
   };
 
   useEffect(() => {
