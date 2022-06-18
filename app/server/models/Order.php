@@ -195,4 +195,15 @@ class Order {
         }
     }
 
+    public function get_confirmed_order($id)
+    {
+        $this->db->query('SELECT * FROM orders WHERE id_admin = :id AND status = "Confirmed"');
+        $this->db->bind(':id', $id);
+        $res = $this->db->resultSet();
+        if($res) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
 }

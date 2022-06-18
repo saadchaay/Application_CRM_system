@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
 
 const statusStyles = {
@@ -17,6 +17,9 @@ function classNames(...classes) {
 
 export default function Example() {
   const auth = JSON.parse(localStorage.getItem("auth"));
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/orders";
+  const navigate = useNavigate();
   const { id } = useParams();
   const [order, setOrder] = useState([]);
   const [product, setProduct] = useState([]);
@@ -60,7 +63,8 @@ export default function Example() {
       console.log(res.data);
       fetchOrder(id);
       setNote("");
-      setNewStatus("");
+      setNewStatus(""); 
+      navigate(from, { replace: true });
     } else {
       console.log(res.data);
     }
@@ -266,7 +270,7 @@ export default function Example() {
                   Total Transaction
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {total.transactions}
+                  {total.transactions} $$
                 </dd>
               </div>
               <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
