@@ -28,7 +28,7 @@
             $all_products = $this->product->get_all_product($data);
             $categories = $this->category->get_all_category($data);
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                if($all_products){
+                if($categories){
                     http_response_code(201);
                     echo json_encode(array(
                         'status' => 'success',

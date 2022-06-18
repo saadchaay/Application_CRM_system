@@ -78,13 +78,13 @@ export default function Example() {
   const fetchProducts = async () => {
     const type = "admin";
     const id = auth.role === "admin" ? auth.id : auth.id_admin;
-    const res = await axios.get(
-      "ProductsController/index/" + id + "/" + type
-    );
-    if (res) {
+    const res = await axios.get("ProductsController/index/" + id + "/" + type);
+    if (res.data) {
       console.log(res.data);
       setProducts(res.data.data);
-      setChecked(res.data.data.map((item) => item.status));
+      if (res.data.data.length > 0) {
+        setChecked(res.data.data.map((item) => item.status));
+      }
       setCategories(res.data.categories);
       setColors(res.data.properties.colors);
       setSizes(res.data.properties.sizes);
@@ -110,7 +110,7 @@ export default function Example() {
     if (price === "") {
       newErrors.price = "Price is required";
     }
-    if(sku === ""){
+    if (sku === "") {
       newErrors.sku = "SKU is required";
     }
     if (category === "") {
@@ -208,7 +208,7 @@ export default function Example() {
               category: res.data.category,
             });
           }
-          if(res.data.sku){
+          if (res.data.sku) {
             setErrors({
               ...errors,
               title: res.data.title,
@@ -665,90 +665,106 @@ export default function Example() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {products.map((item, index) => (
-                  <tr key={item.id}>
-                    <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                      <Link to={`/product/${item.id}`}> <span className="text-cyan-600 font-bold">{item.sku}</span> </Link>
-                      <dl className="font-normal lg:hidden">
-                        <dt className="sr-only">Category</dt>
-                        <dd className="mt-1 truncate text-gray-700">
-                          {categories.find(
-                            (category) => category.id === item.id_category
-                          ).title
-                            ? categories.find(
-                                (category) => category.id === item.id_category
-                              ).title
-                            : ""}
-                        </dd>
-                        <dt className="sr-only sm:hidden">Product name</dt>
-                        <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                          {item.title}
-                        </dd>
-                      </dl>
-                    </td>
-                    <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                      {categories.find(
-                        (category) => category.id === item.id_category
-                      ).title
-                        ? categories.find(
-                            (category) => category.id === item.id_category
-                          ).title
-                        : ""}
-                    </td>
-                    <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      <div className="flex justify-start items-center">
-                      { item.avatar ? (
-                        <Image
-                          className="h-8 w-8 rounded-full"
-                          cloudName="maggie-7223"
-                          public_id={item.avatar}
-                        /> ) : (
-                          <img 
-                            className="h-8 w-8 rounded-full"
-                            src="http://cdn.onlinewebfonts.com/svg/img_231353.png"
-                            alt="" 
-                          /> )
-                        }
-                        <span className="ml-1">{item.title}</span>
+                {products ? (
+                  products.map((item, index) => (
+                    <tr key={item.id}>
+                      <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                        <Link to={`/product/${item.id}`}>
+                          {" "}
+                          <span className="text-cyan-600 font-bold">
+                            {item.sku}
+                          </span>{" "}
+                        </Link>
+                        <dl className="font-normal lg:hidden">
+                          <dt className="sr-only">Category</dt>
+                          <dd className="mt-1 truncate text-gray-700">
+                            {categories.find(
+                              (category) => category.id === item.id_category
+                            ).title
+                              ? categories.find(
+                                  (category) => category.id === item.id_category
+                                ).title
+                              : ""}
+                          </dd>
+                          <dt className="sr-only sm:hidden">Product name</dt>
+                          <dd className="mt-1 truncate text-gray-500 sm:hidden">
+                            {item.title}
+                          </dd>
+                        </dl>
+                      </td>
+                      <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
+                        {categories.find(
+                          (category) => category.id === item.id_category
+                        ).title
+                          ? categories.find(
+                              (category) => category.id === item.id_category
+                            ).title
+                          : ""}
+                      </td>
+                      <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                        <div className="flex justify-start items-center">
+                          {item.avatar ? (
+                            <Image
+                              className="h-8 w-8 rounded-full"
+                              cloudName="maggie-7223"
+                              public_id={item.avatar}
+                            />
+                          ) : (
+                            <img
+                              className="h-8 w-8 rounded-full"
+                              src="http://cdn.onlinewebfonts.com/svg/img_231353.png"
+                              alt=""
+                            />
+                          )}
+                          <span className="ml-1">{item.title}</span>
+                        </div>
+                      </td>
+                      <td className="px-3 py-4 text-sm text-gray-500">
+                        {item.description}
+                      </td>
+                      <td className="px-3 py-4 text-sm text-gray-500">
+                        <span
+                          className={classNames(
+                            item.status
+                              ? statusStyles["active"]
+                              : statusStyles["inactive"],
+                            "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"
+                          )}
+                        >
+                          {item.status ? "In Stock" : "Out of Stock"}
+                        </span>
+                      </td>
+                      <td className="px-3 py-4 text-sm text-gray-500">
+                        {item.price}
+                      </td>
+                      <td className="py-4 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <span>
+                          <Switch
+                            checked={checked[index]}
+                            onChange={() => handleChange(index)}
+                            color="primary"
+                            name="checkedB"
+                            inputProps={{ "aria-label": "primary checkbox" }}
+                          />
+                          <button
+                            onClick={(e) => handleDelete(e, item.id)}
+                            className="text-red-700 hover:text-red-900"
+                          >
+                            <Delete />
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="7" className="text-center">
+                      <div className="flex justify-center py-3">
+                        <div className="text-gray-500">No product found</div>
                       </div>
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-500">
-                      {item.description}
-                    </td>
-                    <td className="px-3 py-4 text-sm text-gray-500">
-                      <span
-                        className={classNames(
-                          item.status
-                            ? statusStyles["active"]
-                            : statusStyles["inactive"],
-                          "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"
-                        )}
-                      >
-                        {item.status ? "In Stock" : "Out of Stock"}
-                      </span>
-                    </td>
-                    <td className="px-3 py-4 text-sm text-gray-500">
-                      {item.price}
-                    </td>
-                    <td className="py-4 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <span>
-                        <Switch
-                          checked={checked[index]}
-                          onChange={() => handleChange(index)}
-                          color="primary"
-                          name="checkedB"
-                          inputProps={{ "aria-label": "primary checkbox" }}
-                        />
-                        <button
-                          onClick={(e) => handleDelete(e, item.id)}
-                          className="text-red-700 hover:text-red-900"
-                        >
-                          <Delete />
-                        </button>
-                      </span>
-                    </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </form>

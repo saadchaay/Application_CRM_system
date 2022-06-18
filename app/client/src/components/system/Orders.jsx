@@ -24,7 +24,11 @@ function classNames(...classes) {
 
 export default function Orders() {
   const auth = JSON.parse(localStorage.getItem("auth"));
-  const token = JSON.parse(localStorage.getItem("token"));
+  const token_data = JSON.parse(localStorage.getItem("token"));
+  const [token, setToken] = useState({
+    apiKey: token_data.apiKey ? token_data.apiKey : API_KEY,
+    clientId: token_data.clientId ? token_data.clientId : CLIENT_ID,
+  });
   const [orders, setOrders] = useState(null);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
@@ -53,7 +57,9 @@ export default function Orders() {
         headers: new Headers({ Authorization: "Bearer " + accessToken }),
       }
     );
+    // console.log(response.json());
     response.json().then((data) => {
+      console.log(data);
       data.values.forEach((item, index) => {
         object[index] = {
           id: item[0],
@@ -71,7 +77,7 @@ export default function Orders() {
         };
       });
       delete object[0];
-
+      console.log(object);
       axios
         .post(
           "OrdersController/store",
@@ -128,8 +134,8 @@ export default function Orders() {
     getFiles();
     function start() {
       gapi.client.init({
-        apiKey: token.apiKey ? token.apiKey : API_KEY,
-        client_id: token.clientId ? token.clientId : CLIENT_ID,
+        apiKey: API_KEY,
+        client_id: CLIENT_ID,
         scope: SCOPE,
         discoveryDocs: [
           "https://sheets.googleapis.com/$discovery/rest?version=v4",

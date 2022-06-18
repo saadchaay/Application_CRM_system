@@ -29,10 +29,7 @@ export default function Integration() {
   const [clientSecret, setClientSecret] = useState("");
   const [apiKey, setApiKey] = useState("");
   const [data, setData] = useState({});
-  const [token, setToken] = useState({
-    apiKey: token_data.apiKey ? token_data.apiKey : API_KEY,
-    clientId: token_data.clientId ? token_data.clientId : CLIENT_ID,
-  });
+  const [token, setToken] = useState({});
   const [createOne, setCreateOne] = useState(false);
   const [fileName, setFileName] = useState("");
   const [spreadsheet, setSpreadsheet] = useState([]);
@@ -147,8 +144,8 @@ export default function Integration() {
   useEffect(() => {
     function start() {
       gapi.client.init({
-        apiKey: token.apiKey ? token.apiKey : API_KEY,
-        client_id: token.clientId ? token.clientId : CLIENT_ID,
+        apiKey: API_KEY,
+        client_id: CLIENT_ID,
         scope: SCOPE,
         discoveryDocs: [
           "https://sheets.googleapis.com/$discovery/rest?version=v4",
@@ -181,7 +178,7 @@ export default function Integration() {
             </div>
           </div>
           <div>
-            {!token_data.apiKey ? (
+            {!(token_data > 0) ? (
               openForm ? (
                 !data.clientId && !data.clientSecret ? (
                   <div>
