@@ -219,9 +219,10 @@ class Order {
         }
     }
 
-    public function overView($id)
+    public function today_order($id)
     {
-        $this->db->query('SELECT count(id) FROM orders WHERE id_admin = :id');
+        $this->db->query('SELECT O.*, C.`name`, C.`phone`, C.`city`  FROM orders O INNER JOIN customers C ON O.`id_customer` = C.`id` WHERE C.`id_admin` = :id AND DATE(O.`created_at`) = CURDATE()');
+
         $this->db->bind(':id', $id);
         $res = $this->db->resultSet();
         if($res) {

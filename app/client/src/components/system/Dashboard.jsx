@@ -1,9 +1,6 @@
-import { ScaleIcon } from "@heroicons/react/outline";
 import { Image } from "cloudinary-react";
 import {
-  CashIcon,
   CheckCircleIcon,
-  ChevronRightIcon,
   OfficeBuildingIcon,
 } from "@heroicons/react/solid";
 import {
@@ -17,81 +14,24 @@ import {
 import axios from "../../api/axios";
 import { useState, useEffect } from "react";
 
-const transactions = [
-  {
-    id: 1,
-    name: "Payment to Molly Sanders",
-    href: "#",
-    amount: "$20,000",
-    currency: "USD",
-    status: "success",
-    date: "July 11, 2020",
-    datetime: "2020-07-11",
-  },
-  // More transactions...
-];
-const statusStyles = {
-  success: "bg-green-100 text-green-800",
-  processing: "bg-yellow-100 text-yellow-800",
-  failed: "bg-gray-100 text-gray-800",
-};
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 export default function Dashboard() {
   const auth = JSON.parse(localStorage.getItem("auth"));
-  const [cards, setCards] = useState([
-    {
-      name: "Total Revenu",
-      href: "#",
-      icon: AttachMoney,
-      amount: "$30,659.45",
-    },
-    { name: "Total Orders", href: "#", icon: Store, amount: "5388" },
-    {
-      name: "Total Profit",
-      href: "#",
-      icon: MonetizationOn,
-      amount: "$11,600.23",
-    },
-    {
-      name: "Delivered Orders",
-      href: "#",
-      icon: LocalShipping,
-      amount: "3199",
-    },
-    { name: "Order In Progress", href: "#", icon: DonutLarge, amount: "1239" },
-    { name: "Returned Orders", href: "#", icon: TrendingDown, amount: "2183" },
-  ]);
+  const [orders, setOrders] = useState([]);
+  const [overview, setOverview] = useState([]);
 
-  const Orders = [
-    {
-      Number: "#5627",
-      date: "28-05-2022",
-      customer: "Saad Chaay",
-      items: "Product 1, Product 2",
-      status: "Pending",
-      total: "$320",
-    },
-    {
-      Number: "#5627",
-      date: "28-05-2022",
-      customer: "Saad Chaay",
-      items: "Product 1, Product 2",
-      status: "Pending",
-      total: "$320",
-    },
-    {
-      Number: "#5627",
-      date: "28-05-2022",
-      customer: "Saad Chaay",
-      items: "Product 1, Product 2",
-      status: "Pending",
-      total: "$320",
-    },
-  ];
+  const overView = async () => {
+    const id = auth.role === "admin" ? auth.id : auth.id_admin;
+    const response = await axios.get("OverviewController/index/" + id);
+    if (response) {
+      setOverview(response.data.data);
+      setOrders(response.data.todayOrders);
+      console.log(response.data.todayOrders);
+    }
+  };
+
+  useEffect(() => {
+    overView();
+  }, []);
 
   return (
     <>
@@ -168,18 +108,45 @@ export default function Dashboard() {
             </h2>
             <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {/* Card */}
-              {cards.map((card) => (
+              {overview.map((card, index) => (
                 <div
-                  key={card.name}
+                  key={index}
                   className="bg-white overflow-hidden shadow rounded-lg"
                 >
                   <div className="p-5">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <card.icon
-                          className="h-6 w-6 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        {card.icon === "Store" ? (
+                          <Store
+                            className="h-6 w-6 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        ) : card.icon === "AttachMoney" ? (
+                          <AttachMoney
+                            className="h-6 w-6 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        ) : card.icon === "MonetizationOn" ? (
+                          <MonetizationOn
+                            className="h-6 w-6 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        ) : card.icon === "LocalShipping" ? (
+                          <LocalShipping
+                            className="h-6 w-6 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        ) : card.icon === "DonutLarge" ? (
+                          <DonutLarge
+                            className="h-6 w-6 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        ) : card.icon === "TrendingDown" ? (
+                          <TrendingDown
+                            className="h-6 w-6 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        ) : null}
                       </div>
                       <div className="ml-5 w-0 flex-1">
                         <dl>
@@ -188,7 +155,7 @@ export default function Dashboard() {
                           </dt>
                           <dd>
                             <div className="text-lg font-medium text-gray-900">
-                              {card.amount}
+                              {card.value}
                             </div>
                           </dd>
                         </dl>
@@ -198,7 +165,7 @@ export default function Dashboard() {
                   <div className="bg-gray-50 px-5 py-3">
                     <div className="text-sm">
                       <a
-                        href={card.href}
+                        href={card.link}
                         className="font-medium text-cyan-700 hover:text-cyan-900"
                       >
                         View all
@@ -216,86 +183,85 @@ export default function Dashboard() {
 
           {/* Orders list (smallest breakpoint only) */}
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                    >
-                      Number
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                    >
-                      Date
-                    </th>
-                    <th
-                      scope="col"
-                      className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-                    >
-                      Customer
-                    </th>
-                    <th
-                      scope="col"
-                      className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
-                    >
-                      Items
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Total
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {Orders.map((order) => (
-                    <tr key={order.id}>
-                      <td className="w-1/2 max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                        {order.Number}
-                        <dl className="font-normal lg:hidden">
-                          <dt className="sr-only">Date</dt>
-                          <dd className="mt-1 truncate text-gray-700">
-                            {order.date}
-                          </dd>
-                          <dt className="sr-only sm:hidden">Customer</dt>
-                          <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                            {order.customer}
-                          </dd>
-                        </dl>
-                      </td>
-                      <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                        {order.date}
-                      </td>
-                      <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                        {order.customer}
-                      </td>
-                      <td className="px-3 py-4 text-sm text-gray-500">
-                        {order.items}
-                      </td>
-                      <td className="px-3 py-4 text-sm text-gray-500">
-                        {order.status}
-                      </td>
-                      <td className="px-3 py-4 text-sm text-gray-500">
-                        {order.total}
-                      </td>
+          <div className="mt-8 mx-4 sm:mx-6 lg:mx-8 flex flex-col">
+          <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-300">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                      >
+                        Order ID
+                      </th>
+                      <th
+                        scope="col"
+                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Customer
+                      </th>
+                      <th
+                        scope="col"
+                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Phone
+                      </th>
+                      <th
+                        scope="col"
+                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Total order
+                      </th>
+                      
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 bg-white">
+                  {orders ? (
+                      orders.map((order) => (
+                        <tr key={order.id}>
+                          <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
+                            {order.reference}
+                          </td>
+                          <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                            {order.name}
+                          </td>
+                          <td className="whitespace-nowrap px -2 py-2 text-sm text-gray-900">
+                            {order.phone}
+                          </td>
+                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                            {order.order_date}
+                          </td>
+                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                            $ {order.total}
+                          </td>
+                          
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="8">
+                          <div className="text-center py-2">
+                            <div className="text-gray-500">
+                              No Orders found.
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+          </div>      
         </div>
       </main>
     </>
