@@ -112,7 +112,7 @@ export default function Example() {
                     <option className="text-gray-400">
                       Track the order status
                     </option>
-                    {Object.keys(statusStyles).map((status) =>
+                    {Object.keys(trackingStyles).map((status) =>
                       order.tracking !== status ? (
                         <option key={status} value={status}>
                           {status}
