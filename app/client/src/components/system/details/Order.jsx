@@ -59,6 +59,8 @@ export default function Example() {
     if (res.status === 200) {
       console.log(res.data);
       fetchOrder(id);
+      setNote("");
+      setNewStatus("");
     } else {
       console.log(res.data);
     }
