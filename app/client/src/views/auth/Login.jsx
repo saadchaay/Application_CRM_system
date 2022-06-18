@@ -60,9 +60,10 @@ function Register() {
         setAuth({ login, pwd });
         if(res?.data.integration) {
           localStorage.setItem("token", JSON.stringify(res?.data.integration));
-        }else {
-          localStorage.setItem("token", JSON.stringify({}));
         }
+        // else {
+        //   localStorage.setItem("token", JSON.stringify({}));
+        // }
         if(res.data.admin){
           localStorage.setItem("auth", JSON.stringify(res?.data.admin));
         }else {

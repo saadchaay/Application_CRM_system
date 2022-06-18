@@ -23,7 +23,8 @@ const transactions = [
 ];
 export default function Integration() {
   const auth = JSON.parse(localStorage.getItem("auth"));
-  const token_data = JSON.parse(localStorage.getItem("token"));
+  // const token_data = JSON.parse(localStorage.getItem("token"));
+  const [isToken, setIsToken] = useState(localStorage.getItem("token") ? true : false);
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -47,6 +48,7 @@ export default function Integration() {
       console.log(res);
       setToken(dataJson);
       localStorage.setItem("token", JSON.stringify(dataJson));
+      setIsToken(true);
     });
     // start(dataJson);
   };
@@ -80,9 +82,9 @@ export default function Integration() {
       .then((res) => {
         console.log(res);
         localStorage.removeItem("token");
-        setToken(null);
         setData({});
         setOpenForm(false);
+        setIsToken(false);
       });
   };
 
@@ -142,10 +144,11 @@ export default function Integration() {
   };
 
   useEffect(() => {
+    fetchAllFiles();
     function start() {
       gapi.client.init({
-        apiKey: API_KEY,
-        client_id: CLIENT_ID,
+        apiKey: token.apiKey ? token.apiKey : API_KEY,
+        client_id: token.clientId ? token.clientId : CLIENT_ID,
         scope: SCOPE,
         discoveryDocs: [
           "https://sheets.googleapis.com/$discovery/rest?version=v4",
@@ -153,7 +156,6 @@ export default function Integration() {
       });
     }
     gapi.load("client:auth2", start);
-    fetchAllFiles();
   }, []);
 
   return (
@@ -178,7 +180,7 @@ export default function Integration() {
             </div>
           </div>
           <div>
-            {!(token_data > 0) ? (
+            {!(isToken) ? (
               openForm ? (
                 !data.clientId && !data.clientSecret ? (
                   <div>
