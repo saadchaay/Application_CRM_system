@@ -105,7 +105,7 @@ export default function Example() {
                       Update Order Status
                     </option>
                     {Object.keys(statusStyles).map((status) =>
-                      order.status !== status ? (
+                      (order.status !== status && status !== "Payed") ? (
                         <option key={status} value={status}>
                           {status}
                         </option>

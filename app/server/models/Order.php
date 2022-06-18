@@ -218,4 +218,16 @@ class Order {
             return false;
         }
     }
+
+    public function overView($id)
+    {
+        $this->db->query('SELECT count(id) FROM orders WHERE id_admin = :id');
+        $this->db->bind(':id', $id);
+        $res = $this->db->resultSet();
+        if($res) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
 }

@@ -1,8 +1,8 @@
 <?php
 
-class Pages extends Controller{
+class OverView extends Controller{
     
-    private $admin;
+    private $order;
     
     public function __construct()
     {
@@ -11,14 +11,13 @@ class Pages extends Controller{
         header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
         header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');           
         
-        $this->admin = new Admin();
+        $this->order = new Order();
     }
 
-    public function home()
+    public function index($id)
     {
-        $data = [
-            'title' => 'Home',
-        ];
-        echo json_encode($data);
+        if($_SERVER["REQUEST_METHOD"] == "GET"){
+            echo json_encode(array('overView' => $this->order->get_all_orders($id)));
+        }
     }
 }

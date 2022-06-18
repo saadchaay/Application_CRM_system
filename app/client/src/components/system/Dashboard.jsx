@@ -211,7 +211,7 @@ export default function Dashboard() {
           </div>
 
           <h2 className="max-w-7xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
-            Recent orders
+            Recent orders (Today)
           </h2>
 
           {/* Orders list (smallest breakpoint only) */}

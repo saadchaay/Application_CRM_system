@@ -295,12 +295,6 @@ export default function Orders() {
                         scope="col"
                         className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Tracking
-                      </th>
-                      <th
-                        scope="col"
-                        className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
                         Total order
                       </th>
                       <th
@@ -346,27 +340,6 @@ export default function Orders() {
                               )}
                             >
                               {order.status}
-                            </span>
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                          <span
-                              className={classNames(
-                                (order.tracking === "No Answer" &&
-                                statusStyles["pending"]) ||
-                                  (order.tracking === "In Progress" &&
-                                    statusStyles["processing"]) ||
-                                  (order.tracking === "Returned" &&
-                                    statusStyles["canceled"]) ||
-                                  (order.tracking === "Refused" &&
-                                    statusStyles["failed"]) ||
-                                  (order.tracking === "Delivered" &&
-                                    statusStyles["confirmed"]) ||
-                                  (order.tracking === "Payed" &&
-                                    statusStyles["payed"]),
-                                "inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium capitalize"
-                              )}
-                            >
-                              {order.tracking}
                             </span>
                           </td>
                           <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">

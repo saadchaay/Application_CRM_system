@@ -5,6 +5,7 @@ import axios from "../../api/axios";
 
 const statusStyles = {
   pending: "bg-gray-500 text-white",
+  waiting: "bg-yellow-500 text-white",
   confirmed: "bg-green-600 text-white",
   canceled: "bg-orange-500 text-white",
   processing: "bg-blue-600 text-white",
@@ -22,8 +23,8 @@ export default function Orders() {
 
 
   const fetchOrder = async () => {
-    
-    const response = await axios.get("OrdersController/confirmedOrders/" + auth.id_admin);
+    const id = auth.role === "admin" ? auth.id : auth.id_admin;
+    const response = await axios.get("OrdersController/confirmedOrders/" + id);
     if (response.status === 201) {
       setOrders(response.data);
       console.log(response.data);
@@ -145,6 +146,8 @@ export default function Orders() {
                               className={classNames(
                                 (order.tracking === "No Answer" &&
                                 statusStyles["pending"]) ||
+                                (order.tracking === "Waiting" &&
+                                statusStyles["waiting"]) ||
                                   (order.tracking === "Processing" &&
                                     statusStyles["processing"]) ||
                                   (order.tracking === "Returned" &&

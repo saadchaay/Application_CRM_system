@@ -10,6 +10,7 @@ import {
     Ballot,
     Category,
     AccountTree,
+    LocalShipping,
   } from "@material-ui/icons";
 import logo from "../assets/images/logo.v2.png";
 
@@ -53,6 +54,7 @@ export default function Sidebar(allowedRoles) {
                     { name: 'Users', to: '/users', icon: SupervisorAccount },
                     { name: 'Customers', to: '/customers', icon: PermIdentity },
                     { name: 'Orders', to: '/orders', icon: Ballot },
+                    { name: 'Tracking Orders', to: '/tracking-order', icon: LocalShipping },
                     { name: 'Products', to: '/products', icon: Storefront },
                     { name: 'Categories', to: '/categories', icon: Category },
                 ]);
