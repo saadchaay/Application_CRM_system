@@ -10,7 +10,7 @@ class Customer {
 
     public function get_customers($id)
     {
-        $this->db->query('SELECT * FROM customers WHERE id_admin = :id ORDER BY id DESC');
+        $this->db->query('SELECT `customers`.* , sum(`orders`.`total`) as total  FROM customers LEFT JOIN orders ON orders.`id_customer` = customers.`id` WHERE `customers`.id_admin = :id GROUP BY `customers`.id');
         $this->db->bind(':id', $id);
         $result = $this->db->resultSet();
         if($result) {

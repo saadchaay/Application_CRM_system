@@ -42,7 +42,7 @@
       e.preventDefault();
       const newErr = {};
       const data = {
-        id_admin: auth.id,
+        id_admin: auth.role === "admin" ? auth.id : auth.id_admin,
         name: name,
         phone: phone,
         address: address,
@@ -97,6 +97,7 @@
     const fetchCustomers = async () => {
       const id_admin = auth.role === "admin" ? auth.id : auth.id_admin;
       const res = await axios.get("CustomersController/index/" + id_admin);
+      console.log(res);
       if (res.status === 201) {
         setCustomers(res.data.data);
         console.log(res.data.data);
@@ -348,7 +349,7 @@
                             {customer.city}
                           </td>
                           <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                            6788.38
+                            {customer.total ? customer.total : "0.00"} $
                           </td>
                           <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                             <button

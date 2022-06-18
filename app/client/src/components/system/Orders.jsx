@@ -30,9 +30,10 @@ export default function Orders() {
   const [error, setError] = useState(null);
   const [spreadsheet, setSpreadsheet] = useState([]);
   const [sheet, setSheet] = useState("");
+  const id_admin = auth.role === "admin" ? auth.id : auth.id_admin;
 
   const getFiles = async () => {
-    const res = await axios.get("SheetsController/index/" + auth.id);
+    const res = await axios.get("SheetsController/index/" + id_admin);
     setSpreadsheet(res.data);
   };
 
@@ -40,6 +41,7 @@ export default function Orders() {
     e.preventDefault();
     const sheetID = sheet;
     console.log(sheetID);
+    console.log(gapi);
     var accessToken = gapi.auth.getToken().access_token;
     const object = {};
     const response = await fetch(
@@ -74,7 +76,7 @@ export default function Orders() {
         .post(
           "OrdersController/store",
           JSON.stringify({
-            admin: auth.id,
+            admin: id_admin,
             orders: object,
           }),
           {

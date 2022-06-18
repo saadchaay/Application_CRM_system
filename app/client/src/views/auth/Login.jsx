@@ -58,11 +58,12 @@ function Register() {
         setPwd("");
         setLogin("");
         setAuth({ login, pwd });
-        if(res.data.integration){
+        if(res.data.admin){
           localStorage.setItem("auth", JSON.stringify(res?.data.admin));
           localStorage.setItem("token", JSON.stringify(res?.data.integration));
         }else {
-          localStorage.setItem("auth", JSON.stringify(res?.data));
+          localStorage.setItem("auth", JSON.stringify(res?.data.user));
+          localStorage.setItem("token", JSON.stringify(res?.data.integration));
         }
         localStorage.setItem("time", new Date().getTime());
         if(res.data.role === "admin"){

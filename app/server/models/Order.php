@@ -40,8 +40,8 @@ class Order {
         $this->db->bind(':date_order', $data['date_order']);
         $this->db->bind(':id', $data['admin']);
         $this->db->bind(":customer", $data["customer"]);
-        $this->db->bind(":status", "pending");
-        $this->db->bind(":tracking", "pending");
+        $this->db->bind(":status", "Pending");
+        $this->db->bind(":tracking", "Waiting");
         $this->db->bind(":total", $data["total"]);
         $this->db->bind(":created_at", date("Y-m-d H:i:s"));
         $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
@@ -197,7 +197,7 @@ class Order {
 
     public function get_confirmed_order($id)
     {
-        $this->db->query('SELECT * FROM orders WHERE id_admin = :id AND status = "Confirmed"');
+        $this->db->query('SELECT O.*, C.`name`, C.`phone`, C.`city`  FROM orders O INNER JOIN customers C ON O.`id_customer` = C.`id` WHERE C.`id_admin` = :id AND status = "Confirmed"');
         $this->db->bind(':id', $id);
         $res = $this->db->resultSet();
         if($res) {

@@ -54,10 +54,7 @@ class LoginController extends Controller{
                         $errors = array('login_password' => 'Login or password is incorrect');
                         echo json_encode(array('errors' => $errors));
                     }else{
-                        if($user_login) {
-                            http_response_code(201);
-                            echo json_encode($user_login);
-                        }elseif(isset($admin_login->status) && $admin_login->status == 1){
+                        if(isset($admin_login->status) && $admin_login->status == 1) {
                             $integration = $this->admin->get_integration($admin_login->id);
                             if($integration){
                                 http_response_code(201);
@@ -66,9 +63,15 @@ class LoginController extends Controller{
                                 http_response_code(201);
                                 echo json_encode(array('admin' => $admin_login));
                             }
-                        }else {
-                            $errors = array('status' => 'Your Account is not active yet.');
-                            echo json_encode(array('errors' => $errors));
+                        }elseif($user_login) {
+                            $integration = $this->admin->get_integration($user_login->id_admin);
+                            if($integration){
+                                http_response_code(201);
+                                echo json_encode(array('user' => $user_login, 'integration' => $integration));
+                            } else {
+                                http_response_code(201);
+                                echo json_encode(array('user' => $user_login));
+                            }
                         }
                     }
                 }

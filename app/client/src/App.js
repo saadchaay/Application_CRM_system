@@ -15,6 +15,7 @@ import Unauthorized from "./components/Unauthorized";
 import Main from "./components/system/Dashboard";
 import Users from "./components/system/Users";
 import Orders from "./components/system/Orders";
+import TrackingOrder from "./components/system/TrackOrder";
 import Customers from "./components/system/Customers";
 import Products from "./components/system/Products";
 import Categories from "./components/system/Categories";
@@ -25,6 +26,7 @@ import Settings from "./components/system/account/Settings";
 import Password from "./components/system/account/Password";
 import Product from "./components/system/details/Product";
 import Order from "./components/system/details/Order";
+import TrackingOrderDetail from "./components/system/details/Tracking";
 
 
 const roles = {
@@ -79,7 +81,7 @@ function App() {
           <Route path="/integration" element={<System contentIntegration={<Integration />} />} />
       </Route>
 
-      <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer, roles.shipManager]} />}>
+      <Route element={<Required allowedRoles={[roles.admin, roles.agentCustomer]} />}>
           <Route
             path="/orders"
             element={<System contentOrders={<Orders />} />}
@@ -87,6 +89,17 @@ function App() {
           <Route
             path="/orders/:id"
             element={<System contentOrders={<Order />} />}
+          />
+      </Route>
+      
+      <Route element={<Required allowedRoles={[roles.admin, roles.shipManager]} />}>
+          <Route
+            path="/tracking-order"
+            element={<System contentOrders={<TrackingOrder />} />}
+          />
+          <Route
+            path="/track-orders-detail/:id"
+            element={<System contentOrders={<TrackingOrderDetail />} />}
           />
       </Route>
 

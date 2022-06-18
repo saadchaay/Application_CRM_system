@@ -34,7 +34,7 @@ const agentRole = [
   { name: "Customers", href: "/customers", icon: PermIdentity },
   { name: "Orders", href: "/orders", icon: Ballot },
 ];
-const shipRole = [{ name: "Orders", href: "/orders", icon: Ballot }];
+const shipRole = [{ name: "Orders should track", href: "/tracking-order", icon: Ballot }];
 const stockRole = [
   { name: "Products", to: "/products", icon: Storefront },
   { name: "Categories", to: "/categories", icon: Category },

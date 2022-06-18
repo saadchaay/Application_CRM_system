@@ -195,5 +195,20 @@
                 }
             }
         }
+
+        public function confirmedOrders($id)
+        {
+            $all_orders = $this->order->get_confirmed_order($id);
+
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                if($all_orders){
+                    http_response_code(201);
+                    echo json_encode($all_orders);
+                }else{
+                    http_response_code(404);
+                    echo json_encode(array('message' => 'No orders found'));
+                }
+            }
+        }
         
     }

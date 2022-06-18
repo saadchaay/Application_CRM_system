@@ -11,6 +11,15 @@ const statusStyles = {
   Payed: "bg-green-700 text-white",
 };
 
+const trackingStyles = {
+  Waiting: "bg-gray-500 text-white",
+  Delivered: "bg-green-600 text-white",
+  Returned: "bg-orange-500 text-white",
+  Processing: "bg-blue-600 text-white",
+  Refused: "bg-pink-700 text-white",
+  Payed: "bg-green-700 text-white",
+};
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -84,11 +93,11 @@ export default function Example() {
                 {/* title with the manager */}
                 <div className="flex flex-col">
                   <h2 className="text-lg font-bold">
-                    Management Status of this order
+                    Shipping Management for this Order
                   </h2>
                   <p>
                     <span className="text-gray-600 text-sm">
-                      Manager name: {auth.name}
+                      Shipping Manager name: {auth.name}
                     </span>
                   </p>
                 </div>
@@ -101,10 +110,10 @@ export default function Example() {
                     className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                   >
                     <option className="text-gray-400">
-                      Update Order Status
+                      Track the order status
                     </option>
                     {Object.keys(statusStyles).map((status) =>
-                      order.status !== status ? (
+                      order.tracking !== status ? (
                         <option key={status} value={status}>
                           {status}
                         </option>

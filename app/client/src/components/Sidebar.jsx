@@ -39,7 +39,7 @@ export default function Sidebar(allowedRoles) {
                 break;
             case "shipManager":
                 setSecondaryNavigation([
-                    { name: 'Orders', to: '/orders', icon: Ballot },
+                    { name: 'Orders Should Track', to: '/tracking-order', icon: Ballot },
                 ]);
                 break
             case "stockManager":
