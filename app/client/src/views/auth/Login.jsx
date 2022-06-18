@@ -52,16 +52,17 @@ function Register() {
           },
         }
       );
-      console.log(JSON.stringify(res?.data));
+      console.log((res?.data));
       if (res.status === 201) {
         setAuth(res.data);
         setPwd("");
         setLogin("");
-        console.log("ok");
         setAuth({ login, pwd });
-        localStorage.setItem("auth", JSON.stringify(res?.data.admin));
         if(res.data.integration){
+          localStorage.setItem("auth", JSON.stringify(res?.data.admin));
           localStorage.setItem("token", JSON.stringify(res?.data.integration));
+        }else {
+          localStorage.setItem("auth", JSON.stringify(res?.data));
         }
         localStorage.setItem("time", new Date().getTime());
         if(res.data.role === "admin"){

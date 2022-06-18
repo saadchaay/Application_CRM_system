@@ -95,7 +95,8 @@
     };
 
     const fetchCustomers = async () => {
-      const res = await axios.get("CustomersController/index/" + auth.id);
+      const id_admin = auth.role === "admin" ? auth.id : auth.id_admin;
+      const res = await axios.get("CustomersController/index/" + id_admin);
       if (res.status === 201) {
         setCustomers(res.data.data);
         console.log(res.data.data);

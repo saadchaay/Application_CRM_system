@@ -105,7 +105,8 @@ export default function Orders() {
   };
 
   const fetchOrder = async () => {
-    const response = await axios.get("OrdersController/index/" + auth.id);
+    const id_admin = auth.role === "admin" ? auth.id : auth.id_admin;
+    const response = await axios.get("OrdersController/index/" + id_admin);
     if (response.status === 201) {
       setOrders(response.data);
       console.log(response.data);
