@@ -61,7 +61,7 @@
                     $orderData = [
                         'reference' => $order->id ? $order->id : "",
                         'date_order' => $order->date ? $order->date : null,
-                        'customer' => $customer_id->id ? $customer_id->id : $newCustomer->id,
+                        'customer' => $customer_id ? $customer_id->id : $newCustomer->id,
                         'admin' => $admin,
                         'total' => $order->total ? $order->total : "",
                     ];
