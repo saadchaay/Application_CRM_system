@@ -182,10 +182,13 @@
                 $order = $this->order->get_order($id);
                 if($order){
                     if($this->order->change_status($id, $dataJSON->status)){
-                        $this->note->create([
-                            'id' => $id,
-                            'note' => $dataJSON->note,
-                        ]);
+                        if(!empty($dataJSON->note)){
+                            $this->note->create([
+                                'id' => $id,
+                                'belongTo' => $dataJSON->belongTo,
+                                'note' => $dataJSON->note,
+                            ]);
+                        }
                         http_response_code(200);
                         echo json_encode(array('message' => 'Order status updated'));
                     }else{

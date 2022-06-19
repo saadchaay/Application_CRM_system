@@ -92,8 +92,9 @@ export default function Example() {
   const handleDelete = async (id) => {
     const res = await axios.delete(`UsersController/destroy/${id}`);
     if (res.status === 200) {
-      fetchUsers();
       console.log("User deleted");
+      setUsers([]);
+      fetchUsers();
     }
   };
 
