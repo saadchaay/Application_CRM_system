@@ -20,7 +20,7 @@ import Sidebar from "../../components/Sidebar";
 import logo from "../../assets/images/logo.v2.png";
 
 const navigation = [
-  { name: "Home", href: "/dashboard", icon: Home, current: true },
+  { name: "Dashboard", href: "/dashboard", icon: Home, current: true },
   { name: "Analytics", href: "/analytics", icon: Timeline, current: false },
   { name: "Sales", href: "sales", icon: MonetizationOn, current: false },
 ];

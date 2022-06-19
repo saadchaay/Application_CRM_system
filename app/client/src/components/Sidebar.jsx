@@ -16,7 +16,7 @@ import logo from "../assets/images/logo.v2.png";
 
 
 const navigation = [
-    { name: 'Home', to: '/dashboard', icon: Home, current: true },
+    { name: 'Dashboard', to: '/dashboard', icon: Home, current: true },
     { name: 'Analytics', to: '/analytics', icon: Timeline, current: false },
     { name: 'Sales', to: '/sales', icon: MonetizationOn, current: false },
   ]
