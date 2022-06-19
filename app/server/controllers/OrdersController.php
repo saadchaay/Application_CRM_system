@@ -45,7 +45,7 @@
                 $orderErr = '';
                 $countOr = count(array($dataJSON->orders));
                 foreach($dataJSON->orders as $order){ 
-                    $customer_id = $this->customer->get_customer_id($order->customer);
+                    $customer_id = $this->customer->get_customer_id($order->customer, $admin);
                     // check if customer exist
                     if(!$customer_id){
                         if($this->customer->create(array(
@@ -55,7 +55,7 @@
                             'address' => $order->address,
                             'city' => $order->city,
                         ))){
-                            $newCustomer = $this->customer->get_customer_id($order->customer);
+                            $newCustomer = $this->customer->get_customer_id($order->customer, $admin);
                         }
                     }
                     $orderData = [

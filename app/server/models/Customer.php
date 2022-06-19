@@ -31,10 +31,11 @@ class Customer {
         }
     }
 
-    public function get_customer_id($name)
+    public function get_customer_id($name, $id)
     {
-        $this->db->query('SELECT * FROM customers WHERE name = :name');
+        $this->db->query('SELECT DISTINCT(*) FROM customers WHERE name = :name AND id_admin = :id');
         $this->db->bind(':name', $name);
+        $this->db->bind(':id', $id);
         if($this->db->single()) {
             return $this->db->single();
         } else {
@@ -44,22 +45,27 @@ class Customer {
 
     public function create($data)
     {
-        $this->db->query("INSERT INTO `customers` (`id_admin`, `name`, `phone`, `address`, `city`, `created_at`, `updated_at`) VALUES (:id, :name, :phone, :address, :city, :created_at, :updated_at)");
+        $cus = $this->get_customer_id($data['name'], $data['id']);
+        if(!$cus) {
+            //create a query
+            $this->db->query("INSERT INTO `customers` (`id_admin`, `name`, `phone`, `address`, `city`, `created_at`, `updated_at`) VALUES (:id, :name, :phone, :address, :city, :created_at, :updated_at)");
 
-        $this->db->bind(':id', $data['id']);
-        $this->db->bind(":name", $data["name"]);
-        $this->db->bind(":phone", $data["phone"]);
-        $this->db->bind(":address", $data["address"]);
-        $this->db->bind(":city", $data["city"]);
-        $this->db->bind(":created_at", date("Y-m-d H:i:s"));
-        $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
+            $this->db->bind(':id', $data['id']);
+            $this->db->bind(":name", $data["name"]);
+            $this->db->bind(":phone", $data["phone"]);
+            $this->db->bind(":address", $data["address"]);
+            $this->db->bind(":city", $data["city"]);
+            $this->db->bind(":created_at", date("Y-m-d H:i:s"));
+            $this->db->bind(":updated_at", date("Y-m-d H:i:s"));
 
-        if($this->db->execute()) {
-            return true;
+            if($this->db->execute()) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
-
     }
 
     public function update($data, $id)
