@@ -21,7 +21,7 @@
 
         public function index($id)
         {   
-            $all_orders = $this->order->get_all_orders($id);
+            $all_orders = $this->order->order_customer($id);
 
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($all_orders){

@@ -136,12 +136,12 @@ class Order {
 
     public function order_customer($id)
     {
-        $this->db->query("SELECT O.*, C.`name`, C.`phone`, C.`city`  FROM orders O LEFT JOIN customers C ON O.`id_customer` = C.`id` WHERE C.`id_admin` = :id");
+        $this->db->query("SELECT O.*, C.`name`, C.`phone`, C.`city`  FROM orders O INNER JOIN customers C ON O.`id_customer` = C.`id` WHERE O.`id_admin` = :id ORDER BY O.`status` DESC");
         $this->db->bind(':id', $id);
         $res = $this->db->resultSet();
         if($res) {
             return $res;
-        } else {    
+    } else {    
             return false;
         }
     }
