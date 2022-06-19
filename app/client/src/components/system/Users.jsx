@@ -28,8 +28,8 @@ export default function Example() {
   const [errRole, setErrRole] = useState("");
 
   const fetchUsers = async () => {
-    const res = await axios.get("UsersController/index/"+auth.id);
-    if(res.status === 200) {
+    const res = await axios.get("UsersController/index/" + auth.id);
+    if (res.status === 200) {
       setUsers(res.data);
       console.log(res.data);
     } else {
@@ -59,11 +59,15 @@ export default function Example() {
       role: role,
       id_admin: auth.id,
     };
-    const res = await axios.post("UsersController/store", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await axios.post(
+      "UsersController/store",
+      JSON.stringify(data),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (res.status === 201) {
       fetchUsers();
       setOpen(false);
@@ -77,13 +81,12 @@ export default function Example() {
     } else {
       console.log(res.data);
       setErrName(res.data.errors.name);
-      setErrUsername(res.data.errors.username); 
+      setErrUsername(res.data.errors.username);
       setErrEmail(res.data.errors.email);
       setErrPwd(res.data.errors.password);
       setErrConfirmPwd(res.data.errors.confirm_password);
       setErrRole(res.data.errors.role);
     }
-    
   };
 
   const handleDelete = async (id) => {
@@ -93,7 +96,6 @@ export default function Example() {
       console.log("User deleted");
     }
   };
-
 
   return (
     <>
@@ -263,10 +265,16 @@ export default function Example() {
                                   autoComplete="country-name"
                                   className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 >
-                                  <option >Choose role ...</option>
-                                  <option value="stockManager" >Stock Manager</option>
-                                  <option value="agentCustomer" >Agent of Customer</option>
-                                  <option value="shipManager" >Shipping Manager</option>
+                                  <option>Choose role ...</option>
+                                  <option value="stockManager">
+                                    Stock Manager
+                                  </option>
+                                  <option value="agentCustomer">
+                                    Agent of Customer
+                                  </option>
+                                  <option value="shipManager">
+                                    Shipping Manager
+                                  </option>
                                 </select>
                                 <div className="text-red-500 mb-3 text-sm">
                                   {errRole ? errRole : null}
@@ -348,49 +356,63 @@ export default function Example() {
                 >
                   Role
                 </th>
-                <th scope="col" className="px-3 text-sm font-semibold text-gray-900">
+                <th
+                  scope="col"
+                  className="px-3 text-sm font-semibold text-gray-900"
+                >
                   Edit
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {users.map((person) => (
-                <tr key={person.email}>
-                  <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                    {person.name}
-                    <dl className="font-normal lg:hidden">
-                      <dt className="sr-only">Created User</dt>
-                      <dd className="mt-1 truncate text-gray-700">
-                        {person.created_at}
-                      </dd>
-                      <dt className="sr-only sm:hidden">Email</dt>
-                      <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                        {person.email}
-                      </dd>
-                    </dl>
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                    {person.created_at}
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {person.email}
-                  </td>
-                  <td className="px-3 py-4 text-sm text-gray-500">
-                    {person.role === "stockManager" ? "Stock Manager" : ""}
-                    {person.role === "agentCustomer" ? "Agent of Customer" : ""}
-                    {person.role === "shipManager" ? "Shipping Manager" : ""}
-                  
-                  </td>
-                  <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <button
-                      onClick={() => handleDelete(person.id)}
-                      className="text-red-500 hover:text-red-600"
-                    >
-                      <Delete />
-                    </button>
+              {users.length > 0 ? (
+                users.map((person) => (
+                  <tr key={person.email}>
+                    <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                      {person.name}
+                      <dl className="font-normal lg:hidden">
+                        <dt className="sr-only">Created User</dt>
+                        <dd className="mt-1 truncate text-gray-700">
+                          {person.created_at}
+                        </dd>
+                        <dt className="sr-only sm:hidden">Email</dt>
+                        <dd className="mt-1 truncate text-gray-500 sm:hidden">
+                          {person.email}
+                        </dd>
+                      </dl>
+                    </td>
+                    <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
+                      {person.created_at}
+                    </td>
+                    <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      {person.email}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-500">
+                      {person.role === "stockManager" ? "Stock Manager" : ""}
+                      {person.role === "agentCustomer"
+                        ? "Agent of Customer"
+                        : ""}
+                      {person.role === "shipManager" ? "Shipping Manager" : ""}
+                    </td>
+                    <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <button
+                        onClick={() => handleDelete(person.id)}
+                        className="text-red-500 hover:text-red-600"
+                      >
+                        <Delete />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="8">
+                    <div className="text-center py-2">
+                      <div className="text-gray-500">No User available.</div>
+                    </div>
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

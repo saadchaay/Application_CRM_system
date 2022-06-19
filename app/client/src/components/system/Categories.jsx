@@ -28,9 +28,7 @@ export default function Example() {
 
   const fetchCategories = async () => {
     const id = auth.role === "admin" ? auth.id : auth.id_admin;
-    const res = await axios.get(
-      "CategoriesController/index/" +id
-    );
+    const res = await axios.get("CategoriesController/index/" + id);
     if (res) {
       setCategories(res.data);
       console.log(res.data);
@@ -40,9 +38,9 @@ export default function Example() {
   };
 
   useEffect(() => {
-      fetchCategories();
-      setErrTitle("");
-      setErrDescription("");
+    fetchCategories();
+    setErrTitle("");
+    setErrDescription("");
   }, []);
 
   const handleClick = async (event, item) => {
@@ -97,7 +95,7 @@ export default function Example() {
     newData[fieldName] = fieldValue;
     setEditData(newData);
   };
-  
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     const res = await axios.put(
@@ -303,24 +301,33 @@ export default function Example() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {categories.map((item) => (
-                  <Fragment>
-                    {editItemId === item.id ? (
-                      <EditCategory
-                        item={item}
-                        handleCancel={handleCancel}
-                        handleEditChange={handleEditChange}
-                      />
-                    ) : (
-                      <HandleCategory
-                        item={item}
-                        handleClick={handleClick}
-                        handleDelete={handleDelete}
-                      />
-                    )}
-
-                  </Fragment>
-                ))}
+                {categories.length > 0 ? (
+                  categories.map((item) => (
+                    <Fragment>
+                      {editItemId === item.id ? (
+                        <EditCategory
+                          item={item}
+                          handleCancel={handleCancel}
+                          handleEditChange={handleEditChange}
+                        />
+                      ) : (
+                        <HandleCategory
+                          item={item}
+                          handleClick={handleClick}
+                          handleDelete={handleDelete}
+                        />
+                      )}
+                    </Fragment>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="8">
+                      <div className="text-center py-2">
+                        <div className="text-gray-500">No Category found.</div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </form>

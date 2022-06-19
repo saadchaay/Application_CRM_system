@@ -21,6 +21,7 @@ import Products from "./components/system/Products";
 import Categories from "./components/system/Categories";
 import Account from "./components/system/Account";
 import Integration from "./components/system/Integration";
+import Analytics from "./components/system/Analytics";
 import Profile from "./components/system/account/Profile";
 import Settings from "./components/system/account/Settings";
 import Password from "./components/system/account/Password";
@@ -62,6 +63,10 @@ function App() {
         <Route
             path="/dashboard"
             element={<System contentMain={<Main />} />}
+          />
+        <Route
+            path="/analytics"
+            element={<System contentAnalytics={<Analytics />} />}
           />
         <Route
             path="account/profile"

@@ -85,6 +85,9 @@ export default function Example() {
         setErrPhone(res.data.errors.phone);
         setErrAddress(res.data.errors.address);
       }
+    
+  
+  
     }
   };
 

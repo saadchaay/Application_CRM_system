@@ -665,7 +665,7 @@ export default function Example() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {products ? (
+                {products.length > 0 ? (
                   products.map((item, index) => (
                     <tr key={item.id}>
                       <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
