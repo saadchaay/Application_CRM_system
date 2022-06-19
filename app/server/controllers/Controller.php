@@ -97,10 +97,10 @@ use PHPMailer\PHPMailer\PHPMailer;
             $mail->SMTPAuth= "true";
             $mail->SMTPSecure = "tls";
             $mail->port="587";
-            $mail->Username = "saad.chaay@cloudlink.us";
-            $mail->Password = "Maggie@7223";
+            $mail->Username = "chaaysaad@gmail.com";
+            $mail->Password = "saad@7223";
             $mail->Subject = "GROW YB: Activation your account";
-            $mail->setFrom("saad.chaay@cloudlink.us");
+            $mail->setFrom("chaaysaad@gmail.com");
             $mail->Body = $data["body"];
             $mail->addAddress($data["admin"]->email);//sent To
             $mail->Send() ;
