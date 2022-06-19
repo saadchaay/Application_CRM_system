@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import logo from "../../assets/images/logo.v2.png";
+import logo from "../../assets/images/logo-cyan.png";
 import axios from "axios";
 import React from "react";
 import Modal from "@material-ui/core/Modal";

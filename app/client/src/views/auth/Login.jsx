@@ -21,7 +21,7 @@ function Register() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
-  const fromTo = location.state?.from?.pathname || "/account/profile";
+  const fromTo = location.state?.from?.pathname || "/dashboard";
 
 
   useEffect(() => {
@@ -60,9 +60,6 @@ function Register() {
         if(res?.data.integration) {
           localStorage.setItem("token", JSON.stringify(res?.data.integration));
         }
-        // else {
-        //   localStorage.setItem("token", JSON.stringify({}));
-        // }
         if(res.data.admin){
           localStorage.setItem("auth", JSON.stringify(res?.data.admin));
         }else {

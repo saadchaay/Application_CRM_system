@@ -79,11 +79,13 @@
                 $admin = $this->admin->get_admin($id);
                 // active
                 if($admin->status == 0) {
+                    print_r("false status");
                     $this->super_admin->change_status($id);
                     $mail = [
                         'admin' => $admin,
                         'body' => "Hello $admin->name,\nThanks for registration!\n\nYour Account is activated.\n\nIf you have any question, contact our support: support@grow-yb.com\n\nThanks,\nGROW YB"
                     ];
+                    print_r("true status");
                     if($this->sendEmail($mail)){
                         http_response_code(201);
                         echo json_encode($admin);

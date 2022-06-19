@@ -19,7 +19,7 @@ class OverviewController extends Controller{
     public function index($id)
     {
         $orders = $this->order->get_all_orders($id);
-        $products = $this->product->get_all_product(array('id' => $id, 'type' => 'adm   in'));
+        $products = $this->product->get_all_product(array('id' => $id, 'type' => 'admin'));
         $total = 0;
         $prices = 0;
         $delivered = 0;
@@ -60,7 +60,7 @@ class OverviewController extends Controller{
                 'name' => "Total Profit",
                 'link' => "",
                 'icon' => "MonetizationOn",
-                'value' => $total - $prices,
+                'value' => (int)($total - $prices),
             ],
             [
                 'name' => "Delivered Orders",

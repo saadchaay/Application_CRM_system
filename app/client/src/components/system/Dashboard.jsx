@@ -340,7 +340,7 @@ export default function Dashboard() {
                               {order.phone}
                             </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {order.order_date}
+                              {order.created_at}
                             </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                               $ {order.total}

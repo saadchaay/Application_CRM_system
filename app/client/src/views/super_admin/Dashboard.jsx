@@ -17,6 +17,7 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/solid";
 import Switch from "@material-ui/core/Switch";
+import logo from "../../assets/images/logo.v2.png";
 
 const navigation = [
   { name: "Dashboard", href: "/super-dashboard", icon: Home, current: true },
@@ -168,8 +169,9 @@ export default function Example() {
                   </Transition.Child>
                   <div className="flex-shrink-0 flex items-center px-4">
                     <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
+                      width={180}
+                      height={40}
+                      src={logo}
                       alt="Easywire logo"
                     />
                   </div>
@@ -213,11 +215,7 @@ export default function Example() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col flex-grow bg-cyan-700 pt-5 pb-4 overflow-y-auto">
             <div className="flex items-center flex-shrink-0 px-4">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
-                alt="Easywire logo"
-              />
+              <img width={180} height={40} src={logo} alt="Easywire logo" />
             </div>
             <nav
               className="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto"

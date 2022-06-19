@@ -98,7 +98,7 @@ use PHPMailer\PHPMailer\PHPMailer;
             $mail->SMTPSecure = "tls";
             $mail->port="587";
             $mail->Username = "chaaysaad@gmail.com";
-            $mail->Password = "saad@7223";
+            $mail->Password = "llkqyocyfaetsvxb";
             $mail->Subject = "GROW YB: Activation your account";
             $mail->setFrom("chaaysaad@gmail.com");
             $mail->Body = $data["body"];
