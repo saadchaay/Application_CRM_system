@@ -11,6 +11,46 @@ import {
 import axios from "../../api/axios";
 import { useState, useEffect } from "react";
 
+
+const dataCard = [
+  {
+      name: "Total Revenu",
+      link: "",
+      icon: "AttachMoney",
+      value: 0,
+  },
+  {
+      name: "Total Orders",
+      link: "/orders",
+      icon: "Store",
+      value: 0
+  },
+  {
+      name: "Total Profit",
+      link: "",
+      icon: "MonetizationOn",
+      value: 0
+  },
+  {
+      name: "Delivered Orders",
+      link: "",
+      icon: "LocalShipping",
+      value: 0,
+  },
+  {
+      name: "Order In Progress",
+      link: "",
+      icon: "DonutLarge",
+      value: 0,
+  },
+  {
+      name: "Returned Orders",
+      link: "",
+      icon: "TrendingDown",
+      value: 0,
+  }
+];
+
 export default function Dashboard() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const [orders, setOrders] = useState([]);
@@ -105,72 +145,139 @@ export default function Dashboard() {
             </h2>
             <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {/* Card */}
-              {overview.map((card, index) => (
-                <div
-                  key={index}
-                  className="bg-white overflow-hidden shadow rounded-lg"
-                >
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        {card.icon === "Store" ? (
-                          <Store
-                            className="h-6 w-6 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        ) : card.icon === "AttachMoney" ? (
-                          <AttachMoney
-                            className="h-6 w-6 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        ) : card.icon === "MonetizationOn" ? (
-                          <MonetizationOn
-                            className="h-6 w-6 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        ) : card.icon === "LocalShipping" ? (
-                          <LocalShipping
-                            className="h-6 w-6 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        ) : card.icon === "DonutLarge" ? (
-                          <DonutLarge
-                            className="h-6 w-6 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        ) : card.icon === "TrendingDown" ? (
-                          <TrendingDown
-                            className="h-6 w-6 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        ) : null}
+              {overview
+                ? overview.map((card, index) => (
+                    <div
+                      key={index}
+                      className="bg-white overflow-hidden shadow rounded-lg"
+                    >
+                      <div className="p-5">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0">
+                            {card.icon === "Store" ? (
+                              <Store
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "AttachMoney" ? (
+                              <AttachMoney
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "MonetizationOn" ? (
+                              <MonetizationOn
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "LocalShipping" ? (
+                              <LocalShipping
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "DonutLarge" ? (
+                              <DonutLarge
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "TrendingDown" ? (
+                              <TrendingDown
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                          </div>
+                          <div className="ml-5 w-0 flex-1">
+                            <dl>
+                              <dt className="text-sm font-medium text-gray-500 truncate">
+                                {card.name}
+                              </dt>
+                              <dd>
+                                <div className="text-lg font-medium text-gray-900">
+                                  {card.value}
+                                </div>
+                              </dd>
+                            </dl>
+                          </div>
+                        </div>
                       </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            {card.name}
-                          </dt>
-                          <dd>
-                            <div className="text-lg font-medium text-gray-900">
-                              {card.value}
-                            </div>
-                          </dd>
-                        </dl>
+                      <div className="bg-gray-50 px-5 py-3">
+                        <div className="text-sm">
+                          <a
+                            href={card.link}
+                            className="font-medium text-cyan-700 hover:text-cyan-900"
+                          >
+                            View all
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <a
-                        href={card.link}
-                        className="font-medium text-cyan-700 hover:text-cyan-900"
-                      >
-                        View all
-                      </a>
+                  ))
+                : dataCard.map((card, index) => (
+                    <div
+                      key={index}
+                      className="bg-white overflow-hidden shadow rounded-lg"
+                    >
+                      <div className="p-5">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0">
+                            {card.icon === "Store" ? (
+                              <Store
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "AttachMoney" ? (
+                              <AttachMoney
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "MonetizationOn" ? (
+                              <MonetizationOn
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "LocalShipping" ? (
+                              <LocalShipping
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "DonutLarge" ? (
+                              <DonutLarge
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : card.icon === "TrendingDown" ? (
+                              <TrendingDown
+                                className="h-6 w-6 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                          </div>
+                          <div className="ml-5 w-0 flex-1">
+                            <dl>
+                              <dt className="text-sm font-medium text-gray-500 truncate">
+                                {card.name}
+                              </dt>
+                              <dd>
+                                <div className="text-lg font-medium text-gray-900">
+                                  {card.value}
+                                </div>
+                              </dd>
+                            </dl>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-gray-50 px-5 py-3">
+                        <div className="text-sm">
+                          <a
+                            href={card.link}
+                            className="font-medium text-cyan-700 hover:text-cyan-900"
+                          >
+                            View all
+                          </a>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  ))}
             </div>
           </div>
 

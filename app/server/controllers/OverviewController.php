@@ -19,7 +19,7 @@ class OverviewController extends Controller{
     public function index($id)
     {
         $orders = $this->order->get_all_orders($id);
-        $products = $this->product->get_all_product(array('id' => $id, 'type' => 'admin'));
+        $products = $this->product->get_all_product(array('id' => $id, 'type' => 'adm   in'));
         $total = 0;
         $prices = 0;
         $delivered = 0;
