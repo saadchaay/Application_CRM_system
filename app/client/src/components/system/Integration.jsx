@@ -23,7 +23,6 @@ const transactions = [
 ];
 export default function Integration() {
   const auth = JSON.parse(localStorage.getItem("auth"));
-  // const token_data = JSON.parse(localStorage.getItem("token"));
   const [isToken, setIsToken] = useState(localStorage.getItem("token") ? true : false);
   const [openForm, setOpenForm] = useState(false);
   const [clientId, setClientId] = useState("");
