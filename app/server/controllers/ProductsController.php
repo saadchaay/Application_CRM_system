@@ -26,7 +26,7 @@
                 ];
             
             $all_products = $this->product->get_all_product($data);
-            $categories = $this->category->get_all_category($data);
+            $categories = $this->category->get_all_category($data['id']);
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($categories){
                     http_response_code(201);
@@ -132,7 +132,7 @@
                     echo json_encode(array(
                         'status' => 'success',
                         'data' => $product,
-                        'categories' => $this->category->get_all_category($data),
+                        'categories' => $this->category->get_all_category($data['id']),
                         'properties' => array(
                             'data' => $this->property->get_properties($id),
                             'colors' => $this->property->get_colors(),

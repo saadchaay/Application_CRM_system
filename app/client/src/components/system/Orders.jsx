@@ -75,13 +75,15 @@ export default function Orders() {
       });
       delete object[0];
       console.log(object);
+      const dataJss = {
+        admin: id_admin,
+        orders: object,
+      };
+      console.log(dataJss);
       axios
         .post(
           "OrdersController/store",
-          JSON.stringify({
-            admin: id_admin,
-            orders: object,
-          }),
+          JSON.stringify(dataJss),
           {
             headers: {
               "Content-Type": "application/json",

@@ -12,15 +12,10 @@
             $this->category = new Category();
         }
 
-        public function index($id, $type)
+        public function index($id)
         {
             
-                $data = [
-                    'id' => $id,
-                    'type' => $type,
-                ];
-            
-            $all_categories = $this->category->get_all_category($data);
+            $all_categories = $this->category->get_all_category($id);
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($all_categories){
                     http_response_code(201);

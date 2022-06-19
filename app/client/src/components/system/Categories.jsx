@@ -27,9 +27,9 @@ export default function Example() {
   const [errDescription, setErrDescription] = useState("");
 
   const fetchCategories = async () => {
-    const type = auth.role === "admin" ? "admin" : "user";
+    const id = auth.role === "admin" ? auth.id : auth.id_admin;
     const res = await axios.get(
-      "CategoriesController/index/" + auth.id + "/" + type
+      "CategoriesController/index/" +id
     );
     if (res) {
       setCategories(res.data);

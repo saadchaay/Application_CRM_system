@@ -123,6 +123,7 @@
                 }elseif($is_success == 0){
                     http_response_code(200);
                     echo json_encode(array('message' => 'No orders imported'));
+                    echo json_encode(array('productErr' => $productErr, 'orderErr' => $orderErr));
                 }else {
                     http_response_code(201);
                     echo json_encode(array('message' => 'Orders Imported'));

@@ -9,12 +9,11 @@ class Category {
         $this->user = new User();
     }
     
-    public function get_all_category($data)
+    public function get_all_category($id)
     {
-        ($data['type'] === 'admin') ?  $this->db->query("SELECT * FROM `categories` WHERE `id_admin` = :id ORDER BY id DESC")
-            : $this->db->query("SELECT * FROM `categories` WHERE `id_admin` = :id ORDER BY id DESC");
-        
-        $this->db->bind(':id', $data['id']);
+        $this->db->query("SELECT * FROM `categories` WHERE `id_admin` = :id ORDER BY id DESC");
+            
+        $this->db->bind(':id', $id);
         
         if($this->db->resultSet()) {
             return $this->db->resultSet();
