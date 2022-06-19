@@ -33,7 +33,7 @@ class Customer {
 
     public function get_customer_id($name, $id)
     {
-        $this->db->query('SELECT DISTINCT(*) FROM customers WHERE name = :name AND id_admin = :id');
+        $this->db->query('SELECT * FROM customers WHERE name = :name AND id_admin = :id');
         $this->db->bind(':name', $name);
         $this->db->bind(':id', $id);
         if($this->db->single()) {
