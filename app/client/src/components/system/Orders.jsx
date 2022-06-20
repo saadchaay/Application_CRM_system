@@ -100,10 +100,6 @@ export default function Orders() {
             const newErr = {};
             if (res.data.message) {
               newErr.message = res.data.message;
-            } else if (res.data.orderErr) {
-              newErr.orderErr = res.data.orderErr;
-            } else if (res.data.productErr) {
-              newErr.productErr = res.data.productErr;
             }
             setError(newErr);
           }
@@ -188,7 +184,7 @@ export default function Orders() {
             >
               <strong className="font-bold">Failed!</strong>
               <span className="ml-2 block sm:inline">
-                Orders Not Imported{" "}
+                { error.message }{" "}
                 {error.messaage ? ", " + error.messaage : null}{" "}
               </span>
               <span

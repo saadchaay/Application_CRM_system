@@ -108,6 +108,7 @@
                                     $this->order->create_order_properties($tmp);
                                 }
                                 $is_success += 1;
+                                $orderErr = 'Some Order already exist';
                             } else {
                                 $this->order->delete($this->order->get_last_insert_order($admin)->id);
                             }
@@ -119,16 +120,19 @@
                         $orderErr = 'Some Order already exist';
                     }
                 }
-                if(($is_success < $countOr) && ($is_success > 0)){
+                if(($is_success < $countOr)){
                     http_response_code(200);
-                    echo json_encode(array('productErr' => $productErr, 'orderErr' => $orderErr));
+                    echo json_encode(array('message' => $orderErr));
                 }elseif($is_success == 0){
                     http_response_code(200);
-                    echo json_encode(array('message' => 'No orders imported'));
-                    echo json_encode(array('productErr' => $productErr, 'orderErr' => $orderErr));
+                    if(!$noProduct){
+                        echo json_encode(array('message' => $productErr));
+                    }else{
+                        echo json_encode(array('message' => 'No orders imported'));
+                    }
                 }else {
                     http_response_code(201);
-                    echo json_encode(array('message' => 'Orders Imported'));
+                    echo json_encode(array('message' => 'Orders Imported', 'data' => $is_success.','.$countOr));
                 }
             }
         }
