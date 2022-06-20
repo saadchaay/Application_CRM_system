@@ -3,6 +3,7 @@ import axios from "../../api/axios";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { Delete } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 const API_KEY = "AIzaSyD8sJuOu8T7-LPBhUFbrGOKh_tzTUnj0xs";
 const CLIENT_ID =
@@ -364,7 +365,9 @@ export default function Integration() {
                     spreadsheet.map((order) => (
                       <tr key={order.id}>
                         <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                          ## {order.id}
+                          <a href={`https://docs.google.com/spreadsheets/d/${order.spreadsheetId}`}>
+                              ## {order.id}
+                          </a>
                         </td>
                         <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
                           {order.fileName}
