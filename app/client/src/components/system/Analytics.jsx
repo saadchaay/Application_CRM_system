@@ -2,11 +2,13 @@ import { Image } from "cloudinary-react";
 import { CheckCircleIcon, OfficeBuildingIcon } from "@heroicons/react/solid";
 import {
   AttachMoney,
-  MonetizationOn,
+  SupervisorAccount,
   Store,
   LocalShipping,
   DonutLarge,
-  TrendingDown,
+  LocalGroceryStore,
+  AccountCircle,
+  Category
 } from "@material-ui/icons";
 import axios from "../../api/axios";
 import { useState, useEffect } from "react";
@@ -14,39 +16,33 @@ import { useState, useEffect } from "react";
 
 const dataCard = [
   {
-      name: "Total Revenu",
+      name: "Total Products",
       link: "",
-      icon: "AttachMoney",
+      icon: "Store",
       value: 0,
   },
   {
       name: "Total Orders",
       link: "/orders",
-      icon: "Store",
+      icon: "LocalGroceryStore",
       value: 0
   },
   {
-      name: "Total Profit",
+      name: "Total Customers",
       link: "",
-      icon: "MonetizationOn",
+      icon: "SupervisorAccount",
       value: 0
   },
   {
-      name: "Delivered Orders",
+      name: "Total Users",
       link: "",
-      icon: "LocalShipping",
+      icon: "AccountCircle",
       value: 0,
   },
   {
-      name: "Order In Progress",
+      name: "Total Categories",
       link: "",
-      icon: "DonutLarge",
-      value: 0,
-  },
-  {
-      name: "Returned Orders",
-      link: "",
-      icon: "TrendingDown",
+      icon: "Category",
       value: 0,
   }
 ];
@@ -80,57 +76,12 @@ export default function Dashboard() {
               <div className="flex-1 min-w-0">
                 {/* Profile */}
                 <div className="flex items-center">
-                  {auth.avatar ? (
-                    <Image
-                      className="hidden h-16 w-16 rounded-full sm:block"
-                      cloudName="maggie-7223"
-                      publicId={auth.avatar}
-                    />
-                  ) : (
-                    <img
-                      className="hidden h-16 w-16 rounded-full sm:block"
-                      src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
-                      alt=""
-                    />
-                  )}
-
                   <div>
                     <div className="flex items-center">
-                      {auth.avatar ? (
-                        <Image
-                          className="h-16 w-16 rounded-full sm:hidden"
-                          cloudName="maggie-7223"
-                          publicId={auth.avatar}
-                        />
-                      ) : (
-                        <img
-                          className="h-16 w-16 rounded-full sm:hidden"
-                          src="http://cdn.onlinewebfonts.com/svg/img_572667.png"
-                          alt=""
-                        />
-                      )}
                       <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                        Good morning, {auth.name}
+                        Analytics
                       </h1>
                     </div>
-                    <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
-                      <dt className="sr-only">Company</dt>
-                      <dd className="flex items-center text-sm text-gray-500 font-medium capitalize sm:mr-6">
-                        <OfficeBuildingIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
-                        {auth.address}
-                      </dd>
-                      <dt className="sr-only">Account status</dt>
-                      <dd className="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize">
-                        <CheckCircleIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
-                          aria-hidden="true"
-                        />
-                        {auth.role}
-                      </dd>
-                    </dl>
                   </div>
                 </div>
               </div>
@@ -155,22 +106,22 @@ export default function Dashboard() {
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             {card.icon === "Store" ? (
-                              <Store
+                              <LocalGroceryStore
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
-                            ) : card.icon === "AttachMoney" ? (
-                              <AttachMoney
+                            ) : card.icon === "People" ? (
+                              <SupervisorAccount
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
-                            ) : card.icon === "MonetizationOn" ? (
-                              <MonetizationOn
+                            ) : card.icon === "Category" ? (
+                              <Category
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
-                            ) : card.icon === "LocalShipping" ? (
-                              <LocalShipping
+                            ) : card.icon === "AccountCircle" ? (
+                              <AccountCircle
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
@@ -179,8 +130,8 @@ export default function Dashboard() {
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
-                            ) : card.icon === "TrendingDown" ? (
-                              <TrendingDown
+                            ) : card.icon === "LocalGroceryStore" ? (
+                              <Store
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
@@ -225,18 +176,18 @@ export default function Dashboard() {
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
-                            ) : card.icon === "AttachMoney" ? (
-                              <AttachMoney
+                            ) : card.icon === "Category" ? (
+                              <Category
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
-                            ) : card.icon === "MonetizationOn" ? (
-                              <MonetizationOn
+                            ) : card.icon === "SupervisorAccount" ? (
+                              <SupervisorAccount
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
-                            ) : card.icon === "LocalShipping" ? (
-                              <LocalShipping
+                            ) : card.icon === "AccountCircle" ? (
+                              <AccountCircle
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
@@ -245,8 +196,8 @@ export default function Dashboard() {
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />
-                            ) : card.icon === "TrendingDown" ? (
-                              <TrendingDown
+                            ) : card.icon === "LocalGroceryStore" ? (
+                              <LocalGroceryStore
                                 className="h-6 w-6 text-gray-400"
                                 aria-hidden="true"
                               />

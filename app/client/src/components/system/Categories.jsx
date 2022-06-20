@@ -31,9 +31,13 @@ export default function Example() {
     const res = await axios.get("CategoriesController/index/" + id);
     if (res) {
       setCategories(res.data);
-      console.log(res.data);
+      console.log(res);
+      if(res.data.length === 0){
+        setCategories([]);
+      }
     } else {
       console.log("There's no category");
+      setCategories([]);
     }
   };
 
@@ -122,8 +126,8 @@ export default function Example() {
     e.preventDefault();
     const res = await axios.delete(`CategoriesController/destroy/${id}`);
     if (res.data) {
-      fetchCategories();
       console.log("Category deleted");
+      fetchCategories();
     } else {
       console.log("Category not deleted");
     }

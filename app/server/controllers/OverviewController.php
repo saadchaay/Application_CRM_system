@@ -4,6 +4,7 @@ class OverviewController extends Controller{
     
     private $order;
     private $product;
+    private $customer;
     
     public function __construct()
     {
@@ -14,6 +15,9 @@ class OverviewController extends Controller{
         
         $this->order = new Order();
         $this->product = new Product();
+        $this->customer = new Customer();
+        $this->category = new Category();
+        $this->user = new User();
     }
 
     public function index($id)
@@ -95,6 +99,7 @@ class OverviewController extends Controller{
     {
         $orders = $this->order->get_all_orders($id);
         $products = $this->product->get_all_product(array('id' => $id, 'type' => 'admin'));
+        $customers = $this->customer->get_customers($id);
         $total = 0;
         $prices = 0;
         $delivered = 0;
@@ -122,7 +127,7 @@ class OverviewController extends Controller{
             [
                 'name' => "Total Products",
                 'link' => "",
-                'icon' => "AttachMoney",
+                'icon' => "LocalGroceryStore",
                 'value' => count($products),
             ],
             [
@@ -134,26 +139,20 @@ class OverviewController extends Controller{
             [
                 'name' => "Total Customers",
                 'link' => "",
-                'icon' => "MonetizationOn",
-                'value' => (int)($total - $prices),
+                'icon' => "People",
+                'value' => count($customers),
             ],
             [
-                'name' => "Delivered Orders",
-                'link' => "",
-                'icon' => "LocalShipping",
-                'value' => $delivered,
+                'name' => "Total Users",
+                'link' => "/orders",
+                'icon' => "AccountCircle",
+                'value' => count($this->user->get_all_users($id))
             ],
             [
-                'name' => "Order In Progress",
+                'name' => "Total Categories",
                 'link' => "",
-                'icon' => "DonutLarge",
-                'value' => $confirmed,
-            ],
-            [
-                'name' => "Returned Orders",
-                'link' => "",
-                'icon' => "TrendingDown",
-                'value' => $returned,
+                'icon' => "Category",
+                'value' => count($this->category->get_all_category($id)),
             ]
         ];
         // $obj = (Object) $data;
