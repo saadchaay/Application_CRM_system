@@ -3,25 +3,12 @@ import axios from "../../api/axios";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { Delete } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 
 const API_KEY = "AIzaSyD8sJuOu8T7-LPBhUFbrGOKh_tzTUnj0xs";
 const CLIENT_ID =
   "280216831650-f9dn7qig5117unbvtfsnlusk5kjda32l.apps.googleusercontent.com";
 const SCOPE = "https://www.googleapis.com/auth/drive";
 
-const transactions = [
-  {
-    id: "AAPS0L",
-    customer: "saad chaay",
-    phone: "+212615207417",
-    city: "Rabat",
-    date: "02/01/2020",
-    status: "Pending",
-    total: "$4,397.00",
-  },
-  // More transactions...
-];
 export default function Integration() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const [isToken, setIsToken] = useState(localStorage.getItem("token") ? true : false);
@@ -35,6 +22,7 @@ export default function Integration() {
   const [fileName, setFileName] = useState("");
   const [spreadsheet, setSpreadsheet] = useState([]);
 
+  // is integration success...
   const onSuccess = (response) => {
     console.log(response);
     const dataJson = {
@@ -50,13 +38,14 @@ export default function Integration() {
       localStorage.setItem("token", JSON.stringify(dataJson));
       setIsToken(true);
     });
-    // start(dataJson);
   };
 
+  // is integration failed...
   const onFailure = (response) => {
     console.log(response);
   };
 
+  // handle data of client
   const handleGoogle = () => {
     if (!clientId || !clientSecret) {
       alert("Please enter client id and client secret");
@@ -75,6 +64,7 @@ export default function Integration() {
     }
   };
 
+  // disconnect with the google
   const HandleDisconnect = (e) => {
     e.preventDefault();
     axios
@@ -88,6 +78,7 @@ export default function Integration() {
       });
   };
 
+  // create new google sheet file
   const createSpreedSheet = async (e) => {
     e.preventDefault();
     var accessToken = gapi.auth.getToken().access_token;
@@ -130,12 +121,14 @@ export default function Integration() {
     }
   };
 
+  // Get all file that insert in bd
   const fetchAllFiles = async () => {
     const res = await axios.get("SheetsController/index/" + auth.id);
     console.log(res);
     setSpreadsheet(res.data);
   };
 
+  // delete file
   const handleDelete = async (id) => {
     // e.preventDefault();
     const res = await axios.delete("SheetsController/delete/" + id);

@@ -57,7 +57,6 @@ export default function Example() {
   };
 
   const handleCategory = async (e) => {
-    // add modal here.........
     e.preventDefault();
     if (title === "") {
       setErrTitle("Name is required");
